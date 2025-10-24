@@ -129,7 +129,7 @@
             "spacing": 8,
             "padding_vertical": 12,
             "padding_horizontal": 20,
-            "border_width": 1,
+            "border_width": 0,
             "border_color": "#e6e6e6"
           },
           "blocks": {}
