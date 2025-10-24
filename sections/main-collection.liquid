@@ -50,7 +50,6 @@
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
-        <h1>{{ collection.title }}</h1>
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
