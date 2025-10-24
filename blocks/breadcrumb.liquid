@@ -51,27 +51,10 @@
 
   @media screen and (max-width: 786px) {
     .breadcrumb-{{ ai_gen_id }} {
-      padding: 20px 0;
+      padding: 8px 10px;
     }
-
-    .breadcrumb-nav-{{ ai_gen_id }} {
-      gap: {{ block.settings.spacing | times: 0.8 }}px;
-    }
-
     .breadcrumb-item-{{ ai_gen_id }} {
       gap: {{ block.settings.spacing | times: 0.8 }}px;
-    }
-    .breadcrumb-current-{{ ai_gen_id }} {
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 150%;
-      color: #121212;
-    }
-    .breadcrumb-link-{{ ai_gen_id }} {
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 150%;
-      color: #121212;
     }
   }
 {% endstyle %}
