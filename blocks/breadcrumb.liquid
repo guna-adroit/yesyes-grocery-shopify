@@ -3,7 +3,7 @@
 {% style %}
   
   .breadcrumb-{{ ai_gen_id }} {
-    padding: 50px 0px;
+    padding: 30px 0px;
     background-color: {{ block.settings.background_color }};
     border-bottom: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
   }
@@ -82,8 +82,9 @@
   {% endif %}
 </style>
 
+<div class="section section--page-width">
 <breadcrumb-navigation-{{ ai_gen_id }}
-  class="breadcrumb-{{ ai_gen_id }} section section--page-width"
+  class="breadcrumb-{{ ai_gen_id }} "
   data-current-url="{{ request.url }}"
   {{ block.shopify_attributes }}
 >
@@ -234,6 +235,7 @@
     {% endif %}
   </nav>
 </breadcrumb-navigation-{{ ai_gen_id }}>
+</div>
 
 <script>
   (function() {
