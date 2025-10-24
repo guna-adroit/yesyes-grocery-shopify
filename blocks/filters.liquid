@@ -1057,6 +1057,18 @@
       z-index: var(--facets-open-z-index);
     }
   }
+
+  .facets--horizontal{
+    border: 1px solid #000;
+  }
+  @media screen and (min-width: 750px) {
+    .facets--horizontal, .filter-bar-grid .facets__filters-wrapper{
+      display: none !important; 
+    }
+    .filter-bar-grid .facets--horizontal{
+      display: flex !important;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
