@@ -2,13 +2,13 @@
 
 {% style %}
   
-  .ai-breadcrumb-{{ ai_gen_id }} {
+  .breadcrumb-{{ ai_gen_id }} {
     padding: 50px 0px;
     background-color: {{ block.settings.background_color }};
     border-bottom: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
   }
 
-  .ai-breadcrumb-nav-{{ ai_gen_id }} {
+  .breadcrumb-nav-{{ ai_gen_id }} {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -16,56 +16,56 @@
     line-height: 1.4;
   }
 
-  .ai-breadcrumb-item-{{ ai_gen_id }} {
+  .breadcrumb-item-{{ ai_gen_id }} {
     display: flex;
     align-items: center;
     gap: {{ block.settings.spacing }}px;
   }
 
-  .ai-breadcrumb-link-{{ ai_gen_id }} {
+  .breadcrumb-link-{{ ai_gen_id }} {
     font-weight: 300;
     font-size: 16px;
     line-height: 150%;
     color: #121212;
   }
 
-  .ai-breadcrumb-link-{{ ai_gen_id }}:hover {
+  .breadcrumb-link-{{ ai_gen_id }}:hover {
     color: {{ block.settings.link_hover_color }};
     text-decoration: underline;
   }
 
-  .ai-breadcrumb-current-{{ ai_gen_id }} {
+  .breadcrumb-current-{{ ai_gen_id }} {
     font-weight: 300;
     font-size: 16px;
     line-height: 150%;
     color: #121212;
   }
 
-  .ai-breadcrumb-separator-{{ ai_gen_id }} {
+  .breadcrumb-separator-{{ ai_gen_id }} {
     color: {{ block.settings.separator_color }};
     font-size: {{ block.settings.font_size | times: 0.9 }}px;
     user-select: none;
   }
 
   @media screen and (max-width: 786px) {
-    .ai-breadcrumb-{{ ai_gen_id }} {
+    .breadcrumb-{{ ai_gen_id }} {
       padding: 20px 0;
     }
 
-    .ai-breadcrumb-nav-{{ ai_gen_id }} {
+    .breadcrumb-nav-{{ ai_gen_id }} {
       gap: {{ block.settings.spacing | times: 0.8 }}px;
     }
 
-    .ai-breadcrumb-item-{{ ai_gen_id }} {
+    .breadcrumb-item-{{ ai_gen_id }} {
       gap: {{ block.settings.spacing | times: 0.8 }}px;
     }
-    .ai-breadcrumb-current-{{ ai_gen_id }} {
+    .breadcrumb-current-{{ ai_gen_id }} {
       font-weight: 300;
       font-size: 14px;
       line-height: 150%;
       color: #121212;
     }
-    .ai-breadcrumb-link-{{ ai_gen_id }} {
+    .breadcrumb-link-{{ ai_gen_id }} {
       font-weight: 300;
       font-size: 14px;
       line-height: 150%;
@@ -76,20 +76,20 @@
 
 <style>
   {% if template.name == 'collection' or template.name == 'list-collections' or template.name == 'index' %}
-    .ai-breadcrumb-{{ ai_gen_id }}{
+    .breadcrumb-{{ ai_gen_id }}{
        display: none !important;
     }
   {% endif %}
 </style>
 
 <breadcrumb-navigation-{{ ai_gen_id }}
-  class="ai-breadcrumb-{{ ai_gen_id }} section section--page-width"
+  class="breadcrumb-{{ ai_gen_id }} section section--page-width"
   data-current-url="{{ request.url }}"
   {{ block.shopify_attributes }}
 >
-  <nav class="ai-breadcrumb-nav-{{ ai_gen_id }}" aria-label="Breadcrumb navigation">
-    <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-      <a href="{{ routes.root_url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">
+  <nav class="breadcrumb-nav-{{ ai_gen_id }}" aria-label="Breadcrumb navigation">
+    <div class="breadcrumb-item-{{ ai_gen_id }}">
+      <a href="{{ routes.root_url }}" class="breadcrumb-link-{{ ai_gen_id }}">
         {{ block.settings.home_text }}
       </a>
     </div>
@@ -118,90 +118,90 @@
     %}
 
     {% if current_collection %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <a href="{{ current_collection.url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <a href="{{ current_collection.url }}" class="breadcrumb-link-{{ ai_gen_id }}">
           {{ current_collection.title }}
         </a>
       </div>
     {% endif %}
 
     {% if product %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {{ product.title }}
         </span>
       </div>
     {% elsif collection %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span> 
       {% if collection.metafields.custom.parent_collection.value != blank %}
         {% assign parent_collection = collection.metafields.custom.parent_collection.value %}
 
-        <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-          <a href="{{ parent_collection.url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">
+        <div class="breadcrumb-item-{{ ai_gen_id }}">
+          <a href="{{ parent_collection.url }}" class="breadcrumb-link-{{ ai_gen_id }}">
             {{ parent_collection.title }}
           </a>
         </div>
 
-        <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+        <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
           {{ block.settings.separator }}
         </span>
       {% endif %}
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {{ collection.title }} 1
         </span>
       </div>
     {% elsif page %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {{ page.title }}
         </span>
       </div>
     {% elsif blog %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {{ blog.title }}
         </span>
       </div>
     {% elsif template.name == 'cart' %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           Cart
         </span>
       </div>
     {% elsif template.name == 'search' %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           Search
         </span>
       </div>
 
     {% elsif request.page_type contains 'policy' %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {% if request.path contains 'terms-of-service' %} 
             {{ shop.terms_of_service.title }} 
           {% elsif request.path contains 'shipping-policy' %}
@@ -215,19 +215,19 @@
       </div>
     {% elsif article %}
       {% if blog %}
-        <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+        <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
           {{ block.settings.separator }}
         </span>
-        <div class="ai-breadcrumb-item-{{ ai_gen_id }}"><a href="{{ blog.url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">
+        <div class="breadcrumb-item-{{ ai_gen_id }}"><a href="{{ blog.url }}" class="breadcrumb-link-{{ ai_gen_id }}">
             {{ blog.title }}
           </a>
         </div>
       {% endif %}
-      <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
-      <div class="ai-breadcrumb-item-{{ ai_gen_id }}">
-        <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
+      <div class="breadcrumb-item-{{ ai_gen_id }}">
+        <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
           {{ article.title }}
         </span>
       </div>
@@ -248,7 +248,7 @@
       }
 
       enhanceAccessibility() {
-        const links = this.querySelectorAll('.ai-breadcrumb-link-{{ ai_gen_id }}');
+        const links = this.querySelectorAll('.breadcrumb-link-{{ ai_gen_id }}');
         links.forEach((link, index) => {
           if (index === 0) {
             link.setAttribute('aria-label', 'Go to homepage');
@@ -306,7 +306,7 @@
         fetch(`/collections/${collectionHandle}.json`)
           .then(response => response.json())
           .then(data => {
-            const collectionLink = this.querySelector('.ai-breadcrumb-link-{{ ai_gen_id }}[href*="/collections/"]');
+            const collectionLink = this.querySelector('.breadcrumb-link-{{ ai_gen_id }}[href*="/collections/"]');
             if (collectionLink && data.collection) {
               collectionLink.textContent = data.collection.title;
               collectionLink.href = `/collections/${collectionHandle}`;
