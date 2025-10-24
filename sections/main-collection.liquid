@@ -85,16 +85,6 @@
 </results-list>
 
 {% stylesheet %}
-  .collection-title-container{
-    grid-column: 1 / -1;
-    text-align: center;
-  }
-  h1.collection-title{
-    font-family: Raleway;
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 44px;
-  }
   
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
@@ -166,6 +156,18 @@
       margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
       margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
     }
+  }
+
+  /* Custom CSS */
+  .collection-title-container{
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  h1.collection-title{
+    font-family: Raleway;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
   }
 {% endstylesheet %}
 
