@@ -119,7 +119,7 @@
           "settings": {
             "home_text": "Home",
             "separator": ">",
-            "background_color": "#ffffff",
+            "background_color": "#ed1d23",
             "link_color": "#666666",
             "link_hover_color": "#000000",
             "current_color": "#000000",
