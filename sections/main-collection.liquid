@@ -48,11 +48,12 @@
       {% assign products_per_page = section.settings.products_per_page %}
     {% endif %}
 
-    <h1>{{ collection.title }}</h1>
+    
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
         {% for product in collection.products %}
+          <h1>{{ collection.title }}</h1>
           <li
             id="{{ section.id }}-{{ product.id }}"
             class="product-grid__item product-grid__item--{{ forloop.index0 }}"
