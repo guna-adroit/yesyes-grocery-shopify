@@ -95,13 +95,15 @@
         >
           {{- 'actions.sort' | t -}}
         </span>
-        <span
-          class="facets__status h6"
-        >
-          {{- status -}}
-        </span>
-        <span class="svg-wrapper icon-caret icon-animated">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+        <span class="facets__status-container">
+          <span
+            class="facets__status h6"
+          >
+            {{- status -}}
+          </span>
+          <span class="svg-wrapper icon-caret icon-animated">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
         </span>
       </summary>
       <floating-panel-component
