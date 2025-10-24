@@ -1,0 +1,599 @@
+{% doc %}
+  @prompt
+    Section Concept:
+    A customizable 5-column grid section featuring a banner and products from a selected collection.
+    
+    Layout:
+    
+    Top Row: Banner occupies a configurable number of columns (default: 2), with the remaining columns displaying product cards.
+    
+    Bottom Row: Up to 5 product cards displayed in a single row.
+    
+    Customization Options:
+    
+    Select collection to display products from.
+    
+    Adjust the number of products per row.
+    
+    Adjust banner width (number of columns it spans).
+    
+    Optional controls for spacing and alignment.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-grid-banner-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-grid-banner-container-{{ ai_gen_id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-grid-banner-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-grid-banner-item-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-grid-banner-banner-{{ ai_gen_id }} {
+    grid-column: span {{ block.settings.banner_columns }};
+    background-color: {{ block.settings.banner_bg_color }};
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ block.settings.banner_content_alignment }};
+    align-items: {{ block.settings.banner_text_alignment }};
+    padding: 40px;
+    min-height: 400px;
+    text-align: {% if block.settings.banner_text_alignment == 'flex-start' %}left{% elsif block.settings.banner_text_alignment == 'flex-end' %}right{% else %}center{% endif %};
+  }
+
+  .ai-grid-banner-banner-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .ai-grid-banner-banner-content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+  }
+
+  .ai-grid-banner-banner-heading-{{ ai_gen_id }} {
+    color: {{ block.settings.banner_text_color }};
+    font-size: {{ block.settings.banner_heading_size }}px;
+    margin: 0 0 16px;
+    font-weight: 700;
+  }
+
+  .ai-grid-banner-banner-text-{{ ai_gen_id }} {
+    color: {{ block.settings.banner_text_color }};
+    font-size: {{ block.settings.banner_text_size }}px;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  .ai-grid-banner-banner-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 32px;
+    background-color: {{ block.settings.banner_button_bg }};
+    color: {{ block.settings.banner_button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .ai-grid-banner-banner-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.banner_button_hover_bg }};
+    color: {{ block.settings.banner_button_hover_text }};
+  }
+
+  .ai-grid-banner-product-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_bg_color }};
+    border: 1px solid {{ block.settings.card_border_color }};
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-grid-banner-product-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-grid-banner-product-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .ai-grid-banner-product-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-grid-banner-product-image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .ai-grid-banner-product-image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-grid-banner-product-info-{{ ai_gen_id }} {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-grid-banner-product-title-{{ ai_gen_id }} {
+    color: {{ block.settings.card_text_color }};
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .ai-grid-banner-product-title-link-{{ ai_gen_id }} {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ai-grid-banner-product-title-link-{{ ai_gen_id }}:hover {
+    text-decoration: underline;
+  }
+
+  .ai-grid-banner-product-price-{{ ai_gen_id }} {
+    color: {{ block.settings.card_text_color }};
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: auto;
+  }
+
+  .ai-grid-banner-empty-state-{{ ai_gen_id }} {
+    grid-column: span 5;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-grid-banner-empty-state-text-{{ ai_gen_id }} {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-grid-banner-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ai-grid-banner-banner-{{ ai_gen_id }} {
+      grid-column: span 3;
+      min-height: 300px;
+      padding: 30px;
+    }
+
+    .ai-grid-banner-item-{{ ai_gen_id }} {
+      grid-column: span 1;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-grid-banner-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: {{ block.settings.grid_gap | times: 0.75 }}px;
+    }
+
+    .ai-grid-banner-banner-{{ ai_gen_id }} {
+      grid-column: span {{ block.settings.columns_mobile }};
+      min-height: 250px;
+      padding: 24px;
+    }
+
+    .ai-grid-banner-item-{{ ai_gen_id }} {
+      grid-column: span 1;
+    }
+
+    .ai-grid-banner-banner-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.banner_heading_size | times: 0.7 }}px;
+    }
+
+    .ai-grid-banner-banner-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.banner_text_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-grid-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-grid-banner-container-{{ ai_gen_id }}">
+    {% if block.settings.collection != blank %}
+      {% assign collection = block.settings.collection %}
+      {% assign products_to_show = block.settings.products_per_row | plus: block.settings.banner_columns %}
+      {% assign available_products = collection.products | slice: 0, products_to_show %}
+
+      <div class="ai-grid-banner-grid-{{ ai_gen_id }}">
+        <div class="ai-grid-banner-banner-{{ ai_gen_id }}">
+          {% if block.settings.banner_image %}
+            <img
+              src="{{ block.settings.banner_image | image_url: width: 1000 }}"
+              alt="{{ block.settings.banner_image.alt | escape }}"
+              class="ai-grid-banner-banner-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.banner_image.width }}"
+              height="{{ block.settings.banner_image.height }}"
+            >
+          {% endif %}
+
+          <div class="ai-grid-banner-banner-content-{{ ai_gen_id }}">
+            {% if block.settings.banner_heading != blank %}
+              <h2 class="ai-grid-banner-banner-heading-{{ ai_gen_id }}">
+                {{ block.settings.banner_heading }}
+              </h2>
+            {% endif %}
+
+            {% if block.settings.banner_description != blank %}
+              <div class="ai-grid-banner-banner-text-{{ ai_gen_id }}">
+                {{ block.settings.banner_description }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+              <a
+                href="{{ block.settings.button_link }}"
+                class="ai-grid-banner-banner-button-{{ ai_gen_id }}"
+              >
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        {% for product in available_products limit: block.settings.products_per_row %}
+          <div class="ai-grid-banner-item-{{ ai_gen_id }}">
+            <div class="ai-grid-banner-product-card-{{ ai_gen_id }}">
+              <div class="ai-grid-banner-product-image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-grid-banner-product-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% else %}
+                  <div class="ai-grid-banner-product-image-placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="ai-grid-banner-product-info-{{ ai_gen_id }}">
+                <h3 class="ai-grid-banner-product-title-{{ ai_gen_id }}">
+                  <a
+                    href="{{ product.url }}"
+                    class="ai-grid-banner-product-title-link-{{ ai_gen_id }}"
+                  >
+                    {{ product.title }}
+                  </a>
+                </h3>
+
+                <div class="ai-grid-banner-product-price-{{ ai_gen_id }}">
+                  {{ product.price | money }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ai-grid-banner-grid-{{ ai_gen_id }}">
+        <div class="ai-grid-banner-empty-state-{{ ai_gen_id }}">
+          <p class="ai-grid-banner-empty-state-text-{{ ai_gen_id }}">
+            Select a collection to display products
+          </p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner and products grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Products per row",
+      "default": 3,
+      "info": "Number of products to display (excluding banner)"
+    },
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "range",
+      "id": "banner_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Banner width",
+      "default": 2,
+      "info": "Number of columns the banner spans"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_description",
+      "label": "Description",
+      "default": "Discover our latest products"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "banner_content_alignment",
+      "label": "Content vertical alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "banner_text_alignment",
+      "label": "Content horizontal alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Banner style"
+    },
+    {
+      "type": "color",
+      "id": "banner_bg_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "banner_heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "banner_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "banner_button_bg",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "banner_button_text_color",
+      "label": "Button text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "banner_button_hover_bg",
+      "label": "Button hover background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "banner_button_hover_text",
+      "label": "Button hover text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner and products grid"
+    }
+  ]
+}
+{% endschema %}
