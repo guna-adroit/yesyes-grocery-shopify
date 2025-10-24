@@ -141,7 +141,7 @@
       <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span> 
-      {% if collection.metafields.custom.parent_collection.value != blank %}
+      {% comment %} {% if collection.metafields.custom.parent_collection.value != blank %}
         {% assign parent_collection = collection.metafields.custom.parent_collection.value %}
 
         <div class="breadcrumb-item-{{ ai_gen_id }}">
@@ -153,10 +153,10 @@
         <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
           {{ block.settings.separator }}
         </span>
-      {% endif %}
+      {% endif %} {% endcomment %}
       <div class="breadcrumb-item-{{ ai_gen_id }}">
         <span class="breadcrumb-current-{{ ai_gen_id }}" aria-current="page">
-          {{ collection.title }} 1
+          {{ collection.title }}
         </span>
       </div>
     {% elsif page %}
