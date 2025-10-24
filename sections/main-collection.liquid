@@ -52,13 +52,14 @@
     {% paginate collection.products by products_per_page %}
       {% capture children %}
         <div class="collection-title-container">
+          <h1 class="collection-title">{{ collection.title }}</h1>
           {% content_for 'block',
       type: 'filters',
       id: 'filters',
       results: collection,
       results_size: collection.products_count
     %}
-          <h1 class="collection-title">{{ collection.title }}</h1>
+          
         </div>
         {% for product in collection.products %}
           <li
