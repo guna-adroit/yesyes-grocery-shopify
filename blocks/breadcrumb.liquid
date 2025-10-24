@@ -117,7 +117,7 @@
       endif
     %}
 
-    {% if current_collection %}
+    {% comment %} {% if current_collection %}
       <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
         {{ block.settings.separator }}
       </span>
@@ -126,7 +126,7 @@
           {{ current_collection.title }}
         </a>
       </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     {% if product %}
       <span class="breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">
