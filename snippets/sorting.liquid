@@ -361,9 +361,18 @@
     }
   }
 
+  /* Custom CSS */
+
   @media screen and (min-width: 750px) {
     .facets--horizontal .sorting-filter .facets__status {
         display: unset;
     }
-}
+  }
+  span.facets__status-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ED1D23;
+      padding: 0 5px;
+      border-radius: 5px;
+  }
 {% endstylesheet %}
