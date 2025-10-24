@@ -51,7 +51,9 @@
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
-        <h1>{{ collection.title }}</h1>
+        <div class="collection-title-container">
+          <h1 class="collection-title">{{ collection.title }}</h1>
+        </div>
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
@@ -79,6 +81,12 @@
 </results-list>
 
 {% stylesheet %}
+  h1.collection-title{
+    font-family: Raleway;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+  }
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
 
