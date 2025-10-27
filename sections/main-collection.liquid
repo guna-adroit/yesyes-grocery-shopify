@@ -94,14 +94,6 @@
     {% endpaginate %}
   </div>
 </results-list>
-<h1>{{ settings.custom_font_1.family }}</h1>
-{{ settings.custom_font_1.variants }}
-
-{%for variant in settings.custom_font_1.variants %}
-  {% if variant.style == "normal" %}
-    {{  variant| font_face }}
-  {%endif %}
-{% endfor %}
 <script>
         document.addEventListener("DOMContentLoaded", function() {
           var endlessScroll = new Ajaxinate({
