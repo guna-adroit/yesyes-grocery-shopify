@@ -86,7 +86,7 @@
         paginate: paginate,
         enable_infinite_scroll: section.settings.enable_infinite_scroll
       %}
-      <div id="AjaxinatePagination">
+      <div id="AjaxinatePagination" class="collection-load-more-container">
         {% if paginate.next %}
           <a href="{{ paginate.next.url }}">Load More</a>
         {% endif %}
