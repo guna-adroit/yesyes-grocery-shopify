@@ -95,6 +95,11 @@
   </div>
 </results-list>
 <h1>{{ settings.custom_font_1.family }}</h1>
+<style>
+  ::root{
+    --custom-font-1: {{ settings.custom_font_1.family }};
+  }
+</style>
 <script>
         document.addEventListener("DOMContentLoaded", function() {
           var endlessScroll = new Ajaxinate({
