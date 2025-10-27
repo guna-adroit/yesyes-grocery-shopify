@@ -175,8 +175,8 @@
     "inventory_in_stock": "In stock",
     "inventory_out_of_stock": "Out of stock",
     "item_count": {
-      "one": "{{ count }} item",
-      "other": "{{ count }} items"
+      "one": "{{ count }} Product",
+      "other": "{{ count }} Products"
     },
     "language": "Language",
     "localization_region_and_language": "Region and language",
