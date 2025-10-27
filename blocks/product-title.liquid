@@ -11,6 +11,7 @@
     ref="productTitleLink"
     href="{% render 'product-card-variant-url', product: closest.product %}"
   >
+    {{ product.type }}
     {% render 'text', fallback_text: product_title, block: block %}
   </a>
 {% endif %}
