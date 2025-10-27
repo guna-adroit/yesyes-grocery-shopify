@@ -15,7 +15,7 @@
     {% if block.settings.show_product_type %}
       <span class="card-product-type">{{ closest.product.type }}</span>
     {%  endif %}
-    {% render 'text', fallback_text: product_title, block: block, custom_classes: custom_classes %}
+    {% render 'text', fallback_text: product_title, block: block, classes: custom_classes %}
     
   </a>
 {% endif %}
