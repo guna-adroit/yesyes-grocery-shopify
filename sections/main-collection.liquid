@@ -98,7 +98,9 @@
 {{ settings.custom_font_1.variants }}
 
 {%for variant in settings.custom_font_1.variants %}
-{{  variant| font_face }}
+  {% if variant.style == "normal" %}
+    {{  variant| font_face }}
+  {%endif %}
 {% endfor %}
 <script>
         document.addEventListener("DOMContentLoaded", function() {
