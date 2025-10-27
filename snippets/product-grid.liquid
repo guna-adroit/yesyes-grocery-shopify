@@ -133,13 +133,6 @@
       {% if enable_infinite_scroll != false %}
         <span ref="viewMoreNext"></span>
       {% else %}
-        {% if section.settings.enable_infinite_scroll == false %}
-        <div id="AjaxinatePagination">
-          {% if paginate.next %}
-            <a href="{{ paginate.next.url }}">Loading More</a>
-          {% endif %}
-        </div>
-      {% endif %}
         {% render 'pagination-controls', paginate: paginate %}
       {% endif %}
     {% endif %}
