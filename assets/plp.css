@@ -2,5 +2,9 @@
     border: 1px solid #D1D1D1;
     border-radius: 7px;
     padding: 16px;
-
+}
+.card-product-type{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12.6px;
 }
