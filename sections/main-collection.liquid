@@ -62,9 +62,11 @@
           </div>
           
         </div>
+        
         {% if section.settings.enable_infinite_scroll == false %}
           <div id="AjaxinateContainer">
         {% endif %}
+
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
@@ -78,9 +80,11 @@
             {% # theme-check-enable %}
           </li>
         {% endfor %}
-         {% if section.settings.enable_infinite_scroll == false %}
-         </div>
+
+        {% if section.settings.enable_infinite_scroll == false %}
+          </div>
         {% endif %}
+
       {% endcapture %}
 
       {% render 'product-grid',
