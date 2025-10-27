@@ -6,6 +6,10 @@
   fetchpriority="low"
 ></script>
 
+{% if section.settings.enable_infinite_scroll == false %}
+  <script src="{{ 'ajaxinate.min.js' | asset_url  }}" defer></script>
+{% endif %}
+
 {% javascript %}
   const url = new URL(window.location.href);
   if (url.hash) {
@@ -58,6 +62,9 @@
           </div>
           
         </div>
+        {% if section.settings.enable_infinite_scroll == false %}
+          <div id="AjaxinateContainer">
+        {% endif %}
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
@@ -71,6 +78,9 @@
             {% # theme-check-enable %}
           </li>
         {% endfor %}
+         {% if section.settings.enable_infinite_scroll == false %}
+         </div>
+        {% endif %}
       {% endcapture %}
 
       {% render 'product-grid',
@@ -80,6 +90,23 @@
         paginate: paginate,
         enable_infinite_scroll: section.settings.enable_infinite_scroll
       %}
+      {% if section.settings.enable_infinite_scroll == false %}
+        <div id="AjaxinatePagination">
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}">Loading More</a>
+          {% endif %}
+        </div>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var endlessScroll = new Ajaxinate({
+            method: 'scroll', // Change to 'click' if you want a button instead
+            container: '#AjaxinateContainer',
+            pagination: '#AjaxinatePagination'
+          });
+        });
+      </script>
+      {% endif %}
     {% endpaginate %}
   </div>
 </results-list>
