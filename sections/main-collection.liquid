@@ -98,7 +98,7 @@
 {{ settings.custom_font_1.variants }}
 
 {%for variant in settings.custom_font_1.variants %}
-{{  variant }}
+{{  variant| font_face }}
 {% endfor %}
 <script>
         document.addEventListener("DOMContentLoaded", function() {
