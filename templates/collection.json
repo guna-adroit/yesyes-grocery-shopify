@@ -161,6 +161,7 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
+                "show_product_type": true,
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
