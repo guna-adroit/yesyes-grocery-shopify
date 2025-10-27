@@ -10,7 +10,12 @@
   {{ primary_font_italic | font_face: font_display: 'swap' }}
   {{ primary_font_bold_italic | font_face: font_display: 'swap' }}
 
-  {{ settings.custom_font_1 | font_face: font_display: 'swap' }}
+
+  {%for custom_font_variant in settings.custom_font_1.variants %}
+    {% if custom_font_variant.style == "normal" %}
+      {{  custom_font_variant| font_face: font_display: 'swap'}}
+    {%endif %}
+  {% endfor %}
 
   {% if settings.type_subheading_font != settings.type_body_font %}
     {%- liquid
