@@ -16,7 +16,7 @@
       <span class="card-product-type">{{ closest.product.type }}</span>
     {%  endif %}
     {% render 'text', fallback_text: product_title, block: block, classes: custom_classes %}
-    
+    {{block.settings.custom_classes }}
   </a>
 {% endif %}
 
