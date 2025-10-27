@@ -12,7 +12,7 @@
     href="{% render 'product-card-variant-url', product: closest.product %}"
   >
     {% if block.settings.show_product_type %}
-      <span>{{ closest.product.type }}</span>
+      <span class="card-product-type">{{ closest.product.type }}</span>
     {%  endif %}
     {% render 'text', fallback_text: product_title, block: block %}
     
