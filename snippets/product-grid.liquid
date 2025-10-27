@@ -138,6 +138,11 @@
     {% endif %}
   </div>
 </div>
+<div id="AjaxinatePagination">
+    {% if paginate.next %}
+      <a href="{{ paginate.next.url }}">Loading More</a>
+    {% endif %}
+  </div>
 
 {% comment %}
   This script is used to set the grid view on the product grid stored in sessionStorage. Keeping it here helps us prevent seeing the default state.
