@@ -52,7 +52,12 @@
       {% assign products_per_page = section.settings.products_per_page %}
     {% endif %}
 
-
+    <div class="collection-title-container">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      <div class="filter-bar-grid">
+        {% content_for 'block', type: 'filters',id: 'filters',results: collection,results_size: collection.products_count %}
+      </div>
+    </div>
     {% paginate collection.products by products_per_page %}
       {% capture children %}
         {% for product in collection.products %}
