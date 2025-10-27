@@ -173,6 +173,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
+                "custom_classes": "card-product-title",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
