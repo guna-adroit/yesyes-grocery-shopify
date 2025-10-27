@@ -21,6 +21,7 @@ body {
   --hover-transition-timing: ease-out;
   --surface-transition-duration: 0.3s;
   --surface-transition-timing: var(--ease-out-quad);
+  --custom-font-1: {{ settings.custom_font_1.family }};
 }
 
 html {
