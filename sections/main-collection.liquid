@@ -62,10 +62,6 @@
           </div>
           
         </div>
-        
-        {% if section.settings.enable_infinite_scroll == false %}
-          <div id="AjaxinateContainer">
-        {% endif %}
 
         {% for product in collection.products %}
           <li
@@ -80,10 +76,6 @@
             {% # theme-check-enable %}
           </li>
         {% endfor %}
-
-        {% if section.settings.enable_infinite_scroll == false %}
-          </div>
-        {% endif %}
 
       {% endcapture %}
 
@@ -101,7 +93,12 @@
           {% endif %}
         </div>
 
-        <script>
+        
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</results-list>
+<script>
         document.addEventListener("DOMContentLoaded", function() {
           var endlessScroll = new Ajaxinate({
             method: 'scroll', // Change to 'click' if you want a button instead
@@ -110,10 +107,6 @@
           });
         });
       </script>
-      {% endif %}
-    {% endpaginate %}
-  </div>
-</results-list>
 
 {% stylesheet %}
   
