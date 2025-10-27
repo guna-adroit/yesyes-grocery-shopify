@@ -10,6 +10,8 @@
   {{ primary_font_italic | font_face: font_display: 'swap' }}
   {{ primary_font_bold_italic | font_face: font_display: 'swap' }}
 
+  {{ settings.custom_font_1 | font_face: font_display: 'swap' }}
+
   {% if settings.type_subheading_font != settings.type_body_font %}
     {%- liquid
       assign secondary_font_bold = settings.type_subheading_font | font_modify: 'weight', 'bold'
@@ -48,7 +50,7 @@
     {{ accent_font_italic | font_face: font_display: 'swap' }}
     {{ accent_font_bold_italic | font_face: font_display: 'swap' }}
 
-    {{ settings.custom_font_1 | font_face: font_display: 'swap' }}
+    
   {% endif %}
 
   :root {
