@@ -83,10 +83,12 @@
     </div>
   {%- endif -%}
 </product-price>
-{% if bl %}
-  <div class="card-product-expiry-container">
-    <span class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</span>
-  </div>
+{% if block.settings.show_product_expiry %}
+  {% if closest.product.metafields.custom.product_expiry != blank %}
+    <div class="card-product-expiry-container">
+      <span class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</span>
+    </div>
+  {% endif %}
 {% endif %}
 </div>
 
