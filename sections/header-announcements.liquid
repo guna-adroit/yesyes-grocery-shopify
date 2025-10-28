@@ -32,7 +32,11 @@
       {% render 'slideshow-arrows', icon_style: 'chevron' %}
     {% endif %}
 
-    <span class="announcement-menu menu--right">Menu appears here</span>
+    <span class="announcement-menu menu--right">
+      {% if section.settings.announcement-menu != blank %}
+        {% render 'menu', menu: section.settings.announcement-menu, menu_class: 'announcement-menu__list', item_class: 'announcement-menu__item', link_class: 'announcement-menu__link' %}
+      {% endif %}
+    </span>
     <div class="announcement-bar__slides">
       {% content_for 'blocks' %}
     </div>
