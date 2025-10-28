@@ -42,4 +42,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 19.6px;
+    border-radius: 6px;
+    opacity: 0.1;
+    background: #fee9e9;
 }
