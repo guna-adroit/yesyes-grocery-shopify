@@ -31,15 +31,14 @@
     {% if show_arrows %}
       {% render 'slideshow-arrows', icon_style: 'chevron' %}
     {% endif %}
-
-    <span class="announcement-menu menu--right">
-      {% if section.settings.announcement-menu != blank %}
-        {% for link in section.settings.announcement-menu.links %}
-          <a class="menu-item" href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      {% endif %}
-    </span>
     <div class="announcement-bar__slides">
+      {% if section.settings.announcement-menu != blank %}
+          <span class="announcement-menu menu--right">
+            {% for link in section.settings.announcement-menu.links %}
+              <a class="menu-item" href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+            </span>
+        {% endif %}
       {% content_for 'blocks' %}
     </div>
   </announcement-bar-component>
