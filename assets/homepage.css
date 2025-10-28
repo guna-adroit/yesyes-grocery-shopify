@@ -1,3 +1,7 @@
+.announcement-menu.menu--right {
+    display: flex;
+    gap: 40px;
+}
 span.announcement-menu .menu-item {
     font-size: 14px;
     font-weight: 600;
