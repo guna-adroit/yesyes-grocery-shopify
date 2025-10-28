@@ -1,7 +1,7 @@
 
 
 {% if closest.product != blank %}
-  {% assign product_vendor = '<p>' | append: closest.product.vendor | append: '</p>' %}
+  {% assign product_vendor = '<p>By ' | append: closest.product.vendor | append: '</p>' %}
 
     {% render 'text', fallback_text: product_vendor, block: block %}
     
