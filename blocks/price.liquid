@@ -86,7 +86,7 @@
 {% if block.settings.show_product_expiry %}
   {% if closest.product.metafields.custom.product_expiry != blank %}
     <div class="card-product-expiry-container">
-      <span class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</span>
+      <p class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</p>
     </div>
   {% endif %}
 {% endif %}
