@@ -83,7 +83,11 @@
     </div>
   {%- endif -%}
 </product-price>
-{{ closest.product.metafields.custom.product_expiry }}
+{% if bl %}
+  <div class="card-product-expiry-container">
+    <span class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</span>
+  </div>
+{% endif %}
 </div>
 
 {% # theme-check-disable %}
