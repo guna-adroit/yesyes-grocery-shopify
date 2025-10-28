@@ -5,4 +5,9 @@
 span.announcement-menu .menu-item {
     font-size: 14px;
     font-weight: 600;
+    transition: 0.5s;
+}
+span.announcement-menu .menu-item:hover {
+    text-decoration: underline;
+    transition: 0.5s;
 }
