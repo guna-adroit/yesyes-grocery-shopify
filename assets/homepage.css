@@ -11,3 +11,7 @@ span.announcement-menu .menu-item:hover {
     text-decoration: underline;
     transition: 0.5s;
 }
+.announcement-bar__slides.with-menu {
+    width: 100%;
+    max-width: 100%;
+}
