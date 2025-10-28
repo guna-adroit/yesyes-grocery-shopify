@@ -34,7 +34,6 @@
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
-        "announcement-menu": "announce-bar-manu",
         "section_width": "page-width",
         "color_scheme": "scheme-6",
         "divider_width": 1,
