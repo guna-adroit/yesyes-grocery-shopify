@@ -38,3 +38,8 @@
     width: 50%;
     text-align: right;
 }
+.card-product-expiry-container .product-expiry{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+}
