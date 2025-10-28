@@ -47,3 +47,8 @@
     color: #ED1D23;
     display: inline-flex;
 }
+.add-to-cart-button{
+    font-family: var(--custom-font-1);
+    font-weight: 700;
+    font-size: 16px;
+}
