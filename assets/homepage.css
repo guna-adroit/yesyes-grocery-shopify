@@ -1,3 +1,6 @@
+p.announcement-bar__text {
+    font-weight: 700;
+}
 .announcement-menu.menu--right {
     display: flex;
     gap: 40px;
