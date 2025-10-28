@@ -202,7 +202,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
-                "custom_classes": "product-vendor",
+                "custom_classes": "card-product-vendor",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
