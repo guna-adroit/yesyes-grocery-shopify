@@ -35,7 +35,7 @@
     <span class="announcement-menu menu--right">
       {% if section.settings.announcement-menu != blank %}
         {% for link in section.settings.announcement-menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
+          <a class="menu-item" href="{{ link.url }}">{{ link.title }}</a>
         {% endfor %}
       {% endif %}
     </span>
