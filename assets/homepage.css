@@ -1,0 +1,22 @@
+p.announcement-bar__text {
+    font-weight: 700;
+}
+.announcement-menu.menu--right {
+    display: flex;
+    gap: 40px;
+    z-index: 2;
+    width: fit-content;
+}
+span.announcement-menu .menu-item {
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.5s;
+}
+span.announcement-menu .menu-item:hover {
+    text-decoration: underline;
+    transition: 0.5s;
+}
+.announcement-bar__slides.with-menu {
+    width: 100%;
+    max-width: 100%;
+}
