@@ -32,7 +32,14 @@
       {% render 'slideshow-arrows', icon_style: 'chevron' %}
     {% endif %}
 
-    <div class="announcement-bar__slides">
+        <div class="announcement-bar__slides {% if section.settings.announcement-menu != blank %}with-menu{% endif %}">
+      {% if section.settings.announcement-menu != blank %}
+          <span class="announcement-menu menu--right">
+            {% for link in section.settings.announcement-menu.links %}
+              <a class="menu-item" href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+            </span>
+        {% endif %}
       {% content_for 'blocks' %}
     </div>
   </announcement-bar-component>
