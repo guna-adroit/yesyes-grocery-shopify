@@ -57,7 +57,7 @@
       <h1 class="collection-title">{{ collection.title }}</h1>
       <div class="filter-bar-grid">
         {% # theme-check-disable %}
-        {% content_for 'block', type: 'filters',id: 'filters-grid',results: collection,results_size: collection.products_count %}
+        {% content_for 'block', type: 'filters',id: 'filters',results: collection,results_size: collection.products_count %}
         {% # theme-check-enable %}
       </div>
     </div>
