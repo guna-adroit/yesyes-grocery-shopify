@@ -81,9 +81,7 @@
       {% comment %} {% if block_settings.enable_filtering %}
         <h4 class="facets--filters-title">{{ 'content.filters' | t }}</h4>
       {% endif %} {% endcomment %}
-      {% if block_settings.enable_grid_density %}
-        {% render 'grid-density-controls', viewport: 'desktop' %}
-      {% endif %}
+      
 
       <div class="products-count-wrapper">
         <span title="{{ 'content.product_count' | t }}">
