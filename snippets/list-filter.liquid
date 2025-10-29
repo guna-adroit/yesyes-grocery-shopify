@@ -259,7 +259,7 @@
                       for="{{ input_id }}"
                       tabindex="-1"
                     >
-                      {{- value.label }} - {{ value.count }}
+                      {{- value.label }}
                     </label>
                   </fieldset>
                 {% elsif is_swatch %}
@@ -346,7 +346,7 @@
                         for="{{ input_id }}"
                         tabindex="0"
                       >
-                        {{- value.label }}
+                        {{- value.label }} - {{ value.count }}
                         {% if is_disabled %}
                           <svg
                             aria-hidden="true"
