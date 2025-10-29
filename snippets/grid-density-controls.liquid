@@ -171,9 +171,12 @@
   .column-options__option:hover .column-picker {
     background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
-
+  .column-options__option-input ~ .column-picker {
+    color: #ED1D23;
+    opacity: 0.4;
+  }
   .column-options__option-input:checked ~ .column-picker {
-    color: rgb(var(--color-foreground-rgb));
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    color: #ED1D23;
+    opacity: 1;
   }
 {% endstylesheet %}
