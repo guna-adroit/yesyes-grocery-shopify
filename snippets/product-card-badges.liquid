@@ -31,6 +31,16 @@
   {%- endif -%}
 </div>
 
+<div
+  class="product-badges product-badges--top-right }}"
+>
+  <div class="product-badges__badge ">
+      <span class="svg-wrapper collection-wishlist-icon">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+      </span>
+  </div>
+</div>
+
 {% stylesheet %}
   .product-badges {
     --badge-inset: max(var(--padding-xs), calc((var(--border-radius) + var(--padding-xs)) * (1 - cos(45deg))));
