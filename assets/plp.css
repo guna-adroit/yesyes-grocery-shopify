@@ -66,3 +66,6 @@
 .svg-wrapper.collection-wishlist-icon {
     color: #ED1D23;
 }
+.svg-wrapper.collection-wishlist-icon svg{
+    width: 30px;
+}
