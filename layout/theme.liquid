@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html
   class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}"
@@ -60,6 +59,8 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {% render 'search-modal' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}

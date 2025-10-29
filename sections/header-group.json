@@ -34,7 +34,6 @@
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
-        "announcement-menu": "announce-bar-manu",
         "section_width": "page-width",
         "color_scheme": "scheme-6",
         "divider_width": 1,
@@ -83,8 +82,7 @@
       "settings": {
         "logo_position": "left",
         "menu_position": "left",
-        "menu_row": "bottom",
-        "secondary_menu": "header-secondary-menu",
+        "menu_row": "top",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
