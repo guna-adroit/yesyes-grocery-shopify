@@ -59,3 +59,7 @@
 .add-to-cart-button{
     height: 60px;
 }
+.product-badges--top-right.wishlist-icon-position{
+    top: 0;
+    right: 0;
+}
