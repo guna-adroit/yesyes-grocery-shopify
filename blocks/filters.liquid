@@ -81,7 +81,9 @@
       {% comment %} {% if block_settings.enable_filtering %}
         <h4 class="facets--filters-title">{{ 'content.filters' | t }}</h4>
       {% endif %} {% endcomment %}
-      
+      {% if block_settings.enable_grid_density %}
+        {% render 'grid-density-controls', viewport: 'desktop' %}
+      {% endif %}
 
       <div class="products-count-wrapper">
         <span title="{{ 'content.product_count' | t }}">
@@ -1061,6 +1063,7 @@
     border: 1px solid #000;
     border-radius: 8px;
     padding: 0 12px !important;
+    height: 60px;
   }
   .products-count-wrapper{
     font-weight: 600;
