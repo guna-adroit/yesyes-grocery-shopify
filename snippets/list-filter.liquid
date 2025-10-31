@@ -99,6 +99,18 @@
               -%}
             </span> <span>selected</span>
           </facet-status-component>
+          {% if filter.active_values.size > 0 %}
+            <facet-clear-component>
+              <button
+                type="button"
+                class="facets__clear-btn text-sm underline cursor-pointer"
+                data-ref="clearButton"
+                onclick="this.closest('facet-clear-component').clearFilter(event)"
+              >
+                Clear
+              </button>
+            </facet-clear-component>
+            {% endif %}
         {% endif %}
         </div>
     <floating-panel-component
