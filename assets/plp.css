@@ -93,3 +93,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: flex;
     gap: 5px;
 }
+.facets-remove.facets-remove--mobile-and-vertical {
+    display: none;
+}
