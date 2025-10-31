@@ -75,6 +75,7 @@
         on:change="/updatePriceFilterAndResults"
       >
         <div class="price-facet__inputs-wrapper facets__inputs-wrapper facets__inputs-wrapper--row">
+          <span>{{ cart.currency.symbol }}</span>
           <div class="field price-facet__field">
             <input
               class="field__input price-facet__input"
@@ -98,7 +99,7 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-GTE"
             >
-              {{ cart.currency.symbol }}
+              From
             </label>
           </div>
 
@@ -127,7 +128,7 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-LTE"
             >
-              {{ cart.currency.symbol }}
+             To
             </label>
           </div>
         </div>
