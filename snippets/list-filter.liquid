@@ -82,9 +82,9 @@
             facet-type="list"
           >
             <span
-              {% if active_value_count > 0 %}
+              {% comment %} {% if active_value_count > 0 %}
                 class="bubble facets__bubble"
-              {% endif %}
+              {% endif %} {% endcomment %}
               
               ref="facetStatus"
             >
