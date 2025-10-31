@@ -54,8 +54,8 @@
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
       </div>
-
-      {% if is_swatch %}
+    </summary>
+    {% if is_swatch %}
           <facet-status-component
             class="facets__status facets__status--swatches"
             facet-type="swatches"
@@ -99,7 +99,6 @@
             </span>
           </facet-status-component>
         {% endif %}
-    </summary>
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
