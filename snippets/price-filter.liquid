@@ -55,6 +55,19 @@
             {%- endif -%}
           {%- endif -%}
         </span>
+        <facet-remove-component
+              class="custom-filter-reset"
+              data-url="{{ filter.url_to_remove }}"
+              tabindex="0"
+              role="button"
+              on:click="/removeFilter?form="
+              on:keydown="/removeFilter?form="
+              
+            >
+            <span class="svg-wrapper">
+              {{ 'icon-filter-reset.svg' | inline_asset_content }}
+            </span> Reset
+            </facet-remove-component>
       </facet-status-component>
       <span class="svg-wrapper icon-caret icon-animated">
         {{- 'icon-caret.svg' | inline_asset_content -}}
