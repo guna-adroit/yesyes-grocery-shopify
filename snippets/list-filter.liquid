@@ -109,13 +109,13 @@
                 facets-remove__pill
                 {% if value.swatch %}pills__pill--swatch{% endif %}
               "
-              data-url="{{ value.url_to_remove }}"
+              data-url="{{ filter.url_to_remove }}"
               tabindex="0"
               role="button"
               on:click="/removeFilter?form="
               on:keydown="/removeFilter?form="
               
-            >{{ value.url_to_remove }}</facet-remove-component>{% endfor %}
+            >X</facet-remove-component>{% endfor %}
             {% endif %}
         {% endif %}
         </div>
