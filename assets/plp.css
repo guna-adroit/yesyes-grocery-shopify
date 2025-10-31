@@ -72,3 +72,8 @@
     width: 30px;
     height: 25px;
 }
+facet-remove-component.custom-filter-reset{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
