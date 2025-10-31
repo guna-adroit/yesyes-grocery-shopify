@@ -99,20 +99,7 @@
               -%}
             </span> <span>selected</span>
           </facet-status-component>
-          {% if filter.active_values.size > 0 %}
-            <facet-clear-component>
-              <button
-                data-url="{{ filter.url_to_remove }}"
-                ref="clearButton"
-                tabindex="0"
-                role="button"
-                on:click="/removeFilter?form="
-                on:keydown="/removeFilter?form="
-              >
-                Clear
-              </button>
-            </facet-clear-component>
-            {% endif %}
+          
         {% endif %}
         </div>
     <floating-panel-component
