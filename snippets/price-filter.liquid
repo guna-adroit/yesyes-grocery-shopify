@@ -61,21 +61,28 @@
         {{- 'icon-caret.svg' | inline_asset_content -}}
       </span>
     </summary>
-    {% if filter.min_value.value != null or filter.max_value.value != null %}
-    <facet-remove-component
-              class="custom-filter-reset"
-              data-url="{{ filter.url_to_remove }}"
-              tabindex="0"
-              role="button"
-              on:click="/removeFilter?form="
-              on:keydown="/removeFilter?form="
-              
-            >
-            <span class="svg-wrapper">
-              {{ 'icon-filter-reset.svg' | inline_asset_content }}
-            </span> Reset
-      </facet-remove-component>
+    <div class="custom-price-reset">
+      <div class="price-facet__highest-price">
+          {%- assign formatted_highest_price = filter.range_max | money -%}
+          {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
+      </div>
+        {% if filter.min_value.value != null or filter.max_value.value != null %}
+        <facet-remove-component
+                  class="custom-filter-reset"
+                  data-url="{{ filter.url_to_remove }}"
+                  tabindex="0"
+                  role="button"
+                  on:click="/removeFilter?form="
+                  on:keydown="/removeFilter?form="
+                  
+                >
+                <span class="svg-wrapper">
+                  {{ 'icon-filter-reset.svg' | inline_asset_content }}
+                </span> Reset
+          </facet-remove-component>
     {% endif %}
+    </div>
+    
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
@@ -149,10 +156,7 @@
           </div>
         </div>
 
-        <div class="price-facet__highest-price">
-          {%- assign formatted_highest_price = filter.range_max | money -%}
-          {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
-        </div>
+        
 
         {% if filter.min_value.value != null or filter.max_value.value != null %}
           {% assign has_active_values = true %}
