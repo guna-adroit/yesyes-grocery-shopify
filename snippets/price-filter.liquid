@@ -61,7 +61,7 @@
         {{- 'icon-caret.svg' | inline_asset_content -}}
       </span>
     </summary>
-    {{ filter.active_values }}
+    {% if filter.min_value.value != null or filter.max_value.value != null %}
     <facet-remove-component
               class="custom-filter-reset"
               data-url="{{ filter.url_to_remove }}"
@@ -75,6 +75,7 @@
               {{ 'icon-filter-reset.svg' | inline_asset_content }}
             </span> Reset
       </facet-remove-component>
+    {% endif %}
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
