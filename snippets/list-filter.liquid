@@ -99,7 +99,23 @@
               -%}
             </span> <span>selected</span>
           </facet-status-component>
-          
+          {% if filter.active_values.size > 0 %}
+            {%- for value in filter.active_values -%}
+            <facet-remove-component
+              class="
+                pills__pill
+                pills__pill--desktop-small
+                facets-remove__pill
+                {% if value.swatch %}pills__pill--swatch{% endif %}
+              "
+              data-url="{{ value.url_to_remove }}"
+              tabindex="0"
+              role="button"
+              on:click="/removeFilter?form="
+              on:keydown="/removeFilter?form="
+              
+            > {{value.label }}</facet-remove-component>{% endfor %}
+            {% endif %}
         {% endif %}
         </div>
     <floating-panel-component
