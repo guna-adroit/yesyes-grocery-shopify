@@ -102,11 +102,12 @@
           {% if filter.active_values.size > 0 %}
             <facet-clear-component>
               <button
-                type="button"
-                class="facets__clear-btn text-sm underline cursor-pointer"
-                data-ref="clearButton"
+                data-url="{{ filter.url_to_remove }}"
                 ref="clearButton"
-                onclick="/removeFilter?form="
+                tabindex="0"
+                role="button"
+                on:click="/removeFilter?form="
+                on:keydown="/removeFilter?form="
               >
                 Clear
               </button>
