@@ -720,7 +720,7 @@ class FacetStatusComponent extends Component {
     facetStatus.classList.remove('bubble', 'facets__bubble');
 
     if (checkedInputElementsCount === 0) {
-      facetStatus.innerHTML = '';
+      facetStatus.innerHTML = '0';
       return;
     }
 
