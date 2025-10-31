@@ -79,4 +79,9 @@ facet-remove-component.custom-filter-reset{
     font-weight: 600;
     font-size: 14px;
     line-height: 19.6px;
+    color: #ED1D23;
+}
+facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.custom-filter-reset .svg-wrapper svg{
+    width: 24px;
+    height: 24px;
 }
