@@ -89,3 +89,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     width: 24px;
     height: 24px;
 }
+.custom-price-reset{
+    display: flex;
+    gap: 5px;
+}
