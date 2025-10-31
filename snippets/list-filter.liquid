@@ -78,11 +78,13 @@
               {% if active_value_count > 0 %}
                 class="bubble facets__bubble"
               {% endif %}
-              hide-when-empty
+              
               ref="facetStatus"
             >
               {%- liquid
                 if active_value_count == 1
+                  echo active_value_count
+                elsif active_value_count == 0 
                   echo active_value_count
                 elsif active_value_count > 1
                   echo active_value_count
