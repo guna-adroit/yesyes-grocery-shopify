@@ -730,7 +730,7 @@ class FacetStatusComponent extends Component {
     }
 
     facetStatus.innerHTML = checkedInputElementsCount.toString();
-    facetStatus.classList.add('bubble', 'facets__bubble');
+    //facetStatus.classList.add('bubble', 'facets__bubble');
   }
 
   /**
