@@ -106,5 +106,5 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     object-fit: unset;
 }
 .facets_status_price-filter{
-    display: none;
+    display: none !important;
 }
