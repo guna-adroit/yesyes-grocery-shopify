@@ -61,6 +61,7 @@
         {{- 'icon-caret.svg' | inline_asset_content -}}
       </span>
     </summary>
+    {{ filter.active_values }}
     <facet-remove-component
               class="custom-filter-reset"
               data-url="{{ filter.url_to_remove }}"
