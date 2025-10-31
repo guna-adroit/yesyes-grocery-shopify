@@ -725,7 +725,7 @@ class FacetStatusComponent extends Component {
     }
 
     if (checkedInputElementsCount === 1) {
-      facetStatus.innerHTML = checkedInputElementsCount;
+      facetStatus.innerHTML = '';
       return;
     }
 
