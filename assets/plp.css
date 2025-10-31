@@ -99,3 +99,9 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .filter-bar-grid facets-form-component.facets__form-wrapper{
     display: none;
 }
+.infinite-scroll-loading{
+    width: 30px;
+    height: 30px;
+    aspect-ratio: unset;
+    object-fit: unset;
+}
