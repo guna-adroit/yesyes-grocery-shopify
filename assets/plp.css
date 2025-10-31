@@ -47,6 +47,11 @@
     color: #ED1D23;
     display: inline-flex;
 }
+@media screen and (max-width: 1250px){
+    .card-product-expiry-container .product-expiry{
+        font-size: 12px;
+    }
+}
 .add-to-cart-button{
     font-family: var(--custom-font-1);
     font-weight: 700;
