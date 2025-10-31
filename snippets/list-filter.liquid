@@ -55,6 +55,7 @@
         </span>
       </div>
     </summary>
+    <div class="facets__status-wrapper">
     {% if is_swatch %}
           <facet-status-component
             class="facets__status facets__status--swatches"
@@ -99,6 +100,7 @@
             </span> selected
           </facet-status-component>
         {% endif %}
+        </div>
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
