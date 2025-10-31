@@ -101,14 +101,18 @@
           </facet-status-component>
           {% if filter.active_values.size > 0 %}
             <facet-remove-component
-              class=""
+              class="custom-filter-reset"
               data-url="{{ filter.url_to_remove }}"
               tabindex="0"
               role="button"
               on:click="/removeFilter?form="
               on:keydown="/removeFilter?form="
               
-            >X</facet-remove-component>
+            >
+            <span class="svg-wrapper">
+              {{ 'icon-filter-reset.svg' | inline_asset_content }}
+            </span> Reset
+            </facet-remove-component>
             {% endif %}
         {% endif %}
         </div>
