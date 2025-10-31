@@ -96,3 +96,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .facets-remove.facets-remove--mobile-and-vertical {
     display: none;
 }
+.filter-bar-grid facets-form-component.facets__form-wrapper{
+    display: none;
+}
