@@ -49,7 +49,13 @@
       <span class="facets__label">{{ filter.label }}</span>
 
       <div class="facets__status-wrapper">
-        {% if is_swatch %}
+        
+        <span class="svg-wrapper icon-caret icon-animated">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </div>
+
+      {% if is_swatch %}
           <facet-status-component
             class="facets__status facets__status--swatches"
             facet-type="swatches"
@@ -93,10 +99,6 @@
             </span>
           </facet-status-component>
         {% endif %}
-        <span class="svg-wrapper icon-caret icon-animated">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
-      </div>
     </summary>
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
