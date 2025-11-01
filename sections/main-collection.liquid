@@ -111,10 +111,10 @@
       return;
     }
 
-    // Destroy old instance safely
+    // Reset previous instance (if any)
     endlessScroll = null;
 
-    // Initialize new instance
+    // Initialize new Ajaxinate
     endlessScroll = new Ajaxinate({
       method: 'click',
       container: '#AjaxinateContainer',
@@ -124,19 +124,35 @@
     console.log('✅ Ajaxinate initialized');
   }
 
-  // Initial load
+  function observePaginationChange() {
+    const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+    if (!parent) return;
+
+    const observer = new MutationObserver((mutations, obs) => {
+      const pagination = document.querySelector('#AjaxinatePagination');
+      if (pagination) {
+        console.log('🔁 Pagination updated, initializing Ajaxinate');
+        obs.disconnect();
+        initAjaxinate();
+      }
+    });
+
+    observer.observe(parent, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  // Initialize on first load
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-  // After filter update event
+  // Re-init when filters are updated
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated, reinitializing Ajaxinate...');
-    
-    // Wait a moment to ensure new pagination markup is inserted
-    setTimeout(() => {
-      initAjaxinate();
-    }, 200); // 200ms usually works; can tweak to 100–300ms if needed
+    console.log('🌀 Filter updated — observing for pagination changes...');
+    observePaginationChange();
   });
 </script>
+
 
 
 
