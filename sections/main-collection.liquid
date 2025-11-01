@@ -97,42 +97,25 @@
   </div>
 </results-list>
   <script type="module">
-  import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
+    import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
+        
+          var endlessScroll = new Ajaxinate({
+            method: 'click',
+            container: '#AjaxinateContainer',
+            pagination: '#AjaxinatePagination'
+          });
+       
 
-  let endlessScroll = null;
-
-  function initAjaxinate() {
-    // Clear existing Ajaxinate instance
-    if (endlessScroll) {
-      // Remove event listeners added by Ajaxinate
-      const paginationEl = document.querySelector('#AjaxinatePagination');
-      if (paginationEl) {
-        const newPaginationEl = paginationEl.cloneNode(true);
-        paginationEl.parentNode.replaceChild(newPaginationEl, paginationEl);
-      }
-      endlessScroll = null;
-    }
-
-    // Initialize new Ajaxinate
-    endlessScroll = new Ajaxinate({
-      method: 'click',
-      container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination'
-    });
-
-    console.log('Ajaxinate initialized');
-  }
-
-  // Initial load
-  initAjaxinate();
-
-  // Re-init after filter update
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('Filter Update -> reinit Ajaxinate');
-    initAjaxinate();
-  });
-</script>
-
+        document.addEventListener(ThemeEvents.FilterUpdate, function() {
+          console.log("Filter Update");
+            endlessScroll = new Ajaxinate({
+                    method: 'click',
+                    container: '#AjaxinateContainer',
+                    pagination: '#AjaxinatePagination'
+                  });
+            console.log("Scroll Init")
+        });
+      </script> 
 
 {% stylesheet %}
   
