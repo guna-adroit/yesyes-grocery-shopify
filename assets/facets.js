@@ -2,7 +2,6 @@ import { sectionRenderer } from '@theme/section-renderer';
 import { Component } from '@theme/component';
 import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
 import { debounce, formatMoney, startViewTransition } from '@theme/utilities';
-import { initInfiniteScroll } from '@theme/infinite-scroll';
 
 /**
  * Search query parameter.
