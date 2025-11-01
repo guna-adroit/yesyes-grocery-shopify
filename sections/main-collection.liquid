@@ -96,7 +96,7 @@
     {% endpaginate %}
   </div>
 </results-list>
-  <script type="module">
+  {% comment %} <script type="module">
     import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
         
           var endlessScroll = new Ajaxinate({
@@ -115,7 +115,7 @@
                   });
             console.log("Scroll Init")
         });
-      </script> 
+      </script>  {% endcomment %}
 
 {% stylesheet %}
   

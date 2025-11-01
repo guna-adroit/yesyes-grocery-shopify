@@ -909,3 +909,20 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
+let endlessScroll = '';
+endlessScroll = new Ajaxinate({
+            method: 'click',
+            container: '#AjaxinateContainer',
+            pagination: '#AjaxinatePagination'
+          });
+       
+
+        document.addEventListener(ThemeEvents.FilterUpdate, function() {
+          console.log("Filter Update");
+            endlessScroll = new Ajaxinate({
+                    method: 'click',
+                    container: '#AjaxinateContainer',
+                    pagination: '#AjaxinatePagination'
+                  });
+            console.log("Scroll Init")
+        });
