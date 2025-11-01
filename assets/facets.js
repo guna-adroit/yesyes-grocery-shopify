@@ -909,3 +909,52 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
+// Infinite scorll
+
+let endlessScroll = null;
+
+  function initAjaxinate() {
+    const container = document.querySelector('#AjaxinateContainer');
+    const pagination = document.querySelector('#AjaxinatePagination');
+
+    if (!container || !pagination) {
+      console.warn('Ajaxinate: container or pagination not found');
+      return;
+    }
+
+    endlessScroll = null;
+
+    endlessScroll = new Ajaxinate({
+      method: 'click',
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination',
+    });
+
+    console.log('✅ Ajaxinate initialized');
+  }
+
+  function observePaginationChange() {
+    const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+    if (!parent) return;
+
+    const observer = new MutationObserver((mutations, obs) => {
+      const pagination = document.querySelector('#AjaxinatePagination');
+      if (pagination) {
+        console.log('🔁 Pagination updated, initializing Ajaxinate');
+        obs.disconnect();
+        initAjaxinate();
+      }
+    });
+
+    observer.observe(parent, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initAjaxinate);
+
+  document.addEventListener(ThemeEvents.FilterUpdate, () => {
+    console.log('🌀 Filter updated — observing for pagination changes...');
+    observePaginationChange();
+  });

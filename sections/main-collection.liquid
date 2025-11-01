@@ -97,7 +97,7 @@
   </div>
 </results-list>
   
-<script type="module">
+{% comment %} <script type="module">
   import { ThemeEvents } from '@theme/events';
 
   let endlessScroll = null;
@@ -111,10 +111,8 @@
       return;
     }
 
-    // Reset previous instance (if any)
     endlessScroll = null;
 
-    // Initialize new Ajaxinate
     endlessScroll = new Ajaxinate({
       method: 'click',
       container: '#AjaxinateContainer',
@@ -143,15 +141,13 @@
     });
   }
 
-  // Initialize on first load
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-  // Re-init when filters are updated
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     console.log('🌀 Filter updated — observing for pagination changes...');
     observePaginationChange();
   });
-</script>
+</script> {% endcomment %}
 
 
 
