@@ -98,13 +98,13 @@
 </results-list>
   <script type="module">
     import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
-        document.addEventListener("DOMContentLoaded", function() {
+        
           var endlessScroll = new Ajaxinate({
             method: 'click',
             container: '#AjaxinateContainer',
             pagination: '#AjaxinatePagination'
           });
-        });
+       
 
         document.addEventListener(ThemeEvents.FilterUpdate, function() {
           console.log("Filter Update");
