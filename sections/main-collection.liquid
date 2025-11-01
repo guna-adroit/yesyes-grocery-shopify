@@ -96,42 +96,48 @@
     {% endpaginate %}
   </div>
 </results-list>
-  <script type="module">
-  import { FilterUpdateEvent, ThemeEvents } from '@theme/events';
+  
+<script type="module">
+  import { ThemeEvents } from '@theme/events';
 
   let endlessScroll = null;
 
   function initAjaxinate() {
-    // Clear existing Ajaxinate instance
-    if (endlessScroll) {
-      // Remove event listeners added by Ajaxinate
-      const paginationEl = document.querySelector('#AjaxinatePagination');
-      if (paginationEl) {
-        const newPaginationEl = paginationEl.cloneNode(true);
-        paginationEl.parentNode.replaceChild(newPaginationEl, paginationEl);
-      }
-      endlessScroll = null;
+    const container = document.querySelector('#AjaxinateContainer');
+    const pagination = document.querySelector('#AjaxinatePagination');
+
+    if (!container || !pagination) {
+      console.warn('Ajaxinate: container or pagination not found');
+      return;
     }
 
-    // Initialize new Ajaxinate
+    // Destroy old instance safely
+    endlessScroll = null;
+
+    // Initialize new instance
     endlessScroll = new Ajaxinate({
       method: 'click',
       container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination'
+      pagination: '#AjaxinatePagination',
     });
 
-    console.log('Ajaxinate initialized');
+    console.log('✅ Ajaxinate initialized');
   }
 
   // Initial load
-  initAjaxinate();
+  document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-  // Re-init after filter update
+  // After filter update event
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('Filter Update -> reinit Ajaxinate');
-    initAjaxinate();
+    console.log('🌀 Filter updated, reinitializing Ajaxinate...');
+    
+    // Wait a moment to ensure new pagination markup is inserted
+    setTimeout(() => {
+      initAjaxinate();
+    }, 200); // 200ms usually works; can tweak to 100–300ms if needed
   });
 </script>
+
 
 
 {% stylesheet %}
