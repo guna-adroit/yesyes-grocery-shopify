@@ -909,25 +909,3 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
-// --- Initialize Infinite Scroll + Reinit on Facet Updates ---
-let endlessScroll = null;
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-  endlessScroll = initInfiniteScroll();
-});
-
-// After filters are updated (facets, price, etc.)
-document.addEventListener(FilterUpdateEvent.FINISHED, () => {
-  // Wait for the sectionRenderer to finish replacing the product grid
-  requestAnimationFrame(() => {
-    endlessScroll = initInfiniteScroll();
-  });
-});
-
-// After sorting changes
-document.addEventListener(ThemeEvents.SORT_CHANGED, () => {
-  requestAnimationFrame(() => {
-    endlessScroll = initInfiniteScroll();
-  });
-});
