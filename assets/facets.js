@@ -959,26 +959,28 @@ const CURRENCY_DECIMALS = {
 //     observePaginationChange();
 //   });
 
-let endlessScroll = null;
+window.endlessScroll = window.endlessScroll || null;
   let reinitTimer = null;
 
   function destroyAjaxinate() {
-    if (!endlessScroll) return;
+    const instance = window.endlessScroll;
 
-    // Abort any ongoing XHR requests from Ajaxinate (if still loading)
-    if (endlessScroll.request && endlessScroll.request.readyState !== 4) {
-      endlessScroll.request.abort();
+    // Abort ongoing Ajaxinate request
+    if (instance && instance.request && instance.request.readyState !== 4) {
+      instance.request.abort();
       console.log('🛑 Aborted old Ajaxinate request');
     }
 
-    // Clone pagination node to remove old event listeners
+    // Remove old click listeners from pagination link
     const oldPagination = document.querySelector('#AjaxinatePagination');
     if (oldPagination) {
       const newPagination = oldPagination.cloneNode(true);
       oldPagination.parentNode.replaceChild(newPagination, oldPagination);
+      console.log('🧹 Old pagination listeners cleared');
     }
 
-    endlessScroll = null;
+    // Reset instance
+    window.endlessScroll = null;
   }
 
   function initAjaxinate() {
@@ -992,7 +994,7 @@ let endlessScroll = null;
 
     destroyAjaxinate();
 
-    endlessScroll = new Ajaxinate({
+    window.endlessScroll = new Ajaxinate({
       method: 'click',
       container: '#AjaxinateContainer',
       pagination: '#AjaxinatePagination',
@@ -1023,9 +1025,9 @@ let endlessScroll = null;
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated');
+    console.log('🌀 Filter updated — watching for pagination...');
 
-    // Debounce to handle rapid filter updates
+    // Debounce to prevent multiple calls
     clearTimeout(reinitTimer);
     reinitTimer = setTimeout(() => {
       destroyAjaxinate();
