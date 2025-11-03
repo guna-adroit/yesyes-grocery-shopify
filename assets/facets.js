@@ -965,7 +965,6 @@ window.endlessScroll = window.endlessScroll || null;
 let reinitTimer = null;
 let paginationObserver = null;
 
-// Local debounce (to avoid conflict with theme's built-in debounce)
 function localDebounce(fn, delay = 150) {
   let timer;
   return function (...args) {
@@ -974,33 +973,28 @@ function localDebounce(fn, delay = 150) {
   };
 }
 
-// Destroy existing Ajaxinate safely
 function destroyAjaxinate() {
   const instance = window.endlessScroll;
 
-  // Abort ongoing Ajaxinate request
   if (instance && instance.request && instance.request.readyState !== 4) {
     try {
       instance.request.abort();
-      console.log('🛑 Aborted old Ajaxinate request');
+      // console.log(' Aborted old Ajaxinate request');
     } catch (e) {
       console.warn('Abort error', e);
     }
   }
 
-  // Remove old click listeners from pagination
   const oldPagination = document.querySelector('#AjaxinatePagination');
   if (oldPagination && oldPagination.parentNode) {
     const newPagination = oldPagination.cloneNode(true);
     oldPagination.parentNode.replaceChild(newPagination, oldPagination);
-    console.log('🧹 Old pagination listeners cleared');
+    // console.log('🧹 Old pagination listeners cleared');
   }
 
-  // Reset instance
   window.endlessScroll = null;
 }
 
-// Initialize Ajaxinate (Load More)
 function initAjaxinate() {
   const container = document.querySelector('#AjaxinateContainer');
   const pagination = document.querySelector('#AjaxinatePagination');
@@ -1020,15 +1014,14 @@ function initAjaxinate() {
       pagination: '#AjaxinatePagination',
     });
 
-    console.log('✅ Ajaxinate initialized');
+    // console.log('✅ Ajaxinate initialized');
   } catch (err) {
     console.error('Ajaxinate init failed', err);
   }
 }
 
-// Observe for pagination changes after filter updates
+
 function observePaginationChange() {
-  // Clean up old observer
   if (paginationObserver) {
     paginationObserver.disconnect();
     paginationObserver = null;
@@ -1043,7 +1036,7 @@ function observePaginationChange() {
       const paginationLink = pagination?.querySelector('a');
 
       if (pagination && paginationLink) {
-        console.log('🔁 Pagination updated → initializing Ajaxinate');
+        // console.log('🔁 Pagination updated → initializing Ajaxinate');
         obs.disconnect();
         paginationObserver = null;
         initAjaxinate();
