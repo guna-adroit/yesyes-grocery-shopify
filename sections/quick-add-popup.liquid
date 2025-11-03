@@ -1,0 +1,55 @@
+{% comment %}
+  Quick Add Popup Section for Horizon theme
+  Dynamically loaded via Section Rendering API
+{% endcomment %}
+
+<div id="QuickAddPopup" class="quick-add-popup hidden" role="dialog" aria-modal="true">
+  <div class="popup-overlay"></div>
+  <div class="popup-content">
+    <button class="popup-close" aria-label="Close">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </button>
+    <div id="QuickAddPopupContent" class="quick-add-popup__content">
+        <h2>{{ product.title }}</h2>
+      {% if product %}
+        {% render 'main-product-form', product: product %}
+      {% else %}
+        <p>Loading product information...</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.quick-add-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.quick-add-popup.hidden { display: none; }
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+.popup-content {
+  position: relative;
+  background: #fff;
+  max-width: 600px;
+  width: 90%;
+  padding: 24px;
+  border-radius: 12px;
+  z-index: 2;
+}
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+</style>
