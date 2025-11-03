@@ -12,10 +12,7 @@
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
       {% if product %}
-         {% content_for 'block',
-      type: 'buy-buttons',
-      id: 'buyButton'
-    %}
+         {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
       {% else %}
         <p>Loading product information...</p>
       {% endif %}
