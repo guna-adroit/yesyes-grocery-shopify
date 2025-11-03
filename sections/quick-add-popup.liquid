@@ -12,7 +12,7 @@
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
-        <div class="variants">
+        <div class="variants-container">
             {% for option in product.options_with_values %}
               <fieldset>
                 <legend>{{ option.name }}</legend>
@@ -96,7 +96,9 @@
 .quick-add-popup__content fieldset{
   border: none;
 }
-
+.variants-container{
+  margin-bottom: 15px;
+}
 .product_variant_item{
             display: flex;
             gap: 20px;
