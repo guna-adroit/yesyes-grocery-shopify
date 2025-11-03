@@ -940,7 +940,7 @@ let endlessScroll = null;
     const observer = new MutationObserver((mutations, obs) => {
       const pagination = document.querySelector('#AjaxinatePagination');
       if (pagination) {
-        console.log('🔁 Pagination updated');
+        console.log('✅ Pagination updated');
         obs.disconnect();
         initAjaxinate();
       }
