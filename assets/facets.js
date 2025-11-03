@@ -397,6 +397,7 @@ class FacetRemoveComponent extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
+    observePaginationChange();
   }
 
   /**
