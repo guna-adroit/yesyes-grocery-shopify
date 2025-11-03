@@ -273,6 +273,14 @@
                 }
               },
               "block_order": []
+            },
+            "custom_liquid_xjRfYk": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": "<button\n    class=\"quick-add-btn button button--secondary\"\n    data-product-handle=\"{{ product.handle }}\"\n  >\n    Quick Add\n  </button>"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -280,7 +288,8 @@
             "product_title_4nY4eT",
             "product_vendor_MzmUdw",
             "price_EzJzMm",
-            "buy_buttons_AYGAQw"
+            "buy_buttons_AYGAQw",
+            "custom_liquid_xjRfYk"
           ]
         }
       },
