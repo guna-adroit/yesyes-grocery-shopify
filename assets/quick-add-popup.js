@@ -49,11 +49,14 @@ function initQuickAddPopup() {
   });
 
   popup.addEventListener('click', (e) => {
-    if (e.target.classList.contains('popup-overlay') || e.target.classList.contains('popup-close')) {
-      popup.classList.add('hidden');
-      popupContent.innerHTML = '';
-    }
-  });
+  if (
+    e.target.classList.contains('popup-overlay') ||
+    e.target.closest('.popup-close')
+  ) {
+    popup.classList.add('hidden');
+    popupContent.innerHTML = '';
+  }
+});
 }
 
 document.addEventListener('DOMContentLoaded', () => {
