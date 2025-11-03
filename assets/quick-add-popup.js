@@ -4,6 +4,7 @@ function initQuickAddPopup() {
 
   if (!popup || !popupContent) return;
 
+
   document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.quick-add-btn');
     if (!btn) return;
@@ -47,20 +48,13 @@ function initQuickAddPopup() {
     document.dispatchEvent(new CustomEvent('cart:updated'));
   });
 
-  const closeBtn = popup.querySelector('.popup-close');
-  const overlay = popup.querySelector('.popup-overlay');
-
-  // Close button click
-  closeBtn.addEventListener('click', () => {
-    popup.classList.add('hidden');
-    popupContent.innerHTML = '';
+  popup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('popup-overlay') || e.target.classList.contains('popup-close')) {
+      popup.classList.add('hidden');
+      popupContent.innerHTML = '';
+    }
   });
-
-  // Overlay click
-  overlay.addEventListener('click', () => {
-    popup.classList.add('hidden');
-    popupContent.innerHTML = '';
-  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const interval = setInterval(() => {
