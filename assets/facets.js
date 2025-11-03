@@ -958,7 +958,3 @@ let endlessScroll = null;
     console.log('🌀 Filter updated — observing for pagination changes...');
     observePaginationChange();
   });
-  document.removeEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter Removed');
-    observePaginationChange();
-  });
