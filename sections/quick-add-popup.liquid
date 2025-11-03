@@ -13,7 +13,7 @@
         <h2>{{ product.title }}</h2>
         <div class="variants">
         
-            {% for option in product.options %}
+            {% for option in product.options_with_values %}
               <fieldset>
                 <legend>{{ option.name }}</legend>
                 {% for value in option.values %}
