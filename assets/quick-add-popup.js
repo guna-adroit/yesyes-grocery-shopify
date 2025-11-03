@@ -61,5 +61,5 @@ document.addEventListener('DOMContentLoaded', () => {
       clearInterval(interval);
       initQuickAddPopup();
     }
-  }, 300);
+  }, 0);
 });
