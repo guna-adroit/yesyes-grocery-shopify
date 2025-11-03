@@ -77,6 +77,7 @@ class FacetsFormComponent extends Component {
     this.#updateURLHash();
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
+    observePaginationChange();
   };
 
   /**
@@ -1056,11 +1057,11 @@ function observePaginationChange() {
 document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 // Reinitialize when filters are updated
-document.addEventListener(
-  ThemeEvents.FilterUpdate,
-  localDebounce(() => {
-    console.log('🌀 Filter updated — watching for pagination...');
-    destroyAjaxinate();
-    observePaginationChange();
-  }, 200)
-);
+// document.addEventListener(
+//   ThemeEvents.FilterUpdate,
+//   localDebounce(() => {
+//     console.log('🌀 Filter updated — watching for pagination...');
+//     destroyAjaxinate();
+//     observePaginationChange();
+//   }, 200)
+// );
