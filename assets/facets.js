@@ -1004,23 +1004,29 @@ window.endlessScroll = window.endlessScroll || null;
   }
 
   function observePaginationChange() {
-    const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-    if (!parent) return;
+  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+  if (!parent) return;
 
-    const observer = new MutationObserver((mutations, obs) => {
-      const pagination = document.querySelector('#AjaxinatePagination');
-      if (pagination) {
+  const observer = new MutationObserver((mutations, obs) => {
+    const pagination = document.querySelector('#AjaxinatePagination');
+    // Wait until pagination and its link exist
+    const paginationLink = pagination?.querySelector('a');
+
+    if (pagination && paginationLink) {
+      // Add a short delay to let browser finish autofocus processing
+      setTimeout(() => {
         obs.disconnect();
         console.log('🔁 Pagination updated → initializing Ajaxinate');
         initAjaxinate();
-      }
-    });
+      }, 50);
+    }
+  });
 
-    observer.observe(parent, {
-      childList: true,
-      subtree: true,
-    });
-  }
+  observer.observe(parent, {
+    childList: true,
+    subtree: true,
+  });
+}
 
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
