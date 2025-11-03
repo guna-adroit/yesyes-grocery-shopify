@@ -16,9 +16,8 @@
             {% for option in product.options_with_values %}
               <fieldset>
                 <legend>{{ option.name }}</legend>
+                <div class="quick-add_product-variant-details">
                 {% for value in option.values %}
-
-                  <div class="quick-add_product-variant-details">
                     <div class="product_variant_item">
                         <div class="product_variant-image">
                             <img src="{{ product.featured_image | image_url: width: 200 }}" width="" height="" alt="">
@@ -39,10 +38,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 {% comment %} <input type="radio" value="{{ value.variant.id}}">
                 <label>{{ value.name }}</label> {% endcomment %}
                 {% endfor %}
+                </div>
               </fieldset>
             {% endfor %}
         </div>
