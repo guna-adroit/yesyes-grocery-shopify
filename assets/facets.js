@@ -961,33 +961,47 @@ const CURRENCY_DECIMALS = {
 
 window.endlessScroll = window.endlessScroll || null;
   let reinitTimer = null;
+  let observerTimer = null;
+  let paginationObserver = null;
+
+  function debounce(fn, delay = 150) {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
 
   function destroyAjaxinate() {
     const instance = window.endlessScroll;
 
     // Abort ongoing Ajaxinate request
     if (instance && instance.request && instance.request.readyState !== 4) {
-      instance.request.abort();
-      console.log('🛑 Aborted old Ajaxinate request');
+      try {
+        instance.request.abort();
+        console.log('🛑 Aborted old Ajaxinate request');
+      } catch (e) {
+        console.warn('Abort error', e);
+      }
     }
 
     // Remove old click listeners from pagination link
     const oldPagination = document.querySelector('#AjaxinatePagination');
-    if (oldPagination) {
+    if (oldPagination && oldPagination.parentNode) {
       const newPagination = oldPagination.cloneNode(true);
       oldPagination.parentNode.replaceChild(newPagination, oldPagination);
       console.log('🧹 Old pagination listeners cleared');
     }
 
-    // Reset instance
     window.endlessScroll = null;
   }
 
   function initAjaxinate() {
     const container = document.querySelector('#AjaxinateContainer');
     const pagination = document.querySelector('#AjaxinatePagination');
+    const paginationLink = pagination?.querySelector('a');
 
-    if (!container || !pagination) {
+    if (!container || !pagination || !paginationLink) {
       console.warn('Ajaxinate: container or pagination not found');
       return;
     }
@@ -1004,39 +1018,39 @@ window.endlessScroll = window.endlessScroll || null;
   }
 
   function observePaginationChange() {
-  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-  if (!parent) return;
-
-  const observer = new MutationObserver((mutations, obs) => {
-    const pagination = document.querySelector('#AjaxinatePagination');
-    // Wait until pagination and its link exist
-    const paginationLink = pagination?.querySelector('a');
-
-    if (pagination && paginationLink) {
-      // Add a short delay to let browser finish autofocus processing
-      setTimeout(() => {
-        obs.disconnect();
-        console.log('🔁 Pagination updated → initializing Ajaxinate');
-        initAjaxinate();
-      }, 50);
+    // Cleanup any previous observer
+    if (paginationObserver) {
+      paginationObserver.disconnect();
+      paginationObserver = null;
     }
-  });
 
-  observer.observe(parent, {
-    childList: true,
-    subtree: true,
-  });
-}
+    const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+    if (!parent) return;
+
+    paginationObserver = new MutationObserver(
+      debounce((mutations, obs) => {
+        const pagination = document.querySelector('#AjaxinatePagination');
+        const paginationLink = pagination?.querySelector('a');
+
+        if (pagination && paginationLink) {
+          console.log('🔁 Pagination updated → initializing Ajaxinate');
+          obs.disconnect();
+          paginationObserver = null;
+          initAjaxinate();
+        }
+      }, 150)
+    );
+
+    paginationObserver.observe(parent, { childList: true, subtree: true });
+  }
 
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated — watching for pagination...');
-
-    // Debounce to prevent multiple calls
-    clearTimeout(reinitTimer);
-    reinitTimer = setTimeout(() => {
+  document.addEventListener(
+    ThemeEvents.FilterUpdate,
+    debounce(() => {
+      console.log('🌀 Filter updated — watching for pagination...');
       destroyAjaxinate();
       observePaginationChange();
-    }, 150);
-  });
+    }, 200)
+  );
