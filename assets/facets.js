@@ -911,7 +911,75 @@ const CURRENCY_DECIMALS = {
 
 // Infinite scorll
 
+// let endlessScroll = null;
+
+//   function initAjaxinate() {
+//     const container = document.querySelector('#AjaxinateContainer');
+//     const pagination = document.querySelector('#AjaxinatePagination');
+
+//     if (!container || !pagination) {
+//       console.warn('Ajaxinate: container or pagination not found');
+//       return;
+//     }
+
+//     endlessScroll = null;
+
+//     endlessScroll = new Ajaxinate({
+//       method: 'click',
+//       container: '#AjaxinateContainer',
+//       pagination: '#AjaxinatePagination',
+//     });
+
+//     console.log('Ajaxinate initialized');
+//   }
+
+//   function observePaginationChange() {
+//     const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+//     if (!parent) return;
+
+//     const observer = new MutationObserver((mutations, obs) => {
+//       const pagination = document.querySelector('#AjaxinatePagination');
+//       if (pagination) {
+//         console.log('✅ Pagination updated');
+//         obs.disconnect();
+//         initAjaxinate();
+//       }
+//     });
+
+//     observer.observe(parent, {
+//       childList: true,
+//       subtree: true,
+//     });
+//   }
+
+//   document.addEventListener('DOMContentLoaded', initAjaxinate);
+
+//   document.addEventListener(ThemeEvents.FilterUpdate, () => {
+//     console.log('🌀 Filter updated');
+//     observePaginationChange();
+//   });
+
 let endlessScroll = null;
+  let reinitTimer = null;
+
+  function destroyAjaxinate() {
+    if (!endlessScroll) return;
+
+    // Abort any ongoing XHR requests from Ajaxinate (if still loading)
+    if (endlessScroll.request && endlessScroll.request.readyState !== 4) {
+      endlessScroll.request.abort();
+      console.log('🛑 Aborted old Ajaxinate request');
+    }
+
+    // Clone pagination node to remove old event listeners
+    const oldPagination = document.querySelector('#AjaxinatePagination');
+    if (oldPagination) {
+      const newPagination = oldPagination.cloneNode(true);
+      oldPagination.parentNode.replaceChild(newPagination, oldPagination);
+    }
+
+    endlessScroll = null;
+  }
 
   function initAjaxinate() {
     const container = document.querySelector('#AjaxinateContainer');
@@ -922,7 +990,7 @@ let endlessScroll = null;
       return;
     }
 
-    endlessScroll = null;
+    destroyAjaxinate();
 
     endlessScroll = new Ajaxinate({
       method: 'click',
@@ -930,7 +998,7 @@ let endlessScroll = null;
       pagination: '#AjaxinatePagination',
     });
 
-    console.log('Ajaxinate initialized');
+    console.log('✅ Ajaxinate initialized');
   }
 
   function observePaginationChange() {
@@ -940,8 +1008,8 @@ let endlessScroll = null;
     const observer = new MutationObserver((mutations, obs) => {
       const pagination = document.querySelector('#AjaxinatePagination');
       if (pagination) {
-        console.log('✅ Pagination updated');
         obs.disconnect();
+        console.log('🔁 Pagination updated → initializing Ajaxinate');
         initAjaxinate();
       }
     });
@@ -956,5 +1024,11 @@ let endlessScroll = null;
 
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     console.log('🌀 Filter updated');
-    observePaginationChange();
+
+    // Debounce to handle rapid filter updates
+    clearTimeout(reinitTimer);
+    reinitTimer = setTimeout(() => {
+      destroyAjaxinate();
+      observePaginationChange();
+    }, 150);
   });
