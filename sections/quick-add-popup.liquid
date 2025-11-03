@@ -17,7 +17,7 @@
               <fieldset>
                 <legend>{{ option.name }}</legend>
                 {% for value in option.values %}
-                <input type="radio" value="{{ value.name }}">
+                <input type="radio" value="{{ value.variant.id}}">
                 <label>{{ value.name }}</label>
                 {% endfor %}
               </fieldset>
