@@ -11,8 +11,8 @@
     </button>
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
+        {%unless product.has_only_default_variant %}
         <div class="variants">
-        
             {% for option in product.options_with_values %}
               <fieldset>
                 <legend>{{ option.name }}</legend>
@@ -21,10 +21,9 @@
                 <label>{{ value.name }}</label>
                 {% endfor %}
               </fieldset>
-
             {% endfor %}
-
         </div>
+        {% endunless %}
       {% if product %}
          {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
       {% else %}
