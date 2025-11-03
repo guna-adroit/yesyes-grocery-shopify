@@ -11,6 +11,20 @@
     </button>
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
+        <div class="variants">
+        
+            {% for option in product.options %}
+              <fieldset>
+                <legend>{{ option.name }}</legend>
+                {% for value in option.values %}
+                <input type="radio" value="{{ value.name }}">
+                <label>{{ value.name }}</label>
+                {% endfor %}
+              </fieldset>
+
+            {% endfor %}
+
+        </div>
       {% if product %}
          {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
       {% else %}
