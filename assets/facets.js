@@ -940,7 +940,7 @@ let endlessScroll = null;
     const observer = new MutationObserver((mutations, obs) => {
       const pagination = document.querySelector('#AjaxinatePagination');
       if (pagination) {
-        console.log('🔁 Pagination updated, initializing Ajaxinate');
+        console.log('🔁 Pagination updated');
         obs.disconnect();
         initAjaxinate();
       }
@@ -955,6 +955,6 @@ let endlessScroll = null;
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated — observing for pagination changes...');
+    console.log('🌀 Filter updated');
     observePaginationChange();
   });
