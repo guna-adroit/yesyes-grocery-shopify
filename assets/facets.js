@@ -960,106 +960,83 @@ const CURRENCY_DECIMALS = {
 //   });
 
 window.endlessScroll = window.endlessScroll || null;
-  let paginationObserver = null;
   let reinitTimer = null;
 
   function destroyAjaxinate() {
     const instance = window.endlessScroll;
 
+    // Abort ongoing Ajaxinate request
     if (instance && instance.request && instance.request.readyState !== 4) {
-      try {
-        instance.request.abort();
-        console.log('🛑 Aborted old Ajaxinate request');
-      } catch (e) {
-        console.warn('Abort error', e);
-      }
+      instance.request.abort();
+      console.log('🛑 Aborted old Ajaxinate request');
     }
 
+    // Remove old click listeners from pagination link
     const oldPagination = document.querySelector('#AjaxinatePagination');
-    if (oldPagination && oldPagination.parentNode) {
+    if (oldPagination) {
       const newPagination = oldPagination.cloneNode(true);
       oldPagination.parentNode.replaceChild(newPagination, oldPagination);
       console.log('🧹 Old pagination listeners cleared');
     }
 
+    // Reset instance
     window.endlessScroll = null;
   }
 
   function initAjaxinate() {
     const container = document.querySelector('#AjaxinateContainer');
     const pagination = document.querySelector('#AjaxinatePagination');
-    const paginationLink = pagination?.querySelector('a');
 
-    if (!container || !pagination || !paginationLink) {
-      console.warn('Ajaxinate init skipped: container/pagination missing');
-      return false;
+    if (!container || !pagination) {
+      console.warn('Ajaxinate: container or pagination not found');
+      return;
     }
 
     destroyAjaxinate();
 
-    try {
-      window.endlessScroll = new Ajaxinate({
-        method: 'click',
-        container: '#AjaxinateContainer',
-        pagination: '#AjaxinatePagination',
-      });
-      console.log('✅ Ajaxinate initialized');
-      return true;
-    } catch (err) {
-      console.error('Ajaxinate init failed', err);
-      return false;
-    }
-  }
-
-  function observePaginationStable() {
-    // Disconnect old observer if exists
-    if (paginationObserver) {
-      paginationObserver.disconnect();
-      paginationObserver = null;
-    }
-
-    const root = document.querySelector('#AjaxinateContainer')?.parentNode;
-    if (!root) return;
-
-    let stableCount = 0;
-    let lastHTML = '';
-
-    paginationObserver = new MutationObserver(() => {
-      const pagination = document.querySelector('#AjaxinatePagination');
-      const paginationLink = pagination?.querySelector('a');
-
-      // Check stability: has pagination HTML stopped changing for a few cycles?
-      const currentHTML = pagination?.outerHTML || '';
-      if (paginationLink && currentHTML === lastHTML) {
-        stableCount++;
-      } else {
-        stableCount = 0;
-        lastHTML = currentHTML;
-      }
-
-      // Only init after it's stable for a few frames (2-3 DOM mutations)
-      if (stableCount >= 3) {
-        paginationObserver.disconnect();
-        paginationObserver = null;
-        console.log('🔁 Pagination stable → initializing Ajaxinate');
-        initAjaxinate();
-      }
+    window.endlessScroll = new Ajaxinate({
+      method: 'click',
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination',
     });
 
-    paginationObserver.observe(root, { childList: true, subtree: true });
+    console.log('✅ Ajaxinate initialized');
   }
 
-  // Initial load
+  function observePaginationChange() {
+  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+  if (!parent) return;
+
+  const observer = new MutationObserver((mutations, obs) => {
+    const pagination = document.querySelector('#AjaxinatePagination');
+    // Wait until pagination and its link exist
+    const paginationLink = pagination?.querySelector('a');
+
+    if (pagination && paginationLink) {
+      // Add a short delay to let browser finish autofocus processing
+      setTimeout(() => {
+        obs.disconnect();
+        console.log('🔁 Pagination updated → initializing Ajaxinate');
+        initAjaxinate();
+      }, 50);
+    }
+  });
+
+  observer.observe(parent, {
+    childList: true,
+    subtree: true,
+  });
+}
+
   document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-  // Handle filter updates
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated → waiting for stable pagination');
+    console.log('🌀 Filter updated — watching for pagination...');
 
-    // Debounce to prevent rapid overlap
+    // Debounce to prevent multiple calls
     clearTimeout(reinitTimer);
     reinitTimer = setTimeout(() => {
       destroyAjaxinate();
-      observePaginationStable();
-    }, 100);
+      observePaginationChange();
+    }, 150);
   });
