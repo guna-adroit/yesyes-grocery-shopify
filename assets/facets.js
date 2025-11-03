@@ -397,7 +397,6 @@ class FacetRemoveComponent extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
-    observePaginationChange();
   }
 
   /**
@@ -957,5 +956,9 @@ let endlessScroll = null;
 
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     console.log('🌀 Filter updated — observing for pagination changes...');
+    observePaginationChange();
+  });
+  document.removeEventListener(ThemeEvents.FilterUpdate, () => {
+    console.log('🌀 Filter Removed');
     observePaginationChange();
   });
