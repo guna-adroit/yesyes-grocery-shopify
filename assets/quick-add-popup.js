@@ -47,13 +47,20 @@ function initQuickAddPopup() {
     document.dispatchEvent(new CustomEvent('cart:updated'));
   });
 
-  popup.addEventListener('click', (e) => {
-    if (e.target.classList.contains('popup-overlay') || e.target.classList.contains('popup-close')) {
-      popup.classList.add('hidden');
-      popupContent.innerHTML = '';
-    }
+  const closeBtn = popup.querySelector('.popup-close');
+  const overlay = popup.querySelector('.popup-overlay');
+
+  // Close button click
+  closeBtn.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    popupContent.innerHTML = '';
   });
-}
+
+  // Overlay click
+  overlay.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    popupContent.innerHTML = '';
+  });
 
 document.addEventListener('DOMContentLoaded', () => {
   const interval = setInterval(() => {
