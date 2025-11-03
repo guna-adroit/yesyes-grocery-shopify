@@ -40,8 +40,8 @@
                         </div>
                     </div>
                 </div>
-                <input type="radio" value="{{ value.variant.id}}">
-                <label>{{ value.name }}</label>
+                {% comment %} <input type="radio" value="{{ value.variant.id}}">
+                <label>{{ value.name }}</label> {% endcomment %}
                 {% endfor %}
               </fieldset>
             {% endfor %}
@@ -88,4 +88,37 @@
   border: none;
   cursor: pointer;
 }
+
+.product_variant_item{
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            background-color:  #fee9e9;
+            border-radius: 8px;
+            padding: 18px 22px;
+        }
+        .product_variant-image img{
+            width: 80px;
+            border-radius: 8px;;
+        }
+        .product_variant-title, .product_variant-price{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .product-compare-price{
+            text-decoration: line-through;
+            color: #999;
+            font-weight: 600;
+        }
+        .product_variant-title p{
+            font-weight: 600;
+        }
+        .product_variant-price span{
+            font-weight: bold;
+        }
+        span.product-price, span.product_variant-details{
+            font-size: 600;
+        }
 </style>
