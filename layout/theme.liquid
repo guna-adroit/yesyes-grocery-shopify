@@ -65,5 +65,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    
+    <script src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
   </body>
 </html>
