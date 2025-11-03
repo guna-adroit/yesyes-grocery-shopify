@@ -2,9 +2,7 @@ function initQuickAddPopup() {
   const popup = document.getElementById('QuickAddPopup');
   const popupContent = document.getElementById('QuickAddPopupContent');
 
-  if (!popup || !popupContent) return; // exit if not loaded
-
-  // --- your existing logic below ---
+  if (!popup || !popupContent) return;
 
   document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.quick-add-btn');
@@ -57,9 +55,7 @@ function initQuickAddPopup() {
   });
 }
 
-// Wait for DOM + section
 document.addEventListener('DOMContentLoaded', () => {
-  // Retry until QuickAddPopup exists (Horizon lazy-loads sections)
   const interval = setInterval(() => {
     if (document.getElementById('QuickAddPopup')) {
       clearInterval(interval);
