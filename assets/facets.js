@@ -422,6 +422,7 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
+    observePaginationChange();
   }
 
   /**
