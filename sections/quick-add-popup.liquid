@@ -29,9 +29,9 @@
                         </div>
                         <div class="product_variant-price">
                             <div>
-                                <span class="product-price">{{ product.price | money_with_currency }}</span>
+                                <span class="product-price">{{ product.price | money }}</span>
                                 {% if product.compare_at_price %}
-                                <span class="product-compare-price">{{ product.compare_at_price | money_with_currency }}</span>
+                                <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
                                 {% endif %}
                             </div>
                             <div class="product_variant-details">
