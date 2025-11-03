@@ -959,84 +959,157 @@ const CURRENCY_DECIMALS = {
 //     observePaginationChange();
 //   });
 
-window.endlessScroll = window.endlessScroll || null;
+// Persist instance & observer across partial re-renders
+  window.endlessScroll = window.endlessScroll || null;
+  window._ajaxinateObserver = window._ajaxinateObserver || null;
+
   let reinitTimer = null;
+  const INIT_RETRY_LIMIT = 5; // number of times to retry init if DOM not ready
+  const INIT_RETRY_DELAY = 120; // ms between retries
 
   function destroyAjaxinate() {
     const instance = window.endlessScroll;
 
-    // Abort ongoing Ajaxinate request
-    if (instance && instance.request && instance.request.readyState !== 4) {
-      instance.request.abort();
-      console.log('🛑 Aborted old Ajaxinate request');
+    if (instance) {
+      try {
+        // Abort in-flight XHR (if Ajaxinate exposes it)
+        if (instance.request && instance.request.readyState !== 4) {
+          instance.request.abort();
+          console.log('🛑 Aborted old Ajaxinate request');
+        }
+      } catch (e) {
+        // Defensive: Ajaxinate internals may differ between implementations
+        console.warn('destroyAjaxinate: abort error', e);
+      }
     }
 
-    // Remove old click listeners from pagination link
+    // Remove old event listeners by cloning the pagination node (if present)
     const oldPagination = document.querySelector('#AjaxinatePagination');
-    if (oldPagination) {
+    if (oldPagination && oldPagination.parentNode) {
       const newPagination = oldPagination.cloneNode(true);
       oldPagination.parentNode.replaceChild(newPagination, oldPagination);
       console.log('🧹 Old pagination listeners cleared');
     }
 
-    // Reset instance
     window.endlessScroll = null;
   }
 
-  function initAjaxinate() {
-    const container = document.querySelector('#AjaxinateContainer');
-    const pagination = document.querySelector('#AjaxinatePagination');
+  function tryInitAjaxinate(retriesLeft = INIT_RETRY_LIMIT) {
+    // Use requestAnimationFrame to let the browser finish microtasks (including focus handling)
+    requestAnimationFrame(() => {
+      const container = document.querySelector('#AjaxinateContainer');
+      const pagination = document.querySelector('#AjaxinatePagination');
+      const paginationLink = pagination?.querySelector('a');
 
-    if (!container || !pagination) {
-      console.warn('Ajaxinate: container or pagination not found');
-      return;
-    }
+      if (!container || !pagination || !paginationLink) {
+        console.warn('Ajaxinate: container/pagination/link not ready. retriesLeft=', retriesLeft);
 
-    destroyAjaxinate();
+        if (retriesLeft > 0) {
+          // Retry after short delay
+          setTimeout(() => tryInitAjaxinate(retriesLeft - 1), INIT_RETRY_DELAY);
+        } else {
+          console.error('Ajaxinate: Failed to initialize after retries.');
+        }
+        return;
+      }
 
-    window.endlessScroll = new Ajaxinate({
-      method: 'click',
-      container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination',
+      // Extra safety: ensure the paginationLink is attached to document
+      if (!document.contains(paginationLink)) {
+        console.warn('Ajaxinate: detected pagination link not attached to document, retrying...');
+        if (retriesLeft > 0) {
+          setTimeout(() => tryInitAjaxinate(retriesLeft - 1), INIT_RETRY_DELAY);
+        } else {
+          console.error('Ajaxinate: pagination link detached, aborting init.');
+        }
+        return;
+      }
+
+      // Clean previous instance and init a fresh one
+      destroyAjaxinate();
+
+      try {
+        window.endlessScroll = new Ajaxinate({
+          method: 'click',
+          container: '#AjaxinateContainer',
+          pagination: '#AjaxinatePagination',
+        });
+        console.log('✅ Ajaxinate initialized');
+      } catch (e) {
+        console.error('Ajaxinate: initialization error', e);
+      }
     });
-
-    console.log('✅ Ajaxinate initialized');
   }
 
   function observePaginationChange() {
-  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-  if (!parent) return;
-
-  const observer = new MutationObserver((mutations, obs) => {
-    const pagination = document.querySelector('#AjaxinatePagination');
-    // Wait until pagination and its link exist
-    const paginationLink = pagination?.querySelector('a');
-
-    if (pagination && paginationLink) {
-      // Add a short delay to let browser finish autofocus processing
-      setTimeout(() => {
-        obs.disconnect();
-        console.log('🔁 Pagination updated → initializing Ajaxinate');
-        initAjaxinate();
-      }, 50);
+    // Disconnect any previous observer to avoid duplicates
+    if (window._ajaxinateObserver) {
+      try { window._ajaxinateObserver.disconnect(); } catch (e) { /* ignore */ }
+      window._ajaxinateObserver = null;
     }
+
+    const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+    if (!parent) {
+      console.warn('observePaginationChange: parent not found');
+      // try a one-time init anyway
+      tryInitAjaxinate();
+      return;
+    }
+
+    // Blur the active element to avoid autofocus interference (optional, see note)
+    try {
+      const active = document.activeElement;
+      if (active && active.tagName !== 'BODY' && typeof active.blur === 'function') {
+        // small, non-invasive blur
+        active.blur();
+      }
+    } catch (e) {
+      // ignore focus errors
+    }
+
+    const observer = new MutationObserver((mutations, obs) => {
+      const pagination = document.querySelector('#AjaxinatePagination');
+      const paginationLink = pagination?.querySelector('a');
+
+      // Wait until the pagination element and its link exist and are attached
+      if (pagination && paginationLink && document.contains(paginationLink)) {
+        // small delay to allow browser autofocus/focus handling to finish
+        setTimeout(() => {
+          // double-check before init
+          if (document.querySelector('#AjaxinatePagination')?.querySelector('a')) {
+            obs.disconnect();
+            window._ajaxinateObserver = null;
+            console.log('🔁 Pagination updated (observer) — starting init');
+            tryInitAjaxinate();
+          }
+        }, 60); // 40–100ms is generally enough
+      }
+    });
+
+    observer.observe(parent, { childList: true, subtree: true });
+    window._ajaxinateObserver = observer;
+  }
+
+  // Initial page load
+  document.addEventListener('DOMContentLoaded', () => {
+    tryInitAjaxinate();
   });
 
-  observer.observe(parent, {
-    childList: true,
-    subtree: true,
-  });
-}
-
-  document.addEventListener('DOMContentLoaded', initAjaxinate);
-
+  // Re-init when filters update (debounced)
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated — watching for pagination...');
-
-    // Debounce to prevent multiple calls
+    console.log('🌀 Filter updated -> scheduling Ajaxinate reinit');
     clearTimeout(reinitTimer);
     reinitTimer = setTimeout(() => {
+      // Try to destroy any known instance immediately
       destroyAjaxinate();
+      // Then observe for the new pagination being inserted
       observePaginationChange();
-    }, 150);
+    }, 100);
+  });
+
+  // Cleanup on turbolinks/page changes if you use them (optional)
+  window.addEventListener('beforeunload', () => {
+    try {
+      if (window._ajaxinateObserver) window._ajaxinateObserver.disconnect();
+    } catch (e) {}
+    destroyAjaxinate();
   });
