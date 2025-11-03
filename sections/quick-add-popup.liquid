@@ -17,6 +17,29 @@
               <fieldset>
                 <legend>{{ option.name }}</legend>
                 {% for value in option.values %}
+
+                  <div class="quick-add_product-variant-details">
+                    <div class="product_variant_item">
+                        <div class="product_variant-image">
+                            <img src="{{ product.featured_image | image_url: width: 200 }}" width="" height="" alt="">
+                        </div>
+                        <div class="product_variant-title">
+                            <p>{{ product.title }}</p>
+                            <p class="product_variant-name">{{ value.name }}</p>
+                        </div>
+                        <div class="product_variant-price">
+                            <div>
+                                <span class="product-price">{{ product.price | money_with_currency }}</span>
+                                {% if product.compare_at_price %}
+                                <span class="product-compare-price">{{ product.compare_at_price | money_with_currency }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="product_variant-details">
+                                <span>$18.00/L</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <input type="radio" value="{{ value.variant.id}}">
                 <label>{{ value.name }}</label>
                 {% endfor %}
