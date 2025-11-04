@@ -277,6 +277,7 @@
             "custom_liquid_xjRfYk": {
               "type": "custom-liquid",
               "name": "t:names.custom_liquid",
+              "disabled": true,
               "settings": {
                 "custom_liquid": "<button\n    class=\"quick-add-btn button button--secondary\"\n    data-product-handle=\"{{ closest.product.handle }}\"\n  >\n    Quick Add\n  </button>"
               },
