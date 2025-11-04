@@ -158,6 +158,16 @@
   </product-card-link>
 {%- endif -%}
 
+{% assign option_count = product.options_with_values.size %}
+<style>
+
+</style>
+{%if option_count > 1 %}
+  .product-card .buy-buttons-block{
+    display: none;
+  }
+{%endif %}
+
 {% stylesheet %}
   product-card-link,
   :not(product-card-link) product-card {
@@ -231,4 +241,6 @@
   .product-card [data-available-count='0'] ~ svg {
     display: block;
   }
+
+  
 {% endstylesheet %}
