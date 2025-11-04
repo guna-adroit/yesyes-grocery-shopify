@@ -9,7 +9,7 @@
   data-product-url="{{ product_resource.url }}"
   class="variant-picker"
 >
-  
+  <form class="variant-picker__form">
   {%- for product_option in product_resource.options_with_values -%}
     {%- liquid
       assign swatch_count = product_option.values | map: 'swatch' | compact | size
@@ -23,7 +23,7 @@
         assign longest_value = 0
       endif
     -%}
-    <form class="variant-picker__form">
+    
     <fieldset
       class="variant-option variant-option--buttons {% if variant_style == 'swatch' %}variant-option--swatches{% endif %}"
       {{ option_id_attribute }}
@@ -95,8 +95,7 @@
       {% endif %}
     </fieldset>
   {%- endfor -%}
-  </form>
-
+</form>
   <script type="application/json">
     {{ product_resource.selected_or_first_available_variant | json }}
   </script>
