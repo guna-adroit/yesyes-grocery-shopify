@@ -156,4 +156,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         line-height: 14px;
         padding: 3px 9px;
     }
+    .compare-at-price {
+        font-size: 14px;
+        line-height: 22px;
+    }
 }
