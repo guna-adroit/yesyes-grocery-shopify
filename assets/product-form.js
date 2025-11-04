@@ -84,7 +84,7 @@ export class AddToCartComponent extends Component {
         quantityControl.innerHTML = `
           <div class="quantity-control">
             <button class="qty-minus" aria-label="Decrease quantity">−</button>
-            <span class="qty-value">1</span>
+            <span class="qty-value">${this.quantity}</span>
             <button class="qty-plus" aria-label="Increase quantity">+</button>
           </div>
         `;
