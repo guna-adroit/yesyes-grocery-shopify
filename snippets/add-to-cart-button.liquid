@@ -67,6 +67,29 @@
 
 
 {% stylesheet %}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.quantity-control button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f3f3f3;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.quantity-control .qty-value {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
   .add-to-cart-text {
     display: flex;
     gap: var(--gap-2xs);
