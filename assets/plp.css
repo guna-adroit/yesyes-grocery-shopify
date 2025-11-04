@@ -164,4 +164,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .add-to-cart-button{
         font-size: 12px;
     }
+    .svg-wrapper.add-to-cart-icon, .svg-wrapper.add-to-cart-icon svg {
+        width: 22px;
+        height: 22px;
+    }
 }
