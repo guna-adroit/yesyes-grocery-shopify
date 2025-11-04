@@ -119,22 +119,23 @@ class ProductQuantityControl extends HTMLElement {
   }
 
   #onCartUpdate = (e) => {
-    const cart = e.detail?.resource;
-    if (!cart) return;
+  const cart = e?.detail?.resource || e?.detail?.cart || e?.detail;
+  if (!cart || !Array.isArray(cart.items)) return;
 
-    const item = cart.items.find(i => i.variant_id === this.variantId);
-    if (item) {
-      this.quantity = item.quantity;
-      this.lineKey = item.key;
-      this.#updateUI();
-      this.#show();
-    } else {
-      this.quantity = 0;
-      this.lineKey = null;
-      this.#updateUI();
-      this.#hide();
-    }
-  };
+  const item = cart.items.find(i => i.variant_id === this.variantId);
+
+  if (item) {
+    this.quantity = item.quantity;
+    this.lineKey = item.key;
+    this.#updateUI();
+    this.#show();
+  } else {
+    this.quantity = 0;
+    this.lineKey = null;
+    this.#updateUI();
+    this.#hide();
+  }
+};
 }
 
 customElements.define('product-quantity-control', ProductQuantityControl);
