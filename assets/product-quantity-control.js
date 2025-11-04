@@ -6,23 +6,25 @@ class ProductQuantityControl extends HTMLElement {
     this.variantId = parseInt(this.dataset.variantId);
     this.quantity = 0;
     this.lineKey = null;
-    this.isUpdating = false; // prevent double adds
+    this.isUpdating = false;
   }
 
   connectedCallback() {
     this.render();
-    this.querySelector('.qty-minus').addEventListener('click', this.decrease);
-    this.querySelector('.qty-plus').addEventListener('click', this.increase);
+    this.minusButton = this.querySelector('.qty-minus');
+    this.plusButton = this.querySelector('.qty-plus');
+    this.valueEl = this.querySelector('.qty-value');
 
-    // Listen for global cart updates
-    document.addEventListener(ThemeEvents.cartUpdate, this.#onCartUpdate);
+    this.minusButton.addEventListener('click', this.decrease);
+    this.plusButton.addEventListener('click', this.increase);
 
-    // Initialize count on first load
-    this.#fetchCartAndSync();
+    document.addEventListener('cart:update', this.onCartUpdate);
+
+    this.fetchCartAndSync(); // sync on first load
   }
 
   disconnectedCallback() {
-    document.removeEventListener(ThemeEvents.cartUpdate, this.#onCartUpdate);
+    document.removeEventListener('cart:update', this.onCartUpdate);
   }
 
   render() {
@@ -35,39 +37,29 @@ class ProductQuantityControl extends HTMLElement {
     `;
   }
 
-  #updateUI() {
-    const valueEl = this.querySelector('.qty-value');
-    if (valueEl) valueEl.textContent = this.quantity;
+  updateUI() {
+    if (this.valueEl) this.valueEl.textContent = this.quantity;
   }
 
-  #show() {
-    this.hidden = false;
-  }
-
-  #hide() {
-    this.hidden = true;
-  }
-
-  #onCartUpdate = (e) => {
+  onCartUpdate = (e) => {
     const cart = e?.detail?.resource || e?.detail?.cart || e?.detail;
-    if (!cart || !Array.isArray(cart.items)) return;
+    if (!cart?.items) return;
 
     const item = cart.items.find(i => i.variant_id === this.variantId);
-
     if (item) {
       this.quantity = item.quantity;
       this.lineKey = item.key;
-      this.#updateUI();
-      this.#show();
+      this.updateUI();
+      this.hidden = false;
     } else {
       this.quantity = 0;
       this.lineKey = null;
-      this.#updateUI();
-      this.#hide();
+      this.updateUI();
+      this.hidden = true;
     }
   };
 
-  async #fetchCartAndSync() {
+  async fetchCartAndSync() {
     try {
       const res = await fetch('/cart.js');
       const cart = await res.json();
@@ -75,78 +67,74 @@ class ProductQuantityControl extends HTMLElement {
       if (item) {
         this.quantity = item.quantity;
         this.lineKey = item.key;
-        this.#updateUI();
-        this.#show();
+        this.updateUI();
+        this.hidden = false;
       }
     } catch (err) {
-      console.error('Failed to sync cart quantity:', err);
+      console.error('Cart sync error:', err);
     }
   }
 
   increase = async () => {
     if (this.isUpdating) return;
     this.isUpdating = true;
-    this.quantity++;
-    this.#updateUI();
 
-    try {
-      await this.#updateCartQuantity();
-      this.isUpdating = false;
-    } catch (err) {
-      console.error(err);
-      this.isUpdating = false;
-    }
+    const newQuantity = this.quantity + 1;
+    await this.updateCartQuantity(newQuantity);
+    this.isUpdating = false;
   };
 
   decrease = async () => {
     if (this.isUpdating) return;
-    if (this.quantity <= 1) {
-      this.quantity = 0;
-      this.#updateUI();
-      await this.#removeFromCart();
-      return;
-    }
-
     this.isUpdating = true;
-    this.quantity--;
-    this.#updateUI();
 
-    try {
-      await this.#updateCartQuantity();
-      this.isUpdating = false;
-    } catch (err) {
-      console.error(err);
-      this.isUpdating = false;
+    const newQuantity = this.quantity - 1;
+    if (newQuantity <= 0) {
+      await this.removeFromCart();
+    } else {
+      await this.updateCartQuantity(newQuantity);
     }
+
+    this.isUpdating = false;
   };
 
-  async #updateCartQuantity() {
-    const body = JSON.stringify({
-      id: this.lineKey,
-      quantity: this.quantity,
-    });
+  async updateCartQuantity(newQuantity) {
+    try {
+      const body = this.lineKey
+        ? { id: this.lineKey, quantity: newQuantity }
+        : { updates: { [this.variantId]: newQuantity } };
 
-    const res = await fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-    });
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
 
-    const cart = await res.json();
-    document.dispatchEvent(new CustomEvent(ThemeEvents.cartUpdate, { detail: { resource: cart } }));
+      const cart = await res.json();
+
+      // update local UI quickly
+      this.quantity = newQuantity;
+      this.updateUI();
+
+      // dispatch cart:update so other parts (cart icon, drawer) refresh
+      document.dispatchEvent(new CustomEvent('cart:update', { detail: { resource: cart } }));
+    } catch (err) {
+      console.error('Cart quantity update failed:', err);
+    }
   }
 
-  async #removeFromCart() {
+  async removeFromCart() {
     try {
+      if (!this.lineKey) return;
       const res = await fetch('/cart/change.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: this.lineKey, quantity: 0 }),
       });
       const cart = await res.json();
-      document.dispatchEvent(new CustomEvent(ThemeEvents.cartUpdate, { detail: { resource: cart } }));
+      document.dispatchEvent(new CustomEvent('cart:update', { detail: { resource: cart } }));
     } catch (err) {
-      console.error('Failed to remove item:', err);
+      console.error('Remove from cart failed:', err);
     }
   }
 }
