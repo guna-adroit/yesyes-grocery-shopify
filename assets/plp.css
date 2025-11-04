@@ -170,6 +170,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .add-to-cart-button{
         font-size: 12px;
         padding: 0;
+        margin-top: 8px;
     }
     .add-to-cart-button.button-secondary{
         padding: 0;
@@ -181,6 +182,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .svg-wrapper.collection-wishlist-icon{
         width: 24px;
     }
+    
     .collection-load-more-btn{
         font-size: 14px;
         line-height: 25.2px;
