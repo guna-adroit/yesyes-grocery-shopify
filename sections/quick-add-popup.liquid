@@ -13,7 +13,7 @@
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
         {% assign option_count = product.options_with_values.size %}
-        {% if option_count > 1 %}
+        {% if option_count == 1 %}
         <div class="variants-container">
           {% for option in product.options_with_values %}
             <fieldset>
