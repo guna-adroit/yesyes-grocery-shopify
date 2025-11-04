@@ -79,7 +79,7 @@
         --product-grid-columns-desktop: repeat(auto-fill, minmax(320px, 1fr));
     }
 }
-@media (min-width: 800px) {
+@media screen and (min-width: 800px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
           .product-grid--{{ section.id }}:is(.product-grid--grid) {
