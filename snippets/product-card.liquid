@@ -154,7 +154,7 @@
           {{- 'icon-trolley.svg' | inline_asset_content -}}
         </span>
       <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
-        {{- add_to_cart_text | default: default_add_to_cart_text -}}
+        {{- 'products.product.add_to_cart' | t -}}
       </span>
     </span>
     </button>
