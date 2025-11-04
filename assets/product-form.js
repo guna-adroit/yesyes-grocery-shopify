@@ -82,11 +82,6 @@ export class AddToCartComponent extends Component {
         
         // Change the innerHTML of the quantity control (example)
         quantityControl.innerHTML = `
-          <div class="quantity-control">
-            <button class="qty-minus" aria-label="Decrease quantity">−</button>
-            <span class="qty-value">${this.quantity}</span>
-            <button class="qty-plus" aria-label="Increase quantity">+</button>
-          </div>
           <quantity-selector-component class="quantity-selector cart-primary-typography" ref="quantitySelectors[]">
             <button class="button quantity-minus button-unstyled" type="button" name="minus" on:click="/decreaseQuantity" ref="quantityButtons[]">
               <span class="visually-hidden">Decrease quantity</span><span class="svg-wrapper icon-plus"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
