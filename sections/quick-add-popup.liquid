@@ -26,8 +26,8 @@
                             <p>{{ product.title }}</p>
                             <p class="product_variant-name">{{ value.name }}</p>
                         </div>
-                        <div class="product_variant-price">
-                            <div>
+                        <div class="product_variant-price-container">
+                            <div class="product_variant-price">
                                 <span class="product-price">{{ product.price | money }}</span>
                                 {% if product.compare_at_price %}
                                 <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
