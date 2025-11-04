@@ -146,7 +146,18 @@
     "
   >
     {{ children }}
-    <button class="button quick-add-btn button-secondary" data-product-handle="{{ closest.product.handle }}">Add to Cart</button>
+    <button class="button quick-add-btn button-secondary" data-product-handle="{{ closest.product.handle }}">
+      <span
+      class="add-to-cart-text"
+    >
+        <span class="svg-wrapper add-to-cart-icon">
+          {{- 'icon-trolley.svg' | inline_asset_content -}}
+        </span>
+      <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
+        {{- add_to_cart_text | default: default_add_to_cart_text -}}
+      </span>
+    </span>
+    </button>
   </div>
   {% if product.compare_at_price > product.price %}
   {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
