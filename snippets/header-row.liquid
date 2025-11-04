@@ -61,11 +61,72 @@
             {% when 'logo' %}
               {{ logo }}
             {% when 'menu' %}
+              <span class="all-categories button-modal">
+                  {{ 'categories-red.svg' | inline_asset_content -}}
+                  <span class="modal-button-label">
+                    Browse all categories
+                  </span>
+                </span>
+              <span class="header__secondary-menu" visually-hidden hidden>
+                <ul>
+                  {%- for link in secondary_menu.links -%}
+                    <li>
+                      <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>
+                        {{ link.title }}
+                      </a>
+
+                      {%- if link.links != blank -%}
+                        <ul>
+                          {%- for child_link in link.links -%}
+                            <li>
+                              <a href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %}>
+                                {{ child_link.title }}
+                              </a>
+
+                              {%- if child_link.links != blank -%}
+                                <ul>
+                                  {%- for grandchild_link in child_link.links -%}
+                                    <li>
+                                      <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %}aria-current="page"{% endif %}>
+                                        {{ grandchild_link.title }}
+                                      </a>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              {%- endif -%}
+
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </span>
               {{ menu }}
+              {% render 'header-contact',
+                show_mobile_number: show_mobile_number,
+                mobile_number: mobile_number %}
             {% when 'localization' %}
               {{ localization }}
             {% when 'search' %}
-              {{ search }}
+              <div class="open-search-modal-wrapper">
+                {% render 'search-modal' %}
+                     <h2
+                      id="search-modal-heading"
+                      class="visually-hidden"
+                    >
+                      {{ 'content.search' | t }}
+                    </h2>
+                    {% render 'predictive-search',
+                      input_id: 'cmdk-input',
+                      search_test_id: 'search-component--modal',
+                      products_test_id: 'products-list-default--modal'
+                    %}
+              </div>
+              {% comment %} {{ search }} {% endcomment %}
+
             {% when 'mobile_search' %}
               {{ mobile_search }}
             {% when 'actions' %}

@@ -240,10 +240,13 @@
         first: first,
         logo: logo,
         menu: menu,
+        secondary_menu: section.settings.secondary_menu,
         actions: actions,
         localization: localization_markup,
         search: search,
-        mobile_search: mobile_search
+        mobile_search: mobile_search,
+        show_mobile_number: section.settings.show_mobile_number,
+        mobile_number: section.settings.mobile_number
       %}
     {% endcapture %}
 
@@ -729,6 +732,26 @@
       "type": "link_list",
       "id": "secondary_menu", 
       "label": "Secondary Menu"
+    },
+    {
+      "type": "radio",
+      "id": "show_mobile_number",
+      "label": "Show Mobile Number",
+      "options": [
+        {
+          "value": "true",
+          "label": "Yes"
+        },
+        {
+          "value": "false",
+          "label": "No"
+        }
+      ],
+    },
+    {
+      "type": "text",
+      "id": "mobile_number",
+      "label": "Mobile Number"
     },
     {
       "type": "header",
