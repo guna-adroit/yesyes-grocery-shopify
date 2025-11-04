@@ -1,64 +1,57 @@
-import { ThemeEvents, CartAddEvent } from '@theme/events';
+import { ThemeEvents } from '@theme/events';
 
 class ProductQuantityControl extends HTMLElement {
   connectedCallback() {
     this.variantId = Number(this.dataset.variantId);
     this.productId = Number(this.dataset.productId);
-    this.innerHTML = '';
+    this.quantity = 0;
     this.isVisible = false;
 
-    // Listen for "added to cart" event
-    document.addEventListener(ThemeEvents.cartAdd, this.#onCartAdd);
-    document.addEventListener(ThemeEvents.cartUpdated, this.#onCartUpdate);
+    this.#render(); // initial empty UI
+    this.#cacheElements();
+    this.#attachEvents();
 
-    // Load current cart state (e.g., on page load or after re-render)
-    this.#refreshQuantity();
+    document.addEventListener(ThemeEvents.cartUpdated, this.#onCartUpdate);
+    this.#refreshQuantity(); // sync with current cart
   }
 
   disconnectedCallback() {
-    document.removeEventListener(ThemeEvents.cartAdd, this.#onCartAdd);
     document.removeEventListener(ThemeEvents.cartUpdated, this.#onCartUpdate);
   }
 
-  #onCartAdd = (event) => {
-    const { productId } = event.detail.options || {};
-    if (Number(productId) === this.productId) {
-      this.#refreshQuantity();
-    }
-  };
+  #cacheElements() {
+    this.buttonMinus = this.querySelector('.qty-minus');
+    this.buttonPlus = this.querySelector('.qty-plus');
+    this.valueEl = this.querySelector('.qty-value');
+  }
+
+  #attachEvents() {
+    this.buttonMinus.addEventListener('click', () => this.#updateQuantity(this.quantity - 1));
+    this.buttonPlus.addEventListener('click', () => this.#updateQuantity(this.quantity + 1));
+  }
 
   #onCartUpdate = () => {
     this.#refreshQuantity();
   };
 
   async #refreshQuantity() {
-    const res = await fetch('/cart.js');
-    const cart = await res.json();
-    const item = cart.items.find(i => i.variant_id === this.variantId);
+    try {
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+      const item = cart.items.find(i => i.variant_id === this.variantId);
 
-    if (item) {
-      this.quantity = item.quantity;
-      this.#render();
-      this.#show();
-    } else {
-      this.#hide();
+      if (item) {
+        this.quantity = item.quantity;
+        this.#updateUI();
+        this.#show();
+      } else {
+        this.quantity = 0;
+        this.#updateUI();
+        this.#hide();
+      }
+    } catch (err) {
+      console.error('Cart refresh failed', err);
     }
-  }
-
-  #show() {
-    if (!this.isVisible) {
-      const addToCart = this.closest('.product-card')?.querySelector('add-to-cart-component');
-      if (addToCart) addToCart.style.display = 'none';
-      this.hidden = false;
-      this.isVisible = true;
-    }
-  }
-
-  #hide() {
-    const addToCart = this.closest('.product-card')?.querySelector('add-to-cart-component');
-    if (addToCart) addToCart.style.display = 'block';
-    this.hidden = true;
-    this.isVisible = false;
   }
 
   async #updateQuantity(newQty) {
@@ -69,24 +62,39 @@ class ProductQuantityControl extends HTMLElement {
       body: JSON.stringify({ id: this.variantId, quantity: newQty }),
     });
 
-    // Re-sync the state
-    this.#refreshQuantity();
-
-    // Let Horizon’s header/cart icon update automatically
+    // Dispatch event for Horizon cart listeners
     document.dispatchEvent(new CustomEvent(ThemeEvents.cartUpdated));
+    this.#refreshQuantity();
+  }
+
+  #updateUI() {
+    this.valueEl.textContent = this.quantity;
+  }
+
+  #show() {
+    if (this.isVisible) return;
+    const addToCart = this.closest('.product-card')?.querySelector('add-to-cart-component');
+    if (addToCart) addToCart.style.display = 'none';
+    this.hidden = false;
+    this.isVisible = true;
+  }
+
+  #hide() {
+    if (!this.isVisible) return;
+    const addToCart = this.closest('.product-card')?.querySelector('add-to-cart-component');
+    if (addToCart) addToCart.style.display = '';
+    this.hidden = true;
+    this.isVisible = false;
   }
 
   #render() {
     this.innerHTML = `
       <div class="quantity-control">
-        <button class="qty-minus" aria-label="Decrease quantity">−</button>
+        <button class="qty-minus button" aria-label="Decrease quantity">−</button>
         <span class="qty-value">${this.quantity}</span>
-        <button class="qty-plus" aria-label="Increase quantity">+</button>
+        <button class="qty-plus button" aria-label="Increase quantity">+</button>
       </div>
     `;
-
-    this.querySelector('.qty-minus').addEventListener('click', () => this.#updateQuantity(this.quantity - 1));
-    this.querySelector('.qty-plus').addEventListener('click', () => this.#updateQuantity(this.quantity + 1));
   }
 }
 
