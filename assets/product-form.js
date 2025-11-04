@@ -65,9 +65,16 @@ export class AddToCartComponent extends Component {
     if (animationEnabled && !event.target.closest('.quick-add-modal')) {
       this.#animateFlyToCart();
     }
+    
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
 
     const quantityControl = productCard.querySelector('product-quantity-control');
+    const addToCartButton = productCard.querySelector('.add-to-cart-button');
+
+    if (addToCartButton) {
+      addToCartButton.style.display = 'none'; // Hides the button
+    }
+    
     if (quantityControl && quantityControl.hidden) {
       // Show the quantity control for this specific product card
       quantityControl.hidden = false;
