@@ -97,6 +97,7 @@
           {% endfor %}
         </div>
         {% else %}
+          {% content_for 'block', type: 'price', id: 'price' %}
           {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
         {% endif %}
 
