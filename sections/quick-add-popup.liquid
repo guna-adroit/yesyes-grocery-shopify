@@ -104,9 +104,9 @@
               assign product_resource = collections.all.products.first
             endif
           -%}
-          <form class="variant-picker__form">
+          
           {% render 'variant-quick-add', product_resource: product_resource %}
-          </form>
+        
         {% endif %}
 
         {% endunless %}
