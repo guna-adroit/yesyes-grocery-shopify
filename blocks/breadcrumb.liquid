@@ -49,12 +49,7 @@
     font-weight: {{block.settings.current_font_weight}};
     user-select: none;
   }
-  @media screen and (max-width: 900px) {
-    .breadcrumb-{{ ai_gen_id }} {
-      margin-bottom; 20px;
-    }
-  }
-
+  
   @media screen and (max-width: 786px) {
     .breadcrumb-{{ ai_gen_id }} {
       padding: 8px 10px;
@@ -62,6 +57,11 @@
     }
     .breadcrumb-item-{{ ai_gen_id }} {
       gap: {{ block.settings.spacing | times: 0.8 }}px;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .breadcrumb-{{ ai_gen_id }} {
+      margin-bottom; 20px;
     }
   }
 {% endstyle %}
