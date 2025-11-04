@@ -146,6 +146,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     }
     .product-price-container{
         flex-direction: column;
+        gap: 4px;
     }
     .product-card product-price, .card-product-expiry-container{
         width: 100%;
