@@ -175,4 +175,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .svg-wrapper.collection-wishlist-icon{
         width: 24px;
     }
+    .collection-load-more-btn{
+        font-size: 14px;
+        line-height: 25.2px;
+        width: 180px;
+        height: 40px;
+    }
 }
