@@ -98,7 +98,13 @@
         </div>
         {% else %}
           {% content_for 'block', type: 'price', id: 'price' %}
-          {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
+          {% liquid
+            assign product_resource = closest.product
+            if request.visual_preview_mode and product_resource == blank
+              assign product_resource = collections.all.products.first
+            endif
+          -%}
+          {% render 'variant-quick-add', product_resource: product_resource %}
         {% endif %}
 
         {% endunless %}
