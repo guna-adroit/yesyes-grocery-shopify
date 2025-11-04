@@ -169,7 +169,7 @@
   </product-card-link>
 {%- endif -%}
 
-{% assign option_count = product.options_with_values.size %}
+
 <style>
   .quick-add-btn{
     display: none;
@@ -179,7 +179,7 @@
     margin-top: 18px;
   }
 </style>
-{%if option_count > 1 %}
+{%if product.has_only_default_variant %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
