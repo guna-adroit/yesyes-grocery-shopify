@@ -161,4 +161,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 14px;
         line-height: 22px;
     }
+    .add-to-cart-button{
+        font-size: 12px;
+    }
 }
