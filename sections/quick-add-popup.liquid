@@ -18,7 +18,7 @@
                 <legend>{{ option.name }}</legend>
                 <div class="quick-add_product-variant-details">
                 {% for value in option.values %}
-                  <input value="{{value.variant.id}}" type="radio" name="{{option.name}}" id="{{option.name}}-{{value.name}}" {% if option.selected_value == value%} checked {% endif %} >
+                  <input class="variant-select-input" value="{{value.variant.id}}" type="radio" name="{{option.name}}" id="{{option.name}}-{{value.name}}" {% if option.selected_value == value%} checked {% endif %} >
                   <label for="{{option.name}}-{{value.name}}" >
                     <div class="product_variant_item">
                         <div class="product_variant-image">
@@ -109,6 +109,9 @@
 }
 .variants-container{
   margin-bottom: 15px;
+}
+.variant-select-input:checked+label{
+  border: 1px solid black;
 }
 .quick-add-popup__content h2{
   font-weight: 700;
