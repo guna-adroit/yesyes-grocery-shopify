@@ -59,6 +59,13 @@
   </button>
 </add-to-cart-component>
 
+<product-quantity-control
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ product.first_available_variant.id }}"
+  hidden
+></product-quantity-control>
+
+
 {% stylesheet %}
   .add-to-cart-text {
     display: flex;
