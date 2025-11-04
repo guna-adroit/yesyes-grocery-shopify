@@ -132,4 +132,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 16px;
         line-height: 22px;
     }
+    .product-card .price {
+        font-size: 18px;
+        line-height: 24px;
+    }
 }
