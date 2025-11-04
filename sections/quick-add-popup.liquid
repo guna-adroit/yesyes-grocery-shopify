@@ -15,6 +15,8 @@
         <div class="variants-container">
           {% assign option_count = product.options_with_values.size %}
 
+          Count: {{ product.options_with_values.size }}
+
           {% for option in product.options_with_values %}
             <fieldset>
               <legend>{{ option.name }}</legend>
