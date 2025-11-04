@@ -68,24 +68,26 @@ export class AddToCartComponent extends Component {
     
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
 
-    const quantityControl = productCard.querySelector('product-quantity-control');
-    const addToCartButton = productCard.querySelector('.add-to-cart-button');
+    if (productCard){
+      const quantityControl = productCard.querySelector('product-quantity-control');
+      const addToCartButton = productCard.querySelector('.add-to-cart-button');
 
-    if (addToCartButton) {
-      addToCartButton.style.display = 'none'; // Hides the button
-    }
-    
-    if (quantityControl && quantityControl.hidden) {
-      // Show the quantity control for this specific product card
-      quantityControl.hidden = false;
-      
-      // Change the innerHTML of the quantity control (example)
-      quantityControl.innerHTML = `
-        <div class="quantity-message">
-          <p>Choose your quantity for this item:</p>
-          <input type="number" min="1" value="1" />
-        </div>
-      `;
+      if (addToCartButton) {
+        addToCartButton.style.display = 'none'; // Hides the button
+      }
+
+      if (quantityControl && quantityControl.hidden) {
+        // Show the quantity control for this specific product card
+        quantityControl.hidden = false;
+        
+        // Change the innerHTML of the quantity control (example)
+        quantityControl.innerHTML = `
+          <div class="quantity-message">
+            <p>Choose your quantity for this item:</p>
+            <input type="number" min="1" value="1" />
+          </div>
+        `;
+      }
     }
   }
 
