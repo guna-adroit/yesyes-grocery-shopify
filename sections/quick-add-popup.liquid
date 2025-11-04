@@ -13,41 +13,90 @@
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
         <div class="variants-container">
-            {% for option in product.options_with_values %}
-              <fieldset>
-                <legend>{{ option.name }}</legend>
-                <div class="quick-add_product-variant-details">
+          {% assign option_count = product.options_with_values.size %}
+
+          {% for option in product.options_with_values %}
+            <fieldset>
+              <legend>{{ option.name }}</legend>
+              <div class="quick-add_product-variant-details">
                 {% for value in option.values %}
-                  <input class="variant-select-input" value="{{value.variant.id}}" type="radio" name="{{option.name}}" id="{{option.name}}-{{value.name}}" {% if option.selected_value == value%} checked {% endif %} >
-                  <label for="{{option.name}}-{{value.name}}" >
-                    <div class="product_variant_item">
+                  {% assign matched_variant = nil %}
+
+                  {%- for variant in product.variants -%}
+                    {%- assign match = true -%}
+
+                    {%- for opt in product.options_with_values -%}
+                      {%- assign opt_pos = 'option' | append: opt.position -%}
+
+                      {%- if opt.name == option.name -%}
+                        {%- if variant[opt_pos] != value -%}
+                          {%- assign match = false -%}
+                        {%- endif -%}
+                      {%- else -%}
+                        {%- if opt.selected_value and variant[opt_pos] != opt.selected_value -%}
+                          {%- assign match = false -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- if match -%}
+                      {% assign matched_variant = variant %}
+                      {% break %}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {% if matched_variant %}
+                    <input 
+                      class="variant-select-input" 
+                      value="{{ matched_variant.id }}" 
+                      type="radio" 
+                      name="{{ option.name }}" 
+                      id="{{ option.name }}-{{ value | handle }}" 
+                      {% if option.selected_value == value %}checked{% endif %}
+                    >
+
+                    <label for="{{ option.name }}-{{ value | handle }}">
+                      <div class="product_variant_item">
                         <div class="product_variant-image">
-                            <img src="{{ product.featured_image | image_url: width: 200 }}" width="" height="" alt="">
+                          <img 
+                            src="{{ matched_variant.featured_image | default: product.featured_image | image_url: width: 200 }}" 
+                            width="" 
+                            height="" 
+                            alt="{{ matched_variant.title | escape }}"
+                          >
                         </div>
+
                         <div class="product_variant-title">
-                            <p>{{ product.title }}</p>
-                            <p class="product_variant-name">{{ value.name }}</p>
+                          <p>{{ product.title }}</p>
+                          <p class="product_variant-name">{{ value }}</p>
                         </div>
+
                         <div class="product_variant-price-container">
-                            <div class="product_variant-price">
-                                <span class="product-price">{{ product.price | money }}</span>
-                                {% if product.compare_at_price %}
-                                <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
-                                {% endif %}
-                            </div>
+                          <div class="product_variant-price">
+                            <span class="product-price">{{ matched_variant.price | money }}</span>
+
+                            {% if matched_variant.compare_at_price > matched_variant.price %}
+                              <span class="product-compare-price">{{ matched_variant.compare_at_price | money }}</span>
+                            {% endif %}
+                          </div>
+
+                          {% if matched_variant.unit_price_measurement %}
                             <div class="product_variant-details">
-                                <span>$18.00/L</span>
+                              <span>
+                                {{ matched_variant.unit_price | money }}/{{ matched_variant.unit_price_measurement.reference_unit }}
+                              </span>
                             </div>
+                          {% endif %}
                         </div>
-                    </div>
-                  </label>
-                {% comment %} <input type="radio" value="{{ value.variant.id}}">
-                <label>{{ value.name }}</label> {% endcomment %}
+                      </div>
+                    </label>
+                  {% endif %}
                 {% endfor %}
-                </div>
-              </fieldset>
-            {% endfor %}
+              </div>
+            </fieldset>
+          {% endfor %}
         </div>
+
         {% endunless %}
       {% if product %}
          {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
