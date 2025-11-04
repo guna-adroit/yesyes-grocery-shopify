@@ -179,7 +179,7 @@
     margin-top: 18px;
   }
 </style>
-{%if product.has_only_default_variant %}
+{%if product.has_only_default_variant == false%}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
