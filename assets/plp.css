@@ -140,6 +140,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-weight: 600;
         font-size: 16px;
         line-height: 22px;
+        height: 44px;
     }
     .card-product-vendor p {
         font-size: 12px;
