@@ -19,7 +19,7 @@
                 <div class="quick-add_product-variant-details">
                 {% for value in option.values %}
                   <input value="{{value.variant.id}}" type="radio" name="{{option.name}}" id="{{option.name}}-{{value.name}}" {% if option.selected_value == value%} checked {% endif %} >
-                  <label for="{{option.name}}-{{value.name}}" >{{value.name}}</label>
+                  <label for="{{option.name}}-{{value.name}}" >
                     <div class="product_variant_item">
                         <div class="product_variant-image">
                             <img src="{{ product.featured_image | image_url: width: 200 }}" width="" height="" alt="">
@@ -40,6 +40,7 @@
                             </div>
                         </div>
                     </div>
+                  </label>
                 {% comment %} <input type="radio" value="{{ value.variant.id}}">
                 <label>{{ value.name }}</label> {% endcomment %}
                 {% endfor %}
