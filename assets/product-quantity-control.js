@@ -1,3 +1,5 @@
+import { ThemeEvents, CartAddEvent, CartErrorEvent, VariantUpdateEvent } from '@theme/events';
+
 class ProductQuantityControl extends HTMLElement {
   constructor() {
     super();
