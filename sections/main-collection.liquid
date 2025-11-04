@@ -204,8 +204,11 @@
   }
 
   @media screen and (max-width: 750px){
-    .facets-toggle{
-      display: none;
+    .facets-toggle {
+        display: none !important;
+    }
+    .filter-bar-grid facets-toggle {
+        display: block;
     }
   }
 {% endstylesheet %}
