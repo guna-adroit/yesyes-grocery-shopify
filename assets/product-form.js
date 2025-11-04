@@ -94,7 +94,7 @@ export class AddToCartComponent extends Component {
           </svg>
           </span>
             </button>
-            <input type="number" name="updates[]" value="5" min="0" on:blur="/setQuantity" on:focus="/selectInputValue" ref="quantityInput" aria-label="Quantity" data-cart-line="1" step="1">
+            <input type="number" name="updates[]" value="1" min="0" on:blur="/setQuantity" on:focus="/selectInputValue" ref="quantityInput" aria-label="Quantity" data-cart-line="1" step="1">
             <button class="button quantity-plus button-unstyled" type="button" name="plus" on:click="/increaseQuantity" ref="quantityButtons[]">
               <span class="visually-hidden">Increase quantity</span><span class="svg-wrapper icon-plus"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="vertical" d="M2.75 7H11.25" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round"></path>
