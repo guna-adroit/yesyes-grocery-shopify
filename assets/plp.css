@@ -144,4 +144,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 18px;
         line-height: 24px;
     }
+    .product-price-container{
+        flex-direction: column;
+    }
+    .product-card product-price, .card-product-expiry-container{
+        width: 100%;
+    }
 }
