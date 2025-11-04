@@ -96,11 +96,13 @@
             </fieldset>
           {% endfor %}
         </div>
+        {% else %}
+          {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
         {% endif %}
 
         {% endunless %}
       
-      {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
+      
       {% if product %}
          {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
       {% else %}
