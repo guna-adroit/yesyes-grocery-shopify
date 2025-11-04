@@ -133,7 +133,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     }
     .card-product-title p {
         font-weight: 600;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 22px;
     }
     .card-product-vendor p {
@@ -141,7 +141,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         line-height: 16px;
     }
     .product-card .price {
-        font-size: 18px;
+        font-size: 16px;
         line-height: 24px;
     }
     .product-price-container{
