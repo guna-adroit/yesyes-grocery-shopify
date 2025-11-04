@@ -82,9 +82,10 @@ export class AddToCartComponent extends Component {
         
         // Change the innerHTML of the quantity control (example)
         quantityControl.innerHTML = `
-          <div class="quantity-message">
-            <p>Choose your quantity for this item:</p>
-            <input type="number" min="1" value="1" />
+          <div class="quantity-control">
+            <button class="qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">${this.quantity}</span>
+            <button class="qty-plus" aria-label="Increase quantity">+</button>
           </div>
         `;
       }
