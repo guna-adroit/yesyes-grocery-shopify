@@ -7,12 +7,14 @@ class ProductQuantityControl extends HTMLElement {
     this.quantity = 0;
     this.isVisible = false;
 
-    this.#render(); // initial empty UI
+    this.#render();
     this.#cacheElements();
     this.#attachEvents();
 
     document.addEventListener(ThemeEvents.cartUpdated, this.#onCartUpdate);
-    this.#refreshQuantity(); // sync with current cart
+
+    // Initial sync
+    this.#refreshQuantity();
   }
 
   disconnectedCallback() {
@@ -38,14 +40,16 @@ class ProductQuantityControl extends HTMLElement {
     try {
       const res = await fetch('/cart.js');
       const cart = await res.json();
-      const item = cart.items.find(i => i.variant_id === this.variantId);
 
+      const item = cart.items.find(i => i.variant_id === this.variantId);
       if (item) {
         this.quantity = item.quantity;
+        this.lineItemKey = item.key; // needed for cart/change.js
         this.#updateUI();
         this.#show();
       } else {
         this.quantity = 0;
+        this.lineItemKey = null;
         this.#updateUI();
         this.#hide();
       }
@@ -56,15 +60,21 @@ class ProductQuantityControl extends HTMLElement {
 
   async #updateQuantity(newQty) {
     if (newQty < 0) return;
+
+    // use variant ID when adding, or line item key when updating existing one
+    const body = this.lineItemKey
+      ? { id: this.lineItemKey, quantity: newQty }
+      : { id: this.variantId, quantity: newQty };
+
     await fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: this.variantId, quantity: newQty }),
+      body: JSON.stringify(body),
     });
 
-    // Dispatch event for Horizon cart listeners
+    // immediately trigger Horizon cart updates
     document.dispatchEvent(new CustomEvent(ThemeEvents.cartUpdated));
-    this.#refreshQuantity();
+    await this.#refreshQuantity();
   }
 
   #updateUI() {
