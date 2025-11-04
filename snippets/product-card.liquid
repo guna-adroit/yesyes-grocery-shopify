@@ -169,7 +169,7 @@
   </product-card-link>
 {%- endif -%}
 
-
+{% assign product_ = product.has_only_default_variant %}
 <style>
   .quick-add-btn{
     display: none;
@@ -179,7 +179,7 @@
     margin-top: 18px;
   }
 </style>
-{%if product.has_only_default_variant == false%}
+{%unless product.has_only_default_variant %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
@@ -188,7 +188,7 @@
       display: flex;
     }
   </style>
-{%endif %}
+{% endunless %}
 
 {% stylesheet %}
   product-card-link,
