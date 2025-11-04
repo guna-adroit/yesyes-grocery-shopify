@@ -186,4 +186,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         width: 180px;
         height: 40px;
     }
+    .infinite-scroll-loading{
+        height: 100%;
+        width: auto;
+    }
 }
