@@ -68,7 +68,7 @@
     "currency_code_enabled_product_pages": false,
     "currency_code_enabled_product_cards": false,
     "currency_code_enabled_cart_items": false,
-    "quick_add": true,
+    "quick_add": false,
     "product_corner_radius": 0,
     "card_corner_radius": 4,
     "show_variant_image": false,
@@ -78,6 +78,74 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "sections": {
+      "quick-add-popup": {
+        "type": "quick-add-popup",
+        "blocks": {
+          "price": {
+            "type": "price",
+            "static": true,
+            "settings": {
+              "show_sale_price_first": true,
+              "show_installments": false,
+              "show_tax_info": false,
+              "show_product_expiry": true,
+              "type_preset": "",
+              "width": "100%",
+              "alignment": "left",
+              "font": "var(--font-body--family)",
+              "font_size": "1rem",
+              "line_height": "normal",
+              "letter_spacing": "normal",
+              "case": "none",
+              "color": "var(--color-foreground)",
+              "padding-block-start": 0,
+              "padding-block-end": 0,
+              "padding-inline-start": 0,
+              "padding-inline-end": 0
+            },
+            "blocks": {}
+          },
+          "buyButton": {
+            "type": "buy-buttons",
+            "static": true,
+            "settings": {
+              "stacking": false,
+              "show_pickup_availability": true,
+              "gift_card_form": true,
+              "padding-block-start": 0,
+              "padding-block-end": 0,
+              "padding-inline-start": 0,
+              "padding-inline-end": 0
+            },
+            "blocks": {
+              "quantity": {
+                "type": "quantity",
+                "static": true,
+                "settings": {},
+                "blocks": {}
+              },
+              "add-to-cart": {
+                "type": "add-to-cart",
+                "static": true,
+                "settings": {
+                  "style_class": "button-secondary"
+                },
+                "blocks": {}
+              },
+              "accelerated-checkout": {
+                "type": "accelerated-checkout",
+                "static": true,
+                "settings": {},
+                "blocks": {}
+              }
+            },
+            "block_order": []
+          }
+        },
+        "settings": {}
+      }
+    },
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
