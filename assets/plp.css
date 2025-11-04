@@ -185,6 +185,9 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .quick-add-btn{
         margin-top: 8px !important;
     }
+    .product-form-buttons{
+        padding-top: 0;
+    }
     .collection-load-more-btn{
         font-size: 14px;
         line-height: 25.2px;
