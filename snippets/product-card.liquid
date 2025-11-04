@@ -160,12 +160,17 @@
 
 {% assign option_count = product.options_with_values.size %}
 <style>
-
+  .quick-add-btn{
+    display: none;
+  }
 </style>
 {%if option_count > 1 %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
+    }
+    #product-card-{{ block.id }} .quick-add-btn{
+      display: block;
     }
   </style>
 {%endif %}
