@@ -113,7 +113,11 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .facets_status_price-filter{
     display: none !important;
 }
-
+.compare-at-price{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+}
 @media (min-width: 1525px) {
     .product-grid--template--26745668304977__main:is(.product-grid--grid) {
         --product-grid-columns-desktop: repeat(auto-fill, minmax(320px, 1fr));
