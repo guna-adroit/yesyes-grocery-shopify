@@ -52,7 +52,7 @@
 
               {% if variant.available %}
 
-                {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
                 <input type="hidden" name="id" ref="variantId" value="58336374063185">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
