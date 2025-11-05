@@ -14,6 +14,10 @@
         {%unless product.has_only_default_variant %}
         {% assign option_count = product.options_with_values.size %}
         {% comment %} {% if option_count == 1 %} {% endcomment %}
+         {%- for variant in product.variants -%}
+          {{variant }}
+         {% endfor %}
+
         <div class="variants-container">
           {% for option in product.options_with_values %}
             <fieldset>
