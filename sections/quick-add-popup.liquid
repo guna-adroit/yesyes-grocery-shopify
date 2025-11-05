@@ -82,6 +82,62 @@
             </div>
           {% endfor %}
         </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+  const forms = document.querySelectorAll('form.add-to-cart-form');
+
+  if (!forms.length) {
+    console.warn('No add-to-cart forms found.');
+    return;
+  }
+
+  forms.forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // ✅ Stops full page reload
+      console.log('Intercepted form submit'); // debug line
+
+      const formData = new FormData(form);
+      const button = form.querySelector('.add-to-cart-button');
+      const message = form.nextElementSibling;
+
+      button.disabled = true;
+      button.textContent = 'Adding...';
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData,
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.description || 'Error adding to cart');
+        }
+
+        const data = await response.json();
+        console.log('Added to cart:', data); // ✅ should log variant data
+
+        message.textContent = 'Added to cart!';
+        message.className = 'cart-message cart-message--success';
+        message.style.display = 'block';
+      } catch (err) {
+        console.error('Add to cart failed:', err);
+        message.textContent = 'Error adding to cart';
+        message.className = 'cart-message cart-message--error';
+        message.style.display = 'block';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Add to Cart';
+        setTimeout(() => (message.style.display = 'none'), 2000);
+      }
+    });
+  });
+});
+
+        </script>
+
+
         
         {% comment %} {% else %}
           {% content_for 'block', type: 'price', id: 'price' %}
