@@ -58,6 +58,8 @@
     </span>
   </button>
 </add-to-cart-component>
+
+<div class="quantity-control-button">
 {% for item in cart.items %}
   {% if item.variant_id == closest.product.first_available_variant.id %}
     {% render 'quantity-selector',
@@ -69,15 +71,15 @@
                     can_update_quantity: can_update_quantity
                   %}
    {% endif %}
- 
+  </div>
 {% endfor %}
               
-{% comment %} <product-quantity-control
+<product-quantity-control
   class="quantity-control-button"
   data-product-id="{{ product.id }}"
   data-variant-id="{{ product.first_available_variant.id }}"
   hidden
-></product-quantity-control> {% endcomment %}
+></product-quantity-control>
 
 
 {% stylesheet %}
