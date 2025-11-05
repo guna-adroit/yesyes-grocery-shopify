@@ -68,63 +68,89 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 300);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.add-to-cart-form').forEach(form => {
+
+
+import { CartAddEvent } from '@theme/events';
+
+/**
+ * Handles all `.add-to-cart-form` submissions with Horizon's event system.
+ */
+export function initCustomAddToCart() {
+  document.querySelectorAll('.add-to-cart-form').forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const button = form.querySelector('.add-to-cart-button');
       const variantId = form.dataset.variantId;
-      const quantity = form.querySelector('input[name="quantity"]').value || 1;
+      const quantity = parseInt(form.querySelector('input[name="quantity"]')?.value || 1, 10);
       const message = form.nextElementSibling;
 
+      if (!variantId) {
+        console.error('⚠️ Missing variant ID on form:', form);
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Adding...';
+
       try {
-        const response = await fetch('/cart/add.js', {
+        // Step 1: Add to cart via Shopify Ajax API
+        const addResponse = await fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: variantId,
-            quantity: quantity
-          })
+          body: JSON.stringify({ id: variantId, quantity }),
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!addResponse.ok) throw new Error('Add to cart failed');
 
-        // Optionally open Dawn’s cart drawer if available
-        const cartDrawer = document.querySelector('cart-drawer, #CartDrawer');
-        if (cartDrawer && typeof cartDrawer.open === 'function') {
-          cartDrawer.open();
-        }
+        // Step 2: Fetch updated cart
+        const cartResponse = await fetch('/cart.js');
+        const cartData = await cartResponse.json();
 
-        // Show success message
+        // Step 3: Dispatch Horizon’s native event (auto-opens cart drawer)
+        document.dispatchEvent(
+          new CartAddEvent(cartData, 'custom-add-to-cart', {
+            variantId,
+            itemCount: cartData.item_count,
+            didError: false,
+            source: 'custom-add-to-cart',
+          }),
+        );
+
+        // Optional feedback
         if (message) {
           message.style.display = 'block';
+          message.style.color = 'green';
           message.textContent = 'Added to cart!';
           setTimeout(() => (message.style.display = 'none'), 2000);
         }
 
-        // Optionally update cart count badge
-        updateCartCount();
-
       } catch (error) {
-        console.error('Add to cart failed:', error);
+        console.error('Error adding to cart:', error);
+
+        // Dispatch an error event (so Horizon can respond properly)
+        document.dispatchEvent(
+          new CartAddEvent(null, 'custom-add-to-cart', {
+            variantId,
+            didError: true,
+            source: 'custom-add-to-cart',
+          }),
+        );
+
         if (message) {
           message.style.display = 'block';
           message.style.color = 'red';
           message.textContent = 'Error adding to cart';
           setTimeout(() => (message.style.display = 'none'), 2000);
         }
+
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Add to Cart';
       }
     });
   });
+}
 
-  async function updateCartCount() {
-    try {
-      const res = await fetch('/cart.js');
-      const cart = await res.json();
-      const countEls = document.querySelectorAll('[data-cart-count], .cart-count-bubble');
-      countEls.forEach(el => (el.textContent = cart.item_count));
-    } catch (err) {
-      console.error('Error updating cart count', err);
-    }
-  }
-});
+// Initialize when DOM ready
+document.addEventListener('DOMContentLoaded', initCustomAddToCart);
