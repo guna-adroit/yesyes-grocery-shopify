@@ -54,9 +54,15 @@
                  
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
+                  >
+                  
+                  <button ref="addToCartButton"
+                  class="add-to-cart-btn" 
                   on:click="/handleClick"
-                  class="add-to-cart-btn" data-variant-id="{{ variant.id }}">
-                  Add to Cart
+                  data-variant-id="{{ variant.id }}">
+                    Add to Cart
+                  </button>
+                  
                 </add-to-cart-component>
                   
 
