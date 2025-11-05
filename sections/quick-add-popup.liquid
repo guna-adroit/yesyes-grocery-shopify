@@ -53,7 +53,9 @@
               {% if variant.available %}
                  
                 <add-to-cart-component
-                  ref="addToCartButtonContainer" class="add-to-cart-btn" data-variant-id="{{ variant.id }}">
+                  ref="addToCartButtonContainer" 
+                  on:click="/handleClick"
+                  class="add-to-cart-btn" data-variant-id="{{ variant.id }}">
                   Add to Cart
                 </add-to-cart-component>
                   
