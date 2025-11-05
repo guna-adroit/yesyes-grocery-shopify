@@ -59,7 +59,7 @@
   </button>
 </add-to-cart-component>
 {% for item in cart.items %}
-  {% if item.variant_id === closest.product.first_available_variant.id %}
+  {% if item.variant_id == closest.product.first_available_variant.id %}
   testid
   {% endif %}
     {% render 'quantity-selector',
