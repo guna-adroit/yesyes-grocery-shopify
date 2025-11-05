@@ -66,7 +66,7 @@
                     ref="liveRegion"
                   ></div>
                 {%- form 'product', product, data-type: 'add-to-cart-form' -%}
-                <input type="hidden" name="id" ref="variantId" value="58336374063185">
+                <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
                   >
