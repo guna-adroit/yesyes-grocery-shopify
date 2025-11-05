@@ -51,27 +51,13 @@
               </div>
 
               {% if variant.available %}
-                 <form action="/cart/add" method="post" class="add-to-cart-form">
-                    <input type="hidden" name="id" value="{{ variant.id }}">
-
-                    <label for="Quantity-{{ variant.id }}" class="add-to-cart-label">
-                      Quantity
-                    </label>
-                    <input
-                      id="Quantity-{{ variant.id }}"
-                      type="number"
-                      name="quantity"
-                      value="1"
-                      min="1"
-                      class="add-to-cart-quantity"
-                    >
-
-                    <button type="submit" class="add-to-cart-button">
-                      Add to Cart
-                    </button>
+                 <form id="test-add-to-cart" action="/cart/add" method="post">
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <input type="number" name="quantity" value="1" min="1" id="quantity">
+                    <button type="submit" id="add-to-cart-btn">Add to Cart</button>
                   </form>
 
-                  <div class="cart-message" aria-live="polite"></div>
+                  <div id="cart-message"></div>
 
 
               {% else %}
