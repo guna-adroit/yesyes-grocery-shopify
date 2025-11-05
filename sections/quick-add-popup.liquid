@@ -15,7 +15,7 @@
         {% assign option_count = product.options_with_values.size %}
         {% comment %} {% if option_count == 1 %} {% endcomment %}
          {%- for variant in product.variants -%}
-          {{variant }}
+          {{ variant.title }}
          {% endfor %}
 
         <div class="variants-container">
