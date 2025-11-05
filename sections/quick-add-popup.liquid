@@ -52,9 +52,10 @@
 
               {% if variant.available %}
                  
-                <button class="add-to-cart-btn" data-variant-id="{{ variant.id }}">
+                <add-to-cart-component
+                  ref="addToCartButtonContainer" class="add-to-cart-btn" data-variant-id="{{ variant.id }}">
                   Add to Cart
-                </button>
+                </add-to-cart-component>
                   
 
 
