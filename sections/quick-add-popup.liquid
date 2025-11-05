@@ -161,7 +161,7 @@
       </cart-icon>
       
       {% if product %}
-         {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
+         {% comment %} {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %} {% endcomment %}
       {% else %}
         <p>Loading product information...</p>
       {% endif %}
