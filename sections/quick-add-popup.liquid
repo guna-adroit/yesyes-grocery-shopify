@@ -13,7 +13,7 @@
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
         {% assign option_count = product.options_with_values.size %}
-        {% if option_count == 1 %}
+        {% comment %} {% if option_count == 1 %} {% endcomment %}
         <div class="variants-container">
           {% for option in product.options_with_values %}
             <fieldset>
@@ -96,7 +96,7 @@
             </fieldset>
           {% endfor %}
         </div>
-        {% else %}
+        {% comment %} {% else %}
           {% content_for 'block', type: 'price', id: 'price' %}
           {% liquid
             assign product_resource = closest.product
@@ -107,7 +107,7 @@
           
           {% render 'variant-quick-add', product_resource: product_resource %}
         
-        {% endif %}
+        {% endif %} {% endcomment %}
 
         {% endunless %}
       
