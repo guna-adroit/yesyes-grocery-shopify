@@ -86,7 +86,10 @@
                   name="add"
                   on:click="/handleClick"
                   data-variant-id="{{ variant.id }}">
-                    Add to Cart
+                  <span class="svg-wrapper add-to-cart-icon">
+                    {{- 'icon-trolley.svg' | inline_asset_content -}}
+                  </span>
+                    Add
                   </button>
                   
                 </add-to-cart-component>
