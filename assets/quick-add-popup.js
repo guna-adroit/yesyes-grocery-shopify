@@ -36,19 +36,19 @@ function initQuickAddPopup() {
     }
   });
 
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.quick-add-direct');
-    if (!btn) return;
+  // document.addEventListener('click', async (e) => {
+  //   const btn = e.target.closest('.quick-add-direct');
+  //   if (!btn) return;
 
-    const variantId = btn.dataset.variantId;
-    await fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: variantId, quantity: 1 })
-    });
+  //   const variantId = btn.dataset.variantId;
+  //   await fetch('/cart/add.js', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ id: variantId, quantity: 1 })
+  //   });
 
-    document.dispatchEvent(new CustomEvent('cart:updated'));
-  });
+  //   document.dispatchEvent(new CustomEvent('cart:updated'));
+  // });
 
   popup.addEventListener('click', (e) => {
   if (
