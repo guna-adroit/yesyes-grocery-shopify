@@ -9,19 +9,18 @@
   @param {string} [id] - The ID attribute for the button.
 {%- enddoc -%}
 
-
-
-{%- liquid 
-  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
-  if variant.featured_media.preview_image != blank
-    assign product_variant_media = variant.featured_media.preview_image | image_url: width: 100 
+{%- liquid
+  assign default_add_to_cart_text = 'actions.add_to_cart' | t
+  assign product_variant_media = product.selected_or_first_available_variant.featured_media.preview_image | image_url: width: 100
+  if product.selected_or_first_available_variant.featured_media.preview_image == blank
+    assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
   endif
- %}
- 
+-%}
+
 <add-to-cart-component
   ref="addToCartButtonContainer"
   data-product-variant-media="{{ product_variant_media }}"
-  data-add-to-cart-animation="true"
+  data-add-to-cart-animation="{{ settings.add_to_cart_animation }}"
 >
   <button
     id="{{ id }}"
@@ -59,7 +58,7 @@
     </span>
   </button>
 </add-to-cart-component>
-{% comment %} {% for item in cart.items %}
+{% for item in cart.items %}
   {% if item.variant_id == closest.product.first_available_variant.id %}
     {% render 'quantity-selector',
                     product: item.product,
@@ -71,7 +70,7 @@
                   %}
    {% endif %}
  
-{% endfor %} {% endcomment %}
+{% endfor %}
               
 <product-quantity-control
   class="quantity-control-button"
