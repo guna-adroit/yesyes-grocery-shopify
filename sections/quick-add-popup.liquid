@@ -50,6 +50,14 @@
                 {% endif %}
               </div>
 
+              {%- liquid
+                 
+                  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  if variant.featured_media.preview_image != blank
+                    assign product_variant_media = variant.featured_media.preview_image | image_url: width: 100
+                  endif
+                -%}
+
               {% if variant.available %}
                 <product-form-component
                   data-section-id="{{ section.id }}"
@@ -69,6 +77,8 @@
                 <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
+                  data-product-variant-media="{{ product_variant_media }}"
+                  data-add-to-cart-animation="true"
                   >
                   <button ref="addToCartButton"
                   class="button" 
