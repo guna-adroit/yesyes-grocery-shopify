@@ -9,18 +9,19 @@
   @param {string} [id] - The ID attribute for the button.
 {%- enddoc -%}
 
-{%- liquid
-  assign default_add_to_cart_text = 'actions.add_to_cart' | t
-  assign product_variant_media = product.selected_or_first_available_variant.featured_media.preview_image | image_url: width: 100
-  if product.selected_or_first_available_variant.featured_media.preview_image == blank
-    assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
-  endif
--%}
 
+
+{%- liquid 
+  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+  if variant.featured_media.preview_image != blank
+    assign product_variant_media = variant.featured_media.preview_image | image_url: width: 100 
+  endif
+ %}
+ 
 <add-to-cart-component
   ref="addToCartButtonContainer"
   data-product-variant-media="{{ product_variant_media }}"
-  data-add-to-cart-animation="{{ settings.add_to_cart_animation }}"
+  data-add-to-cart-animation="true"
 >
   <button
     id="{{ id }}"
