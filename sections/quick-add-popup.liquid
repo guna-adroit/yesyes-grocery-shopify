@@ -51,7 +51,13 @@
               </div>
 
               {% if variant.available %}
-
+                <product-form-component
+                  data-section-id="{{ section.id }}"
+                  data-product-id="{{ variant.id }}"
+                  data-product-url="{{ variant.url }}"
+                  on:submit="/handleSubmit"
+                  data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                >
                 {%- form 'product', product, data-type: 'add-to-cart-form' -%}
                 <input type="hidden" name="id" ref="variantId" value="58336374063185">
                 <add-to-cart-component
@@ -68,6 +74,7 @@
                   
                 </add-to-cart-component>
               {% endform %}
+            </product-form-component>
 
               {% else %}
                 <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
