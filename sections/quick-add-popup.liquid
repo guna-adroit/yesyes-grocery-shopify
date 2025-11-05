@@ -97,9 +97,15 @@
             </product-form-component>
 
               {% else %}
-                <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
-                  Sold Out
-                </button>
+                <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  type="submit"
+                  name="add"
+                  on:click="/handleClick"
+                  data-variant-id="{{ variant.id }}" disabled>
+                  
+                    Sold out
+                  </button>
               {% endif %}
             </div>
           {% endfor %}
