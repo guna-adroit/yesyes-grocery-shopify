@@ -109,6 +109,7 @@
 
         {% endunless %}
       
+      {% render 'cart-bubble' %}
       
       {% if product %}
          {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %}
