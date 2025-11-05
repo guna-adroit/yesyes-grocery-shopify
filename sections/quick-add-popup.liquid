@@ -110,10 +110,7 @@
         {% endunless %}
       
       <cart-icon
-        class="
-          header-actions__cart-icon
-          {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}
-        "
+        class="header-actions__cart-icon {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
         data-testid="cart-icon"
       >
         <span
@@ -123,7 +120,38 @@
           {{ 'icon-cart.svg' | inline_asset_content }}
         </span>
 
-        {% render 'cart-bubble', limit: 100, live_region: true, test_id: test_id %}
+        <div
+          ref="cartBubble"
+          class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
+          {% assign item_count = cart.item_count %}
+          {% if item_count <= 99 %}
+            data-maintain-ratio
+          {% endif %}
+        >
+          <span class="cart-bubble__background"></span>
+          <span
+            ref="cartBubbleText"
+            id="cart-bubble-text"
+            class="cart-bubble__text"
+            role="status"
+
+          >
+            <span class="visually-hidden">
+              {{- 'accessibility.cart_count' | t -}}
+              : {{ cart.item_count }}
+            </span>
+            <span
+              class="cart-bubble__text-count{% if cart == empty %} hidden{% endif %}"
+              ref="cartBubbleCount"
+              aria-hidden="true"
+              data-testid="cart-bubble"
+            >
+              {%- if limit == blank or cart.item_count < limit %}
+                {{- cart.item_count -}}
+              {%- endif -%}
+            </span>
+          </span>
+        </div>
       </cart-icon>
       
       {% if product %}
