@@ -71,42 +71,45 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    let addToCart =  document.querySelectorAll('.add-to-cart-btn');
-    console.log("addToCart");
-  addToCart.forEach(button => {
-    button.addEventListener('click', async (e) => {
-      const variantId = e.currentTarget.getAttribute('data-variant-id');
+// QUick Add
+document.addEventListener('click', async (event) => {
+  const button = event.target.closest('.add-to-cart-btn');
+  if (!button) return; // Only handle clicks on Add to Cart buttons
 
-      const formData = {
-        items: [
-          {
-            id: variantId,
-            quantity: 1
-          }
-        ]
-      };
+  const variantId = button.getAttribute('data-variant-id');
+  if (!variantId) return console.error('No variant ID found');
 
-      try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+  button.disabled = true;
+  button.textContent = 'Adding...';
 
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-
-        console.log('Added to cart:', data);
-
-        // Optional: update AJAX cart or show a success message
-        document.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-      }
+  try {
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [{ id: variantId, quantity: 1 }]
+      })
     });
-  });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+
+    console.log('✅ Added to cart:', data);
+
+    // Trigger cart drawer update if you're using Dawn theme
+    document.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
+
+    button.textContent = 'Added!';
+  } catch (error) {
+    console.error('❌ Add to Cart error:', error);
+    button.textContent = 'Error';
+  } finally {
+    setTimeout(() => {
+      button.disabled = false;
+      button.textContent = 'Add to Cart';
+    }, 2000);
+  }
 });
