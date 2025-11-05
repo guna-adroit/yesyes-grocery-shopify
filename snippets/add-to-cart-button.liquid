@@ -59,7 +59,7 @@
   </button>
 </add-to-cart-component>
 {% for item in cart.items %}
-  {% if item.variant_id == product.first_available_variant.id %}
+  {{ item.variant_id }} - {{  closest.product.first_available_variant.id }}
     {% render 'quantity-selector',
                     product: item.product,
                     in_cart_quantity: item.quantity,
@@ -68,7 +68,7 @@
                     class: 'cart-primary-typography',
                     can_update_quantity: can_update_quantity
                   %}
-  {% endif %}
+ 
 {% endfor %}
               
 <product-quantity-control
