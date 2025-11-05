@@ -12,97 +12,61 @@
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
-        {% assign option_count = product.options_with_values.size %}
-        {% comment %} {% if option_count == 1 %} {% endcomment %}
-         {%- for variant in product.variants -%}
-          {{ variant.title }} -
-         {% endfor %}
-
-        <div class="variants-container">
-          {% for option in product.options_with_values %}
-            <fieldset>
-              <legend>{{ option.name }}</legend>
-              <div class="quick-add_product-variant-details">
-                {% for value in option.values %}
-                  {% assign matched_variant = nil %}
-
-                  {%- for variant in product.variants -%}
-                    {%- assign match = true -%}
-
-                    {%- for opt in product.options_with_values -%}
-                      {%- assign opt_pos = 'option' | append: opt.position -%}
-
-                      {%- if opt.name == option.name -%}
-                        {%- if variant[opt_pos] != value -%}
-                          {%- assign match = false -%}
-                        {%- endif -%}
-                      {%- else -%}
-                        {%- if opt.selected_value and variant[opt_pos] != opt.selected_value -%}
-                          {%- assign match = false -%}
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-
-                    {%- if match -%}
-                      {% assign matched_variant = variant %}
-                      {% break %}
-                    {%- endif -%}
-                  {%- endfor -%}
-
-                  {% if matched_variant %}
-                    <input 
-                      class="variant-select-input" 
-                      value="{{ matched_variant.id }}" 
-                      type="radio" 
-                      name="{{ option.name }}" 
-                      id="{{ option.name }}-{{ value | handle }}" 
-                      {% if option.selected_value == value %}checked{% endif %}
-                    >
-
-                    <label for="{{ option.name }}-{{ value | handle }}">
-                      <div class="product_variant_item">
-                        <div class="product_variant-image">
-                          <img 
-                            src="{{ matched_variant.featured_image | default: product.featured_image | image_url: width: 200 }}" 
-                            width="" 
-                            height="" 
-                            alt="{{ matched_variant.title | escape }}"
-                          >
-                        </div>
-
-                        <div class="product_variant-title">
-                          <p>{{ product.title }}</p>
-                          <p class="product_variant-name">{{ value }}</p>
-                        </div>
-
-                        <div class="product_variant-price-container">
-                          <div class="product_variant-price">
-                            <span class="product-price">{{ matched_variant.price | money }}</span>
-
-                            {% if matched_variant.compare_at_price > matched_variant.price %}
-                              <span class="product-compare-price">{{ matched_variant.compare_at_price | money }}</span>
-                            {% endif %}
-                          </div>
-
-                          {% if matched_variant.unit_price_measurement %}
-                            <div class="product_variant-details">
-                              <span>
-                                {{ matched_variant.unit_price | money }}/{{ matched_variant.unit_price_measurement.reference_unit }}
-                              </span>
-                            </div>
-                          {% endif %}
-                        </div>
-                        <div class="">
-                          {% content_for 'block', type: 'add-to-cart', id: 'add-to-cart' %}
-                        </div>
-                      </div>
-                    </label>
-                  {% endif %}
-                {% endfor %}
+        
+          <div class="variants-container">
+        {% for variant in product.variants %}
+          <div class="product_variant_item" style="margin-bottom: 1.5rem; border: 1px solid #eee; padding: 1rem; border-radius: 8px;">
+            
+            <div class="product_variant-image">
+                <img 
+                  src="{{ variant.featured_image | default: product.featured_image | image_url: width: 200 }}" 
+                  alt="{{ variant.title | escape }}"
+                  height=""
+                  width=""
+                  loading="lazy"
+                >
               </div>
-            </fieldset>
+
+              <div class="product_variant-title">
+                <p>{{ product.title }}</p>
+                <p class="product_variant-name">{{ variant.title }}</p>
+              </div>
+
+              <div class="product_variant-price-container">
+                <div class="product_variant-price">
+                  <span class="product-price">{{ variant.price | money }}</span>
+
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="product-compare-price">{{ variant.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+
+                {% if variant.unit_price_measurement %}
+                  <div class="product_variant-details">
+                    <span>
+                      {{ variant.unit_price | money }}/{{ variant.unit_price_measurement.reference_unit }}
+                    </span>
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if variant.available %}
+                <form method="post" action="/cart/add" class="add-to-cart-form" style="margin-top: 0.5rem;">
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  <input type="number" name="quantity" value="1" min="1" style="width:60px;">
+                  <button type="submit" class="button" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:4px;">
+                    Add to Cart
+                  </button>
+                </form>
+              {% else %}
+                <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
+                  Sold Out
+                </button>
+              {% endif %}
+            </div>
           {% endfor %}
         </div>
+        
         {% comment %} {% else %}
           {% content_for 'block', type: 'price', id: 'price' %}
           {% liquid
