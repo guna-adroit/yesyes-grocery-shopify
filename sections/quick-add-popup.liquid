@@ -58,7 +58,52 @@
                     Add to Cart
                   </button>
                 </form> {% endcomment %}
-                {% content_for 'block', type: 'buy-buttons', id: 'buy-buttons' %}
+                {%liquid
+                  assign inventory_quantity = variant.inventory_quantity
+                  assign inventory_policy = variant.inventory_policy
+
+                  if variant.inventory_management == 'shopify'
+                    assign inventory_managed = true
+                  endif
+
+                  if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+                    assign quantity_rule_soldout = true
+                  endif
+
+                  if inventory_managed
+                    if inventory_quantity <= 0 and inventory_policy == 'deny' or quantity_rule_soldout
+                      assign can_add_to_cart = false
+                      assign add_to_cart_text = 'products.product.sold_out' | t
+                    else
+                      assign can_add_to_cart = true
+                      assign add_to_cart_text = 'products.product.add_to_cart' | t
+                    endif
+                  else
+                    if closest.product.selected_or_first_available_variant != null
+                      assign can_add_to_cart = true
+                      assign add_to_cart_text = 'products.product.add_to_cart' | t
+                    else
+                      assign can_add_to_cart = false
+                      assign add_to_cart_text = 'products.product.unavailable' | t
+                    endif
+                  endif
+                %}
+                {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+                <input
+                  type="hidden"
+                  name="id"
+                  ref="variantId"
+                  value="{{ variant.id }}"
+                >
+                  {% render 'add-to-cart-button',
+                      id: id,
+                      class: class,
+                      can_add_to_cart: can_add_to_cart,
+                      product: closest.product,
+                      add_to_cart_text: add_to_cart_text
+                    %}
+                  
+                {%- endform -%}
               {% else %}
                 <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
                   Sold Out
