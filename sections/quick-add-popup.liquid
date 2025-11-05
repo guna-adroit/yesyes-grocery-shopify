@@ -51,21 +51,23 @@
               </div>
 
               {% if variant.available %}
-                 
+
+                {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="58336374063185">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
                   >
-                  
                   <button ref="addToCartButton"
-                  class="add-to-cart-btn" 
+                  class="button" 
+                  type="submit"
+                  name="add"
                   on:click="/handleClick"
                   data-variant-id="{{ variant.id }}">
                     Add to Cart
                   </button>
                   
                 </add-to-cart-component>
-                  
-
+              {% endform %}
 
               {% else %}
                 <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
