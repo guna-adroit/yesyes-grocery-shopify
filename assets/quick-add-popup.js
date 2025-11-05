@@ -67,3 +67,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 300);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.add-to-cart-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const variantId = form.dataset.variantId;
+      const quantity = form.querySelector('input[name="quantity"]').value || 1;
+      const message = form.nextElementSibling;
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: quantity
+          })
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        // Optionally open Dawn’s cart drawer if available
+        const cartDrawer = document.querySelector('cart-drawer, #CartDrawer');
+        if (cartDrawer && typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+        }
+
+        // Show success message
+        if (message) {
+          message.style.display = 'block';
+          message.textContent = 'Added to cart!';
+          setTimeout(() => (message.style.display = 'none'), 2000);
+        }
+
+        // Optionally update cart count badge
+        updateCartCount();
+
+      } catch (error) {
+        console.error('Add to cart failed:', error);
+        if (message) {
+          message.style.display = 'block';
+          message.style.color = 'red';
+          message.textContent = 'Error adding to cart';
+          setTimeout(() => (message.style.display = 'none'), 2000);
+        }
+      }
+    });
+  });
+
+  async function updateCartCount() {
+    try {
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+      const countEls = document.querySelectorAll('[data-cart-count], .cart-count-bubble');
+      countEls.forEach(el => (el.textContent = cart.item_count));
+    } catch (err) {
+      console.error('Error updating cart count', err);
+    }
+  }
+});
