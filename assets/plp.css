@@ -33,13 +33,14 @@
 .product-price-container {
     display: flex;
     align-items: center;
+    gap: 8px;
     justify-content: space-between;
 }
 .product-card product-price{
-    width: 50%;
+    width: auto;
 }
 .card-product-expiry-container{
-    width: 50%;
+    width: auto;
     text-align: right;
 }
 .card-product-expiry-container .product-expiry{
