@@ -51,13 +51,14 @@
               </div>
 
               {% if variant.available %}
-                <form method="post" action="/cart/add" class="add-to-cart-form" style="margin-top: 0.5rem;">
+                {% comment %} <form method="post" action="/cart/add" class="add-to-cart-form" style="margin-top: 0.5rem;">
                   <input type="hidden" name="id" value="{{ variant.id }}">
                   <input type="number" name="quantity" value="1" min="1" style="width:60px;">
                   <button type="submit" class="button" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:4px;">
                     Add to Cart
                   </button>
-                </form>
+                </form> {% endcomment %}
+                {% content_for 'block', type: 'buy-buttons', id: 'buy-buttons' %}
               {% else %}
                 <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
                   Sold Out
