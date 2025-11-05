@@ -131,17 +131,17 @@
       >
         <div
           ref="cartBubble"
-          class=""
+          class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
           {% assign item_count = cart.item_count %}
           {% if item_count <= 99 %}
             data-maintain-ratio
           {% endif %}
         >
-          <span class=""></span>
+          <span class="cart-bubble__background"></span>
           <span
             ref="cartBubbleText"
             id="cart-bubble-text"
-            class=""
+            class="cart-bubble__text"
             role="status"
 
           >
@@ -150,13 +150,13 @@
               : {{ cart.item_count }}
             </span>
             <span
-              class="quick-add-popup-item-total"
+              class="cart-bubble__text-count{% if cart == empty %} hidden{% endif %}"
               ref="cartBubbleCount"
               aria-hidden="true"
               data-testid="cart-bubble"
             >
               {%- if limit == blank or cart.item_count < limit %}
-                Item total : {{- cart.item_count -}} 
+                {{- cart.item_count -}}
               {%- endif -%}
             </span>
           </span>
@@ -179,13 +179,6 @@
 </script>
 
 <style>
-.quick-add-popup-item-total{
-  font-family: Raleway;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: center;
-}
 .quick-add-button{
   display: flex;
   justify-content: center;
