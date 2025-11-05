@@ -51,37 +51,28 @@
               </div>
 
               {% if variant.available %}
-                 {% comment %} <form class="add-to-cart-form" data-variant-id="{{ variant.id }}" aria-live="polite">
-                  <input type="hidden" name="id" value="{{ variant.id }}">
-                  <input type="number" name="quantity" value="1" min="1" style="width:60px;">
-                  <button type="submit" class="button add-to-cart-button" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:4px;">
-                    Add to Cart
-                  </button>
-                </form>
-                <div class="cart-message" style="margin-top:6px; font-size:0.95em; display:none;"></div> {% endcomment %}
-                <button
-                  class="quick-add-direct"
-                  data-product-id="{{ variant.id }}"
-                >
-                  Add to Cart
-                </button>
-                <script>
-                  document.addEventListener('click', async (e) => {
-                    const directBtn = e.target.closest('.quick-add-direct');
-                    if (!directBtn) return;
+                 <form action="/cart/add" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="id" value="{{ variant.id }}">
 
-                    const id = directBtn.dataset.productId;
+                    <label for="Quantity-{{ variant.id }}" class="add-to-cart-label">
+                      Quantity
+                    </label>
+                    <input
+                      id="Quantity-{{ variant.id }}"
+                      type="number"
+                      name="quantity"
+                      value="1"
+                      min="1"
+                      class="add-to-cart-quantity"
+                    >
 
-                    await fetch('/cart/add.js', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ id, quantity: 1 }),
-                    });
+                    <button type="submit" class="add-to-cart-button">
+                      Add to Cart
+                    </button>
+                  </form>
 
-                    // Optionally show a toast or cart drawer
-                    alert('Added to cart!');
-                  });
-                </script>
+                  <div class="cart-message" aria-live="polite"></div>
+
 
               {% else %}
                 <button disabled style="background:#ccc; color:#666; border:none; padding:8px 16px; border-radius:4px;">
