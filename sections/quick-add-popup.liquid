@@ -96,45 +96,7 @@
 
 <script>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    let addToCart =  document.querySelectorAll('.add-to-cart-btn');
-    console.log("addToCart");
-  addToCart.forEach(button => {
-    button.addEventListener('click', async (e) => {
-      const variantId = e.currentTarget.getAttribute('data-variant-id');
-
-      const formData = {
-        items: [
-          {
-            id: variantId,
-            quantity: 1
-          }
-        ]
-      };
-
-      try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-
-        console.log('Added to cart:', data);
-
-        // Optional: update AJAX cart or show a success message
-        document.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-      }
-    });
-  });
-});
+  
 
 </script>
 
