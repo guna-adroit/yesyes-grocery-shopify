@@ -126,7 +126,7 @@
         {% endunless %}
       
       <cart-icon
-        class="header-actions__cart-icon {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
+        class=" {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
         data-testid="cart-icon"
       >
         <div
@@ -179,6 +179,10 @@
 </script>
 
 <style>
+.quick-add-popup .header-actions__cart-icon{
+  height: 0;
+  display: block;
+}
 .quick-add-popup .cart-bubble__text{
   color: black;
   font-family: 'Raleway';
