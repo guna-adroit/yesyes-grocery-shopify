@@ -150,13 +150,13 @@
               : {{ cart.item_count }}
             </span>
             <span
-              class=""
+              class="quick-add-popup-item-total"
               ref="cartBubbleCount"
               aria-hidden="true"
               data-testid="cart-bubble"
             >
               {%- if limit == blank or cart.item_count < limit %}
-                {{- cart.item_count -}}
+                Item total : {{- cart.item_count -}} 
               {%- endif -%}
             </span>
           </span>
