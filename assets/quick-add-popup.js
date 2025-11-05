@@ -1,3 +1,5 @@
+import { CartAddEvent } from '@theme/events';
+
 function initQuickAddPopup() {
   const popup = document.getElementById('QuickAddPopup');
   const popupContent = document.getElementById('QuickAddPopupContent');
@@ -70,87 +72,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-import { CartAddEvent } from '@theme/events';
 
-/**
- * Handles all `.add-to-cart-form` submissions with Horizon's event system.
- */
-export function initCustomAddToCart() {
-  document.querySelectorAll('.add-to-cart-form').forEach((form) => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('form[action$="/cart/add"]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
       const button = form.querySelector('.add-to-cart-button');
-      const variantId = form.dataset.variantId;
-      const quantity = parseInt(form.querySelector('input[name="quantity"]')?.value || 1, 10);
       const message = form.nextElementSibling;
-
-      if (!variantId) {
-        console.error('⚠️ Missing variant ID on form:', form);
-        return;
-      }
+      const formData = new FormData(form);
 
       button.disabled = true;
       button.textContent = 'Adding...';
+      message.style.display = 'none';
 
       try {
-        // Step 1: Add to cart via Shopify Ajax API
-        const addResponse = await fetch('/cart/add.js', {
+        const response = await fetch(`${window.Shopify.routes.root}cart/add.js`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: variantId, quantity }),
+          body: formData,
         });
 
-        if (!addResponse.ok) throw new Error('Add to cart failed');
+        const data = await response.json();
 
-        // Step 2: Fetch updated cart
-        const cartResponse = await fetch('/cart.js');
-        const cartData = await cartResponse.json();
+        if (!response.ok) throw new Error(data.description || 'Error adding to cart');
 
-        // Step 3: Dispatch Horizon’s native event (auto-opens cart drawer)
+        // Dispatch Horizon’s cart event
         document.dispatchEvent(
-          new CartAddEvent(cartData, 'custom-add-to-cart', {
-            variantId,
-            itemCount: cartData.item_count,
-            didError: false,
-            source: 'custom-add-to-cart',
-          }),
+          new CartAddEvent(data, form.dataset.variantId, {
+            variantId: formData.get('id'),
+            productId: data.product_id,
+            itemCount: data.quantity,
+            source: 'ajax-form',
+          })
         );
 
-        // Optional feedback
-        if (message) {
-          message.style.display = 'block';
-          message.style.color = 'green';
-          message.textContent = 'Added to cart!';
-          setTimeout(() => (message.style.display = 'none'), 2000);
-        }
-
+        message.textContent = 'Added to cart!';
+        message.className = 'cart-message cart-message--success';
+        message.style.display = 'block';
       } catch (error) {
-        console.error('Error adding to cart:', error);
-
-        // Dispatch an error event (so Horizon can respond properly)
-        document.dispatchEvent(
-          new CartAddEvent(null, 'custom-add-to-cart', {
-            variantId,
-            didError: true,
-            source: 'custom-add-to-cart',
-          }),
-        );
-
-        if (message) {
-          message.style.display = 'block';
-          message.style.color = 'red';
-          message.textContent = 'Error adding to cart';
-          setTimeout(() => (message.style.display = 'none'), 2000);
-        }
-
+        console.error(error);
+        message.textContent = 'Error adding to cart.';
+        message.className = 'cart-message cart-message--error';
+        message.style.display = 'block';
       } finally {
         button.disabled = false;
         button.textContent = 'Add to Cart';
+        setTimeout(() => (message.style.display = 'none'), 2000);
       }
     });
   });
-}
+});
 
-// Initialize when DOM ready
-document.addEventListener('DOMContentLoaded', initCustomAddToCart);
