@@ -97,7 +97,9 @@
 <script>
 
   document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    let addToCart =  document.querySelectorAll('.add-to-cart-btn');
+    console.log("addToCart");
+  addToCart.forEach(button => {
     button.addEventListener('click', async (e) => {
       const variantId = e.currentTarget.getAttribute('data-variant-id');
 
