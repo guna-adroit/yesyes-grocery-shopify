@@ -113,13 +113,6 @@
         class="header-actions__cart-icon {% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
         data-testid="cart-icon"
       >
-        <span
-          class="svg-wrapper"
-          aria-hidden="true"
-        >
-          {{ 'icon-cart.svg' | inline_asset_content }}
-        </span>
-
         <div
           ref="cartBubble"
           class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
