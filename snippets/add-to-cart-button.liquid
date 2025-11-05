@@ -59,7 +59,9 @@
   </button>
 </add-to-cart-component>
 {% for item in cart.items %}
-  {{ item.variant_id }} - {{  closest.product.first_available_variant.id }}
+  {% if item.variant_id === closest.product.first_available_variant.id %}
+  testid
+  {% endif %}
     {% render 'quantity-selector',
                     product: item.product,
                     in_cart_quantity: item.quantity,
