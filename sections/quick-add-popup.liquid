@@ -51,12 +51,13 @@
               </div>
 
               {% if variant.available %}
-                 <form method="post" action="/cart/add" class="add-to-cart-form" style="margin-top: 0.5rem;">
+                 <form method="post" action="/cart/add" class="add-to-cart-form">
                   <input type="hidden" name="id" value="{{ variant.id }}">
-                  <input type="number" name="quantity" value="1" min="1" style="width:60px;">
-                  <button type="submit" class="button" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:4px;">
+                  <input type="number" hidden name="quantity" value="1" min="1" style="width:60px;">
+                  <button type="submit" class="button button-secondary">
                     Add to Cart
                   </button>
+                  <div class="cart-message" style="margin-top:5px; color:green; font-size:0.9em; display:none;">Added to cart!</div>
                 </form> 
 
               {% else %}
