@@ -131,17 +131,17 @@
       >
         <div
           ref="cartBubble"
-          class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
+          class=""
           {% assign item_count = cart.item_count %}
           {% if item_count <= 99 %}
             data-maintain-ratio
           {% endif %}
         >
-          <span class="cart-bubble__background"></span>
+          <span class=""></span>
           <span
             ref="cartBubbleText"
             id="cart-bubble-text"
-            class="cart-bubble__text"
+            class=""
             role="status"
 
           >
