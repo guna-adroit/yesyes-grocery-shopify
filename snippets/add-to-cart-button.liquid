@@ -59,7 +59,7 @@
   </button>
 </add-to-cart-component>
 
-<div class="quantity-control-button">
+{% comment %} <div class="quantity-control-button">
 {% for item in cart.items %}
   {% if item.variant_id == closest.product.first_available_variant.id %}
     {% render 'quantity-selector',
@@ -72,7 +72,7 @@
                   %}
    {% endif %}
 {% endfor %}
-  </div>          
+  </div>           {% endcomment %}
 <product-quantity-control
   class="quantity-control-button"
   data-product-id="{{ product.id }}"
