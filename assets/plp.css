@@ -204,6 +204,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view {
     grid-template-columns: 1fr !important;
 }
-.product-grid.product-list-view .product-card{
-    
+.product-grid.product-list-view .product-card .product-grid__card{
+    flex-direction: row;
 }
