@@ -79,74 +79,61 @@
     {% endif %}
   </fieldset>
   <div class="product-view-container">
-      {% if viewport == 'desktop' %}
-        <label class="product-view_option">
-        <input
-          type="radio"
-          name="product-view"
-          value="grid-view"
-          class="product-grid-view"
-           checked
-        >
+    {% if viewport == 'desktop' %}
+      <button class="product-view_option" data-view="grid-view">
         <span class="column-picker">
           {{- 'icon-grid-view.svg' | inline_asset_content -}}
         </span>
-      </label>
+      </button>
 
-      <label class="product-view_option">
-        <input
-          type="radio"
-          name="product-view"
-          value="list-view"
-          class="product-list-view"
-        >
+      <button class="product-view_option" data-view="list-view">
         <span class="column-picker">
           {{- 'icon-list-view.svg' | inline_asset_content -}}
         </span>
-      </label>
-      {%endif %}
+      </button>
+    {% endif %}
   </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
   function initViewToggle() {
     const productGrid = document.querySelector('.product-grid');
-    const viewInputs = document.querySelectorAll('input[name="product-view"]');
+    const viewButtons = document.querySelectorAll('.product-view_option');
 
-    // If DOM not ready yet, try again shortly
-    if (!productGrid || !viewInputs.length) {
+    if (!productGrid || !viewButtons.length) {
       setTimeout(initViewToggle, 200);
       return;
     }
 
+    // Helper: activate selected button
+    const setActiveButton = (activeView) => {
+      viewButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === activeView);
+      });
+    };
+
     // --- Restore previous view from localStorage ---
-    const savedView = localStorage.getItem('productView');
-    const listInput = document.querySelector('input[value="list-view"]');
-    const gridInput = document.querySelector('input[value="grid-view"]');
+    const savedView = localStorage.getItem('productView') || 'grid-view';
+    setActiveButton(savedView);
 
-    if (savedView === 'list-view' && listInput) {
+    if (savedView === 'list-view') {
       productGrid.classList.add('product-list-view');
-      listInput.checked = true;
-
-      // Force refresh for CSS :checked to apply
-      listInput.dispatchEvent(new Event('change', { bubbles: true }));
-    } else if (gridInput) {
-      // Default to grid view
+    } else {
       productGrid.classList.remove('product-list-view');
-      gridInput.checked = true;
-
-      gridInput.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-    // --- Add event listeners to update view and save preference ---
-    viewInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        if (input.value === 'list-view' && input.checked) {
+    // --- Button click handler ---
+    viewButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedView = button.dataset.view;
+
+        setActiveButton(selectedView);
+        localStorage.setItem('productView', selectedView);
+
+        if (selectedView === 'list-view') {
           productGrid.classList.add('product-list-view');
-          localStorage.setItem('productView', 'list-view');
-        } else if (input.value === 'grid-view' && input.checked) {
+        } else {
           productGrid.classList.remove('product-list-view');
-          localStorage.setItem('productView', 'grid-view');
         }
       });
     });
@@ -154,7 +141,6 @@
 
   initViewToggle();
 });
-
 
 </script>
 
