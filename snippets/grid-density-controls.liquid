@@ -107,60 +107,37 @@
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
   const productGrid = document.querySelector('.product-grid');
   const viewInputs = document.querySelectorAll('input[name="product-view"]');
 
   if (!productGrid || !viewInputs.length) return;
 
-  // Helper function to handle label active state
-  const updateActiveLabel = (selectedInput) => {
-    document.querySelectorAll('.product-view_option').forEach(label => {
-      label.classList.remove('active');
-    });
-    selectedInput.closest('.product-view_option').classList.add('active');
-  };
-
-  // Restore saved view
+  // --- Restore previous view from localStorage ---
   const savedView = localStorage.getItem('productView');
-  if (savedView) {
-    const savedInput = document.querySelector(`input[value="${savedView}"]`);
-    if (savedInput) {
-      savedInput.checked = true;
-      updateActiveLabel(savedInput);
-
-      if (savedView === 'list-view') {
-        productGrid.classList.add('product-list-view');
-      } else {
-        productGrid.classList.remove('product-list-view');
-      }
-    }
+  if (savedView === 'list-view') {
+    productGrid.classList.add('product-list-view');
+    document.querySelector('input[value="list-view"]').checked = true;
   } else {
-    // Default: grid-view
-    const defaultInput = document.querySelector('input[value="grid-view"]');
-    if (defaultInput) {
-      defaultInput.checked = true;
-      updateActiveLabel(defaultInput);
-    }
+    // Default to grid view
+    productGrid.classList.remove('product-list-view');
+    document.querySelector('input[value="grid-view"]').checked = true;
   }
 
-  // Listen for user change
+  // --- Add event listeners to update view and save preference ---
   viewInputs.forEach(input => {
     input.addEventListener('change', () => {
-      if (!input.checked) return;
-
-      updateActiveLabel(input);
-
-      if (input.value === 'list-view') {
+      if (input.value === 'list-view' && input.checked) {
         productGrid.classList.add('product-list-view');
         localStorage.setItem('productView', 'list-view');
-      } else {
+      } else if (input.value === 'grid-view' && input.checked) {
         productGrid.classList.remove('product-list-view');
         localStorage.setItem('productView', 'grid-view');
       }
     });
   });
 });
+
 
 </script>
 
