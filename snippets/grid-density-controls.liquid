@@ -114,12 +114,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!productGrid || !viewInputs.length) return;
 
+  // --- Restore previous view from localStorage ---
+  const savedView = localStorage.getItem('productView');
+  if (savedView === 'list-view') {
+    productGrid.classList.add('product-list-view');
+    document.querySelector('input[value="list-view"]').checked = true;
+  } else {
+    // Default to grid view
+    productGrid.classList.remove('product-list-view');
+    document.querySelector('input[value="grid-view"]').checked = true;
+  }
+
+  // --- Add event listeners to update view and save preference ---
   viewInputs.forEach(input => {
     input.addEventListener('change', () => {
       if (input.value === 'list-view' && input.checked) {
         productGrid.classList.add('product-list-view');
+        localStorage.setItem('productView', 'list-view');
       } else if (input.value === 'grid-view' && input.checked) {
         productGrid.classList.remove('product-list-view');
+        localStorage.setItem('productView', 'grid-view');
       }
     });
   });
