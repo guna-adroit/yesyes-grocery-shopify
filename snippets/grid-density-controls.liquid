@@ -108,34 +108,50 @@
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-  const productGrid = document.querySelector('.product-grid');
-  const viewInputs = document.querySelectorAll('input[name="product-view"]');
+  function initViewToggle() {
+    const productGrid = document.querySelector('.product-grid');
+    const viewInputs = document.querySelectorAll('input[name="product-view"]');
 
-  if (!productGrid || !viewInputs.length) return;
+    // If DOM not ready yet, try again shortly
+    if (!productGrid || !viewInputs.length) {
+      setTimeout(initViewToggle, 200);
+      return;
+    }
 
-  // --- Restore previous view from localStorage ---
-  const savedView = localStorage.getItem('productView');
-  if (savedView === 'list-view') {
-    productGrid.classList.add('product-list-view');
-    document.querySelector('input[value="list-view"]').checked = true;
-  } else {
-    // Default to grid view
-    productGrid.classList.remove('product-list-view');
-    document.querySelector('input[value="grid-view"]').checked = true;
+    // --- Restore previous view from localStorage ---
+    const savedView = localStorage.getItem('productView');
+    const listInput = document.querySelector('input[value="list-view"]');
+    const gridInput = document.querySelector('input[value="grid-view"]');
+
+    if (savedView === 'list-view' && listInput) {
+      productGrid.classList.add('product-list-view');
+      listInput.checked = true;
+
+      // Force refresh for CSS :checked to apply
+      listInput.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (gridInput) {
+      // Default to grid view
+      productGrid.classList.remove('product-list-view');
+      gridInput.checked = true;
+
+      gridInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    // --- Add event listeners to update view and save preference ---
+    viewInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        if (input.value === 'list-view' && input.checked) {
+          productGrid.classList.add('product-list-view');
+          localStorage.setItem('productView', 'list-view');
+        } else if (input.value === 'grid-view' && input.checked) {
+          productGrid.classList.remove('product-list-view');
+          localStorage.setItem('productView', 'grid-view');
+        }
+      });
+    });
   }
 
-  // --- Add event listeners to update view and save preference ---
-  viewInputs.forEach(input => {
-    input.addEventListener('change', () => {
-      if (input.value === 'list-view' && input.checked) {
-        productGrid.classList.add('product-list-view');
-        localStorage.setItem('productView', 'list-view');
-      } else if (input.value === 'grid-view' && input.checked) {
-        productGrid.classList.remove('product-list-view');
-        localStorage.setItem('productView', 'grid-view');
-      }
-    });
-  });
+  initViewToggle();
 });
 
 
