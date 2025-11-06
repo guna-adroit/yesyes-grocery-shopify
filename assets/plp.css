@@ -248,3 +248,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view product-form-component {
     width: 100%;
 }
+.product-grid.product-list-view .product-form-buttons {
+    padding: 0;
+}
