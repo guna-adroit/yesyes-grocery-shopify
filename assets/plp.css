@@ -215,3 +215,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view .product-card  .card-product-vendor{
     display: none;
 }
+.product-grid.product-list-view .sale-ribbon{
+    padding: 1.5px 10px;
+    top: 8px;
+}
