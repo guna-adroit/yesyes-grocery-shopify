@@ -200,3 +200,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         width: 25px;
     }
 }
+
+.product-grid.product-list-view {
+    grid-template-columns: 1fr !important;
+}
+.product-grid.product-list-view .product-card{
+    
+}
