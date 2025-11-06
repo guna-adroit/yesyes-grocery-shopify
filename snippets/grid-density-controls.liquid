@@ -95,53 +95,7 @@
   </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-  function initViewToggle() {
-    const productGrid = document.querySelector('.product-grid');
-    const viewButtons = document.querySelectorAll('.product-view_option');
-
-    if (!productGrid || !viewButtons.length) {
-      setTimeout(initViewToggle, 200);
-      return;
-    }
-
-    // Helper: activate selected button
-    const setActiveButton = (activeView) => {
-      viewButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.view === activeView);
-      });
-    };
-
-    // --- Restore previous view from localStorage ---
-    const savedView = localStorage.getItem('productView') || 'grid-view';
-    setActiveButton(savedView);
-
-    if (savedView === 'list-view') {
-      productGrid.classList.add('product-list-view');
-    } else {
-      productGrid.classList.remove('product-list-view');
-    }
-
-    // --- Button click handler ---
-    viewButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const selectedView = button.dataset.view;
-
-        setActiveButton(selectedView);
-        localStorage.setItem('productView', selectedView);
-
-        if (selectedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-        } else {
-          productGrid.classList.remove('product-list-view');
-        }
-      });
-    });
-  }
-
-  initViewToggle();
-});
-
+ 
 </script>
 
 {% stylesheet %}
