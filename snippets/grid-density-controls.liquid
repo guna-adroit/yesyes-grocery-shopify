@@ -107,6 +107,25 @@
       {%endif %}
   </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const productGrid = document.querySelector('.product-grid');
+  const viewInputs = document.querySelectorAll('input[name="product-view"]');
+
+  if (!productGrid || !viewInputs.length) return;
+
+  viewInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.value === 'list-view' && input.checked) {
+        productGrid.classList.add('product-list-view');
+      } else if (input.value === 'grid-view' && input.checked) {
+        productGrid.classList.remove('product-list-view');
+      }
+    });
+  });
+});
+
+</script>
 
 {% stylesheet %}
   .column-options-wrapper {
