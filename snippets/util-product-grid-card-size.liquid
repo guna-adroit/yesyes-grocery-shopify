@@ -12,7 +12,7 @@
 {% liquid
   if section.settings.layout_type == 'organic'
     if section.settings.product_grid_width == 'centered'
-      assign product_card_size = '250px'
+      assign product_card_size = '260px'
     else
       assign product_card_size = '260px'
     endif
@@ -22,7 +22,7 @@
       when 'small'
         assign product_card_size = '165px'
       when 'medium'
-        assign product_card_size = '250px'
+        assign product_card_size = '260px'
       when 'large'
         assign product_card_size = '340px'
       when 'extra-large'

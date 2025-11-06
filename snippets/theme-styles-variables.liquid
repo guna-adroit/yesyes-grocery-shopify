@@ -10,6 +10,13 @@
   {{ primary_font_italic | font_face: font_display: 'swap' }}
   {{ primary_font_bold_italic | font_face: font_display: 'swap' }}
 
+
+  {%for custom_font_variant in settings.custom_font_1.variants %}
+    {% if custom_font_variant.style == "normal" %}
+      {{  custom_font_variant| font_face: font_display: 'swap'}}
+    {%endif %}
+  {% endfor %}
+
   {% if settings.type_subheading_font != settings.type_body_font %}
     {%- liquid
       assign secondary_font_bold = settings.type_subheading_font | font_modify: 'weight', 'bold'
@@ -47,6 +54,8 @@
     {{ accent_font_bold | font_face: font_display: 'swap' }}
     {{ accent_font_italic | font_face: font_display: 'swap' }}
     {{ accent_font_bold_italic | font_face: font_display: 'swap' }}
+
+    
   {% endif %}
 
   :root {
@@ -56,8 +65,10 @@
     --normal-content-width: 42rem;
     --wide-content-width: 46rem;
     --narrow-page-width: 90rem;
-    --normal-page-width: 120rem;
+    --normal-page-width: 110rem;
     --wide-page-width: 150rem;
+
+    --custom-font-1: {{ settings.custom_font_1.family }};
 
     /* Section Heights */
     --section-height-small: 15rem;

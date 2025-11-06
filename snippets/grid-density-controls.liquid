@@ -45,7 +45,7 @@
       </label>
 
     {% elsif viewport == 'desktop' %}
-      <label class="column-options__option">
+      {% comment %} <label class="column-options__option">
         <input
           type="radio"
           name="grid"
@@ -58,7 +58,7 @@
           data-skip-node-update
         >
         <span class="column-picker column-picker--default">
-          {{- 'icon-grid-default.svg' | inline_asset_content -}}
+          {{- 'icon-grid-view.svg' | inline_asset_content -}}
         </span>
       </label>
 
@@ -73,12 +73,30 @@
           data-skip-node-update
         >
         <span class="column-picker column-picker--zoom-out">
-          {{- 'icon-grid-dense.svg' | inline_asset_content -}}
+          {{- 'icon-list-view.svg' | inline_asset_content -}}
         </span>
-      </label>
+      </label> {% endcomment %}
     {% endif %}
   </fieldset>
+  <div class="product-view-container">
+    {% if viewport == 'desktop' %}
+      <button class="product-view_option" data-view="grid-view">
+        <span class="column-picker">
+          {{- 'icon-grid-view.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      <button class="product-view_option" data-view="list-view">
+        <span class="column-picker">
+          {{- 'icon-list-view.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    {% endif %}
+  </div>
 </div>
+<script>
+ 
+</script>
 
 {% stylesheet %}
   .column-options-wrapper {
@@ -171,9 +189,39 @@
   .column-options__option:hover .column-picker {
     background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
-
-  .column-options__option-input:checked ~ .column-picker {
-    color: rgb(var(--color-foreground-rgb));
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  .column-options__option-input ~ .column-picker {
+    color: #ED1D23;
+    opacity: 0.4;
   }
+  .column-options__option-input:checked ~ .column-picker {
+    color: #ED1D23;
+    opacity: 1;
+  }
+  .product-view-container{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .product-view-container input{
+    display: none;
+  }
+  .product-view_option {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0px;
+    height: auto;
+    outline: none;
+  }
+
+.product-view_option .column-picker {
+  color: #ED1D23;
+  opacity: 0.4;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.product-view_option.active .column-picker {
+  color: #ED1D23;
+  opacity: 1;
+}
 {% endstylesheet %}

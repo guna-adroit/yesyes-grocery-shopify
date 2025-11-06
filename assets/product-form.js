@@ -65,6 +65,42 @@ export class AddToCartComponent extends Component {
     if (animationEnabled && !event.target.closest('.quick-add-modal')) {
       this.#animateFlyToCart();
     }
+    
+    const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
+
+    if (productCard){
+      const quantityControl = productCard.querySelector('product-quantity-control');
+      const addToCartButton = productCard.querySelector('.add-to-cart-button');
+
+      if (addToCartButton) {
+        addToCartButton.style.display = 'none'; // Hides the button
+      }
+
+      if (quantityControl && quantityControl.hidden) {
+        // Show the quantity control for this specific product card
+        quantityControl.hidden = false;
+        
+        // Change the innerHTML of the quantity control (example)
+        quantityControl.innerHTML = `
+          <quantity-selector-component class="quantity-selector cart-primary-typography" ref="quantitySelectors[]">
+            <button class="button quantity-minus button-unstyled" type="button" name="minus" on:click="/decreaseQuantity" ref="quantityButtons[]">
+              <span class="visually-hidden">Decrease quantity</span><span class="svg-wrapper icon-plus"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.75 7H11.25" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round"></path>
+          </svg>
+          </span>
+            </button>
+            <input type="number" name="updates[]" value="1" min="0" on:blur="/setQuantity" on:focus="/selectInputValue" ref="quantityInput" aria-label="Quantity" data-cart-line="1" step="1">
+            <button class="button quantity-plus button-unstyled" type="button" name="plus" on:click="/increaseQuantity" ref="quantityButtons[]">
+              <span class="visually-hidden">Increase quantity</span><span class="svg-wrapper icon-plus"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="vertical" d="M2.75 7H11.25" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round"></path>
+            <path class="horizontal" d="M7 2.75L7 11.25" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round"></path>
+          </svg>
+          </span>
+            </button>
+          </quantity-selector-component>
+        `;
+      }
+    }
   }
 
   #preloadImage = () => {

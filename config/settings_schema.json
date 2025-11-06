@@ -1354,6 +1354,16 @@
           }
         ],
         "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "Custom Fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "custom_font_1",
+        "label": "Custom Font 1",
+        "default": "raleway_n4"
       }
     ]
   },

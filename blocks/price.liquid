@@ -35,7 +35,7 @@
     endif
   endcapture
 %}
-
+<div class="product-price-container">
 <product-price
   class="text-block {{ text_block_classes }} text-{{ block_settings.alignment }} {{ block_settings.type_preset | default: 'paragraph' }} spacing-style"
   data-block-id="{{ block.id }}"
@@ -83,6 +83,14 @@
     </div>
   {%- endif -%}
 </product-price>
+{% if block.settings.show_product_expiry %}
+  {% if closest.product.metafields.custom.product_expiry != blank %}
+    <div class="card-product-expiry-container">
+      <p class="product-expiry">{{ closest.product.metafields.custom.product_expiry }}</p>
+    </div>
+  {% endif %}
+{% endif %}
+</div>
 
 {% # theme-check-disable %}
 {% stylesheet %}
@@ -129,6 +137,12 @@
       "id": "show_tax_info",
       "label": "t:settings.show_tax_info",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_expiry",
+      "label": "Show Product Expiry",
+      "default": true
     },
     {
       "type": "header",

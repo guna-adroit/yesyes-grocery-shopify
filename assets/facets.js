@@ -77,6 +77,7 @@ class FacetsFormComponent extends Component {
     this.#updateURLHash();
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
+    observePaginationChange();
   };
 
   /**
@@ -421,6 +422,7 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
+    observePaginationChange();
   }
 
   /**
@@ -720,17 +722,17 @@ class FacetStatusComponent extends Component {
     facetStatus.classList.remove('bubble', 'facets__bubble');
 
     if (checkedInputElementsCount === 0) {
-      facetStatus.innerHTML = '';
+      facetStatus.innerHTML = '0';
       return;
     }
 
     if (checkedInputElementsCount === 1) {
-      facetStatus.innerHTML = checkedInputElements[0]?.dataset.label ?? '';
+      facetStatus.innerHTML = '';
       return;
     }
 
     facetStatus.innerHTML = checkedInputElementsCount.toString();
-    facetStatus.classList.add('bubble', 'facets__bubble');
+    //facetStatus.classList.add('bubble', 'facets__bubble');
   }
 
   /**
@@ -908,3 +910,206 @@ const CURRENCY_DECIMALS = {
   XTS: 0,
   XUA: 0,
 };
+
+// Infinite scorll
+
+// let endlessScroll = null;
+
+//   function initAjaxinate() {
+//     const container = document.querySelector('#AjaxinateContainer');
+//     const pagination = document.querySelector('#AjaxinatePagination');
+
+//     if (!container || !pagination) {
+//       console.warn('Ajaxinate: container or pagination not found');
+//       return;
+//     }
+
+//     endlessScroll = null;
+
+//     endlessScroll = new Ajaxinate({
+//       method: 'click',
+//       container: '#AjaxinateContainer',
+//       pagination: '#AjaxinatePagination',
+//     });
+
+//     console.log('Ajaxinate initialized');
+//   }
+
+//   function observePaginationChange() {
+//     const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+//     if (!parent) return;
+
+//     const observer = new MutationObserver((mutations, obs) => {
+//       const pagination = document.querySelector('#AjaxinatePagination');
+//       if (pagination) {
+//         console.log('✅ Pagination updated');
+//         obs.disconnect();
+//         initAjaxinate();
+//       }
+//     });
+
+//     observer.observe(parent, {
+//       childList: true,
+//       subtree: true,
+//     });
+//   }
+
+//   document.addEventListener('DOMContentLoaded', initAjaxinate);
+
+//   document.addEventListener(ThemeEvents.FilterUpdate, () => {
+//     console.log('🌀 Filter updated');
+//     observePaginationChange();
+//   });
+
+window.endlessScroll = window.endlessScroll || null;
+let reinitTimer = null;
+let paginationObserver = null;
+
+function localDebounce(fn, delay = 150) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+function destroyAjaxinate() {
+  const instance = window.endlessScroll;
+
+  if (instance && instance.request && instance.request.readyState !== 4) {
+    try {
+      instance.request.abort();
+      // console.log(' Aborted old Ajaxinate request');
+    } catch (e) {
+      console.warn('Abort error', e);
+    }
+  }
+
+  const oldPagination = document.querySelector('#AjaxinatePagination');
+  if (oldPagination && oldPagination.parentNode) {
+    const newPagination = oldPagination.cloneNode(true);
+    oldPagination.parentNode.replaceChild(newPagination, oldPagination);
+    // console.log('🧹 Old pagination listeners cleared');
+  }
+
+  window.endlessScroll = null;
+}
+
+function initAjaxinate() {
+  const container = document.querySelector('#AjaxinateContainer');
+  const pagination = document.querySelector('#AjaxinatePagination');
+  const paginationLink = pagination?.querySelector('a');
+
+  if (!container || !pagination || !paginationLink) {
+    console.warn('Ajaxinate init skipped: container/pagination missing');
+    return;
+  }
+
+  destroyAjaxinate();
+
+  try {
+    window.endlessScroll = new Ajaxinate({
+      method: 'click',
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination',
+    });
+
+    // console.log('✅ Ajaxinate initialized');
+  } catch (err) {
+    console.error('Ajaxinate init failed', err);
+  }
+}
+
+
+function observePaginationChange() {
+  if (paginationObserver) {
+    paginationObserver.disconnect();
+    paginationObserver = null;
+  }
+
+  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+  if (!parent) return;
+
+  paginationObserver = new MutationObserver(
+    localDebounce((mutations, obs) => {
+      const pagination = document.querySelector('#AjaxinatePagination');
+      const paginationLink = pagination?.querySelector('a');
+
+      if (pagination && paginationLink) {
+        // console.log('🔁 Pagination updated → initializing Ajaxinate');
+        obs.disconnect();
+        paginationObserver = null;
+        initAjaxinate();
+      }
+    }, 150)
+  );
+
+  paginationObserver.observe(parent, { childList: true, subtree: true });
+}
+
+// Initial load
+document.addEventListener('DOMContentLoaded', initAjaxinate);
+
+// Reinitialize when filters are updated
+// document.addEventListener(
+//   ThemeEvents.FilterUpdate,
+//   localDebounce(() => {
+//     console.log('🌀 Filter updated — watching for pagination...');
+//     destroyAjaxinate();
+//     observePaginationChange();
+//   }, 200)
+// );
+
+
+// List view 
+ document.addEventListener('DOMContentLoaded', () => {
+  function initViewToggle() {
+    const productGrid = document.querySelector('.product-grid');
+    const viewButtons = document.querySelectorAll('.product-view_option');
+
+    if (!productGrid || !viewButtons.length) {
+      setTimeout(initViewToggle, 200);
+      return;
+    }
+
+    // Helper: activate selected button
+    const setActiveButton = (activeView) => {
+      viewButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === activeView);
+      });
+    };
+
+    // --- Restore previous view from localStorage ---
+    const savedView = localStorage.getItem('productView') || 'grid-view';
+    setActiveButton(savedView);
+
+    if (savedView === 'list-view') {
+      productGrid.classList.add('product-list-view');
+    } else {
+      productGrid.classList.remove('product-list-view');
+    }
+
+    // --- Button click handler ---
+    viewButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedView = button.dataset.view;
+
+        setActiveButton(selectedView);
+        localStorage.setItem('productView', selectedView);
+
+        if (selectedView === 'list-view') {
+          productGrid.classList.add('product-list-view');
+        } else {
+          productGrid.classList.remove('product-list-view');
+        }
+      });
+    });
+  }
+
+  initViewToggle();
+
+  document.addEventListener(ThemeEvents.FilterUpdate, () => {
+     console.log('🌀 Filter updated');
+     initViewToggle();
+   });
+});

@@ -1,0 +1,363 @@
+{% comment %}
+  Quick Add Popup Section for Horizon theme
+  Dynamically loaded via Section Rendering API
+{% endcomment %}
+
+<quick-add-popup id="QuickAddPopup" class="quick-add-popup hidden" role="dialog" aria-modal="true">
+  <div class="popup-overlay"></div>
+  <div class="popup-content">
+    <button class="popup-close" aria-label="Close">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </button>
+    <div id="QuickAddPopupContent" class="quick-add-popup__content">
+        <h2>{{ product.title }}</h2>
+        {%unless product.has_only_default_variant %}
+        
+          <table class="variants-container">
+        {% for variant in product.variants %}
+          <tr class="product_variant_item" style="">
+            
+            <td class="product_variant-image">
+                <img 
+                  src="{{ variant.featured_image | default: product.featured_image | image_url: width: 200 }}" 
+                  alt="{{ variant.title | escape }}"
+                  height=""
+                  width=""
+                  loading="lazy"
+                >
+            </td>
+
+              <td class="product_variant-title">
+                <p>{{ product.title }}</p>
+                <p class="product_variant-name">{{ variant.title }}</p>
+              </td>
+
+              <td class="product_variant-price-container">
+                <div class="product_variant-price">
+                  <span class="product-price">{{ variant.price | money }}</span>
+
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="product-compare-price">{{ variant.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+
+                {% if variant.unit_price_measurement %}
+                  <div class="product_variant-details">
+                    <span>
+                      {{ variant.unit_price | money }}/{{ variant.unit_price_measurement.reference_unit }}
+                    </span>
+                  </div>
+                {% endif %}
+              </td>
+              <td>
+
+              {%- liquid
+                 
+                  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  if variant.featured_media.preview_image != blank
+                    assign product_variant_media = variant.featured_media.preview_image | image_url: width: 100
+                  endif
+                -%}
+
+              {% if variant.available %}
+                <product-form-component
+                  data-section-id="{{ section.id }}"
+                  data-product-id="{{ variant.id }}"
+                  data-product-url="{{ variant.url }}"
+                  on:submit="/handleSubmit"
+                  data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                >
+                  <div
+                    class="visually-hidden"
+                    aria-live="assertive"
+                    role="status"
+                    aria-atomic="true"
+                    ref="liveRegion"
+                  ></div>
+                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+                <add-to-cart-component
+                  ref="addToCartButtonContainer" 
+                  data-product-variant-media="{{ product_variant_media }}"
+                  data-add-to-cart-animation="true"
+                  >
+                  <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  type="submit"
+                  name="add"
+                  on:click="/handleClick"
+                  data-variant-id="{{ variant.id }}">
+                  <span class="svg-wrapper add-to-cart-icon">
+                    {{- 'icon-trolley.svg' | inline_asset_content -}}
+                  </span>
+                    Add
+                  </button>
+                  
+                </add-to-cart-component>
+              {% endform %}
+            </product-form-component>
+
+              {% else %}
+                <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  data-variant-id="{{ variant.id }}" disabled>
+                  
+                    Sold out
+                  </button>
+              {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        
+          
+        
+        {% comment %} {% else %}
+          {% content_for 'block', type: 'price', id: 'price' %}
+          {% liquid
+            assign product_resource = closest.product
+            if request.visual_preview_mode and product_resource == blank
+              assign product_resource = collections.all.products.first
+            endif
+          -%}
+          
+          {% render 'variant-quick-add', product_resource: product_resource %}
+        
+        {% endif %} {% endcomment %}
+
+        {% endunless %}
+      
+      <cart-icon
+        class=""
+        data-testid="cart-icon"
+      >
+        <div
+          ref="cartBubble"
+          class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
+          {% assign item_count = cart.item_count %}
+          {% if item_count <= 99 %}
+            data-maintain-ratio
+          {% endif %}
+        >
+          <span class="cart-bubble__background"></span>
+          <span
+            ref="cartBubbleText"
+            id="cart-bubble-text"
+            class="cart-bubble__text"
+            role="status"
+
+          >
+            <span class="visually-hidden">
+              {{- 'accessibility.cart_count' | t -}}
+              : {{ cart.item_count }}
+            </span> Items total : 
+            <span
+              class="cart-bubble__text-count{% if cart == empty %} hidden{% endif %}"
+              ref="cartBubbleCount"
+              aria-hidden="true"
+              data-testid="cart-bubble"
+            >
+              {%- if limit == blank or cart.item_count < limit %}
+                {{- cart.item_count -}}
+              {%- endif -%}
+            </span>
+          </span>
+        </div>
+      </cart-icon>
+      
+      {% if product %}
+         {% comment %} {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %} {% endcomment %}
+      {% else %}
+        <p>Loading product information...</p>
+      {% endif %}
+    </div>
+  </div>
+</quick-add-popup>
+
+<script>
+
+  
+
+</script>
+
+<style>
+.variants-container tr td{
+  padding: 10px;
+}
+td.product_variant-image {
+    width: 100px;
+    padding: 8px;
+}
+  .quick-add-popup cart-icon{
+    height: 50px;
+    display: flex;
+  }
+.quick-add-popup .header-actions__cart-icon{
+  height: 0;
+  display: block;
+}
+.quick-add-popup .cart-bubble__text{
+  color: black;
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+}
+.quick-add-popup .cart-bubble{
+  position: unset;
+  width: 100%;
+  display: block;
+}
+.quick-add-popup .cart-bubble__background{
+  display: none;
+}
+.quick-add-button{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  width: 130px;
+  height: 57px;
+  background-color: #be171c;
+  color: white;
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22.4px;
+}
+.quick-add-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.quick-add-popup.hidden { display: none; }
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+.popup-content {
+  position: relative;
+  background: #fff;
+  max-width: 700px;
+  width: 90%;
+  padding: 24px;
+  border-radius: 12px;
+  z-index: 2;
+  min-height: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+.popup-close {
+  position: absolute;
+    top: -40px;
+    right: -40px;
+    border: none;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    background: #D9D9D9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 200px;
+    color: #E90000;
+}
+.quick-add_product-variant-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+.quick-add-popup__content fieldset{
+  border: none;
+  padding: 0;
+}
+.variants-container{
+  margin-bottom: 15px;
+  border-spacing: 0 15px;
+}
+.variant-select-input{
+  display: none;
+}
+.quick-add_product-variant-details label{
+  cursor: pointer;
+}
+.variant-select-input:checked+label{
+  border: 1px solid #ed1d23;
+  border-radius: 7px;
+}
+.quick-add-popup__content h2{
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+}
+.quick-add-popup__content .variant-picker__form{
+  margin-bottom: 15px;
+}
+.quick-add-popup .variant-option__button-label:has(:checked){
+  background: black;
+}
+.product_variant_item{
+            /*display: flex;*/
+            gap: 20px;
+            background-color:  #fee9e9;
+            border-radius: 8px;
+            padding: 18px 22px;
+            justify-content: 
+        }
+        .product_variant-image img{
+            width: 77px;
+            border-radius: 7px;;
+        }
+        .product_variant-title{
+            /*display: flex;*/
+            flex-direction: column;
+            gap: 15px;
+        }
+        .product-compare-price{
+            font-family: 'Raleway';
+            font-weight: 800;
+            font-size: 16px;
+            line-height: 26px;
+            text-decoration: line-through;
+        }
+        .product_variant-title p{
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 25.2px;
+            margin: 0;
+        }
+        p.product_variant-name{
+          font-weight: 800;
+          font-size: 18px;
+          line-height: 26px;
+        }
+        .product_variant-price{
+          display: flex;
+          align-items: center;
+          gap: 24px;
+        }
+        .product_variant-price .product-price{
+          font-family: 'Raleway';
+          font-weight: 800;
+          font-size: 22px;
+          line-height: 26px;
+        }
+        .product_variant-details span{
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 19.6px;
+        }
+        .product_variant-price-container{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+</style>

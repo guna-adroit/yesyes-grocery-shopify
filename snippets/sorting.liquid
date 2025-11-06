@@ -95,13 +95,15 @@
         >
           {{- 'actions.sort' | t -}}
         </span>
-        <span
-          class="facets__status h6 desktop:hidden"
-        >
-          {{- status -}}
-        </span>
-        <span class="svg-wrapper icon-caret icon-animated">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+        <span class="facets__status-container">
+          <span
+            class="facets__status h6"
+          >
+            {{- status -}}
+          </span>
+          <span class="svg-wrapper icon-caret icon-animated">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
         </span>
       </summary>
       <floating-panel-component
@@ -357,5 +359,25 @@
     &:focus-within {
       overflow-y: visible;
     }
+  }
+
+  /* Custom CSS */
+
+  @media screen and (min-width: 750px) {
+    .facets--horizontal .sorting-filter .facets__status {
+        display: unset;
+    }
+  }
+  span.facets__status-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ED1D23;
+      padding: 6px 16px;
+      border-radius: 5px;
+  }
+  .sorting-filter .facets__label, .sorting-filter .facets__status{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
   }
 {% endstylesheet %}
