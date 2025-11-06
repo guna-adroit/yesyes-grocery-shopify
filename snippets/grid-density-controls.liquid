@@ -251,14 +251,20 @@
   .product-view-container input{
     display: none;
   }
-  .product-view-container input ~ .column-picker{
-    color: #ED1D23;
-    opacity: 0.4;
-    cursor: pointer;
-  }
-  .product-view-container input:checked ~ .column-picker,.product-view_option.active input ~ .column-picker { 
-    color: #ED1D23;
-    opacity: 1;
-    
-  }
+  .product-view_option {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.product-view_option .column-picker {
+  opacity: 0.6;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.product-view_option.active .column-picker {
+  color: #ED1D23;
+  opacity: 1;
+}
 {% endstylesheet %}
