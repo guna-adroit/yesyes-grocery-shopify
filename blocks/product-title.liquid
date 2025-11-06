@@ -11,11 +11,12 @@
     ref="productTitleLink"
     href="{% render 'product-card-variant-url', product: closest.product %}"
   >
-    {% if block.settings.show_product_type %}
-      <span class="card-product-type">{{ closest.product.type }}</span>
-    {%  endif %}
-    {% render 'text', fallback_text: product_title, block: block %}
-    
+    <div class="">
+      {% if block.settings.show_product_type %}
+        <span class="card-product-type">{{ closest.product.type }}</span>
+      {%  endif %}
+      {% render 'text', fallback_text: product_title, block: block %}
+    </div>
   </a>
 {% endif %}
 
