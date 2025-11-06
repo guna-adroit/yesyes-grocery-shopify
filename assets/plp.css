@@ -211,6 +211,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 }
 .product-grid.product-list-view .product-card  .product-price-container{
     flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
 }
 .product-grid.product-list-view .product-card  .card-product-vendor{
     display: none;
