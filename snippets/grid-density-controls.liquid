@@ -78,6 +78,34 @@
       </label>
     {% endif %}
   </fieldset>
+  <div class="product-view-container">
+      {% if viewport == 'desktop' %}
+        <label class="column-options__option">
+        <input
+          type="radio"
+          name="grid"
+          value="grid-view"
+          class="product-grid-view"
+          checked
+        >
+        <span class="column-picker column-picker--default">
+          {{- 'icon-grid-view.svg' | inline_asset_content -}}
+        </span>
+      </label>
+
+      <label class="column-options__option">
+        <input
+          type="radio"
+          name="grid"
+          value="list-view"
+          class="product-list-view"
+        >
+        <span class="column-picker column-picker--zoom-out">
+          {{- 'icon-list-view.svg' | inline_asset_content -}}
+        </span>
+      </label>
+      {%endif %}
+  </div>
 </div>
 
 {% stylesheet %}
