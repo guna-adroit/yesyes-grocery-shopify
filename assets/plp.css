@@ -245,3 +245,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: flex;
     align-items: center;
 }
+.product-grid.product-list-view product-form-component {
+    width: 100%;
+}
