@@ -207,7 +207,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view .product-card .product-grid__card{
     flex-direction: row;
     display: grid;
-    grid-template-columns: 100px 70px 40% 1fr 1fr 1fr;;
+    grid-template-columns: 100px 70px 35% 1fr 1fr;
 }
 .product-grid.product-list-view .product-card  .product-price-container{
     flex-direction: column;
