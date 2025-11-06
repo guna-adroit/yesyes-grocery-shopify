@@ -80,10 +80,10 @@
   </fieldset>
   <div class="product-view-container">
       {% if viewport == 'desktop' %}
-        <label class="column-options__option">
+        <label class="product-view_option">
         <input
           type="radio"
-          name="grid"
+          name="product-view"
           value="grid-view"
           class="product-grid-view"
           checked
@@ -93,14 +93,14 @@
         </span>
       </label>
 
-      <label class="column-options__option">
+      <label class="product-view_option">
         <input
           type="radio"
-          name="grid"
+          name="product-view"
           value="list-view"
           class="product-list-view"
         >
-        <span class="column-picker column-picker--zoom-out">
+        <span class="product-view-picker">
           {{- 'icon-list-view.svg' | inline_asset_content -}}
         </span>
       </label>
