@@ -234,5 +234,9 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     width: 20px;
 }
 .product-grid.product-list-view .quick-add-button-wrapper{
-    
+    display: flex;
+    align-items: center;
+}
+.product-grid.product-list-view .quick-add-button-wrapper .quick-add-btn{
+    margin: 0;
 }
