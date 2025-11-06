@@ -16,6 +16,10 @@
         <span class="card-product-type">{{ closest.product.type }}</span>
       {%  endif %}
       {% render 'text', fallback_text: product_title, block: block %}
+      <div class="list-view card-product-vendor">
+        {% assign product_vendor = '<p>by ' | append: closest.product.vendor | append: '</p>' %}
+        {{ product_vendor }}
+      </div>
     </div>
   </a>
 {% endif %}
