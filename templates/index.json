@@ -787,7 +787,7 @@
         "collection": "all",
         "banner_image": "shopify://shop_images/delicious_basmati_rice_social_media_banner_1.png",
         "layout_type": "grid",
-        "carousel_on_mobile": true,
+        "carousel_on_mobile": false,
         "max_products": 10,
         "columns": 5,
         "mobile_columns": "2",
