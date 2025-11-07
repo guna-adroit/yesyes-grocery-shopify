@@ -1064,86 +1064,45 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view 
-  function initViewToggle() {
-    const productGrid = document.querySelector('.product-grid');
-    const viewButtons = document.querySelectorAll('.product-view_option');
+  document.addEventListener('DOMContentLoaded', () => {
+  const productGrid = document.querySelector('.product-grid');
+  const viewButtons = document.querySelectorAll('.product-view_option');
 
-    if (!productGrid || !viewButtons.length) return;
+  if (!productGrid || !viewButtons.length) return;
 
-    // Prevent duplicate listeners
+  // Helper to activate the correct button
+  const setActiveButton = (activeView) => {
     viewButtons.forEach(btn => {
-      btn.replaceWith(btn.cloneNode(true));
+      btn.classList.toggle('active', btn.dataset.view === activeView);
     });
+  };
 
-    const updatedViewButtons = document.querySelectorAll('.product-view_option');
+  // Restore saved view
+  const savedView = localStorage.getItem('productView') || 'grid-view';
+  setActiveButton(savedView);
 
-    // Helper to set the active button
-    const setActiveButton = (activeView) => {
-      updatedViewButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.view === activeView);
-      });
-    };
-
-    // Restore last view
-    const savedView = localStorage.getItem('productView') || 'grid-view';
-    setActiveButton(savedView);
-
-    if (savedView === 'list-view') {
-      productGrid.classList.add('product-list-view');
-    } else {
-      productGrid.classList.remove('product-list-view');
-    }
-
-    // Click handler
-    updatedViewButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const selectedView = button.dataset.view;
-        setActiveButton(selectedView);
-        localStorage.setItem('productView', selectedView);
-
-        if (selectedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-        } else {
-          productGrid.classList.remove('product-list-view');
-        }
-      });
-    });
-
-    console.log('✅ View toggle initialized');
+  if (savedView === 'list-view') {
+    productGrid.classList.add('product-list-view');
+  } else {
+    productGrid.classList.remove('product-list-view');
   }
 
-  // Initialize once
-  initViewToggle();
+  // Click handlers
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selectedView = button.dataset.view;
 
-  // --- MutationObserver to watch for changes in product list ---
-  const gridContainer = document.querySelector('[id*="ProductGridContainer"], .collection, .collection__products, main');
+      setActiveButton(selectedView);
+      localStorage.setItem('productView', selectedView);
 
-  if (gridContainer) {
-    const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        // Check if new nodes were added or product grid changed
-        if (
-          [...mutation.addedNodes].some(
-            node =>
-              node.nodeType === 1 &&
-              (node.matches('.product-grid') || node.querySelector('.product-grid'))
-          )
-        ) {
-          console.log('🌀 Product grid updated — reinitializing view toggle');
-          initViewToggle();
-          break;
-        }
+      if (selectedView === 'list-view') {
+        productGrid.classList.add('product-list-view');
+      } else {
+        productGrid.classList.remove('product-list-view');
       }
     });
-
-    observer.observe(gridContainer, {
-      childList: true,
-      subtree: true,
-    });
-
-    console.log('👀 MutationObserver active');
-  }
-
+  });
+});
 
 
 
