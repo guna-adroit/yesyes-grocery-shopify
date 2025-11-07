@@ -1065,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', () => {
           productGrid.classList.remove('product-list-view');
           console.log("class removed");
         }
-    }, 500);
+    }, 800);
     
   });
 });
