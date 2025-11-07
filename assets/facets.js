@@ -1068,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     const viewButtons = document.querySelectorAll('.product-view_option');
 
     if (!productGrid || !viewButtons.length) {
-      setTimeout(initViewToggle, 200);
+      setTimeout(initViewToggle, 100);
       return;
     }
 
