@@ -69,7 +69,7 @@
         "image_1": "shopify://shop_images/Group_1000009210.png",
         "mobile_image": "shopify://shop_images/Frame_2_1.png",
         "media_type_2": "image",
-        "link": "",
+        "link": "shopify://collections/all",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
