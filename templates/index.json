@@ -1074,6 +1074,60 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "hero_9rqzTi": {
+      "type": "hero",
+      "blocks": {
+        "button_jrfxrR": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop now",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "custom_color": "",
+            "custom_class": "",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "button_jrfxrR"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Group_1000009197.png",
+        "mobile_image": "shopify://shop_images/Group_1000009197.png",
+        "media_type_2": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
@@ -1082,6 +1136,7 @@
     "section_wHChnB",
     "products_grid_with_banner_KJAxda",
     "slideshow_GqQCxE",
-    "product_recommendations_fHN9ri"
+    "product_recommendations_fHN9ri",
+    "hero_9rqzTi"
   ]
 }
