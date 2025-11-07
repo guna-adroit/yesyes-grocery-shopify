@@ -1042,6 +1042,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+  document.addEventListener(ThemeEvents.FilterUpdate, () => {
+    const productGrid = document.querySelector('.product-grid');
+  });
 });
 
 
