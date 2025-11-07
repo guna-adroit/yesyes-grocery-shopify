@@ -246,7 +246,7 @@
       "settings": {
         "heading": "{{ metaobjects.homepage_featured_categories_heading[\"featured-categories\"].heading.value }}",
         "desktop_visible": 10,
-        "mobile_visible": 4
+        "mobile_visible": 2
       }
     }
   },
