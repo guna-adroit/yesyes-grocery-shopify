@@ -685,7 +685,7 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
-                "show_product_type": true,
+                "show_product_type": false,
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
