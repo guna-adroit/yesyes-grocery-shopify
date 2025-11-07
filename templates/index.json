@@ -1077,28 +1077,6 @@
     },
     "hero_9rqzTi": {
       "type": "hero",
-      "blocks": {
-        "button_jrfxrR": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop now",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "custom_color": "",
-            "custom_class": "",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "button_jrfxrR"
-      ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -1118,7 +1096,7 @@
         "section_width": "page-width",
         "section_height": "large",
         "section_height_custom": 50,
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-1",
         "toggle_overlay": true,
         "overlay_color": "#00000026",
         "overlay_style": "gradient",
