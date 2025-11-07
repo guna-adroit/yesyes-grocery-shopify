@@ -90,7 +90,6 @@ class FacetsFormComponent extends Component {
       startViewTransition(() => sectionRenderer.renderSection(this.sectionId), ['product-grid']);
     } else {
       sectionRenderer.renderSection(this.sectionId);
-      console.log("filter change");
     }
   }
 
