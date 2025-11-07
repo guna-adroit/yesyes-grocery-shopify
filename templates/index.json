@@ -128,50 +128,102 @@
         },
         "category_W6wfC9": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.oils }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards.oils.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.oils.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.oils.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.oils.background_color.value }}"
           }
         },
         "category_CMzYVj": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.noodles }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards.noodles.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.noodles.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.noodles.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.noodles.background_color.value }}"
           }
         },
         "category_rk8P47": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.paneer }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards.paneer.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.paneer.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.paneer.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.paneer.background_color.value }}"
           }
         },
         "category_XA7PeL": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.frozen }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards.frozen.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.frozen.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.frozen.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.frozen.background_color.value }}"
           }
         },
         "category_xWhxJC": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.flours }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards.flours.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.flours.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.flours.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.flours.background_color.value }}"
           }
         },
         "category_KN3yjM": {
           "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"] }}",
           "settings": {
-            "title": "Category Name",
-            "collection_link": "",
-            "bg_color": "#f3f3f3"
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].background_color.value }}"
+          }
+        },
+        "category_Tjnnh9": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.rice }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards.rice.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.rice.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.rice.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.rice.background_color.value }}"
+          }
+        },
+        "category_7Ptg7e": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].background_color.value }}"
+          }
+        },
+        "category_3WUznW": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"veggies-flowers\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"veggies-flowers\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"veggies-flowers\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"veggies-flowers\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"veggies-flowers\"].background_color.value }}"
+          }
+        },
+        "category_FaAXgg": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards.noodles }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards.noodles.category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards.noodles.collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards.noodles.category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards.noodles.background_color.value }}"
           }
         }
       },
@@ -184,7 +236,11 @@
         "category_rk8P47",
         "category_XA7PeL",
         "category_xWhxJC",
-        "category_KN3yjM"
+        "category_KN3yjM",
+        "category_Tjnnh9",
+        "category_7Ptg7e",
+        "category_3WUznW",
+        "category_FaAXgg"
       ],
       "name": "Featured Categories",
       "settings": {
