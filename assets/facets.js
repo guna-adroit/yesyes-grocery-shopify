@@ -1010,29 +1010,23 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
   if (!productGrid || !viewButtons.length) return;
 
-  // --- Helper: set active button + toggle class ---
   const setActiveButton = (activeView) => {
-    // Toggle active button
     viewButtons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.view === activeView);
     });
 
-    // Add/remove list-view class
     if (activeView === 'list-view') {
       productGrid.classList.add('product-list-view');
     } else {
       productGrid.classList.remove('product-list-view');
     }
 
-    // Save selected view
     localStorage.setItem('productView', activeView);
   };
 
-  // --- Restore saved view ---
   const savedView = localStorage.getItem('productView') || 'grid-view';
   setActiveButton(savedView);
 
-  // --- Click handlers ---
   viewButtons.forEach(button => {
     button.addEventListener('click', () => {
       const selectedView = button.dataset.view;
@@ -1043,36 +1037,47 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
   console.log('✅ View toggle initialized');
 }
 
-// --- Run once on first load ---
-document.addEventListener('DOMContentLoaded', () => {
-  initViewToggle();
+let gridObserver = null;
 
-  // --- Independent MutationObserver for product grid updates ---
+function observeGridChanges() {
+  if (gridObserver) {
+    gridObserver.disconnect();
+    gridObserver = null;
+  }
+
   const gridParent = document.querySelector('[id*="ProductGridContainer"], .collection, .collection__products, main');
   if (!gridParent) return;
 
-  const gridObserver = new MutationObserver((mutationsList) => {
+  gridObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (
         [...mutation.addedNodes].some(
           node =>
             node.nodeType === 1 &&
             (node.matches('.product-grid') || node.querySelector?.('.product-grid'))
-        )
       ) {
-        console.log('🌀 Product grid updated → reinitializing view toggle');
+        console.log('🌀 Product grid changed → reinitializing view toggle');
         initViewToggle();
+        observeGridChanges(); // reconnect observer for the new grid
         break;
       }
     }
   });
 
-  gridObserver.observe(gridParent, {
-    childList: true,
-    subtree: true,
-  });
+  gridObserver.observe(gridParent, { childList: true, subtree: true });
+  console.log('👀 MutationObserver active for product grid');
+}
 
-  console.log('👀 MutationObserver active for view toggle');
+document.addEventListener('DOMContentLoaded', () => {
+  initViewToggle();
+  observeGridChanges();
+
+  // 🔁 Also reinitialize on filter update
+  document.addEventListener(ThemeEvents.FilterUpdate, () => {
+    console.log('🌀 Filter updated → reinitializing view toggle + observer');
+    initViewToggle();
+    observeGridChanges(); // ✅ restart observer for new DOM
+  });
 });
 
 
