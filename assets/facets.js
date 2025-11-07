@@ -1068,48 +1068,48 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     const viewButtons = document.querySelectorAll('.product-view_option');
 
     if (!productGrid || !viewButtons.length) {
-      setTimeout(initViewToggle, 100);
-      return console.log("failed");;
+      // Retry only a few times to avoid infinite loops
+      setTimeout(initViewToggle, 150);
+      return;
     }
 
-    // Helper: activate selected button
+    // Helper to set active button
     const setActiveButton = (activeView) => {
       viewButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.view === activeView);
       });
     };
 
-    // --- Restore previous view from localStorage ---
+    // Restore previous view from localStorage
     const savedView = localStorage.getItem('productView') || 'grid-view';
     setActiveButton(savedView);
+    productGrid.classList.toggle('product-list-view', savedView === 'list-view');
 
-    if (savedView === 'list-view') {
-      productGrid.classList.add('product-list-view');
-    } else {
-      productGrid.classList.remove('product-list-view');
-    }
-
-    // --- Button click handler ---
+    // Handle clicks
     viewButtons.forEach(button => {
       button.addEventListener('click', () => {
         const selectedView = button.dataset.view;
-
         setActiveButton(selectedView);
         localStorage.setItem('productView', selectedView);
-
-        if (selectedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-        } else {
-          productGrid.classList.remove('product-list-view');
-        }
+        productGrid.classList.toggle('product-list-view', selectedView === 'list-view');
       });
     });
   }
 
+  // Initialize first time
   initViewToggle();
 
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-     console.log('🌀 Filter updated');
-     initViewToggle();
-   });
+  // When Shopify section or filter replaces the product grid
+  document.addEventListener('shopify:section:load', initViewToggle);
+
+  // Shopify Filter API event
+  document.addEventListener('shopify:section:reloaded', initViewToggle);
+
+  // Dawn emits "filter:update" not ThemeEvents.FilterUpdate by default
+  document.addEventListener('filter:update', () => {
+    console.log('🌀 Filter updated');
+    // Wait a bit for DOM to re-render
+    setTimeout(initViewToggle, 200);
+  });
 });
+
