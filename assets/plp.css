@@ -261,3 +261,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     padding-left: 8px !important;
     text-align: left !important;
 }
+.price-facet__input::placeholder{
+    color: black;
+}
