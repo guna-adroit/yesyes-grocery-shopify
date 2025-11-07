@@ -78,7 +78,6 @@ class FacetsFormComponent extends Component {
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
     observePaginationChange();
-    initViewToggle();
   };
 
   /**
@@ -424,7 +423,6 @@ class FacetRemoveComponent extends Component {
 
     facetsForm.updateFiltersByURL(url);
     observePaginationChange();
-    initViewToggle();
   }
 
   /**
