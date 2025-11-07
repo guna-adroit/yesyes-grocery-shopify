@@ -1060,10 +1060,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (savedView === 'list-view') {
           productGrid.classList.add('product-list-view');
-          console.log("class added");
+          console.log("FilterEvent: class added");
         } else {
           productGrid.classList.remove('product-list-view');
-          console.log("class removed");
+          console.log("FilterEvent: class removed");
         }
     }, 800);
     
