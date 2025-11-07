@@ -254,3 +254,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .facets__summary{
     text-transform: uppercase;
 }
+.field__label.price-facet__label{
+    display: none;
+}
