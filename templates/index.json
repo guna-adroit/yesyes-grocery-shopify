@@ -15,6 +15,7 @@
         "text_YLPk4p": {
           "type": "text",
           "name": "t:names.heading",
+          "disabled": true,
           "settings": {
             "text": "<p>Browse our latest products</p>",
             "width": "fit-content",
@@ -42,6 +43,7 @@
         "button_H9gpTf": {
           "type": "button",
           "name": "t:names.button",
+          "disabled": true,
           "settings": {
             "label": "Shop all",
             "link": "shopify://collections/all",
@@ -64,7 +66,8 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/9004dc071f4590d973f462a8999afe41c5c4bbc5.png",
+        "image_1": "shopify://shop_images/Group_1000009203.png",
+        "mobile_image": "shopify://shop_images/Frame_2_1.png",
         "media_type_2": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -76,11 +79,11 @@
         "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
+        "section_width": "full-width",
+        "section_height": "large",
         "section_height_custom": 50,
         "color_scheme": "scheme-6",
-        "toggle_overlay": true,
+        "toggle_overlay": false,
         "overlay_color": "#12121266",
         "overlay_style": "solid",
         "gradient_direction": "to bottom",
