@@ -1045,11 +1045,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     const productGrid = document.querySelector('.product-grid');
     const viewButtons = document.querySelectorAll('.product-view_option');
-    console.log(productGrid);
-    console.log(viewButtons);
     const setActiveButton = (activeView) => {
         viewButtons.forEach(btn => {
           btn.classList.toggle('active', btn.dataset.view === activeView);
+          console.log("Active done");
         });
       };
 
@@ -1059,8 +1058,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (savedView === 'list-view') {
         productGrid.classList.add('product-list-view');
+        console.log("class added");
       } else {
         productGrid.classList.remove('product-list-view');
+        console.log("class removed");
       }
   });
 });
