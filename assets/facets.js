@@ -78,6 +78,7 @@ class FacetsFormComponent extends Component {
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
     observePaginationChange();
+    initViewToggle();
   };
 
   /**
@@ -423,6 +424,7 @@ class FacetRemoveComponent extends Component {
 
     facetsForm.updateFiltersByURL(url);
     observePaginationChange();
+    initViewToggle();
   }
 
   /**
@@ -1062,7 +1064,6 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view 
- document.addEventListener('DOMContentLoaded', () => {
   function initViewToggle() {
     const productGrid = document.querySelector('.product-grid');
     const viewButtons = document.querySelectorAll('.product-view_option');
@@ -1120,6 +1121,6 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     // Wait a bit to ensure DOM is re-rendered
     setTimeout(initViewToggle, 200);
   });
-});
+
 
 
