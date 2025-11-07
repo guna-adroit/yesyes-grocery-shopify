@@ -26,7 +26,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
-
+    <link rel="stylesheet" href="{{ 'plp.css' | asset_url }}">
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
