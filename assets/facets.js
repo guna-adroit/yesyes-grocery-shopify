@@ -1004,11 +1004,14 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code
- function initViewToggle() {
+function initViewToggle() {
   const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
-  if (!productGrid || !viewButtons.length) return;
+  if (!productGrid || !viewButtons.length) {
+    console.warn('⚠️ View toggle elements not found, retrying...');
+    return; // stop safely — no error
+  }
 
   const setActiveButton = (activeView) => {
     viewButtons.forEach(btn => {
@@ -1024,15 +1027,20 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     localStorage.setItem('productView', activeView);
   };
 
+  // Restore saved view
   const savedView = localStorage.getItem('productView') || 'grid-view';
   setActiveButton(savedView);
 
+  // Add event listeners safely
   viewButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const selectedView = button.dataset.view;
-      setActiveButton(selectedView);
-    });
+    button.removeEventListener('click', handleViewChange); // prevent duplicates
+    button.addEventListener('click', handleViewChange);
   });
+
+  function handleViewChange(e) {
+    const selectedView = e.currentTarget.dataset.view;
+    setActiveButton(selectedView);
+  }
 
   console.log('✅ View toggle initialized');
 }
@@ -1058,7 +1066,7 @@ function observeGridChanges() {
       ) {
         console.log('🌀 Product grid changed → reinitializing view toggle');
         initViewToggle();
-        observeGridChanges(); // reconnect observer for the new grid
+        observeGridChanges(); // reconnect observer for the new DOM
         break;
       }
     }
@@ -1072,11 +1080,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initViewToggle();
   observeGridChanges();
 
-  // 🔁 Also reinitialize on filter update
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     console.log('🌀 Filter updated → reinitializing view toggle + observer');
     initViewToggle();
-    observeGridChanges(); // ✅ restart observer for new DOM
+    observeGridChanges();
   });
 });
 
