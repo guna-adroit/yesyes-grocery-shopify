@@ -1009,7 +1009,8 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
   const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
-  if (!productGrid || !viewButtons.length) return;
+  if (!productGrid || !viewButtons.length) {
+    return;}
 
   // Helper to activate the correct button
   const setActiveButton = (activeView) => {
