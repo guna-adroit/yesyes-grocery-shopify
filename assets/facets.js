@@ -1068,20 +1068,23 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     const productGrid = document.querySelector('.product-grid');
     const viewButtons = document.querySelectorAll('.product-view_option');
 
-    if (!productGrid || !viewButtons.length) {
-      // Retry after a short delay if elements aren't yet in DOM
-      setTimeout(initViewToggle, 150);
-      return null;
-    }
+    if (!productGrid || !viewButtons.length) return;
+
+    // Prevent duplicate listeners
+    viewButtons.forEach(btn => {
+      btn.replaceWith(btn.cloneNode(true));
+    });
+
+    const updatedViewButtons = document.querySelectorAll('.product-view_option');
 
     // Helper to set the active button
     const setActiveButton = (activeView) => {
-      viewButtons.forEach(btn => {
+      updatedViewButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.view === activeView);
       });
     };
 
-    // Restore previously selected view
+    // Restore last view
     const savedView = localStorage.getItem('productView') || 'grid-view';
     setActiveButton(savedView);
 
@@ -1091,11 +1094,10 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
       productGrid.classList.remove('product-list-view');
     }
 
-    // Button click handler
-    viewButtons.forEach(button => {
+    // Click handler
+    updatedViewButtons.forEach(button => {
       button.addEventListener('click', () => {
         const selectedView = button.dataset.view;
-
         setActiveButton(selectedView);
         localStorage.setItem('productView', selectedView);
 
@@ -1106,21 +1108,43 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
         }
       });
     });
+
+    console.log('✅ View toggle initialized');
   }
 
-  // Initial setup
+  // Initialize once
   initViewToggle();
 
-  // Re-run after Shopify dynamic updates
-  document.addEventListener('shopify:section:load', initViewToggle);
-  document.addEventListener('shopify:section:reloaded', initViewToggle);
+  // --- MutationObserver to watch for changes in product list ---
+  const gridContainer = document.querySelector('[id*="ProductGridContainer"], .collection, .collection__products, main');
 
-  // Dawn’s filter update event
-  document.addEventListener('filter:update', () => {
-    console.log('🌀 Filter updated');
-    // Wait a bit to ensure DOM is re-rendered
-    setTimeout(initViewToggle, 200);
-  });
+  if (gridContainer) {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        // Check if new nodes were added or product grid changed
+        if (
+          [...mutation.addedNodes].some(
+            node =>
+              node.nodeType === 1 &&
+              (node.matches('.product-grid') || node.querySelector('.product-grid'))
+          )
+        ) {
+          console.log('🌀 Product grid updated — reinitializing view toggle');
+          initViewToggle();
+          break;
+        }
+      }
+    });
+
+    observer.observe(gridContainer, {
+      childList: true,
+      subtree: true,
+    });
+
+    console.log('👀 MutationObserver active');
+  }
+
+
 
 
 
