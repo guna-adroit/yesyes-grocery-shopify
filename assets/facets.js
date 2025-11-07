@@ -1047,6 +1047,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewButtons = document.querySelectorAll('.product-view_option');
     console.log(productGrid);
     console.log(viewButtons);
+    const setActiveButton = (activeView) => {
+        viewButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.view === activeView);
+        });
+      };
+
+      // Restore saved view
+      const savedView = localStorage.getItem('productView') || 'grid-view';
+      setActiveButton(savedView);
+
+      if (savedView === 'list-view') {
+        productGrid.classList.add('product-list-view');
+      } else {
+        productGrid.classList.remove('product-list-view');
+      }
   });
 });
 
