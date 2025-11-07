@@ -494,6 +494,23 @@
     "products_grid_with_banner_KJAxda": {
       "type": "products-grid-with-banner",
       "blocks": {
+        "button_QqaQpQ": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "View All Products",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-secondary",
+            "custom_color": "",
+            "custom_class": "section_view_all",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -557,6 +574,7 @@
             "product_list_button_g3gcEd": {
               "type": "_product-list-button",
               "name": "t:names.product_list_button",
+              "disabled": true,
               "settings": {
                 "label": "View all",
                 "open_in_new_tab": false,
@@ -667,19 +685,22 @@
           ]
         }
       },
+      "block_order": [
+        "button_QqaQpQ"
+      ],
       "name": "Products grid with Banner",
       "settings": {
         "collection": "all",
         "banner_image": "shopify://shop_images/delicious_basmati_rice_social_media_banner_1.png",
         "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
+        "carousel_on_mobile": true,
+        "max_products": 10,
+        "columns": 5,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
         "rows_gap": 24,
-        "icons_style": "arrow",
+        "icons_style": "chevron",
         "icons_shape": "none",
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
