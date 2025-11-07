@@ -1250,17 +1250,19 @@
         "ai_gen_block_a735947_P3LHRP": {
           "type": "ai_gen_block_a735947",
           "settings": {
-            "heading": "Welcome to our store",
-            "subheading": "<p>Discover our latest collection</p>",
-            "alignment": "center",
-            "max_width": 800,
-            "padding_top": 40,
-            "padding_bottom": 40,
-            "heading_size": 48,
-            "heading_color": "#000000",
-            "subheading_size": 16,
-            "subheading_color": "#000000",
-            "subheading_spacing": 12
+            "heading": "Popular Products",
+            "total_products": 10,
+            "products_per_collection": 10,
+            "collection_1": "rice",
+            "collection_2": "soya",
+            "collection_3": "milk",
+            "collection_4": "frontpage",
+            "collection_5": "",
+            "collection_6": "",
+            "view_all_url": "shopify://collections/all",
+            "view_all_text": "View All Products",
+            "spacing_top": 40,
+            "spacing_bottom": 40
           },
           "blocks": {}
         }
