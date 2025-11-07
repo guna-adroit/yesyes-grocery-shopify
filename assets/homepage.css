@@ -116,10 +116,15 @@ slideshow-controls[controls-on-media] {
     width: 720px;
     border-radius: 5px;
     font-family: Inter;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 25.2px;
+    font-weight: 400;
+    font-size: 16px;
     letter-spacing: 0;
+    font-family: Inter;
+    line-height: 21.4px;
+
+}
+.predictive-search:has(.predictive-search-dropdown) .search-input:hover {
+    border: 1px solid #ed1d23;
 }
 .predictive-search__reset-button{
     position: absolute;
