@@ -1055,7 +1055,7 @@ function observeGridChanges() {
           node =>
             node.nodeType === 1 &&
             (node.matches('.product-grid') || node.querySelector?.('.product-grid'))
-      ) {
+      )) {
         console.log('🌀 Product grid changed → reinitializing view toggle');
         initViewToggle();
         observeGridChanges(); // reconnect observer for the new grid
