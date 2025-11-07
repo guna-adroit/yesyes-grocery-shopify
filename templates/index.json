@@ -739,7 +739,7 @@
                 "stacking": false,
                 "show_pickup_availability": false,
                 "gift_card_form": true,
-                "padding-block-start": 0,
+                "padding-block-start": 18,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
