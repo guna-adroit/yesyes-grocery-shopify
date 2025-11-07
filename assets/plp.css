@@ -257,3 +257,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .field__label.price-facet__label{
     display: none;
 }
+.price-facet__input{
+    padding-left: 8px;
+    text-align: left;
+}
