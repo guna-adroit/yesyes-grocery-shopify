@@ -6,6 +6,10 @@
   fetchpriority="low"
 ></script>
 
+{% if section.settings.enable_infinite_scroll == false %}
+  <script src="{{ 'ajaxinate.min.js' | asset_url  }}" defer></script>
+{% endif %}
+
 {% javascript %}
   const url = new URL(window.location.href);
   if (url.hash) {
@@ -48,6 +52,16 @@
       {% assign products_per_page = section.settings.products_per_page %}
     {% endif %}
 
+    {% capture filterbar %}
+    <div class="collection-title-container">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      <div class="filter-bar-grid">
+        {% # theme-check-disable %}
+        {% content_for 'block', type: 'filters',id: 'filters',results: collection,results_size: collection.products_count %}
+        {% # theme-check-enable %}
+      </div>
+    </div>
+    {% endcapture %}
     {% paginate collection.products by products_per_page %}
       {% capture children %}
         {% for product in collection.products %}
@@ -63,20 +77,29 @@
             {% # theme-check-enable %}
           </li>
         {% endfor %}
+
       {% endcapture %}
 
       {% render 'product-grid',
         section: section,
+        filterbar: filterbar,
         children: children,
         products: collection.products,
         paginate: paginate,
         enable_infinite_scroll: section.settings.enable_infinite_scroll
       %}
+      <div id="AjaxinatePagination" class="collection-load-more-container">
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" class="collection-load-more-btn">Load More</a>
+        {% endif %}
+      </div>
     {% endpaginate %}
   </div>
 </results-list>
+  
 
 {% stylesheet %}
+  
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
 
@@ -146,6 +169,59 @@
     @media screen and (max-width: 749px) {
       margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
       margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+    }
+  }
+
+  /* Custom CSS */
+  .collection-title-container, .collection-load-more-container{
+    grid-column: 5 / -1;
+    text-align: center;
+  }
+  .collection-load-more-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  h1.collection-title{
+    font-family: var(--custom-font-1);
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+  }
+  .collection-load-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px 33px;
+      border: 2px solid #ED1D23;
+      border-radius: 8px;
+      font-family: var(--custom-font-1);
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 25.2px;
+      width: 220px;
+      height: 65px;
+  }
+
+  @media screen and (max-width: 750px){
+    .facets-toggle {
+        display: none !important;
+    }
+    .filter-bar-grid .facets-toggle {
+        display: flex !important;
+    }
+    .product-grid{
+      padding: 0 15px;
+    }
+    .collection-load-more-btn{
+        font-size: 14px;
+        line-height: 25.2px;
+        width: 180px;
+        height: 40px;
+    }
+    h1.collection-title{
+      font-size: 24px;
+      line-height: 24px;
     }
   }
 {% endstylesheet %}
@@ -224,9 +300,9 @@
       "type": "range",
       "id": "products_per_page",
       "label": "t:settings.products_per_page",
-      "min": 8,
+      "min": 6,
       "max": 36,
-      "step": 4,
+      "step": 3,
       "default": 24,
       "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
     },

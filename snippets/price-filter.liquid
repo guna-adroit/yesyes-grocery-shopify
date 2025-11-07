@@ -31,7 +31,7 @@
   >
     <summary class="facets__summary">
       <span class="facets__label">{{ filter.label }}</span>
-      <facet-status-component class="facets__status">
+      <facet-status-component class="facets__status facets_status_price-filter">
         <template ref="moneyFormat">{{ shop.money_format }}</template>
 
         <span
@@ -55,11 +55,34 @@
             {%- endif -%}
           {%- endif -%}
         </span>
+        
       </facet-status-component>
       <span class="svg-wrapper icon-caret icon-animated">
         {{- 'icon-caret.svg' | inline_asset_content -}}
       </span>
     </summary>
+    <div class="custom-price-reset">
+      <div class="price-facet__highest-price">
+          {%- assign formatted_highest_price = filter.range_max | money -%}
+          {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
+      </div>
+        {% if filter.min_value.value != null or filter.max_value.value != null %}
+        <facet-remove-component
+                  class="custom-filter-reset"
+                  data-url="{{ filter.url_to_remove }}"
+                  tabindex="0"
+                  role="button"
+                  on:click="/removeFilter?form="
+                  on:keydown="/removeFilter?form="
+                  
+                >
+                <span class="svg-wrapper">
+                  {{ 'icon-filter-reset.svg' | inline_asset_content }}
+                </span> Reset
+          </facet-remove-component>
+    {% endif %}
+    </div>
+    
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
@@ -75,6 +98,7 @@
         on:change="/updatePriceFilterAndResults"
       >
         <div class="price-facet__inputs-wrapper facets__inputs-wrapper facets__inputs-wrapper--row">
+          <span>{{ cart.currency.symbol }}</span>
           <div class="field price-facet__field">
             <input
               class="field__input price-facet__input"
@@ -98,11 +122,11 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-GTE"
             >
-              {{ cart.currency.symbol }}
+              From
             </label>
           </div>
 
-          <div class="price-facet__separator">{{ 'fields.separator' | t }}</div>
+          <div class="price-facet__separator">{{ 'fields.separator' | t }}</div> <span>{{ cart.currency.symbol }}</span>
 
           <div class="field price-facet__field">
             <input
@@ -127,15 +151,12 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-LTE"
             >
-              {{ cart.currency.symbol }}
+             To
             </label>
           </div>
         </div>
 
-        <div class="price-facet__highest-price">
-          {%- assign formatted_highest_price = filter.range_max | money -%}
-          {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
-        </div>
+        
 
         {% if filter.min_value.value != null or filter.max_value.value != null %}
           {% assign has_active_values = true %}
@@ -166,7 +187,7 @@
   .price-facet {
     container-type: inline-size;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .facets__inputs-wrapper.price-facet__inputs-wrapper {
@@ -192,6 +213,7 @@
   .facets .facets__inputs-wrapper.price-facet__inputs-wrapper {
     padding: var(--style-border-width-inputs);
     gap: calc(var(--gap-sm) + (var(--style-border-width-inputs) * 2));
+    align-items: center;
   }
 
   .facets--horizontal .facets__panel-content:has(.price-facet) {
@@ -232,8 +254,25 @@
   .field__label.price-facet__label {
     top: 0;
     left: 0;
-    color: var(--facets-input-label-color);
+    color: #000000;
     padding: var(--input-padding-y) var(--input-padding-x);
     transform: none;
   }
+  .price-facet__highest-price {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+    color: #000000;
+}
+.price-facet__input{
+  border: 1px solid #000;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25.2px;
+}
+.field__label.price-facet__label{
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25.2px;
+}
 {% endstylesheet %}

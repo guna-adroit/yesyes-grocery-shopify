@@ -38,7 +38,7 @@
     >
       {% if can_add_to_cart %}
         <span class="svg-wrapper add-to-cart-icon">
-          {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+          {{- 'icon-trolley.svg' | inline_asset_content -}}
         </span>
       {% endif %}
       <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
@@ -59,7 +59,62 @@
   </button>
 </add-to-cart-component>
 
+{% comment %} <div class="quantity-control-button">
+{% for item in cart.items %}
+  {% if item.variant_id == closest.product.first_available_variant.id %}
+    {% render 'quantity-selector',
+                    product: item.product,
+                    in_cart_quantity: item.quantity,
+                    line_index: item.index,
+                    min: 0,
+                    class: 'cart-primary-typography',
+                    can_update_quantity: can_update_quantity
+                  %}
+   {% endif %}
+{% endfor %}
+  </div>           {% endcomment %}
+<product-quantity-control
+  class="quantity-control-button"
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ product.first_available_variant.id }}"
+  hidden
+></product-quantity-control>
+
+
 {% stylesheet %}
+.quantity-control-button .quantity-selector{
+  background-color: #ED1D23;
+  justify-content: space-evenly;
+}
+.quantity-control-button .quantity-selector :is(.quantity-minus,.quantity-plus){
+  color: white;
+}
+.quantity-control-button  .quantity-selector input[type=number]{
+  color:white;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.quantity-control button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f3f3f3;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.quantity-control .qty-value {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
   .add-to-cart-text {
     display: flex;
     gap: var(--gap-2xs);

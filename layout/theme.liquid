@@ -26,7 +26,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
-
+    <link rel="stylesheet" href="{{ 'plp.css' | asset_url }}">
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
@@ -60,8 +60,15 @@
 
     {% sections 'footer-group' %}
 
+    {% render 'search-modal' %}
+
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    
+    {% section 'quick-add-popup' %}
+    <script type="module" src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
+    <script type="module" src="{{ 'product-quantity-control.js' | asset_url }}" defer></script>
   </body>
 </html>
+

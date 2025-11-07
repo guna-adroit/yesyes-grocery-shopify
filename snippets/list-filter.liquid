@@ -49,7 +49,14 @@
       <span class="facets__label">{{ filter.label }}</span>
 
       <div class="facets__status-wrapper">
-        {% if is_swatch %}
+        
+        <span class="svg-wrapper icon-caret icon-animated">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </div>
+    </summary>
+    <div class="facets__status-wrapper">
+    {% if is_swatch %}
           <facet-status-component
             class="facets__status facets__status--swatches"
             facet-type="swatches"
@@ -71,31 +78,44 @@
           </facet-status-component>
         {% else %}
           <facet-status-component
-            class="facets__status"
+            class="facets__status custom"
             facet-type="list"
           >
             <span
-              {% if active_value_count > 1 %}
+              {% comment %} {% if active_value_count > 0 %}
                 class="bubble facets__bubble"
-              {% endif %}
-              hide-when-empty
+              {% endif %} {% endcomment %}
+              
               ref="facetStatus"
             >
               {%- liquid
                 if active_value_count == 1
-                  echo filter.active_values[0].label
+                  echo active_value_count
+                elsif active_value_count == 0 
+                  echo active_value_count
                 elsif active_value_count > 1
                   echo active_value_count
                 endif
               -%}
-            </span>
+            </span> <span>selected</span>
           </facet-status-component>
+          {% if filter.active_values.size > 0 %}
+            <facet-remove-component
+              class="custom-filter-reset"
+              data-url="{{ filter.url_to_remove }}"
+              tabindex="0"
+              role="button"
+              on:click="/removeFilter?form="
+              on:keydown="/removeFilter?form="
+              
+            >
+            <span class="svg-wrapper">
+              {{ 'icon-filter-reset.svg' | inline_asset_content }}
+            </span> Reset
+            </facet-remove-component>
+            {% endif %}
         {% endif %}
-        <span class="svg-wrapper icon-caret icon-animated">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
-      </div>
-    </summary>
+        </div>
     <floating-panel-component
       {% unless filter_style == 'vertical' %}
         data-close-on-resize
@@ -189,7 +209,7 @@
             {% endif %}
             name="{{ filter.label }}"
           >
-            {%- for value in filter.values -%}
+            {%- for value in filter.values -%} 
               {% liquid
                 assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index | replace: '.', '-' | append: '-' | append: filter_style | append: '-' | append: in_drawer
                 assign is_disabled = false
@@ -346,7 +366,7 @@
                         for="{{ input_id }}"
                         tabindex="0"
                       >
-                        {{- value.label }}
+                        {{- value.label }} - {{ value.count }}
                         {% if is_disabled %}
                           <svg
                             aria-hidden="true"
@@ -364,6 +384,7 @@
                     {% render 'checkbox',
                       name: value.param_name,
                       value: value.value,
+                      count: value.count,
                       label: value.label,
                       checked: value.active,
                       id: input_id,
@@ -780,4 +801,7 @@
   .variant-option--images:not(:has(input:disabled)) .facets__image-label:hover {
     font-weight: 500;
   }
+
+  /* Custom CSS */
+  
 {% endstylesheet %}

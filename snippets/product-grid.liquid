@@ -15,6 +15,7 @@
 {% assign product_card_size = product_card_size | strip %}
 
 {% style %}
+  
   @media (min-width: 750px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
@@ -72,7 +73,22 @@
       padding-block-end: var(--zoom-out-padding-block-end, 0);
     }
   }
+
+  @media (min-width: 1525px) {
+    .product-grid--{{ section.id }}:is(.product-grid--grid) {
+        --product-grid-columns-desktop: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}
+@media screen and (max-width: 800px) {
+    {% case section.settings.layout_type %}
+      {% when 'grid' %}
+          .product-grid--{{ section.id }}:is(.product-grid--grid) {
+            --product-grid-columns-desktop: repeat(auto-fill, minmax(240px, 1fr));
+      }
+    {% endcase %}
+  }
 {% endstyle %}
+
 
 <div
   id="ResultsList"
@@ -101,6 +117,7 @@
       container-name: product-grid;
     "
   >
+    {{ filterbar }}
     {% if products.size == 0 %}
       <div class="main-collection-grid__empty">
         <h2 class="main-collection-grid__empty-title h2">
@@ -118,9 +135,11 @@
       {% if title %}
         <h4 class="main-collection-grid__title">{{ title }}</h4>
       {% endif %}
+      
       <ul
         class="product-grid product-grid--{{ section.id }} product-grid--{{ section.settings.layout_type }} {% if section.settings.mobile_product_card_size == 'large' %} product-grid-mobile--large{% endif %}"
         product-grid-view="default"
+        id="AjaxinateContainer"
         ref="grid"
         role="list"
         data-last-page="{{ paginate.pages }}"
@@ -137,6 +156,7 @@
     {% endif %}
   </div>
 </div>
+
 
 {% comment %}
   This script is used to set the grid view on the product grid stored in sessionStorage. Keeping it here helps us prevent seeing the default state.
