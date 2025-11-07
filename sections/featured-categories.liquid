@@ -89,6 +89,9 @@
     .featured-categories__title {
       font-size: 1.2rem;
     }
+    .featured-categories__wrapper {
+      overflow-x: scroll;
+    }
   }
 </style>
 <div class="featured-categories-wrapper 
@@ -110,14 +113,16 @@
     <div class="featured-categories__wrapper">
         <div class="featured-categories__track">
         {% for block in section.blocks %}
-            <div
-            class="featured-category-card"
-            style="background-color: {{ block.settings.bg_color }}; width: calc((100% / {{ section.settings.desktop_visible }}) - 20px);"
-            >
-            {% if block.settings.image != blank %}
-                <img class="featured-category-card-image" src="{{ block.settings.image | img_url: '150x150' }}" alt="{{ block.settings.title }}">
-            {% endif %}
-            <h3>{{ block.settings.title }}</h3>
+          <div
+          class="featured-category-card"
+          style="background-color: {{ block.settings.bg_color }}; width: calc((100% / {{ section.settings.desktop_visible }}) - 20px);"
+          >
+            {%if block.settings.collection_link %}<a href="{{ block.settings.collection_link.url }}">{% endif %}
+              {% if block.settings.image != blank %}
+                  <img class="featured-category-card-image" src="{{ block.settings.image | img_url: '150x150' }}" alt="{{ block.settings.title }}">
+                {% endif %}
+                <h3>{{ block.settings.title }}</h3>
+              {%if block.settings.collection_link %}</a>{% endif %}
             </div>
         {% endfor %}
         </div>
@@ -200,6 +205,11 @@
           "id": "title",
           "label": "Category title",
           "default": "Category Name"
+        },
+        {
+          "type": "collection",
+          "id": "collection_link",
+          "label": "Collection"
         },
         {
           "type": "image_picker",

@@ -12,6 +12,7 @@
   assign widths = '832, 1200, 1600, 1920, 2560, 3840'
 
   assign has_image_1 = false
+  assign has_mobile_image = false
   assign has_image_2 = false
   assign has_video_1 = false
   assign has_video_2 = false
@@ -23,6 +24,9 @@
   assign media_type_2 = section.settings.media_type_2
   if section.settings.image_1 != blank and media_type_1 == 'image'
     assign has_image_1 = true
+  endif
+  if section.settings.mobile_image != blank and media_type_1 == 'image'
+    assign has_mobile_image = true
   endif
   if section.settings.image_2 != blank and media_type_2 == 'image'
     assign has_image_2 = true
@@ -65,12 +69,25 @@
         widths: widths,
         height: section.settings.image_1.height,
         alt: section.settings.image_1.alt,
-        class: 'hero__image',
+        class: 'hero__image mobile-hidden-flex',
         sizes: sizes,
         fetchpriority: fetch_priority
     }}
   {%- endif -%}
-
+  {%- if has_mobile_image -%}
+    {{
+      section.settings.mobile_image
+      | image_url: width: 3840
+      | image_tag:
+        width: section.settings.mobile_image.width,
+        widths: widths,
+        height: section.settings.mobile_image.height,
+        alt: section.settings.mobile_image.alt,
+        class: 'hero__image_mobile desktop-hidden-flex',
+        sizes: sizes,
+        fetchpriority: fetch_priority
+    }}
+  {%- endif -%}
   {%- if has_video_1 -%}
     {% assign media_count = media_count | plus: 1 %}
     <div class="hero__video-wrapper">
@@ -239,7 +256,18 @@
       ></a>
     {%- endif -%}
     <div
-      class="hero__media-wrapper"
+      class="hero__media-wrapper mobile-hidden-flex"
+      style="--hero-media-count: {{ media_count }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
+    >
+      {% liquid
+        if section.settings.toggle_overlay
+          render 'overlay', settings: section.settings
+        endif
+      %}
+      {{ media }}
+    </div>
+    <div
+      class="hero__media-wrapper desktop-hidden-flex"
       style="--hero-media-count: {{ media_count }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
     >
       {% liquid
@@ -492,6 +520,12 @@
       "type": "image_picker",
       "id": "image_1",
       "label": "t:settings.image",
+      "visible_if": "{{ section.settings.media_type_1 == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image",
       "visible_if": "{{ section.settings.media_type_1 == 'image' }}"
     },
     {
