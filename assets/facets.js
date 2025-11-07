@@ -1085,6 +1085,8 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     setActiveButton(savedView);
     productGrid.classList.toggle('product-list-view', savedView === 'list-view');
 
+    console.log("Success")
+
     // Handle clicks
     viewButtons.forEach(button => {
       button.addEventListener('click', () => {
