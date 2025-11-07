@@ -1005,14 +1005,12 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code
-
+document.addEventListener('DOMContentLoaded', () => {
   const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
-  if (!productGrid || !viewButtons.length) {
-    console.warn('⚠️ View toggle elements not found');
-    return; // ✅ legal now
-  }
+  if (!productGrid || !viewButtons.length) return;
+
   // Helper to activate the correct button
   const setActiveButton = (activeView) => {
     viewButtons.forEach(btn => {
@@ -1067,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
         console.log("class removed");
       }
   });
-
+});
 
 
 
