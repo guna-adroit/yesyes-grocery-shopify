@@ -79,6 +79,26 @@ class FacetsFormComponent extends Component {
     this.#updateSection();
     observePaginationChange();
     console.log("UpdateFilter");
+    const productGrid = document.querySelector('.product-grid');
+    const viewButtons = document.querySelectorAll('.product-view_option');
+    const setActiveButton = (activeView) => {
+        viewButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.view === activeView);
+          console.log("Active done");
+        });
+      };
+
+      // Restore saved view
+      const savedView = localStorage.getItem('productView') || 'grid-view';
+      setActiveButton(savedView);
+
+      if (savedView === 'list-view') {
+        productGrid.classList.add('product-list-view');
+        console.log("class added");
+      } else {
+        productGrid.classList.remove('product-list-view');
+        console.log("class removed");
+      }
   };
 
   /**
@@ -1005,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code
-document.addEventListener('DOMContentLoaded', () => {
+
   const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
@@ -1044,28 +1064,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    const productGrid = document.querySelector('.product-grid');
-    const viewButtons = document.querySelectorAll('.product-view_option');
-    const setActiveButton = (activeView) => {
-        viewButtons.forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.view === activeView);
-          console.log("Active done");
-        });
-      };
+    // const productGrid = document.querySelector('.product-grid');
+    // const viewButtons = document.querySelectorAll('.product-view_option');
+    // const setActiveButton = (activeView) => {
+    //     viewButtons.forEach(btn => {
+    //       btn.classList.toggle('active', btn.dataset.view === activeView);
+    //       console.log("Active done");
+    //     });
+    //   };
 
-      // Restore saved view
-      const savedView = localStorage.getItem('productView') || 'grid-view';
-      setActiveButton(savedView);
+    //   // Restore saved view
+    //   const savedView = localStorage.getItem('productView') || 'grid-view';
+    //   setActiveButton(savedView);
 
-      if (savedView === 'list-view') {
-        productGrid.classList.add('product-list-view');
-        console.log("class added");
-      } else {
-        productGrid.classList.remove('product-list-view');
-        console.log("class removed");
-      }
+    //   if (savedView === 'list-view') {
+    //     productGrid.classList.add('product-list-view');
+    //     console.log("class added");
+    //   } else {
+    //     productGrid.classList.remove('product-list-view');
+    //     console.log("class removed");
+    //   }
   });
-});
+
 
 
 
