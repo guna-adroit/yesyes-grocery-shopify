@@ -1005,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 // List view code
 document.addEventListener('DOMContentLoaded', () => {
-  const productGrid = document.querySelector('.plp-grid-container');
+  const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
   if (!productGrid || !viewButtons.length) return;
