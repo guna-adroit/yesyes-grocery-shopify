@@ -11,7 +11,7 @@
     ref="productTitleLink"
     href="{% render 'product-card-variant-url', product: closest.product %}"
   >
-    <div class="product-grid-title-container">
+    <div class="product-grid-title-container card-product-title">
       {% if block.settings.show_product_type %}
         <span class="card-product-type">{{ closest.product.type }}</span>
       {%  endif %}
