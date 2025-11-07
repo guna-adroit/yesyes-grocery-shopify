@@ -1073,11 +1073,11 @@ document.addEventListener('DOMContentLoaded', () => {
   observeGridChanges();
 
   // 🔁 Also reinitialize on filter update
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated → reinitializing view toggle + observer');
-    initViewToggle();
-    observeGridChanges(); // ✅ restart observer for new DOM
-  });
+  // document.addEventListener(ThemeEvents.FilterUpdate, () => {
+  //   console.log('🌀 Filter updated → reinitializing view toggle + observer');
+  //   initViewToggle();
+  //   observeGridChanges(); // ✅ restart observer for new DOM
+  // });
 });
 
 
