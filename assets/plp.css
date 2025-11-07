@@ -264,3 +264,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .price-facet__input::placeholder{
     color: black !important;
 }
+.sorting-filter .facets__summary .icon-caret{
+    width: 18px;
+    height: 18px;
+    color: #000;
+}
