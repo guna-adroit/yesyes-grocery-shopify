@@ -1069,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
     if (!productGrid || !viewButtons.length) {
       setTimeout(initViewToggle, 100);
-      return;
+      return console.log("failed");;
     }
 
     // Helper: activate selected button
