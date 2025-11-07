@@ -258,6 +258,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: none;
 }
 .price-facet__input{
-    padding-left: 8px;
-    text-align: left;
+    padding-left: 8px !important;
+    text-align: left !important;
 }
