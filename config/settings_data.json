@@ -11,7 +11,7 @@
   "current": {
     "logo": "shopify://shop_images/8ea56b2eae2849240574ebf168ba34f6784bf192.png",
     "logo_height": 100,
-    "logo_height_mobile": 75,
+    "logo_height_mobile": 100,
     "favicon": "shopify://shop_images/YesYesFavicon.png",
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
@@ -78,6 +78,12 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "sections": {
+      "quick-add-popup": {
+        "type": "quick-add-popup",
+        "settings": {}
+      }
+    },
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
