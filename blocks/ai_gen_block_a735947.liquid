@@ -1,194 +1,1097 @@
 {% doc %}
   @prompt
-    Heading section
+    Section Heading & Category Filters
+    
+    Heading:
+    Displays the section title “Popular Products”.
+    
+    Category Tabs:
+    A filter bar below the heading allows users to switch between product categories (e.g., All, Tea & Coffee, Oils, Veggies & Flowers, Frozen, Paneer).
+    
+    When a category is clicked:
+    
+    The product list updates dynamically to show items belonging only to the selected category.
+    
+    The active category is visually highlighted (e.g., bold or underlined).
+    Categories should be selected from customizer, They should show respective products. ( Upto 6 collections, Would be great if the collections can be added as blocks). A custom heading, Spacing adjustments, Adjustable number of products to show. No need to create product cards ( Already have product card snippet). Slider in mobile, A view all products button also.
+    section showcases a curated list of popular or trending products in a visually appealing carousel or grid layout. It helps customers quickly discover top-selling or frequently purchased items., Currently the product cards are not rendering, 
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
-  .ai-heading-block-{{ ai_gen_id }} {
-    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
-    text-align: {{ block.settings.alignment }};
+  .ai-popular-products-{{ ai_gen_id }} {
+    padding-top: {{ block.settings.spacing_top }}px;
+    padding-bottom: {{ block.settings.spacing_bottom }}px;
+    width: 100%;
   }
 
-  .ai-heading-block__container-{{ ai_gen_id }} {
-    max-width: {{ block.settings.max_width }}px;
-    margin: 0 auto;
-    padding: 0 20px;
+  .ai-popular-products__header-{{ ai_gen_id }} {
+    margin-bottom: 32px;
+    display: flex;
+    gap: 46px;
   }
 
-  .ai-heading-block__heading-{{ ai_gen_id }} {
-    color: {{ block.settings.heading_color }};
-    margin: 0;
-    font-size: {{ block.settings.heading_size }}px;
-    line-height: 1.2;
+  .ai-popular-products__heading-{{ ai_gen_id }} {
+    margin: 0 0 24px;
+    text-align: center;
   }
 
-  .ai-heading-block__subheading-{{ ai_gen_id }} {
-    color: {{ block.settings.subheading_color }};
-    margin: {{ block.settings.subheading_spacing }}px 0 0;
-    font-size: {{ block.settings.subheading_size }}px;
-    line-height: 1.5;
+  .ai-popular-products__filters-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ai-popular-products__filter-btn-{{ ai_gen_id }} {
+    padding: 10px 20px;
+    background: transparent;
+    border: 0px solid #00000000;
+    cursor: pointer;
+    color: #000000cf;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+    height: fit-content;
+    position:relative;
+
+  }
+  .ai-popular-products__filter-btn-{{ ai_gen_id }}.active {
+    font-weight: 700;
+  }
+  ai-popular-products__filter-btn-{{ ai_gen_id }}:hover {
+    text-decoration: underline;
+  }
+  .ai-popular-products__filter-btn-{{ ai_gen_id }}:after{
+    content:"";
+    height: 20px;
+    width: 2px;
+    background: #3a3636;
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+  }
+  .ai-popular-products__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .ai-popular-products__product-{{ ai_gen_id }} {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-popular-products__product-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-popular-products__card-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ai-popular-products__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .ai-popular-products__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-popular-products__card-title-{{ ai_gen_id }} {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: #000000;
+  }
+
+  .ai-popular-products__card-price-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: #000000cf;
+  }
+
+  .ai-popular-products__view-all-{{ ai_gen_id }} {
+    text-align: center;
+  }
+
+  .ai-popular-products__view-all-btn-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 32px;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+    border: 1px solid #ED1D23;
+  }
+
+  .ai-popular-products__view-all-btn-{{ ai_gen_id }}:hover {
+    background: #333333;
+    color: #fff
+  }
+
+  .ai-popular-products__slider-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  .ai-popular-products__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
   }
 
   @media screen and (max-width: 749px) {
-    .ai-heading-block-{{ ai_gen_id }} {
-      padding: {{ block.settings.padding_top | times: 0.7 }}px 0 {{ block.settings.padding_bottom | times: 0.7 }}px;
+    .ai-popular-products__grid-{{ ai_gen_id }} {
+      display: none;
     }
 
-    .ai-heading-block__heading-{{ ai_gen_id }} {
-      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    .ai-popular-products__slider-{{ ai_gen_id }} {
+      display: block;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-bottom: 32px;
     }
 
-    .ai-heading-block__subheading-{{ ai_gen_id }} {
-      font-size: {{ block.settings.subheading_size | times: 0.9 }}px;
+    .ai-popular-products__slider-{{ ai_gen_id }}::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ai-popular-products__slider-track-{{ ai_gen_id }} {
+      display: flex;
+      gap: 16px;
+      padding: 0 16px;
+    }
+
+    .ai-popular-products__slide-{{ ai_gen_id }} {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+    }
+
+    .ai-popular-products__slide-{{ ai_gen_id }}.hidden {
+      display: none;
+    }
+    .ai-popular-products__header-{{ ai_gen_id }} {
+      flex-direction: column;
+    }
+    .ai-popular-products__filter-btn-{{ ai_gen_id }}:after{
+      display: none;
+    }
+    .ai-popular-products__filter-btn-{{ ai_gen_id }} {
+      border: 1px solid #ED1D23;
+      border-radius: 5px;
+
+    }
+    .ai-popular-products__filter-btn-{{ ai_gen_id }}.active {
+      color: #ED1D23;
     }
   }
 {% endstyle %}
 
-<div class="ai-heading-block-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
-  <div class="ai-heading-block__container-{{ ai_gen_id }}">
+<popular-products-{{ ai_gen_id }} class="ai-popular-products-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-popular-products__header-{{ ai_gen_id }}">
     {% if block.settings.heading != blank %}
-      <h2 class="ai-heading-block__heading-{{ ai_gen_id }}">
-        {{ block.settings.heading }}
-      </h2>
+      <h2 class="ai-popular-products__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
     {% endif %}
 
-    {% if block.settings.subheading != blank %}
-      <div class="ai-heading-block__subheading-{{ ai_gen_id }}">
-        {{ block.settings.subheading }}
+    {% assign has_collections = false %}
+    {% if block.settings.collection_1 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+    {% if block.settings.collection_2 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+    {% if block.settings.collection_3 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+    {% if block.settings.collection_4 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+    {% if block.settings.collection_5 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+    {% if block.settings.collection_6 != blank %}
+      {% assign has_collections = true %}
+    {% endif %}
+
+    {% if has_collections %}
+      <div class="ai-popular-products__filters-{{ ai_gen_id }}">
+        <button
+          class="ai-popular-products__filter-btn-{{ ai_gen_id }} active"
+          data-filter="all"
+        >
+          All
+        </button>
+        {% if block.settings.collection_1 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_1.handle }}"
+          >
+            {{ block.settings.collection_1.title }}
+          </button>
+        {% endif %}
+        {% if block.settings.collection_2 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_2.handle }}"
+          >
+            {{ block.settings.collection_2.title }}
+          </button>
+        {% endif %}
+        {% if block.settings.collection_3 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_3.handle }}"
+          >
+            {{ block.settings.collection_3.title }}
+          </button>
+        {% endif %}
+        {% if block.settings.collection_4 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_4.handle }}"
+          >
+            {{ block.settings.collection_4.title }}
+          </button>
+        {% endif %}
+        {% if block.settings.collection_5 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_5.handle }}"
+          >
+            {{ block.settings.collection_5.title }}
+          </button>
+        {% endif %}
+        {% if block.settings.collection_6 != blank %}
+          <button
+            class="ai-popular-products__filter-btn-{{ ai_gen_id }}"
+            data-filter="{{ block.settings.collection_6.handle }}"
+          >
+            {{ block.settings.collection_6.title }}
+          </button>
+        {% endif %}
       </div>
     {% endif %}
   </div>
-</div>
+
+  {% if has_collections %}
+    <div class="ai-popular-products__grid-{{ ai_gen_id }}">
+      {% assign product_count = 0 %}
+      
+      {% if block.settings.collection_1 != blank %}
+        {% for product in block.settings.collection_1.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if block.settings.collection_2 != blank %}
+        {% for product in block.settings.collection_2.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if block.settings.collection_3 != blank %}
+        {% for product in block.settings.collection_3.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if block.settings.collection_4 != blank %}
+        {% for product in block.settings.collection_4.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if block.settings.collection_5 != blank %}
+        {% for product in block.settings.collection_5.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+      {% if block.settings.collection_6 != blank %}
+        {% for product in block.settings.collection_6.products limit: block.settings.products_per_collection %}
+          {% if product_count < block.settings.total_products %}
+            <div class="ai-popular-products__product-{{ ai_gen_id }}" data-collection="all">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+            {% assign product_count = product_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_1 != blank %}
+        {% for product in block.settings.collection_1.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_1.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_2 != blank %}
+        {% for product in block.settings.collection_2.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_2.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_3 != blank %}
+        {% for product in block.settings.collection_3.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_3.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_4 != blank %}
+        {% for product in block.settings.collection_4.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_4.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_5 != blank %}
+        {% for product in block.settings.collection_5.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_5.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if block.settings.collection_6 != blank %}
+        {% for product in block.settings.collection_6.products limit: block.settings.products_per_collection %}
+          <div class="ai-popular-products__product-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_6.handle }}">
+            <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+              <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-popular-products__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="500"
+                    height="500"
+                  >
+                {% endif %}
+              </div>
+              <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+              <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="ai-popular-products__slider-{{ ai_gen_id }}">
+      <div class="ai-popular-products__slider-track-{{ ai_gen_id }}">
+        {% assign product_count = 0 %}
+        
+        {% if block.settings.collection_1 != blank %}
+          {% for product in block.settings.collection_1.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if block.settings.collection_2 != blank %}
+          {% for product in block.settings.collection_2.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if block.settings.collection_3 != blank %}
+          {% for product in block.settings.collection_3.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if block.settings.collection_4 != blank %}
+          {% for product in block.settings.collection_4.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if block.settings.collection_5 != blank %}
+          {% for product in block.settings.collection_5.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if block.settings.collection_6 != blank %}
+          {% for product in block.settings.collection_6.products limit: block.settings.products_per_collection %}
+            {% if product_count < block.settings.total_products %}
+              <div class="ai-popular-products__slide-{{ ai_gen_id }}" data-collection="all">
+                <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                  <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="ai-popular-products__image-{{ ai_gen_id }}"
+                        loading="lazy"
+                        width="500"
+                        height="500"
+                      >
+                    {% endif %}
+                  </div>
+                  <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+                </a>
+              </div>
+              {% assign product_count = product_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_1 != blank %}
+          {% for product in block.settings.collection_1.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_1.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_2 != blank %}
+          {% for product in block.settings.collection_2.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_2.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_3 != blank %}
+          {% for product in block.settings.collection_3.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_3.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_4 != blank %}
+          {% for product in block.settings.collection_4.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_4.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_5 != blank %}
+          {% for product in block.settings.collection_5.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_5.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% if block.settings.collection_6 != blank %}
+          {% for product in block.settings.collection_6.products limit: block.settings.products_per_collection %}
+            <div class="ai-popular-products__slide-{{ ai_gen_id }} hidden" data-collection="{{ block.settings.collection_6.handle }}">
+              <a href="{{ product.url }}" class="ai-popular-products__card-{{ ai_gen_id }}">
+                <div class="ai-popular-products__image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      alt="{{ product.featured_image.alt | escape }}"
+                      class="ai-popular-products__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="500"
+                      height="500"
+                    >
+                  {% endif %}
+                </div>
+                <h3 class="ai-popular-products__card-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-popular-products__card-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if block.settings.view_all_url != blank %}
+      <div class="ai-popular-products__view-all-{{ ai_gen_id }}">
+        <a
+          href="{{ block.settings.view_all_url }}"
+          class="ai-popular-products__view-all-btn-{{ ai_gen_id }}"
+        >
+          {{ block.settings.view_all_text }}
+        </a>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="ai-popular-products__empty-state-{{ ai_gen_id }}">
+      <p>Next, add collections to display products</p>
+    </div>
+  {% endif %}
+</popular-products-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PopularProducts{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.filterButtons = this.querySelectorAll('.ai-popular-products__filter-btn-{{ ai_gen_id }}');
+        this.gridProducts = this.querySelectorAll('.ai-popular-products__product-{{ ai_gen_id }}');
+        this.sliderProducts = this.querySelectorAll('.ai-popular-products__slide-{{ ai_gen_id }}');
+      }
+
+      connectedCallback() {
+        this.setupFilters();
+      }
+
+      setupFilters() {
+        this.filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+            
+            this.filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            this.filterProducts(filter);
+          });
+        });
+      }
+
+      filterProducts(filter) {
+        this.gridProducts.forEach(product => {
+          const productCollection = product.getAttribute('data-collection');
+          
+          if (filter === 'all') {
+            if (productCollection === 'all') {
+              product.classList.remove('hidden');
+            } else {
+              product.classList.add('hidden');
+            }
+          } else {
+            if (productCollection === filter) {
+              product.classList.remove('hidden');
+            } else {
+              product.classList.add('hidden');
+            }
+          }
+        });
+
+        this.sliderProducts.forEach(product => {
+          const productCollection = product.getAttribute('data-collection');
+          
+          if (filter === 'all') {
+            if (productCollection === 'all') {
+              product.classList.remove('hidden');
+            } else {
+              product.classList.add('hidden');
+            }
+          } else {
+            if (productCollection === filter) {
+              product.classList.remove('hidden');
+            } else {
+              product.classList.add('hidden');
+            }
+          }
+        });
+      }
+    }
+
+    customElements.define('popular-products-{{ ai_gen_id }}', PopularProducts{{ ai_gen_id }});
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "Heading",
+  "name": "Popular products",
+  "tag": null,
   "settings": [
     {
-      "type": "header",
-      "content": "Content"
-    },
-    {
-      "type": "inline_richtext",
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Welcome to our store"
+      "default": "Popular Products"
     },
     {
-      "type": "richtext",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "<p>Discover our latest collection</p>"
+      "type": "range",
+      "id": "total_products",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "label": "Total products to show",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "products_per_collection",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "label": "Products per collection",
+      "default": 4
     },
     {
       "type": "header",
-      "content": "Layout"
+      "content": "Collections"
     },
     {
-      "type": "select",
-      "id": "alignment",
-      "label": "Text alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center"
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "header",
+      "content": "View all button"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all link"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Button text",
+      "default": "View All Products"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
-      "id": "max_width",
-      "min": 400,
-      "max": 1200,
-      "step": 50,
-      "unit": "px",
-      "label": "Maximum width",
-      "default": 800
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
+      "id": "spacing_top",
       "min": 0,
       "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Top padding",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Bottom padding",
-      "default": 40
-    },
-    {
-      "type": "header",
-      "content": "Heading style"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "min": 20,
-      "max": 80,
-      "step": 2,
-      "unit": "px",
-      "label": "Size",
-      "default": 48
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Color",
-      "default": "#000000"
-    },
-    {
-      "type": "header",
-      "content": "Subheading style"
-    },
-    {
-      "type": "range",
-      "id": "subheading_size",
-      "min": 12,
-      "max": 32,
-      "step": 2,
-      "unit": "px",
-      "label": "Size",
-      "default": 16
-    },
-    {
-      "type": "color",
-      "id": "subheading_color",
-      "label": "Color",
-      "default": "#000000"
-    },
-    {
-      "type": "range",
-      "id": "subheading_spacing",
-      "min": 0,
-      "max": 40,
-      "step": 2,
+      "step": 4,
       "unit": "px",
       "label": "Top spacing",
-      "default": 12
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 40
     }
   ],
   "presets": [
     {
-      "name": "Heading"
+      "name": "Popular products"
     }
   ]
 }
