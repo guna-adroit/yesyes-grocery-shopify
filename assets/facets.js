@@ -78,6 +78,7 @@ class FacetsFormComponent extends Component {
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
     observePaginationChange();
+    console.log("UpdateFilter");
   };
 
   /**
@@ -912,55 +913,6 @@ const CURRENCY_DECIMALS = {
 };
 
 // Infinite scorll
-
-// let endlessScroll = null;
-
-//   function initAjaxinate() {
-//     const container = document.querySelector('#AjaxinateContainer');
-//     const pagination = document.querySelector('#AjaxinatePagination');
-
-//     if (!container || !pagination) {
-//       console.warn('Ajaxinate: container or pagination not found');
-//       return;
-//     }
-
-//     endlessScroll = null;
-
-//     endlessScroll = new Ajaxinate({
-//       method: 'click',
-//       container: '#AjaxinateContainer',
-//       pagination: '#AjaxinatePagination',
-//     });
-
-//     console.log('Ajaxinate initialized');
-//   }
-
-//   function observePaginationChange() {
-//     const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-//     if (!parent) return;
-
-//     const observer = new MutationObserver((mutations, obs) => {
-//       const pagination = document.querySelector('#AjaxinatePagination');
-//       if (pagination) {
-//         console.log('✅ Pagination updated');
-//         obs.disconnect();
-//         initAjaxinate();
-//       }
-//     });
-
-//     observer.observe(parent, {
-//       childList: true,
-//       subtree: true,
-//     });
-//   }
-
-//   document.addEventListener('DOMContentLoaded', initAjaxinate);
-
-//   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-//     console.log('🌀 Filter updated');
-//     observePaginationChange();
-//   });
-
 window.endlessScroll = window.endlessScroll || null;
 let reinitTimer = null;
 let paginationObserver = null;
@@ -1009,7 +961,7 @@ function initAjaxinate() {
 
   try {
     window.endlessScroll = new Ajaxinate({
-      method: 'click',
+      method: 'scroll',
       container: '#AjaxinateContainer',
       pagination: '#AjaxinatePagination',
     });
@@ -1050,66 +1002,75 @@ function observePaginationChange() {
 // Initial load
 document.addEventListener('DOMContentLoaded', initAjaxinate);
 
-// Reinitialize when filters are updated
-// document.addEventListener(
-//   ThemeEvents.FilterUpdate,
-//   localDebounce(() => {
-//     console.log('🌀 Filter updated — watching for pagination...');
-//     destroyAjaxinate();
-//     observePaginationChange();
-//   }, 200)
-// );
 
 
-// List view 
- document.addEventListener('DOMContentLoaded', () => {
-  function initViewToggle() {
-    const productGrid = document.querySelector('.product-grid');
-    const viewButtons = document.querySelectorAll('.product-view_option');
+// List view code
+document.addEventListener('DOMContentLoaded', () => {
+  const productGrid = document.querySelector('.product-grid');
+  const viewButtons = document.querySelectorAll('.product-view_option');
 
-    if (!productGrid || !viewButtons.length) {
-      setTimeout(initViewToggle, 200);
-      return;
-    }
+  if (!productGrid || !viewButtons.length) return;
 
-    // Helper: activate selected button
-    const setActiveButton = (activeView) => {
-      viewButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.view === activeView);
-      });
-    };
-
-    // --- Restore previous view from localStorage ---
-    const savedView = localStorage.getItem('productView') || 'grid-view';
-    setActiveButton(savedView);
-
-    if (savedView === 'list-view') {
-      productGrid.classList.add('product-list-view');
-    } else {
-      productGrid.classList.remove('product-list-view');
-    }
-
-    // --- Button click handler ---
-    viewButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const selectedView = button.dataset.view;
-
-        setActiveButton(selectedView);
-        localStorage.setItem('productView', selectedView);
-
-        if (selectedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-        } else {
-          productGrid.classList.remove('product-list-view');
-        }
-      });
+  // Helper to activate the correct button
+  const setActiveButton = (activeView) => {
+    viewButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.view === activeView);
     });
+  };
+
+  // Restore saved view
+  const savedView = localStorage.getItem('productView') || 'grid-view';
+  setActiveButton(savedView);
+
+  if (savedView === 'list-view') {
+    productGrid.classList.add('product-list-view');
+  } else {
+    productGrid.classList.remove('product-list-view');
   }
 
-  initViewToggle();
+  // Click handlers
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selectedView = button.dataset.view;
 
+      setActiveButton(selectedView);
+      localStorage.setItem('productView', selectedView);
+
+      if (selectedView === 'list-view') {
+        productGrid.classList.add('product-list-view');
+      } else {
+        productGrid.classList.remove('product-list-view');
+      }
+    });
+  });
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
-     console.log('🌀 Filter updated');
-     initViewToggle();
-   });
+    setTimeout(function() {
+      const productGrid = document.querySelector('.product-grid');
+      const viewButtons = document.querySelectorAll('.product-view_option');
+      const setActiveButton = (activeView) => {
+          viewButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.view === activeView);
+            console.log("Active done");
+          });
+        };
+
+        // Restore saved view
+        const savedView = localStorage.getItem('productView') || 'grid-view';
+        setActiveButton(savedView);
+
+        if (savedView === 'list-view') {
+          productGrid.classList.add('product-list-view');
+          console.log("FilterEvent: class added");
+        } else {
+          productGrid.classList.remove('product-list-view');
+          console.log("FilterEvent: class removed");
+        }
+    }, 800);
+    
+  });
 });
+
+
+
+
+

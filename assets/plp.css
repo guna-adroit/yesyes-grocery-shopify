@@ -251,3 +251,16 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view .product-form-buttons {
     padding: 0;
 }
+.facets__summary{
+    text-transform: uppercase;
+}
+.field__label.price-facet__label{
+    display: none;
+}
+.price-facet__input{
+    padding-left: 8px !important;
+    text-align: left !important;
+}
+.price-facet__input::placeholder{
+    color: black !important;
+}
