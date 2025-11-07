@@ -1010,8 +1010,9 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
   const viewButtons = document.querySelectorAll('.product-view_option');
 
   if (!productGrid || !viewButtons.length) {
-    return;}
-
+    console.warn('⚠️ View toggle elements not found');
+    return; // ✅ legal now
+  }
   // Helper to activate the correct button
   const setActiveButton = (activeView) => {
     viewButtons.forEach(btn => {
