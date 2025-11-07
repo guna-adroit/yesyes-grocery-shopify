@@ -961,7 +961,7 @@ function initAjaxinate() {
 
   try {
     window.endlessScroll = new Ajaxinate({
-      method: 'click',
+      method: 'scroll',
       container: '#AjaxinateContainer',
       pagination: '#AjaxinatePagination',
     });
