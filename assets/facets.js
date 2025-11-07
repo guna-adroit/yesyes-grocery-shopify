@@ -1044,7 +1044,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.addEventListener(ThemeEvents.FilterUpdate, () => {
     const productGrid = document.querySelector('.product-grid');
+    const viewButtons = document.querySelectorAll('.product-view_option');
     console.log(productGrid);
+    console.log(viewButtons);
   });
 });
 
