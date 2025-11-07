@@ -252,6 +252,9 @@
         "group_V4a6GM",
         "group_J7r6zQ"
       ],
+      "custom_css": [
+        "img.image-block__image.border-style {max-width: 118px;}"
+      ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
