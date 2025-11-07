@@ -269,3 +269,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     height: 18px;
     color: #000;
 }
+.product-card__content{
+    justify-content: space-between;
+}
