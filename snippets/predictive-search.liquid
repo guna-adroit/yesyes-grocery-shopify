@@ -64,9 +64,10 @@
           type="hidden"
           value="last"
         >
-        <span class="svg-wrapper predictive-search__icon">
+        {% comment %} <span class="svg-wrapper predictive-search__icon">
           {{ 'icon-search.svg' | inline_asset_content }}
-        </span>
+        </span> {% endcomment %}
+        
         <button
           type="button"
           class="button-unstyled predictive-search__reset-button"
@@ -76,6 +77,9 @@
         >
           {{ 'actions.clear' | t }}
         </button>
+        <span class="svg-wrapper search-btn-right">
+          {{ 'search-icon.svg' | inline_asset_content }}
+        </span>
       </div>
       <button
         type="button"

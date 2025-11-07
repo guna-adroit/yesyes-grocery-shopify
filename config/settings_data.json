@@ -12,6 +12,7 @@
     "logo": "shopify://shop_images/8ea56b2eae2849240574ebf168ba34f6784bf192.png",
     "logo_height": 100,
     "logo_height_mobile": 75,
+    "favicon": "shopify://shop_images/YesYesFavicon.png",
     "type_body_font": "inter_n4",
     "type_subheading_font": "inter_n5",
     "type_heading_font": "inter_n7",
@@ -42,11 +43,11 @@
     "type_font_h6": "subheading",
     "type_size_h6": "12",
     "type_line_height_h6": "display-loose",
-    "page_width": "normal",
+    "page_width": "narrow",
     "page_transition_enabled": false,
     "transition_to_main_product": false,
     "card_hover_effect": "none",
-    "badge_position": "top-left",
+    "badge_position": "top-right",
     "badge_corner_radius": 100,
     "badge_sale_color_scheme": "scheme-1",
     "badge_sold_out_color_scheme": "scheme-3",
@@ -68,7 +69,6 @@
     "currency_code_enabled_product_pages": false,
     "currency_code_enabled_product_cards": false,
     "currency_code_enabled_cart_items": false,
-    "quick_add": false,
     "product_corner_radius": 0,
     "card_corner_radius": 4,
     "show_variant_image": false,
@@ -78,74 +78,6 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
-    "sections": {
-      "quick-add-popup": {
-        "type": "quick-add-popup",
-        "blocks": {
-          "price": {
-            "type": "price",
-            "static": true,
-            "settings": {
-              "show_sale_price_first": true,
-              "show_installments": false,
-              "show_tax_info": false,
-              "show_product_expiry": true,
-              "type_preset": "",
-              "width": "100%",
-              "alignment": "left",
-              "font": "var(--font-body--family)",
-              "font_size": "1rem",
-              "line_height": "normal",
-              "letter_spacing": "normal",
-              "case": "none",
-              "color": "var(--color-foreground)",
-              "padding-block-start": 0,
-              "padding-block-end": 0,
-              "padding-inline-start": 0,
-              "padding-inline-end": 0
-            },
-            "blocks": {}
-          },
-          "buyButton": {
-            "type": "buy-buttons",
-            "static": true,
-            "settings": {
-              "stacking": false,
-              "show_pickup_availability": true,
-              "gift_card_form": true,
-              "padding-block-start": 0,
-              "padding-block-end": 0,
-              "padding-inline-start": 0,
-              "padding-inline-end": 0
-            },
-            "blocks": {
-              "quantity": {
-                "type": "quantity",
-                "static": true,
-                "settings": {},
-                "blocks": {}
-              },
-              "add-to-cart": {
-                "type": "add-to-cart",
-                "static": true,
-                "settings": {
-                  "style_class": "button-secondary"
-                },
-                "blocks": {}
-              },
-              "accelerated-checkout": {
-                "type": "accelerated-checkout",
-                "static": true,
-                "settings": {},
-                "blocks": {}
-              }
-            },
-            "block_order": []
-          }
-        },
-        "settings": {}
-      }
-    },
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {

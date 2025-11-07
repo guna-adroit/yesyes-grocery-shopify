@@ -1,0 +1,235 @@
+<style>
+  .featured-categories {
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  .featured-categories__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .featured-categories__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .featured-categories__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .featured-categories__track {
+    display: flex;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-category-card {
+    flex: 0 0 auto;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 15px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+  }
+  .featured-category-card-image {
+    transition: transform 0.3s ease;
+  }
+  .featured-category-card:hover .featured-category-card-image {
+    transform: translateY(-4px);
+  }
+
+  .featured-category-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 10px auto;
+  }
+
+  .featured-category-card h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .featured-categories__arrow {
+    background: #e50914;
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .featured-categories__arrow:hover {
+    background: #b40710;
+  }
+
+  .featured-categories__arrows {
+    display: flex;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .featured-category-card img {
+      width: 60px;
+      height: 60px;
+    }
+    .featured-categories__title {
+      font-size: 1.2rem;
+    }
+    .featured-categories__wrapper {
+      overflow-x: scroll;
+    }
+  }
+</style>
+<div class="featured-categories-wrapper 
+    section
+    section--page-width
+    section-resource-list
+    spacing-style
+    gap-style
+  ">
+    <div class="featured-categories" id="FeaturedCategories-{{ section.id }}">
+    <div class="featured-categories__header">
+        <h2 class="featured-categories__title">{{ section.settings.heading }}</h2>
+        <div class="featured-categories__arrows">
+        <button class="featured-categories__arrow prev" aria-label="Previous">❮</button>
+        <button class="featured-categories__arrow next" aria-label="Next">❯</button>
+        </div>
+    </div>
+
+    <div class="featured-categories__wrapper">
+        <div class="featured-categories__track">
+        {% for block in section.blocks %}
+          <div
+          class="featured-category-card"
+          style="background-color: {{ block.settings.bg_color }}; width: calc((100% / {{ section.settings.desktop_visible }}) - 20px);"
+          >
+            {%if block.settings.collection_link %}<a href="{{ block.settings.collection_link.url }}">{% endif %}
+              {% if block.settings.image != blank %}
+                  <img class="featured-category-card-image" src="{{ block.settings.image | img_url: '150x150' }}" alt="{{ block.settings.title }}">
+                {% endif %}
+                <h3>{{ block.settings.title }}</h3>
+              {%if block.settings.collection_link %}</a>{% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+  (() => {
+    const section = document.getElementById('FeaturedCategories-{{ section.id }}');
+    const track = section.querySelector('.featured-categories__track');
+    const prev = section.querySelector('.featured-categories__arrow.prev');
+    const next = section.querySelector('.featured-categories__arrow.next');
+    const cards = section.querySelectorAll('.featured-category-card');
+
+    let index = 0;
+    const totalCards = cards.length;
+    const visibleDesktop = {{ section.settings.desktop_visible }};
+    const visibleMobile = {{ section.settings.mobile_visible }};
+    const isMobile = () => window.innerWidth < 768;
+
+    const updateSlide = () => {
+      const visible = isMobile() ? visibleMobile : visibleDesktop;
+      const maxIndex = Math.max(0, totalCards - visible);
+      if (index < 0) index = 0;
+      if (index > maxIndex) index = maxIndex;
+      const cardWidth = cards[0].offsetWidth;
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    };
+
+    prev.addEventListener('click', () => {
+      index--;
+      updateSlide();
+    });
+    next.addEventListener('click', () => {
+      index++;
+      updateSlide();
+    });
+
+    window.addEventListener('resize', updateSlide);
+    updateSlide();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Featured Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Featured Categories"
+    },
+    {
+      "type": "range",
+      "id": "desktop_visible",
+      "label": "Cards visible (desktop)",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_visible",
+      "label": "Cards visible (mobile)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Category Name"
+        },
+        {
+          "type": "collection",
+          "id": "collection_link",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category image"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#f3f3f3"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Categories",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
