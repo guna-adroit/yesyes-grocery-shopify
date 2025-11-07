@@ -78,6 +78,7 @@ class FacetsFormComponent extends Component {
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
     observePaginationChange();
+    observeGridChanges();
   };
 
   /**
