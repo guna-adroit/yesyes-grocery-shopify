@@ -1057,7 +1057,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "{{ closest.product }}",
+        "product": "ashoka-punjabi-choley-280gm",
         "recommendation_type": "related",
         "layout_type": "grid",
         "carousel_on_mobile": false,
