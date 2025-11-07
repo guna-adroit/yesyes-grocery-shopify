@@ -35,6 +35,7 @@
     >
       {%- if limit == blank or cart.item_count < limit %}
         {{- cart.item_count -}}
+        {% comment %} Modify here to change in cart bubble {% endcomment %}
       {%- endif -%}
     </span>
   </span>
