@@ -1071,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
     if (!productGrid || !viewButtons.length) {
       // Retry after a short delay if elements aren't yet in DOM
       setTimeout(initViewToggle, 150);
-      return;
+      return null;
     }
 
     // Helper to set the active button
