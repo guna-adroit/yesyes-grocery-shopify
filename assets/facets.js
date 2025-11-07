@@ -78,7 +78,6 @@ class FacetsFormComponent extends Component {
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
     observePaginationChange();
-    observeGridChanges();
   };
 
   /**
@@ -1005,79 +1004,43 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code
- function initViewToggle() {
-  const productGrid = document.querySelector('.product-grid');
+document.addEventListener('DOMContentLoaded', () => {
+  const productGrid = document.querySelector('.plp-grid-container');
   const viewButtons = document.querySelectorAll('.product-view_option');
 
   if (!productGrid || !viewButtons.length) return;
 
+  // Helper to activate the correct button
   const setActiveButton = (activeView) => {
     viewButtons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.view === activeView);
     });
-
-    if (activeView === 'list-view') {
-      productGrid.classList.add('product-list-view');
-    } else {
-      productGrid.classList.remove('product-list-view');
-    }
-
-    localStorage.setItem('productView', activeView);
   };
 
+  // Restore saved view
   const savedView = localStorage.getItem('productView') || 'grid-view';
   setActiveButton(savedView);
 
+  if (savedView === 'list-view') {
+    productGrid.classList.add('product-list-view');
+  } else {
+    productGrid.classList.remove('product-list-view');
+  }
+
+  // Click handlers
   viewButtons.forEach(button => {
     button.addEventListener('click', () => {
       const selectedView = button.dataset.view;
+
       setActiveButton(selectedView);
-    });
-  });
+      localStorage.setItem('productView', selectedView);
 
-  console.log('✅ View toggle initialized');
-}
-
-let gridObserver = null;
-
-function observeGridChanges() {
-  if (gridObserver) {
-    gridObserver.disconnect();
-    gridObserver = null;
-  }
-
-  const gridParent = document.querySelector('[id*="ProductGridContainer"], .collection, .collection__products, main');
-  if (!gridParent) return;
-
-  gridObserver = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (
-        [...mutation.addedNodes].some(
-          node =>
-            node.nodeType === 1 &&
-            (node.matches('.product-grid') || node.querySelector?.('.product-grid'))
-      )) {
-        console.log('🌀 Product grid changed → reinitializing view toggle');
-        initViewToggle();
-        observeGridChanges(); // reconnect observer for the new grid
-        break;
+      if (selectedView === 'list-view') {
+        productGrid.classList.add('product-list-view');
+      } else {
+        productGrid.classList.remove('product-list-view');
       }
-    }
-  });
-
-  gridObserver.observe(gridParent, { childList: true, subtree: true });
-  console.log('👀 MutationObserver active for product grid');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initViewToggle();
-  observeGridChanges();
-
-  // 🔁 Also reinitialize on filter update
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    console.log('🌀 Filter updated → reinitializing view toggle + observer');
-    initViewToggle();
-    observeGridChanges(); // ✅ restart observer for new DOM
+    });
   });
 });
 
