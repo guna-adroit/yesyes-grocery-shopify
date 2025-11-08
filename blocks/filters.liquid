@@ -158,6 +158,25 @@
               {% assign total_active_values = 0 %}
 
               {% capture rendered_filters %}
+                <accordion-custom class="facets__item" open-by-default-on-mobile="" open="" open-by-default-on-desktop="">
+                  <details id="Facet-Details" class="facets__panel" open="">
+                    <summary class="facets__summary">
+                      <span class="facets__label">Category</span>
+
+                      <div class="facets__status-wrapper">
+                        
+                        <span class="svg-wrapper icon-caret icon-animated"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 5.5L7 9.5L3 5.5" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    </span>
+                      </div>
+                    </summary>
+                    <div class="">
+                    Test
+                  </div>	
+                    
+                  </details>
+                </accordion-custom>
                 {%- for filter in filters -%}
                   {% case filter.type %}
                     {% when 'price_range' %}
