@@ -1469,7 +1469,7 @@
           "type": "_featured-blog-posts-title",
           "static": true,
           "settings": {
-            "text": "",
+            "text": "<h3>Recipes</h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
