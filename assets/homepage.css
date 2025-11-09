@@ -379,6 +379,11 @@ a.popular_products_tabs {
 .desktop-hidden-flex{
     display: none !important;
 }
+@media (max-width: 1366px) {
+    .predictive-search:has(.predictive-search-dropdown) .search-input{
+        width: 420px;
+    }
+}
 @media (max-width: 992px) {
     .mobile-hidden-flex{
         display: none !important;
