@@ -272,3 +272,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-card__content{
     justify-content: space-between;
 }
+.category-list-item {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
