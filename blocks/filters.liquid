@@ -172,7 +172,7 @@
                       </div>
                     </summary>
                     <div class="category-list">
-                      {% for collection in block.settings.collection_list %}
+                      {% for collection in block.settings.collection_list.collections %}
                           {{ collection.title }}
                       {% endfor %}
                       <div class="category-list-item">
