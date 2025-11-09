@@ -161,6 +161,7 @@ button.account-button.header-actions__action span svg {
 span.header-icons-label {
     display: flex;
     align-items: center;
+}
 /* // Mega Menu */
 /* Mega menu container */
 .mega-menu {
@@ -356,5 +357,11 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
     }
     .header-actions__action{
         margin-right: 0;
+    }
+    slideshow-container .slide__image-container > .slide__image{
+        object-fit: contain;
+    }
+    slideshow-slides[size=small] {
+        min-height: 100px !important;
     }
 }
