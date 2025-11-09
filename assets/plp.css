@@ -296,4 +296,6 @@ p.category-item_title{
     padding: 5px 15px;
     border-radius: 5px;
     border: 1px solid #ED1D23;
+    width: 50px;
+    text-align: center;
 }
