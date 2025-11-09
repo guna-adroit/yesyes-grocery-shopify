@@ -172,6 +172,9 @@
                       </div>
                     </summary>
                     <div class="category-list">
+                      {% for collection in collection_list %}
+                          {{ collection.title }}
+                      {% endfor %}
                       <div class="category-list-item">
                         <div class="category-item_title-container">
                           {{'icon-filter-right.svg' | inline_asset_content }}
