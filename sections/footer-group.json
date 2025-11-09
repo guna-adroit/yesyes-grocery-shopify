@@ -243,6 +243,33 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "text_TPGMtL": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Join a Newsletter</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "1.125rem",
+                "line_height": "normal",
+                "letter_spacing": "tight",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "custom_classes": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "email_signup_MBjCLB": {
               "type": "email-signup",
               "name": "t:names.email_signup",
@@ -382,6 +409,7 @@
             }
           },
           "block_order": [
+            "text_TPGMtL",
             "email_signup_MBjCLB",
             "spacer_g4jK9j",
             "text_xbaNHL",
