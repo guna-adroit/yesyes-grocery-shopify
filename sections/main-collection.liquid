@@ -26,7 +26,7 @@
   }
 {% endjavascript %}
 
-{%assign collection_list = section.settings.collection_list %}
+
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
@@ -44,7 +44,7 @@
       type: 'filters',
       id: 'filters',
       results: collection,
-      collection_list: collection_list,
+      category_list: section.settings.collection_list,
       results_size: collection.products_count
     %}
 
@@ -314,9 +314,8 @@
     },
     {
       "type": "collection_list",
-      "id": "collection_list",
+      "id": "category_list",
       "label": "Collections",
-      "limit": 8
     },
     {
       "type": "header",
