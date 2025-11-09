@@ -38,7 +38,7 @@
   {% content_for 'block', id: 'title', type: '_heading', text: display_title %}
 {% endcapture %}
 
-{% capture details %}
+{% capture  %}
   {% content_for 'block',
     id: 'blog-post-info-text',
     type: '_blog-post-info-text',
@@ -95,8 +95,8 @@
 
     <div class="featured-blog-posts-card__content layout-panel-flex--column">
       <h4>{{ title }}</h4>
-      {{ description }}
       {{ details }}
+      {{ description }}
     </div>
   </div>
 </div>
