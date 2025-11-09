@@ -173,15 +173,17 @@
                     </summary>
                     <div class="category-list">
                       {% for collection in block.settings.category_list %}
-                        <div class="category-list-item">
-                          <div class="category-item_title-container">
-                            {{'icon-filter-right.svg' | inline_asset_content }}
-                            <p class="category-item_title">{{ collection.title }}</p>
+                        <a href="{{ collection.url }}">
+                          <div class="category-list-item">
+                            <div class="category-item_title-container">
+                              {{'icon-filter-right.svg' | inline_asset_content }}
+                              <p class="category-item_title">{{ collection.title }}</p>
+                            </div>
+                            <div class="category-item_count">
+                              {{ collection.products_count }}
+                            </div>
                           </div>
-                          <div class="category-item_count">
-                            {{ collection.products_count }}
-                          </div>
-                        </div>
+                        </a>
                       {% endfor %}
                       <div class="category-list-item">
                         <div class="category-item_title-container">
