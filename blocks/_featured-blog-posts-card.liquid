@@ -16,6 +16,7 @@
     assign display_title = article.title
     assign display_author = article.author
     assign display_date = article.published_at
+    assign blog_url = article.url
     assign display_description = null
   endif
 
@@ -38,13 +39,14 @@
   {% content_for 'block', id: 'title', type: '_heading', text: display_title %}
 {% endcapture %}
 
-{% capture  %}
+{% capture details %}
   {% content_for 'block',
     id: 'blog-post-info-text',
     type: '_blog-post-info-text',
     alignment: block_settings.alignment,
     author: display_author,
-    date: display_date
+    date: display_date,
+    blog_url: blog_url
   %}
 {% endcapture %}
 
@@ -95,8 +97,8 @@
 
     <div class="featured-blog-posts-card__content layout-panel-flex--column">
       <h4>{{ title }}</h4>
-      {{ details }}
       {{ description }}
+      {{ details }}
     </div>
   </div>
 </div>
