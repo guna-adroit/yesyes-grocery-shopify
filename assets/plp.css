@@ -276,6 +276,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: flex;
     gap: 8px;
     justify-content: space-between;
+    margin-bottom: 17px;
 }
 .category-item_title-container {
     display: flex;
