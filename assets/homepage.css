@@ -416,4 +416,13 @@ a.popular_products_tabs {
     slideshow-component slideshow-slides[size=medium] {
         min-height: 100px;
     }
+    span.Additional_menu_flex {
+        display: none;
+    }
+    span.footer-utilities__text {
+        text-wrap: auto;
+    }
+    .hero__image{
+        object-fit: scale-down;
+    }
 }
