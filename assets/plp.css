@@ -294,5 +294,6 @@ p.category-item_title{
     font-size: 18px;
     line-height: 25.2px;
     padding: 5px 15px;
+    border-radius: 5px;
     border: 1px solid #ED1D23;
 }
