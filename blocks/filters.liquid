@@ -172,19 +172,17 @@
                       </div>
                     </summary>
                     <div class="category-list">
-                      {{block.settings.category_list }}
                       {% for collection in block.settings.category_list %}
-                          {{ collection.title }}
+                        <div class="category-list-item">
+                          <div class="category-item_title-container">
+                            {{'icon-filter-right.svg' | inline_asset_content }}
+                            <p class="category-item_title">{{ collection.title }}</p>
+                          </div>
+                          <div class="category-item_count">
+                            {{ collection.products_count }}
+                          </div>
+                        </div>
                       {% endfor %}
-                      <div class="category-list-item">
-                        <div class="category-item_title-container">
-                          {{'icon-filter-right.svg' | inline_asset_content }}
-                          <p class="category-item_title">Aachi Spices</p>
-                        </div>
-                        <div class="category-item_count">
-                          13
-                        </div>
-                      </div>
                       <div class="category-list-item">
                         <div class="category-item_title-container">
                           {{'icon-filter-right.svg' | inline_asset_content }}
