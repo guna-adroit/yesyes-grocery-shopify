@@ -413,4 +413,7 @@ a.popular_products_tabs {
     slideshow-slides[size=small] {
         min-height: 100px !important;
     }
+    slideshow-component slideshow-slides[size=medium] {
+        min-height: 100px;
+    }
 }
