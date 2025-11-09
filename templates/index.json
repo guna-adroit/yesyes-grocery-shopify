@@ -1412,7 +1412,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "ashoka-punjabi-choley-280gm",
+        "product": "cow-milk-full-cream-1",
         "recommendation_type": "related",
         "layout_type": "grid",
         "carousel_on_mobile": false,
