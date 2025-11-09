@@ -1202,6 +1202,7 @@
         "button_RizJXw": {
           "type": "button",
           "name": "t:names.button",
+          "disabled": true,
           "settings": {
             "label": "Shop now",
             "link": "shopify://collections/all",
