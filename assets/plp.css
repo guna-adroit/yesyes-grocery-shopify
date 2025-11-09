@@ -292,7 +292,7 @@ p.category-item_title{
 .category-item_count{
     font-weight: 500;
     font-size: 18px;
-    line-height: 25.2px;
+    line-height: normal;
     padding: 5px 15px;
     border-radius: 5px;
     border: 1px solid #ED1D23;
