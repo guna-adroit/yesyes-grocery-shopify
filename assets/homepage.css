@@ -379,6 +379,11 @@ a.popular_products_tabs {
 .desktop-hidden-flex{
     display: none !important;
 }
+@media (max-width: 1366px) {
+    .predictive-search:has(.predictive-search-dropdown) .search-input {
+        width: 420px;
+    }
+}
 @media (max-width: 992px) {
     .mobile-hidden-flex{
         display: none !important;
@@ -408,7 +413,7 @@ a.popular_products_tabs {
         margin-right: 0;
     }
     slideshow-container .slide__image-container > .slide__image{
-        object-fit: contain;
+        /* object-fit: contain; */
     }
     slideshow-slides[size=small] {
         min-height: 100px !important;
