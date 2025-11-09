@@ -118,6 +118,12 @@
             "enable_grid_density": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
+            "category_list": [
+              "grocery",
+              "frontpage",
+              "milk",
+              "rice"
+            ],
             "padding-block-start": 8,
             "padding-block-end": 8,
             "padding-inline-start": 0,

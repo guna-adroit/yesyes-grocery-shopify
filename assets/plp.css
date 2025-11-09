@@ -272,3 +272,31 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-card__content{
     justify-content: space-between;
 }
+.category-list-item {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    align-items: center;
+}
+.category-item_title-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+p.category-item_title{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    margin: 0;
+}
+.category-item_count{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: normal;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 1px solid #ED1D23;
+    width: 50px;
+    text-align: center;
+}
