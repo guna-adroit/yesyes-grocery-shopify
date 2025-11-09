@@ -314,6 +314,31 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
     background: #ED1D23;
     color: #fff;
 }
+.blog-details-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+}
+.featured_blog_date, .featured_blog_author{
+    display: flex;
+    gap: 6px;
+}
+.resource-list.hidden--mobile.resource-list--grid{
+    gap: 30px;
+}
+img.image-block__image {
+    border-radius: 10px;
+}
+.blog-details-wrapper {
+    margin-top: 16px;
+}
+.blog_read_more {
+    margin-top: 32px;
+}
 /* Responsive behavior */
 @media (max-width: 1100px) {
   .mega-menu { grid-template-columns: repeat(3, 1fr); }

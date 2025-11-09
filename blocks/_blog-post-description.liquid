@@ -49,9 +49,9 @@
 {% endcapture %}
 
 {% if content %}
-  {% assign truncatewords = 30 %}
+  {% assign truncatewords = 20 %}
   {% unless should_truncate or article.image %}
-    {% assign truncatewords = 90 %}
+    {% assign truncatewords = 60 %}
   {% endunless %}
 
   {% liquid
