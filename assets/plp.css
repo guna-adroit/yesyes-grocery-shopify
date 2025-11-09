@@ -282,10 +282,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: flex;
     align-items: center;
     gap: 8px;
+}
+p.category-item_title{
     font-weight: 500;
     font-size: 18px;
     line-height: 25.2px;
-}
-p.category-item_title{
     margin: 0;
 }
