@@ -655,7 +655,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h3>{{ closest.collection.title }}</h3>",
+                    "text": "<h3>Popular Products</h3>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
