@@ -44,7 +44,6 @@
       type: 'filters',
       id: 'filters',
       results: collection,
-      category_list: section.settings.category_list,
       results_size: collection.products_count
     %}
 
@@ -307,15 +306,6 @@
       "step": 3,
       "default": 24,
       "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
-    },
-    {
-      "type": "header",
-      "content": "Collection Category"
-    },
-    {
-      "type": "collection_list",
-      "id": "category_list",
-      "label": "Collections",
     },
     {
       "type": "header",
