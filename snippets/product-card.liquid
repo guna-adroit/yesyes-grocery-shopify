@@ -161,6 +161,61 @@
         </span>
         </button>
       </div>
+    {% else %}
+      {%- liquid
+                 
+                  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  if product.featured_media.preview_image != blank
+                    assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  endif
+                -%}
+
+              {% if product.available %}
+                <product-form-component
+                  data-section-id="{{ section.id }}"
+                  data-product-id="{{ product.id }}"
+                  data-product-url="{{ product.url }}"
+                  on:submit="/handleSubmit"
+                  data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                >
+                  <div
+                    class="visually-hidden"
+                    aria-live="assertive"
+                    role="status"
+                    aria-atomic="true"
+                    ref="liveRegion"
+                  ></div>
+                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="{{ product.id }}">
+                <add-to-cart-component
+                  ref="addToCartButtonContainer" 
+                  data-product-variant-media="{{ product_variant_media }}"
+                  data-add-to-cart-animation="true"
+                  >
+                  <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  type="submit"
+                  name="add"
+                  on:click="/handleClick"
+                  data-variant-id="{{ product.id }}">
+                  <span class="svg-wrapper add-to-cart-icon">
+                    {{- 'icon-trolley.svg' | inline_asset_content -}}
+                  </span>
+                    Add
+                  </button>
+                  
+                </add-to-cart-component>
+              {% endform %}
+            </product-form-component>
+
+              {% else %}
+                <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  data-variant-id="{{ product.id }}" disabled>
+                  
+                    Sold out
+                  </button>
+              {% endif %}
     {% endif %}
   </div>
   {% if product.compare_at_price > product.price %}
@@ -181,7 +236,7 @@
     margin-top: 18px;
   }
 </style>
-{% if product.variants.size > 1 %}
+
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
@@ -190,7 +245,7 @@
       display: flex;
     }
   </style>
-{% endif %}
+
 
 {% stylesheet %}
   product-card-link,
