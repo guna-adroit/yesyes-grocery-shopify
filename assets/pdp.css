@@ -2,3 +2,6 @@
     border: 1px solid #00000033;
     border-radius: 8px;
 }
+.slideshow-controls__thumbnails{
+    margin: 0;
+}
