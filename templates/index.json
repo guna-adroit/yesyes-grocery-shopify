@@ -11,7 +11,7 @@
   "sections": {
     "hero_phhUHj": {
       "type": "hero",
-      "name": "Hero Guna",
+      "name": "Hero New",
       "settings": {
         "media_type_1": "image",
         "image_1": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].deskop_banner.value }}",
