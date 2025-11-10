@@ -307,8 +307,10 @@ p.category-item_title{
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
+    border-radius: 8px;
 }
 .sold-out-button{
     width: 100%;
     font-weight: 600;
+    border-radius: 8px;
 }
