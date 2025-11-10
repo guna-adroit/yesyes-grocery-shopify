@@ -207,6 +207,12 @@
                 </add-to-cart-component>
               {% endform %}
             </product-form-component>
+            <product-quantity-control
+              class="quantity-control-button"
+              data-product-id="{{ product.id }}"
+              data-variant-id="{{ product.first_available_variant.id }}"
+              hidden
+            ></product-quantity-control>
 
               {% else %}
                 <button ref="addToCartButton"
