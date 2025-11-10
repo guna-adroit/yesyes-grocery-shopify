@@ -171,7 +171,6 @@
   </product-card-link>
 {%- endif -%}
 {{ product.variants.size }}
-{% assign product_ = product.has_only_default_variant %}
 <style>
   .quick-add-btn{
     display: none;
@@ -181,7 +180,7 @@
     margin-top: 18px;
   }
 </style>
-{%unless product.has_only_default_variant %}
+{% if product.variants.size > 1 %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
@@ -190,7 +189,7 @@
       display: flex;
     }
   </style>
-{% endunless %}
+{% endif %}
 
 {% stylesheet %}
   product-card-link,
