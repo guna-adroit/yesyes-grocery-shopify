@@ -308,3 +308,7 @@ p.category-item_title{
     justify-content: center;
     gap: 0.3rem;
 }
+.sold-out-button{
+    width: 100%;
+    font-weight: 600;
+}
