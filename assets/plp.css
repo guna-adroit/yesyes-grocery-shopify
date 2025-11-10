@@ -300,3 +300,11 @@ p.category-item_title{
     width: 50px;
     text-align: center;
 }
+.card-atc-button{
+    width: 100%;
+    place-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
