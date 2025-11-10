@@ -70,7 +70,7 @@ export class AddToCartComponent extends Component {
 
     if (productCard){
       const quantityControl = productCard.querySelector('product-quantity-control');
-      const addToCartButton = productCard.querySelector('.add-to-cart-button');
+      const addToCartButton = productCard.querySelector('.card-atc-button');
 
       if (addToCartButton) {
         addToCartButton.style.display = 'none'; // Hides the button
