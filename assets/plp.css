@@ -314,3 +314,6 @@ p.category-item_title{
     font-weight: 600;
     border-radius: 8px;
 }
+.add-to-cart-button.card-atc-button {
+    margin-top: 18px;
+}
