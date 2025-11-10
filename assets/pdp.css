@@ -5,3 +5,7 @@
 .slideshow-controls__thumbnails{
     margin: 0;
 }
+.slideshow-controls__thumbnails{
+    border: 1px solid #00000033;
+    border-radius: 8px;
+}
