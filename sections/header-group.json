@@ -113,10 +113,39 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "breadcrumb_DwDU6L": {
+      "type": "breadcrumb",
+      "blocks": {
+        "static-group": {
+          "type": "breadcrumb",
+          "static": true,
+          "settings": {
+            "home_text": "Home",
+            "separator": "/",
+            "background_color": "#ffffff",
+            "link_color": "#666666",
+            "link_hover_color": "#000000",
+            "current_color": "#000000",
+            "separator_color": "#cccccc",
+            "current_font_weight": "500",
+            "font_size": 14,
+            "spacing": 8,
+            "padding_vertical": 12,
+            "padding_horizontal": 20,
+            "border_width": 1,
+            "border_color": "#e6e6e6"
+          },
+          "blocks": {}
+        }
+      },
+      "name": "Breadcrumb",
+      "settings": {}
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "breadcrumb_DwDU6L"
   ]
 }
