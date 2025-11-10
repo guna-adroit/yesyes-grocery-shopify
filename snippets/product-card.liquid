@@ -173,8 +173,15 @@
   </product-card-link>
 {%- endif -%}
 {{ product.variants.size }}
-
-{% comment %} {% if product.variants.size == 1 %}
+<style>
+  .quick-add-btn{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+  }
+</style>
+{% if product.variants.size = 1 %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
@@ -183,7 +190,7 @@
       display: flex;
     }
   </style>
-{% endif %} {% endcomment %}
+{% endif %}
 
 {% stylesheet %}
   product-card-link,
