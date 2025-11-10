@@ -961,7 +961,7 @@ function initAjaxinate() {
 
   try {
     window.endlessScroll = new Ajaxinate({
-      method: 'click',
+      method: 'scroll',
       container: '#AjaxinateContainer',
       pagination: '#AjaxinatePagination',
     });
@@ -1004,7 +1004,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 
-// List view code
+// List view code START
 document.addEventListener('DOMContentLoaded', () => {
   const productGrid = document.querySelector('.product-grid');
   const viewButtons = document.querySelectorAll('.product-view_option');
