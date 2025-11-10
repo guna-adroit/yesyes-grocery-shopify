@@ -122,7 +122,7 @@
           "static": true,
           "settings": {
             "home_text": "Home",
-            "separator": "/",
+            "separator": ">",
             "background_color": "#ffffff",
             "link_color": "#666666",
             "link_hover_color": "#000000",
