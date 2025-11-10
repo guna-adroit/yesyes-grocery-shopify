@@ -183,9 +183,9 @@
 </style>
 {% if product.variants.size == 1 %}
   <style>
-    #product-card-{{ block.id }} .buy-buttons-block{
+    {% comment %} #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
-    }
+    } {% endcomment %}
     #product-card-{{ block.id }} .quick-add-btn{
       display: flex;
     }
