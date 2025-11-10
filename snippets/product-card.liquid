@@ -146,20 +146,82 @@
     "
   >
     {{ children }}
-    <div class="quick-add-button-wrapper">
-      <button class="button quick-add-btn add-to-cart-button button-secondary" data-product-handle="{{ closest.product.handle }}">
-        <span
-        class="add-to-cart-text"
-      >
-          <span class="svg-wrapper add-to-cart-icon">
-            {{- 'icon-trolley.svg' | inline_asset_content -}}
+    {% if product.variants.size > 1 %}
+      <div class="quick-add-button-wrapper">
+        <button class="button quick-add-btn add-to-cart-button button-secondary" data-product-handle="{{ closest.product.handle }}">
+          <span
+          class="add-to-cart-text"
+        >
+            <span class="svg-wrapper add-to-cart-icon">
+              {{- 'icon-trolley.svg' | inline_asset_content -}}
+            </span>
+          <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
+            {{- 'products.product.add_to_cart' | t -}}
           </span>
-        <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
-          {{- 'products.product.add_to_cart' | t -}}
         </span>
-      </span>
-      </button>
-    </div>
+        </button>
+      </div>
+    {% else %}
+      {%- liquid
+                 
+                  assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  if product.featured_media.preview_image != blank
+                    assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+                  endif
+                -%}
+
+              {% if product.available %}
+                <product-form-component
+                  data-section-id="{{ section.id }}"
+                  data-product-id="{{ product.id }}"
+                  data-product-url="{{ product.url }}"
+                  on:submit="/handleSubmit"
+                  data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                >
+                  <div
+                    class="visually-hidden"
+                    aria-live="assertive"
+                    role="status"
+                    aria-atomic="true"
+                    ref="liveRegion"
+                  ></div>
+                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="{{ product.selected_or_first_available_variant.id }}">
+                <add-to-cart-component
+                  ref="addToCartButtonContainer" 
+                  data-product-variant-media="{{ product_variant_media }}"
+                  data-add-to-cart-animation="true"
+                  >
+                  <button ref="addToCartButton"
+                  class="button button-secondary add-to-cart-button card-atc-button" 
+                  type="submit"
+                  name="add"
+                  on:click="/handleClick"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                  <span class="svg-wrapper add-to-cart-icon">
+                    {{- 'icon-trolley.svg' | inline_asset_content -}}
+                  </span>
+                    {{- 'products.product.add_to_cart' | t -}}
+                  </button>
+                  
+                </add-to-cart-component>
+              {% endform %}
+            </product-form-component>
+            <product-quantity-control
+              class="quantity-control-button"
+              data-product-id="{{ product.id }}"
+              data-variant-id="{{ product.first_available_variant.id }}"
+              hidden
+            ></product-quantity-control>
+
+              {% else %}
+                <button ref="addToCartButton"
+                  class="button button-secondary sold-out-button" 
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}" disabled>
+                    Sold out
+                  </button>
+              {% endif %}
+    {% endif %}
   </div>
   {% if product.compare_at_price > product.price %}
   {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
@@ -170,27 +232,25 @@
 {%- if settings.transition_to_main_product -%}
   </product-card-link>
 {%- endif -%}
-
-{% assign product_ = product.has_only_default_variant %}
 <style>
   .quick-add-btn{
-    display: none;
     width: 100%;
     align-items: center;
     justify-content: center;
     margin-top: 18px;
+    border-radius: 8px;
   }
 </style>
-{%unless product.has_only_default_variant %}
+
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
-    }
+    } 
     #product-card-{{ block.id }} .quick-add-btn{
       display: flex;
     }
   </style>
-{% endunless %}
+
 
 {% stylesheet %}
   product-card-link,

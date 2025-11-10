@@ -73,18 +73,19 @@
    {% endif %}
 {% endfor %}
   </div>           {% endcomment %}
-<product-quantity-control
+{% comment %} <product-quantity-control
   class="quantity-control-button"
   data-product-id="{{ product.id }}"
   data-variant-id="{{ product.first_available_variant.id }}"
   hidden
-></product-quantity-control>
+></product-quantity-control> {% endcomment %}
 
 
 {% stylesheet %}
 .quantity-control-button .quantity-selector{
   background-color: #ED1D23;
   justify-content: space-evenly;
+  border-radius: 8px;
 }
 .quantity-control-button .quantity-selector :is(.quantity-minus,.quantity-plus){
   color: white;
