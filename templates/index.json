@@ -9,6 +9,38 @@
  */
 {
   "sections": {
+    "hero_phhUHj": {
+      "type": "hero",
+      "name": "Hero Guna",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].deskop_banner.value }}",
+        "mobile_image": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].mobile_banner.value }}",
+        "media_type_2": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -63,6 +95,7 @@
         "text_YLPk4p",
         "button_H9gpTf"
       ],
+      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -1598,41 +1631,10 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "hero_phhUHj": {
-      "type": "hero",
-      "name": "Hero Guna",
-      "settings": {
-        "media_type_1": "image",
-        "image_1": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].deskop_banner.value }}",
-        "mobile_image": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].mobile_banner.value }}",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "auto",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
-        "overlay_color": "#00000026",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
     }
   },
   "order": [
+    "hero_phhUHj",
     "hero_jVaWmY",
     "featured_categories_cibbXA",
     "section_wHChnB",
@@ -1642,7 +1644,6 @@
     "slideshow_GqQCxE",
     "product_recommendations_fHN9ri",
     "hero_9rqzTi",
-    "featured_blog_posts_3NJwAt",
-    "hero_phhUHj"
+    "featured_blog_posts_3NJwAt"
   ]
 }
