@@ -181,7 +181,7 @@
     margin-top: 18px;
   }
 </style>
-{% if product.variants.size == 1 %}
+{% if product.variants.size > 1 %}
   <style>
     #product-card-{{ block.id }} .buy-buttons-block{
       display: none;
