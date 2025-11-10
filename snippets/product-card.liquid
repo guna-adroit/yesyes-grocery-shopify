@@ -170,7 +170,7 @@
 {%- if settings.transition_to_main_product -%}
   </product-card-link>
 {%- endif -%}
-
+{{ product.variants.size }}
 {% assign product_ = product.has_only_default_variant %}
 <style>
   .quick-add-btn{
