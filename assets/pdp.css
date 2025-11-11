@@ -9,3 +9,8 @@
     border: 1px solid #00000033;
     border-radius: 8px;
 }
+.product-page-title h1{
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+}
