@@ -881,7 +881,7 @@
       },
       "name": "t:names.products_grid",
       "settings": {
-        "collection": "all",
+        "collection": "{{ metaobjects.featured_collection_grid_1[\"featured-collection-grid-1-mnkjh3co\"].featured_collection_grid_1.value }}",
         "layout_type": "grid",
         "carousel_on_mobile": true,
         "max_products": 8,
