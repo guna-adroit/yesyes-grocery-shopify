@@ -1062,6 +1062,33 @@
               },
               "blocks": {}
             },
+            "product_vendor_ECGJFN": {
+              "type": "product-vendor",
+              "name": "Product Vendor",
+              "settings": {
+                "show_product_type": false,
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "custom_classes": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "price_tBRDJt": {
               "type": "price",
               "name": "t:names.product_price",
@@ -1128,6 +1155,7 @@
           "block_order": [
             "product_card_gallery_bA7NrA",
             "product_title_BrjMXe",
+            "product_vendor_ECGJFN",
             "price_tBRDJt",
             "buy_buttons_PBTp3y"
           ]
@@ -1367,6 +1395,33 @@
               },
               "blocks": {}
             },
+            "product_vendor_kjPnft": {
+              "type": "product-vendor",
+              "name": "Product Vendor",
+              "settings": {
+                "show_product_type": false,
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "custom_classes": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "price_Qc4DX7": {
               "type": "price",
               "name": "t:names.product_price",
@@ -1433,6 +1488,7 @@
           "block_order": [
             "product_card_gallery_RUDNPF",
             "product_title_V84kVm",
+            "product_vendor_kjPnft",
             "price_Qc4DX7",
             "buy_buttons_aCPqaU"
           ]
