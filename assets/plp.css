@@ -76,12 +76,12 @@
 }
 .svg-wrapper.collection-wishlist-icon {
     color: #ED1D23;
-    width: 30px;
-    height: 25px;
+    width: 42px;
+    height: 42px;
 }
 .svg-wrapper.collection-wishlist-icon svg{
-    width: 30px;
-    height: 25px;
+    width: 42px;
+    height: 42px;
 }
 facet-remove-component.custom-filter-reset{
     display: flex;
