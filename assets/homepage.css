@@ -1,3 +1,6 @@
+*{
+    font-family: inter;
+}
 p.announcement-bar__text {
     font-weight: 700;
 }
