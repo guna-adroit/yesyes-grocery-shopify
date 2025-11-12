@@ -333,3 +333,6 @@ p.category-item_title{
     line-height: 100%;
     justify-content: center;
 }
+.wishlist-icon-position .product-badges__badge{
+    background: transparent;
+}
