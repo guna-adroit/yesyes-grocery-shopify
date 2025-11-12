@@ -325,3 +325,7 @@ p.category-item_title{
 .add-to-cart-button.card-atc-button {
     margin-top: 18px;
 }
+.product-page.sale-ribbon{
+    width: 105px;
+    height: 48px;
+}
