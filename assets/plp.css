@@ -328,4 +328,8 @@ p.category-item_title{
 .product-page.sale-ribbon{
     width: 105px;
     height: 48px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    justify-content: center;
 }
