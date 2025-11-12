@@ -29,7 +29,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-</div>
+</div> 
 
 {% comment %} {% if product.compare_at_price > product.price %}
 {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
@@ -93,14 +93,17 @@
     padding-inline: var(--badge-rectangle-padding-inline);
   }
 
+  .sale-ribbon-container{
+     position: absolute;
+      left: 0px;
+      top: 20px;
+  }
   .sale-ribbon{
 	display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5px 15px;
-	  position: absolute;
-    left: 0px;
-    top: 20px;
+	 
     line-height: 24px;
 	  height:34.8px;
     text-align: center;
