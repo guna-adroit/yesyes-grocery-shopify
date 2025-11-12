@@ -97,22 +97,25 @@
   position: absolute;
   left: 0;
   top: 20px;
+  z-index: 2;
 }
 
 .sale-ribbon {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 15px;
-  line-height: 24px;
-  height: 36px; /* match pseudo-element height */
-  text-align: center;
-  white-space: nowrap;
-  font-weight: 600;
+  height: 36px; /* fixed height for consistency */
+  padding: 0 15px;
   background-color: #27AE60;
   color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1; /* prevent font scaling mismatch */
+  text-transform: uppercase;
+  white-space: nowrap;
   border-radius: 0;
+  box-sizing: border-box;
 }
 
 .sale-ribbon-two::before {
@@ -120,10 +123,13 @@
   position: absolute;
   top: 0;
   right: -9px;
-  border-width: 18px 9px; /* half of height (36px / 2 = 18px) */
+  width: 0;
+  height: 0;
   border-style: solid;
+  border-width: 18px 9px; /* 18 * 2 = 36px, matches height */
   border-color: transparent transparent transparent #27AE60;
 }
+
 
 .sale-ribbon-two:before {
     border-color: #27AE60;
