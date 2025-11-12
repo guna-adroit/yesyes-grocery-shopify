@@ -132,7 +132,7 @@ slideshow-controls[controls-on-media] {
     letter-spacing: 0;
     font-family: Inter;
     line-height: 21.4px;
-
+    padding-block: 18px;
 }
 .predictive-search:has(.predictive-search-dropdown) .search-input:hover {
     border: 1px solid #ed1d23;
