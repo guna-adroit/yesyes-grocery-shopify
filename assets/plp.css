@@ -163,7 +163,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         line-height: 24px;
     }
     .product-price-container{
-        flex-direction: column;
         gap: 4px;
     }
     .product-card product-price, .card-product-expiry-container{
