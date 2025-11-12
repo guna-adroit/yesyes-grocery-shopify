@@ -29,7 +29,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-</div>
+</div> 
 
 {% comment %} {% if product.compare_at_price > product.price %}
 {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
@@ -38,16 +38,6 @@
 </div>
 {% endif %} {% endcomment %}
 
-
-<div
-  class="product-badges product-badges--top-right wishlist-icon-position"
->
-  <div class="product-badges__badge ">
-      <span class="svg-wrapper collection-wishlist-icon">
-          {{- 'icon-heart.svg' | inline_asset_content -}}
-      </span>
-  </div>
-</div>
 
 {% stylesheet %}
   .product-badges {
@@ -93,40 +83,32 @@
     padding-inline: var(--badge-rectangle-padding-inline);
   }
 
-  .sale-ribbon{
-	display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5px 15px;
-	  position: absolute;
-    left: 0px;
-    top: 20px;
-    line-height: 24px;
-	  height:34.8px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25em;
-	  border-radius: 0;
-    text-shadow: none;
-    font-weight: 600;
-    background-color: #27AE60 !important;
-    color: white;
-}
-
-.sale-ribbon-two:before, .sale-ribbon-two:before {
-    display: inline-block;
-    content: "";
+  .sale-ribbon-container {
     position: absolute;
-    right: -14px;
-    top: 0;
-    border: 9px solid transparent;
-    border-width: 18px 9px;
-    border-right-color: #27AE60;
-}
-.sale-ribbon-two:before {
-    border-color: #27AE60;
-    border-right-color: transparent!important;
-    right: -9px;
-}
+    left: 0;
+    top: 20px;
+    z-index: 2;
+  }
+  .sale-ribbon {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font-weight: bold;
+    color: #fff;
+    background: #27AE60;
+    padding: 0.5em 8.5px;
+    clip-path: polygon(
+      0% 0%,        /* top-left */
+      100% 0%,      /* top-right */
+      85% 50%,   /* inward diagonal */
+      100% 100%,    /* bottom-right */
+      0% 100%,      /* bottom-left */
+      0% 0%         /* close path */
+    );
+    width: 66px;
+    height: 34px;
+  }
 {% endstylesheet %}

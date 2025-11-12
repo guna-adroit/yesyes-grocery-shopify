@@ -35,6 +35,7 @@
     align-items: center;
     gap: 8px;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .product-card product-price{
     width: auto;
@@ -42,6 +43,7 @@
 .card-product-expiry-container{
     width: auto;
     text-align: right;
+    flex-basis: 125px;
 }
 .card-product-expiry-container .product-expiry{
     font-weight: 600;
@@ -71,17 +73,26 @@
     height: 60px;
 }
 .product-badges--top-right.wishlist-icon-position{
-    top: 0;
-    right: 0;
+    top: 11px;
+    right: 11px;
 }
 .svg-wrapper.collection-wishlist-icon {
     color: #ED1D23;
-    width: 30px;
-    height: 25px;
+    width: 42px;
+    height: 42px;
 }
 .svg-wrapper.collection-wishlist-icon svg{
-    width: 30px;
-    height: 25px;
+    width: 42px;
+    height: 42px;
+}
+.product.collection-wishlist-icon{
+    color: black;
+    width: 46px;
+    height: 46px;
+}
+.product-badges--top-right.product.wishlist-icon-position{
+    top: 24px;
+    right: 24px;
 }
 facet-remove-component.custom-filter-reset{
     display: flex;
@@ -316,4 +327,17 @@ p.category-item_title{
 }
 .add-to-cart-button.card-atc-button {
     margin-top: 18px;
+}
+.product-page.sale-ribbon{
+    width: 105px;
+    height: 48px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    justify-content: center;
+    padding-left: 8px;
+    padding-right: 20px;
+}
+.wishlist-icon-position .product-badges__badge{
+    background: transparent;
 }

@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "product-information",
@@ -15,15 +16,15 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
+            "media_presentation": "carousel",
             "media_columns": "two",
             "image_gap": 4,
             "large_first_image": false,
             "icons_style": "none",
-            "slideshow_controls_style": "counter",
+            "slideshow_controls_style": "thumbnails",
             "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 90,
             "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
             "media_fit": "contain",
@@ -60,7 +61,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "padding-block-start": 24,
+            "padding-block-start": 0,
             "padding-block-end": 24,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -70,7 +71,6 @@
               "type": "group",
               "name": "Header",
               "settings": {
-                "open_in_new_tab": false,
                 "content_direction": "column",
                 "vertical_on_mobile": true,
                 "horizontal_alignment": "flex-start",
@@ -98,6 +98,9 @@
                 "overlay_color": "#00000026",
                 "overlay_style": "solid",
                 "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -120,6 +123,7 @@
                     "case": "none",
                     "wrap": "pretty",
                     "color": "",
+                    "custom_classes": "product-page-title",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
@@ -136,6 +140,7 @@
                     "show_sale_price_first": true,
                     "show_installments": false,
                     "show_tax_info": false,
+                    "show_product_expiry": true,
                     "type_preset": "paragraph",
                     "width": "100%",
                     "alignment": "left",
@@ -188,6 +193,7 @@
               "settings": {
                 "stacking": true,
                 "show_pickup_availability": false,
+                "gift_card_form": true,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -233,6 +239,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "",
+                "custom_classes": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -256,9 +263,9 @@
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": false,
+        "equal_columns": true,
         "limit_details_width": false,
-        "gap": 48,
+        "gap": 66,
         "color_scheme": "",
         "padding-block-start": 0,
         "padding-block-end": 0
@@ -283,6 +290,7 @@
             "case": "none",
             "wrap": "pretty",
             "color": "",
+            "custom_classes": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -331,6 +339,7 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
+                "show_product_type": true,
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -342,6 +351,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
+                "custom_classes": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -358,6 +368,7 @@
                 "show_sale_price_first": true,
                 "show_installments": false,
                 "show_tax_info": false,
+                "show_product_expiry": true,
                 "type_preset": "h6",
                 "width": "100%",
                 "alignment": "left",
