@@ -563,6 +563,11 @@
   {%- endif -%}
 
   {% render 'product-card-badges', product: product, settings: settings %}
+  {% if product.compare_at_price > product.price %}
+  {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
+    <span class="sale-ribbon sale-ribbon-two">{{ percent }}%</span>
+  {% endif %}
+  
 </media-gallery>
 
 {% stylesheet %}
