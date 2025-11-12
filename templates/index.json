@@ -1265,13 +1265,12 @@
         "button_RizJXw": {
           "type": "button",
           "name": "t:names.button",
-          "disabled": true,
           "settings": {
             "label": "Shop now",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button",
-            "custom_color": "",
+            "custom_color": "#ed1d23",
             "custom_class": "section_view_all",
             "width": "fit-content",
             "custom_width": 100,
