@@ -93,40 +93,38 @@
     padding-inline: var(--badge-rectangle-padding-inline);
   }
 
-  .sale-ribbon-container{
-     position: absolute;
-      left: 0px;
-      top: 20px;
-  }
-  .sale-ribbon{
-	display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5px 15px;
-	 
-    line-height: 24px;
-	  height:34.8px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25em;
-	  border-radius: 0;
-    text-shadow: none;
-    font-weight: 600;
-    background-color: #27AE60 !important;
-    color: white;
+  .sale-ribbon-container {
+  position: absolute;
+  left: 0;
+  top: 20px;
 }
 
-.sale-ribbon-two:before, .sale-ribbon-two:before {
-    display: inline-block;
-    content: "";
-    position: absolute;
-    right: -14px;
-    top: 0;
-    border: 9px solid transparent;
-    border-width: 18px 9px;
-    border-right-color: #27AE60;
+.sale-ribbon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 15px;
+  line-height: 24px;
+  height: 36px; /* match pseudo-element height */
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  background-color: #27AE60;
+  color: #fff;
+  border-radius: 0;
 }
+
+.sale-ribbon-two::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -9px;
+  border-width: 18px 9px; /* half of height (36px / 2 = 18px) */
+  border-style: solid;
+  border-color: transparent transparent transparent #27AE60;
+}
+
 .sale-ribbon-two:before {
     border-color: #27AE60;
     border-right-color: transparent!important;
