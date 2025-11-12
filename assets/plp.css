@@ -87,6 +87,10 @@
     width: 46px;
     height: 46px;
 }
+.product-badges--top-right.product.wishlist-icon-position{
+    top: 24px;
+    right: 24px;
+}
 facet-remove-component.custom-filter-reset{
     display: flex;
     gap: 4px;
