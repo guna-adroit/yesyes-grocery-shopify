@@ -214,6 +214,12 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 18px;
         line-height: 22px;
     }
+    p.category-item_title{
+        font-size: 14px;
+    }
+    .category-item_count{
+        font-size: 14px;
+    }
 }
 
 .product-grid.product-list-view {
