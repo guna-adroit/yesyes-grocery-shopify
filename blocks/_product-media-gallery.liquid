@@ -562,7 +562,13 @@
     </script>
   {%- endif -%}
 
-  {% render 'product-card-badges', product: product, settings: settings %}
+  <div class="product-badges product-badges--top-right wishlist-icon-position">
+    <div class="product-badges__badge ">
+        <span class="svg-wrapper collection-wishlist-icon">
+            {{- 'icon-heart.svg' | inline_asset_content -}}
+        </span>
+    </div>
+  </div>
   {% if product.compare_at_price > product.price %}
   {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
     <div class="sale-ribbon-container">
