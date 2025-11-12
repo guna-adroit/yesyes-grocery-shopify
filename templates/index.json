@@ -1039,7 +1039,7 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
-                "show_product_type": false,
+                "show_product_type": true,
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
