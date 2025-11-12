@@ -83,6 +83,10 @@
     width: 42px;
     height: 42px;
 }
+.product.collection-wishlist-icon{
+    width: 46px;
+    height: 46px;
+}
 facet-remove-component.custom-filter-reset{
     display: flex;
     gap: 4px;
