@@ -210,6 +210,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         height: 25px;
         width: 25px;
     }
+    .facets__label{
+        font-size: 18px;
+        line-height: 22px;
+    }
 }
 
 .product-grid.product-list-view {
