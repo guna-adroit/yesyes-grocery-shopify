@@ -7,7 +7,11 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
-
+  
+  <span class="wishlist-wrapper">
+    <span class="wishlist-icons">{% render 'header-wishlist' %}</span>
+    <span class="header-icons-label">Wishlist</span>
+  </span>
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
   {% else %}

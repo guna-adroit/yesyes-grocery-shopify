@@ -80,6 +80,7 @@ overflow-list.overflow-menu .menu-list__link {
     line-height: 28px;
     letter-spacing: 0;
     text-wrap-mode: nowrap;
+    position: relative;
 }
 .header-contact-wrapper {
     display: flex;
@@ -166,7 +167,7 @@ button.account-button.header-actions__action span svg {
     min-width: 32px;
 }
 .header-actions__action {
-    margin-right: 20px;
+    margin-right: 24px;
 }
 span.header-icons-label {
     display: flex;
@@ -367,6 +368,35 @@ a.popular_products_tabs {
 }
 .group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-column {
     align-items: center;
+}
+span.wishlist-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 4px;
+}
+header-actions {
+    width: auto;
+    min-width: fit-content;
+    padding-left: 30px;
+}
+
+span.header-contact-label
+ {
+    font-family: Raleway;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12.6px;
+    letter-spacing: 0;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+}
+h2.featured-categories__title {
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+    letter-spacing: 0;
 }
 /* Responsive behavior */
 @media (max-width: 1100px) {
