@@ -343,14 +343,5 @@ p.category-item_title{
     background: transparent;
 }
 @media screen and (max-width: 750px){
-    .facets__label{
-        font-size: 18px;
-        line-height: 22px;
-    }
-    p.category-item_title{
-        font-size: 14px;
-    }
-    .category-item_count{
-        font-size: 14px;
-    }
+    
 }
