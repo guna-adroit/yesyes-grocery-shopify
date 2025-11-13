@@ -377,4 +377,7 @@ p.category-item_title{
     .product-price-container .product-price{
         width: fit-content;
     }
+    .product-price-container .product-price div{
+        width: min-content;
+    }
 }
