@@ -40,7 +40,10 @@
     align-items: center;
 }
 .low-stock-circle{
-
+    width: 16px;
+    height: 16px;
+    background: #EFAE1A;
+    border-radius: 50px;
 }
 .low-stock-text{
     font-weight: 600;
