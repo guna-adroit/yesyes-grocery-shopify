@@ -389,4 +389,7 @@ p.category-item_title{
         font-size: 14px;
         height: 35px !important;
     }
+    .add-to-cart-button.card-atc-button{
+        margin-top: 8px;
+    }
 }
