@@ -27,7 +27,7 @@
     line-height: 28px;
     text-decoration: line-through;
 }
-.product-details product-price{
+.product-details product-price > div{
     display: flex;
     align-items: center;
     gap: 30px;
