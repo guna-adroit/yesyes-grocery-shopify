@@ -38,6 +38,7 @@
 .product-details .product-price-container .product-low-stock-container{
     display: flex;
     align-items: center;
+    gap: 9px;
 }
 .low-stock-circle{
     width: 16px;
