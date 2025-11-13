@@ -407,7 +407,8 @@ p.category-item_title{
         width: 32px;
         height: 32px;
     }
-    .product-grid.product-list-view {
+    .product-grid.product-list-view .add-to-cart-button{
+        font-size: 14px;
         height: 40px !important;
         padding: 5px;
     }
