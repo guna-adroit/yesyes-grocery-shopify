@@ -417,6 +417,12 @@ p.category-item_title{
     .column-options-wrapper:has(.product-view-container){
         display: none !important;
     }
+    .filter-bar-grid .facets--horizontal {
+        justify-content: space-between;
+    }
+    .products-count-wrapper{
+        margin-left: unset !important;
+    }
 }
 @media screen and (max-width: 600px){
     .column-options-wrapper:has(.product-view-container){
