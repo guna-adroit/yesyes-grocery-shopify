@@ -413,3 +413,8 @@ p.category-item_title{
         padding: 5px;
     }
 }
+@media screen and (max-width: 820px){
+    .column-options-wrapper:has(.product-view-container){
+        display: none;
+    }
+}
