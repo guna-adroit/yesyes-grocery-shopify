@@ -182,7 +182,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 12px;
         padding: 0;
         margin-top: 8px;
-        height: 35px !important;
     }
     .add-to-cart-button.button-secondary{
         padding: 0;
@@ -383,5 +382,11 @@ p.category-item_title{
     .add-to-cart-button{
         font-size: 14px;
         height: 45px !important;
+    }
+}
+@media screen and (max-width: 600px) {
+    .add-to-cart-button {
+        font-size: 14px;
+        height: 35px !important;
     }
 }
