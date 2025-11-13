@@ -27,3 +27,42 @@
     line-height: 28px;
     text-decoration: line-through;
 }
+.product-details product-price > div{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.product-price-container .product-low-stock-container{
+    display: none;
+}
+.product-details .product-price-container .product-low-stock-container{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.low-stock-circle{
+    width: 16px;
+    height: 16px;
+    background: #EFAE1A;
+    border-radius: 50px;
+}
+.low-stock-text{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+}
+.product-description-title h5{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+}
+.product-description-content p{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+}
+.related-products-heading h4{
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+}

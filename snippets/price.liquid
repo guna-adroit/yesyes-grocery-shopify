@@ -42,6 +42,7 @@
 -%}
 
 <div ref="priceContainer">
+  <div>
   {% if show_sale_price_first == false and show_compare_price %}
     <span role="group">
       <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
@@ -76,4 +77,11 @@
     -%}
     {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
   {%- endif -%}
+  </div>
+  {% if closest.product.selected_or_first_available_variant.inventory_quantity < 5 %}
+    <div class="product-low-stock-container">
+      <span class="low-stock-circle"></span>
+      <span class="low-stock-text">Low stock</span>
+    </div>
+  {% endif %}
 </div>
