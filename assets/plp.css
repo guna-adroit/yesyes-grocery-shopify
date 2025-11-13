@@ -380,4 +380,8 @@ p.category-item_title{
     .product-price-container product-price div{
         width: min-content;
     }
+    .add-to-cart-button{
+        font-size: 14px;
+        height: 45px !important;
+    }
 }
