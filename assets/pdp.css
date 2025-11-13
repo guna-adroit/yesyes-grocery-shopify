@@ -27,3 +27,6 @@
     line-height: 28px;
     text-decoration: line-through;
 }
+.product-price-container .product-low-stock-container{
+    display: none;
+}
