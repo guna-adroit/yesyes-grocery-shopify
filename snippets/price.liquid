@@ -78,7 +78,9 @@
     {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
   {%- endif -%}
   </div>
+  
   <div class="product-low-stock-container">
+    {{ closest.product.selected_or_first_available_variant.inventory_quantity }}
     <span class="low-stock-circle"></span>
     <span class="low-stock-text">Low stock</span>
   </div>
