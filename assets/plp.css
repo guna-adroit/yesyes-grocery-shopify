@@ -44,6 +44,12 @@
     width: 100%;
     flex-basis: 125px;
 }
+.product-media{
+    padding: 25px;
+}
+.product-grid.product-list-view .product-media{
+    padding: 0;
+}
 .product-grid.product-list-view .card-product-expiry-container{
     flex-basis: unset;
 }
