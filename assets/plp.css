@@ -420,6 +420,6 @@ p.category-item_title{
 }
 @media screen and (max-width: 600px){
     .column-options-wrapper:has(.product-view-container){
-        display: flex;
+        display: flex !important; 
     }
 }
