@@ -426,10 +426,8 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
-    setTimeout(() => {
       observePaginationChange();
-      console.log("Remove Filter");
-    }, 1000);
+ 
   }
 
   /**
