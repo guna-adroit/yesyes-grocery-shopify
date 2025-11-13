@@ -143,7 +143,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 }
 @media screen and (max-width: 750px){
     .product-card{
-        padding: 8px 4px;
+        padding: 8px 6px;
     }
     .card-product-type {
         font-size: 12px;
