@@ -77,8 +77,11 @@ class FacetsFormComponent extends Component {
     this.#updateURLHash();
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
-    observePaginationChange();
-    console.log("UpdateFilter");
+    setTimeout(() => {
+      observePaginationChange();
+      console.log("UpdateFilter");
+    }, 1000);
+
   };
 
   /**
@@ -423,7 +426,8 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
-    observePaginationChange();
+      observePaginationChange();
+ 
   }
 
   /**
@@ -961,7 +965,7 @@ function initAjaxinate() {
 
   try {
     window.endlessScroll = new Ajaxinate({
-      method: 'click',
+      method: 'scroll',
       container: '#AjaxinateContainer',
       pagination: '#AjaxinatePagination',
     });
