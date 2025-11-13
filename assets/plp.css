@@ -167,7 +167,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         gap: 4px;
     }
     .product-card product-price, .card-product-expiry-container{
-        width: 100%;
         text-align: left;
     }
     .card-product-expiry-container .product-expiry {
