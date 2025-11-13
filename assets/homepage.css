@@ -304,7 +304,7 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 32px;
+    padding: 19px 64px;
     background: #ffffff;
     color: #000000;
     border-radius: 5px;
