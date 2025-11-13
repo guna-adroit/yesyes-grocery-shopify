@@ -343,6 +343,7 @@ p.category-item_title{
 .wishlist-icon-position .product-badges__badge{
     background: transparent;
 }
-@media screen and (max-width: 750px){
-
-}
+@media screen and (max-width: 1024px) {
+    .resource-list--grid {
+        --resource-list-columns: repeat(3, 1fr) !important;
+    }
