@@ -347,3 +347,13 @@ p.category-item_title{
     .resource-list--grid {
         --resource-list-columns: repeat(3, 1fr) !important;
     }
+    .product-card .price {
+        font-size: 20px;
+        line-height: 22px;
+    }
+    .compare-at-price{
+        font-size: 16px;
+        line-height: 20px;
+        padding-left: 5px;
+    }
+}
