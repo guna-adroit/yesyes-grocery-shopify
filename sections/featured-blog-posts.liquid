@@ -21,7 +21,7 @@
   "
 >
   {% content_for 'block', id: 'static-blog-title', type: '_featured-blog-posts-title' %}
-XXXX
+  <div class="blog-subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
   {% if section.settings.blog != blank and section.settings.blog.articles_count > 0 %}
     {% paginate section.settings.blog.articles by max_items %}
       {% assign section_articles = section.settings.blog.articles %}
