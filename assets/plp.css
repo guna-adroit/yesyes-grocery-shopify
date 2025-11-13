@@ -403,4 +403,12 @@ p.category-item_title{
     .facets__label {
         font-size: 20px;
     }
+    .product-grid.product-list-view .svg-wrapper.add-to-cart-icon{
+        width: 32px;
+        height: 32px;
+    }
+    .product-grid.product-list-view {
+        height: 40px !important;
+        padding: 5px;
+    }
 }
