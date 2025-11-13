@@ -42,6 +42,7 @@
 -%}
 
 <div ref="priceContainer">
+  <div>
   {% if show_sale_price_first == false and show_compare_price %}
     <span role="group">
       <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
@@ -76,6 +77,7 @@
     -%}
     {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
   {%- endif -%}
+  </div>
   <div class="product-low-stock-container">
     Low stock
   </div>
