@@ -39,3 +39,11 @@
     display: flex;
     align-items: center;
 }
+.low-stock-circle{
+
+}
+.low-stock-text{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+}
