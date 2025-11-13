@@ -356,4 +356,7 @@ p.category-item_title{
         line-height: 20px;
         padding-left: 5px;
     }
+    .card-product-expiry-container .product-expiry {
+        font-size: 10px;
+    }
 }
