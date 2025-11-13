@@ -393,3 +393,11 @@ p.category-item_title{
         margin-top: 8px;
     }
 }
+
+
+@media screen and (max-width: 1024px) {
+   .product-grid.product-list-view  .card-product-expiry-container {
+        display: unset;
+        flex-basis: unset;
+    }
+}
