@@ -375,4 +375,7 @@ p.category-item_title{
     .add-to-cart-button{
         padding: 0 5px;
     }
+    .product-price-container .product-price{
+        width: fit-content;
+    }
 }
