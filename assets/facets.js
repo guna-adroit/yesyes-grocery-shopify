@@ -79,7 +79,7 @@ class FacetsFormComponent extends Component {
     this.#updateSection();
     setTimeout(() => {
       observePaginationChange();
-      console.log("UpdateFilter");
+      console.log("Update Scroll");
     }, 1000);
 
   };
