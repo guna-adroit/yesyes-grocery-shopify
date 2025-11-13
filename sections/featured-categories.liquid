@@ -127,7 +127,7 @@
         <div class="featured-categories__track">
         {% for block in section.blocks %}
           <div
-          class="featured-category-card"
+          class="featured-category-card hover"
           style="background-color: {{ block.settings.bg_color }}; width: calc(100% / {{ section.settings.desktop_visible }});"
           >
             {%if block.settings.collection_link %}<a href="{{ block.settings.collection_link.url }}">{% endif %}
