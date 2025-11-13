@@ -14,3 +14,16 @@
     font-size: 34px;
     line-height: 44px;
 }
+.product-details .price{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 34px;
+    line-height: 44px;
+}
+.product-details .compare-at-price{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 20px;
+    line-height: 28px;
+    text-decoration: line-through;
+}
