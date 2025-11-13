@@ -342,7 +342,7 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
     gap: 30px;
 }
 img.image-block__image {
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 .blog-details-wrapper {
     margin-top: 16px;
