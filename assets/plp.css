@@ -367,3 +367,9 @@ p.category-item_title{
         justify-content: end;
     }
 }
+
+@media screen and (max-width: 820px){
+    .add-to-cart-button{
+        padding: 0 5px;
+    }
+}
