@@ -368,7 +368,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h5>Shipping Details</h5>",
+                    "text": "<h5>Shipping Information</h5>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
