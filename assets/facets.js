@@ -79,7 +79,7 @@ class FacetsFormComponent extends Component {
     this.#updateSection();
     setTimeout(() => {
       observePaginationChange();
-      console.log("Update Scroll");
+      console.log("UpdateFilter");
     }, 1000);
 
   };
@@ -426,7 +426,10 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
-    observePaginationChange();
+    setTimeout(() => {
+      observePaginationChange();
+      console.log("Remove Filter");
+    }, 1000);
   }
 
   /**
