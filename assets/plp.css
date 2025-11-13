@@ -311,7 +311,7 @@ p.category-item_title{
     width: 50px;
     text-align: center;
 }
-/* .card-atc-button{
+.card-atc-button{
     width: 100%;
     place-content: center;
     display: flex;
@@ -319,7 +319,7 @@ p.category-item_title{
     justify-content: center;
     gap: 0.3rem;
     border-radius: 8px;
-} */
+} 
 .sold-out-button{
     width: 100%;
     font-weight: 600;
