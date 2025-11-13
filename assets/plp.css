@@ -400,4 +400,7 @@ p.category-item_title{
         display: unset;
         flex-basis: unset;
     }
+    .facets__label {
+        font-size: 20px;
+    }
 }
