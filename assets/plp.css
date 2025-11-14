@@ -253,7 +253,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     padding: 0 15px;
 }
 .product-grid.product-list-view .svg-wrapper.collection-wishlist-icon{
-    width: 20px;
+    width: 30px;
+    height: 30px;
 }
 .product-grid.product-list-view .quick-add-button-wrapper{
     display: flex;
