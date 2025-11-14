@@ -150,7 +150,7 @@
             "vertical_alignment_flex_direction_column": "center",
             "gap": 0,
             "width": "custom",
-            "custom_width": 100,
+            "custom_width": 40,
             "width_mobile": "fit-content",
             "custom_width_mobile": 100,
             "height": "fit",
