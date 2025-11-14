@@ -1014,7 +1014,11 @@ function initAjaxinate() {
     });
 }
 
-document.addEventListener(ThemeEvents.FilterUpdate, setTimeout(initViewButtons, 1500));
+document.addEventListener(ThemeEvents.FilterUpdate, () => {
+  setTimeout(() => {
+    initViewButtons();
+  }, 1500);
+});
 
 document.addEventListener('DOMContentLoaded', initAjaxinate);
 
