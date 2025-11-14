@@ -916,95 +916,95 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
-// Infinite scorll
-window.endlessScroll = window.endlessScroll || null;
-let reinitTimer = null;
-let paginationObserver = null;
+// // Infinite scorll
+// window.endlessScroll = window.endlessScroll || null;
+// let reinitTimer = null;
+// let paginationObserver = null;
 
-function localDebounce(fn, delay = 150) {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn.apply(this, args), delay);
-  };
-}
+// function localDebounce(fn, delay = 150) {
+//   let timer;
+//   return function (...args) {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => fn.apply(this, args), delay);
+//   };
+// }
 
-function destroyAjaxinate() {
-  const instance = window.endlessScroll;
+// function destroyAjaxinate() {
+//   const instance = window.endlessScroll;
 
-  if (instance && instance.request && instance.request.readyState !== 4) {
-    try {
-      instance.request.abort();
-      // console.log(' Aborted old Ajaxinate request');
-    } catch (e) {
-      console.warn('Abort error', e);
-    }
-  }
+//   if (instance && instance.request && instance.request.readyState !== 4) {
+//     try {
+//       instance.request.abort();
+//       // console.log(' Aborted old Ajaxinate request');
+//     } catch (e) {
+//       console.warn('Abort error', e);
+//     }
+//   }
 
-  const oldPagination = document.querySelector('#AjaxinatePagination');
-  if (oldPagination && oldPagination.parentNode) {
-    const newPagination = oldPagination.cloneNode(true);
-    oldPagination.parentNode.replaceChild(newPagination, oldPagination);
-    // console.log('🧹 Old pagination listeners cleared');
-  }
+//   const oldPagination = document.querySelector('#AjaxinatePagination');
+//   if (oldPagination && oldPagination.parentNode) {
+//     const newPagination = oldPagination.cloneNode(true);
+//     oldPagination.parentNode.replaceChild(newPagination, oldPagination);
+//     // console.log('🧹 Old pagination listeners cleared');
+//   }
 
-  window.endlessScroll = null;
-}
+//   window.endlessScroll = null;
+// }
 
-function initAjaxinate() {
-  const container = document.querySelector('#AjaxinateContainer');
-  const pagination = document.querySelector('#AjaxinatePagination');
-  const paginationLink = pagination?.querySelector('a');
+// function initAjaxinate() {
+//   const container = document.querySelector('#AjaxinateContainer');
+//   const pagination = document.querySelector('#AjaxinatePagination');
+//   const paginationLink = pagination?.querySelector('a');
 
-  if (!container || !pagination || !paginationLink) {
-    console.warn('Ajaxinate init skipped: container/pagination missing');
-    return;
-  }
+//   if (!container || !pagination || !paginationLink) {
+//     console.warn('Ajaxinate init skipped: container/pagination missing');
+//     return;
+//   }
 
-  destroyAjaxinate();
+//   destroyAjaxinate();
 
-  try {
-    window.endlessScroll = new Ajaxinate({
-      method: 'scroll',
-      container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination',
-    });
+//   try {
+//     window.endlessScroll = new Ajaxinate({
+//       method: 'scroll',
+//       container: '#AjaxinateContainer',
+//       pagination: '#AjaxinatePagination',
+//     });
 
-    // console.log('✅ Ajaxinate initialized');
-  } catch (err) {
-    console.error('Ajaxinate init failed', err);
-  }
-}
+//     // console.log('✅ Ajaxinate initialized');
+//   } catch (err) {
+//     console.error('Ajaxinate init failed', err);
+//   }
+// }
 
 
-function observePaginationChange() {
-  if (paginationObserver) {
-    paginationObserver.disconnect();
-    paginationObserver = null;
-  }
+// function observePaginationChange() {
+//   if (paginationObserver) {
+//     paginationObserver.disconnect();
+//     paginationObserver = null;
+//   }
 
-  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-  if (!parent) return;
+//   const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
+//   if (!parent) return;
 
-  paginationObserver = new MutationObserver(
-    localDebounce((mutations, obs) => {
-      const pagination = document.querySelector('#AjaxinatePagination');
-      const paginationLink = pagination?.querySelector('a');
+//   paginationObserver = new MutationObserver(
+//     localDebounce((mutations, obs) => {
+//       const pagination = document.querySelector('#AjaxinatePagination');
+//       const paginationLink = pagination?.querySelector('a');
 
-      if (pagination && paginationLink) {
-        // console.log('🔁 Pagination updated → initializing Ajaxinate');
-        obs.disconnect();
-        paginationObserver = null;
-        initAjaxinate();
-      }
-    }, 150)
-  );
+//       if (pagination && paginationLink) {
+//         // console.log('🔁 Pagination updated → initializing Ajaxinate');
+//         obs.disconnect();
+//         paginationObserver = null;
+//         initAjaxinate();
+//       }
+//     }, 150)
+//   );
 
-  paginationObserver.observe(parent, { childList: true, subtree: true });
-}
+//   paginationObserver.observe(parent, { childList: true, subtree: true });
+// }
 
-// Initial load
-document.addEventListener('DOMContentLoaded', initAjaxinate);
+// // Initial load
+// document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 
