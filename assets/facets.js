@@ -1006,6 +1006,17 @@ const CURRENCY_DECIMALS = {
 // // Initial load
 // document.addEventListener('DOMContentLoaded', initAjaxinate);
 
+function initAjaxinate() {
+    var endlessScroll = new Ajaxinate({
+      method: 'scroll', // Change to 'click' if you want a button instead
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination'
+    });
+}
+
+document.addEventListener(ThemeEvents.FilterUpdate, setTimeout(initViewButtons, 1500));
+
+document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code START
