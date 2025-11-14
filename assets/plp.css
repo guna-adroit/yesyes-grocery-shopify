@@ -409,9 +409,12 @@ p.category-item_title{
     .product-price-container product-price div{
         width: min-content;
     }
-    .add-to-cart-button{
+    .add-to-cart-button, .sold-out-button{
         font-size: 14px;
         height: 45px !important;
+    }
+    .product-grid{
+        gap: 15px;
     }
 }
 @media screen and (max-width: 600px) {
