@@ -1704,7 +1704,7 @@
                 "type_preset": "",
                 "alignment": "left",
                 "show_alignment": true,
-                "padding-block-start": 24,
+                "padding-block-start": 0,
                 "padding-block-end": 0
               },
               "blocks": {}
