@@ -259,6 +259,11 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
 .product-grid.product-list-view .shopify-product-form{
     width: 100%;
 }
+.product-grid.product-list-view .sold-out-button-container {
+    display: flex;
+    align-items: center;
+}
+
 .product-grid.product-list-view .product-badges--top-right.wishlist-icon-position{
 
 }
@@ -348,6 +353,7 @@ p.category-item_title{
     width: 100%;
     font-weight: 600;
     border-radius: 8px;
+    height: 55px;
 }
 .add-to-cart-button.card-atc-button {
     margin-top: 18px;
