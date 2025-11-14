@@ -1012,7 +1012,7 @@ function initAjaxinate() {
 
 document.addEventListener(ThemeEvents.FilterUpdate, () => {
   setTimeout(() => {
-    initViewButtons();
+    initAjaxinate()
   }, 1500);
 });
 
