@@ -1131,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
   observer.observe(document.body, { childList: true, subtree: true });
 
   // Support Shopify section reloads
-  document.addEventListener("shopify:section:load", initViewButtons);
+  document.addEventListener(ThemeEvents.FilterUpdate, initViewButtons);
 
 
 
