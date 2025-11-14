@@ -1009,71 +1009,129 @@ document.addEventListener('DOMContentLoaded', initAjaxinate);
 
 
 // List view code START
-document.addEventListener('DOMContentLoaded', () => {
-  const productGrid = document.querySelector('.product-grid');
-  const viewButtons = document.querySelectorAll('.product-view_option');
+// document.addEventListener('DOMContentLoaded', () => {
+//   const productGrid = document.querySelector('.product-grid');
+//   const viewButtons = document.querySelectorAll('.product-view_option');
 
-  if (!productGrid || !viewButtons.length) return;
+//   if (!productGrid || !viewButtons.length) return;
 
-  // Helper to activate the correct button
-  const setActiveButton = (activeView) => {
+//   // Helper to activate the correct button
+//   const setActiveButton = (activeView) => {
+//     viewButtons.forEach(btn => {
+//       btn.classList.toggle('active', btn.dataset.view === activeView);
+//     });
+//   };
+
+//   // Restore saved view
+//   const savedView = localStorage.getItem('productView') || 'grid-view';
+//   setActiveButton(savedView);
+
+//   if (savedView === 'list-view') {
+//     productGrid.classList.add('product-list-view');
+//   } else {
+//     productGrid.classList.remove('product-list-view');
+//   }
+
+//   // Click handlers
+//   viewButtons.forEach(button => {
+//     button.addEventListener('click', () => {
+//       const selectedView = button.dataset.view;
+
+//       setActiveButton(selectedView);
+//       localStorage.setItem('productView', selectedView);
+
+//       if (selectedView === 'list-view') {
+//         productGrid.classList.add('product-list-view');
+//       } else {
+//         productGrid.classList.remove('product-list-view');
+//       }
+//     });
+//   });
+//   document.addEventListener(ThemeEvents.FilterUpdate, () => {
+//     setTimeout(function() {
+//       const productGrid = document.querySelector('.product-grid');
+//       const viewButtons = document.querySelectorAll('.product-view_option');
+//       const setActiveButton = (activeView) => {
+//           viewButtons.forEach(btn => {
+//             btn.classList.toggle('active', btn.dataset.view === activeView);
+//             console.log("Active done");
+//           });
+//         };
+
+//         // Restore saved view
+//         const savedView = localStorage.getItem('productView') || 'grid-view';
+//         setActiveButton(savedView);
+
+//         if (savedView === 'list-view') {
+//           productGrid.classList.add('product-list-view');
+//           console.log("FilterEvent: class added");
+//         } else {
+//           productGrid.classList.remove('product-list-view');
+//           console.log("FilterEvent: class removed");
+//         }
+//     }, 1000);
+    
+//   });
+// });
+
+
+
+
+  function initViewButtons() {
+    const productGrid = document.querySelector(".product-grid");
+    const viewButtons = document.querySelectorAll(".product-view_option");
+
+    if (!productGrid || viewButtons.length === 0) return;
+
+    // Get saved view
+    const savedView = localStorage.getItem("productView") || "grid-view";
+
+    // Apply active class
     viewButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.view === activeView);
+      btn.classList.toggle("active", btn.dataset.view === savedView);
     });
-  };
 
-  // Restore saved view
-  const savedView = localStorage.getItem('productView') || 'grid-view';
-  setActiveButton(savedView);
+    // Apply layout class to grid
+    if (savedView === "list-view") {
+      productGrid.classList.add("product-list-view");
+    } else {
+      productGrid.classList.remove("product-list-view");
+    }
 
-  if (savedView === 'list-view') {
-    productGrid.classList.add('product-list-view');
-  } else {
-    productGrid.classList.remove('product-list-view');
+    // Click events
+    viewButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const selectedView = button.dataset.view;
+
+        // Update buttons
+        viewButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        // Save
+        localStorage.setItem("productView", selectedView);
+
+        // Apply to grid
+        if (selectedView === "list-view") {
+          productGrid.classList.add("product-list-view");
+        } else {
+          productGrid.classList.remove("product-list-view");
+        }
+      });
+    });
   }
 
-  // Click handlers
-  viewButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const selectedView = button.dataset.view;
+  // Initial load
+  initViewButtons();
 
-      setActiveButton(selectedView);
-      localStorage.setItem('productView', selectedView);
-
-      if (selectedView === 'list-view') {
-        productGrid.classList.add('product-list-view');
-      } else {
-        productGrid.classList.remove('product-list-view');
-      }
-    });
+  // MutationObserver — detects when Shopify replaces product-grid after filtering
+  const observer = new MutationObserver(() => {
+    initViewButtons();
   });
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    setTimeout(function() {
-      const productGrid = document.querySelector('.product-grid');
-      const viewButtons = document.querySelectorAll('.product-view_option');
-      const setActiveButton = (activeView) => {
-          viewButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.view === activeView);
-            console.log("Active done");
-          });
-        };
 
-        // Restore saved view
-        const savedView = localStorage.getItem('productView') || 'grid-view';
-        setActiveButton(savedView);
+  observer.observe(document.body, { childList: true, subtree: true });
 
-        if (savedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-          console.log("FilterEvent: class added");
-        } else {
-          productGrid.classList.remove('product-list-view');
-          console.log("FilterEvent: class removed");
-        }
-    }, 1000);
-    
-  });
-});
-
+  // Support Shopify section reloads
+  document.addEventListener("shopify:section:load", initViewButtons);
 
 
 
