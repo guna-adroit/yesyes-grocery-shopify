@@ -341,8 +341,15 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
 .resource-list.hidden--mobile.resource-list--grid{
     gap: 30px;
 }
-img.image-block__image {
-    /* border-radius: 10px; */
+.featured-blog-posts-card img.image-block__image {
+    border-radius: 10px;
+}
+div[id*="blog-post-description"] {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
 }
 .blog-details-wrapper {
     margin-top: 16px;
