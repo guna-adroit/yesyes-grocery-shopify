@@ -256,6 +256,12 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     width: 30px;
     height: 30px;
 }
+.product-grid.product-list-view .shopify-product-form{
+    width: 100%;
+}
+.product-grid.product-list-view .product-badges--top-right.wishlist-icon-position{
+
+}
 .product-grid.product-list-view .quick-add-button-wrapper{
     display: flex;
     align-items: center;
