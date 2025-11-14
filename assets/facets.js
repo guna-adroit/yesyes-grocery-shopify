@@ -914,21 +914,56 @@ const CURRENCY_DECIMALS = {
 
 
 // Infinite Scroll
+let ajaxinateInstance = null;
+
+// SAFE initialize function (prevents duplicates)
 function initAjaxinate() {
-    var endlessScroll = new Ajaxinate({
-      method: 'scroll', // Change to 'click' if you want a button instead
-      container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination'
-    });
+
+  // Destroy previous instance if exists
+  if (ajaxinateInstance && ajaxinateInstance.destroy) {
+    ajaxinateInstance.destroy();
+  }
+
+  ajaxinateInstance = new Ajaxinate({
+    method: 'scroll',
+    container: '#AjaxinateContainer',
+    pagination: '#AjaxinatePagination'
+  });
+
+  console.log("Ajaxinate initialized");
 }
 
-document.addEventListener(ThemeEvents.FilterUpdate, () => {
-  setTimeout(() => {
-    initAjaxinate()
-  }, 1500);
+// INITIAL LOAD
+document.addEventListener('DOMContentLoaded', () => {
+  initAjaxinate();
 });
 
-document.addEventListener('DOMContentLoaded', initAjaxinate);
+// Horizon main product wrapper
+const horizonWrapper =
+  document.querySelector('[data-products-root]') ||
+  document.querySelector('#AjaxinateContainer')?.parentNode;
+
+// MutationObserver (PREVENTS duplicates)
+if (horizonWrapper) {
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.addedNodes.length > 0) {
+        initAjaxinate();
+        break;
+      }
+    }
+  });
+
+  observer.observe(horizonWrapper, { childList: true, subtree: true });
+}
+
+// Horizon filter update event (backup)
+document.addEventListener('collection:updated', () => {
+  initAjaxinate();
+});
+
+// Section load (Horizon sometimes reloads this)
+document.addEventListener('shopify:section:load', initAjaxinate);
 
 
 
