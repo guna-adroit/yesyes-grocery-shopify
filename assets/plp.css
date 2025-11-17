@@ -384,6 +384,9 @@ p.category-item_title{
     color: #676666;
     text-align: center;
 }
+.product-grid.product-list-view  .card-product-more-option{
+    display: none;
+}
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
         --resource-list-columns: repeat(3, 1fr) !important;
