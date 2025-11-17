@@ -1304,7 +1304,7 @@
       ],
       "name": "t:names.slideshow",
       "settings": {
-        "icons_style": "arrows_large",
+        "icons_style": "none",
         "slideshow_controls_style": "dots",
         "color_scheme": "",
         "autoplay": false,
