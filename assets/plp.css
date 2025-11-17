@@ -454,6 +454,12 @@ p.category-item_title{
         flex-wrap: wrap;
         gap: 4px;
     }
+    .product-price-container{
+        flex-wrap: wrap;
+    }
+    .card-product-expiry-container{
+        justify-content: flex-start;
+    }
 }
 
 
