@@ -460,6 +460,9 @@ p.category-item_title{
     .card-product-expiry-container{
         justify-content: flex-start;
     }
+    .variants-container{
+        display: block;
+    }
 }
 
 
