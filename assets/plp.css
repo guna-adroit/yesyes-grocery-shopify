@@ -466,6 +466,7 @@ p.category-item_title{
     .variants-container tbody{
         display: flex;
         flex-direction: column;
+        gap: 10px;
     }
 }
 
