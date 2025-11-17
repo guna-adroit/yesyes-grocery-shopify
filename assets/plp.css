@@ -375,6 +375,12 @@ p.category-item_title{
 .wishlist-icon-position .product-badges__badge{
     background: transparent;
 }
+.card-product-more-option{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12.6px;
+    margin: 0;
+}
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
         --resource-list-columns: repeat(3, 1fr) !important;
