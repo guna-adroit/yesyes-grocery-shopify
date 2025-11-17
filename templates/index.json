@@ -1198,7 +1198,7 @@
         "banner_image": "shopify://shop_images/Screenshot_2025-11-13_151350.png",
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "max_products": 10,
+        "max_products": 8,
         "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
