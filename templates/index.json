@@ -583,6 +583,23 @@
     "product_list_BXNHJD": {
       "type": "product-list",
       "blocks": {
+        "button_8yrr3Y": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "View All Products",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-secondary",
+            "custom_color": "",
+            "custom_class": "section_view_all",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -907,6 +924,9 @@
           ]
         }
       },
+      "block_order": [
+        "button_8yrr3Y"
+      ],
       "name": "t:names.products_grid",
       "settings": {
         "collection": "{{ metaobjects.featured_collection_grid_1[\"featured-collection-grid-1-mnkjh3co\"].featured_collection_grid_1.value }}",
@@ -1222,6 +1242,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Group_1000009195.png",
+            "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -1249,6 +1270,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Group_1000009195.png",
+            "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -1275,6 +1297,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Group_1000009195.png",
+            "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
