@@ -644,6 +644,33 @@
               },
               "blocks": {}
             },
+            "text_Rx7Wmt": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h3>Popular Products</h3>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "custom_classes": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "group_6eKQRz": {
               "type": "group",
               "name": "t:names.group",
@@ -684,33 +711,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "text_kgt4Ak": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<h3>Popular Products</h3>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "custom_classes": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
                 "custom_liquid_gdBDXQ": {
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
@@ -721,7 +721,6 @@
                 }
               },
               "block_order": [
-                "text_kgt4Ak",
                 "custom_liquid_gdBDXQ"
               ]
             },
@@ -743,6 +742,7 @@
           },
           "block_order": [
             "product_list_text_HL9HFR",
+            "text_Rx7Wmt",
             "group_6eKQRz",
             "product_list_button_r67gUj"
           ]
