@@ -66,6 +66,11 @@ span.modal-button-label:after {
     border-width: 0px 1px 1px 0;
     transform: rotate(45deg);
     top: 3px;
+    transition: transform 0.3s ease, top 0.3s ease;
+}
+.all-categories.active span.modal-button-label:after {
+    transform: rotate(225deg);
+    top: 10px;
 }
 overflow-list.overflow-menu .menu-list__link {
     font-weight: 500;
@@ -219,6 +224,7 @@ span.header-icons-label {
     line-height: 30px;
     letter-spacing: 0;
     text-transform: uppercase;
+    text-align: justify;
 }
 .menu-title a {
   color: #e53935; /* red */

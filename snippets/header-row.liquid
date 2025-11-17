@@ -147,14 +147,16 @@
 {%- endfor -%}
 <script>
   //on click of all-categories-btn add class active to span.header__secondary-menu ans clicking outside removes the class
-    var menu_btn = document.getElementById('all-categories-btn');
-    document.getElementById('all-categories-btn').addEventListener('click', function(event) {
+    var menu_toggle = document.getElementById('all-categories-btn');
+    if (menu_toggle) {
+      menu_toggle.addEventListener('click', function() {
+    this.classList.toggle('active');
     event.stopPropagation();
     var menu = this.querySelector('.header__secondary-menu');
     //if menu is already visible, hide it
     if (!menu.classList.contains('hidden-menu')) {
       menu.classList.add('hidden-menu');
-      menu_btn.classList.remove('active-btn');
+      menu_toggle.classList.remove('active');
       return;
     }
     menu.classList.remove('hidden-menu');
@@ -162,9 +164,9 @@
     document.addEventListener('click', function outsideClickListener(event) {
       if (!menu.contains(event.target) && event.target !== document.getElementById('all-categories-btn')) {
         menu.classList.add('hidden-menu');
-        menu_btn.classList.remove('active-btn');
         document.removeEventListener('click', outsideClickListener);
+        menu_toggle.classList.remove('active');
       }
     });
-  });
+  })};
 </script>
