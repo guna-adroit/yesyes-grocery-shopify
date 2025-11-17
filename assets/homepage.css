@@ -382,7 +382,7 @@ a.popular_products_tabs {
 .popular_products_tabs:hover {
     font-weight: 700;
 }
-.group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-column {
+footer .group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-column {
     align-items: center;
 }
 span.wishlist-wrapper {
@@ -421,7 +421,7 @@ h2.featured-categories__title {
     letter-spacing: 0;
 }
 .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
-    min-height: 412px;
+    min-height: 360px;
 }
 /* Responsive behavior */
 @media (max-width: 1100px) {
