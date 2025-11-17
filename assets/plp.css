@@ -382,6 +382,7 @@ p.category-item_title{
     margin: 0;
     margin-bottom: 14px;
     color: #676666;
+    text-align: center;
 }
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
