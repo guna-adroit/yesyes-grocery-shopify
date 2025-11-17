@@ -444,6 +444,9 @@ p.category-item_title{
     .product-grid{
         gap: 8px;
     }
+    .sold-out-button{
+        height: 35px !important;
+    }
 }
 
 
