@@ -421,7 +421,7 @@ h2.featured-categories__title {
     letter-spacing: 0;
 }
 .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
-    min-height: 285px;
+    min-height: 412px;
 }
 /* Responsive behavior */
 @media (max-width: 1100px) {
