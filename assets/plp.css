@@ -447,6 +447,13 @@ p.category-item_title{
     .sold-out-button{
         height: 35px !important;
     }
+    .product-price-container product-price div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
 }
 
 
