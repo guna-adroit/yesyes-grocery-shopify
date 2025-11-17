@@ -12,6 +12,9 @@
     href="{% render 'product-card-variant-url', product: closest.product %}"
   >
     <div class="product-grid-title-container card-product-title">
+      {% if closest.product.variants.size > 1 %}
+        <span class="card-product-more-option">More Options</span>
+      {% endif %}
       {% if block.settings.show_product_type %}
         <span class="card-product-type">{{ closest.product.type }}</span>
       {%  endif %}
