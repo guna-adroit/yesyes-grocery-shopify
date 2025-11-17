@@ -30,7 +30,9 @@
     data-testid="cart-drawer-trigger"
   >
     {% render 'cart-icon-component' %}
-    <span class="header-icons-label">Cart</span>
+      {% if cart.total_price <= 0 %}
+          <span class="header-icons-label">Cart</span>
+      {% endif %}
   </button>
 
   <dialog

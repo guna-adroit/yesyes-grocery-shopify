@@ -189,6 +189,17 @@ a.slider-overlay-link {
     height: 100%;
     z-index: 4;
 }
+.cart-total {
+    display: flex;
+    align-items: center;
+    background: #e50914;
+    padding: 0 4px;
+    border-radius: 10px;
+    min-height: 30px;
+    margin: auto 5px auto 2px;
+    color: white;
+    font-weight: 600;
+}
 /* // Mega Menu */
 /* Mega menu container */
 .mega-menu {
@@ -524,6 +535,11 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
     }
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
         min-height: 240px;
+    }
+    .cart-total {
+        font-size: 12px;
+        padding: 0 4px;
+        min-height: 24px;
     }
 }
 @media (max-width: 767px) {
