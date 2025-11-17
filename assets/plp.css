@@ -380,6 +380,7 @@ p.category-item_title{
     font-size: 14px;
     line-height: 12.6px;
     margin: 0;
+    color: #676666;
 }
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
