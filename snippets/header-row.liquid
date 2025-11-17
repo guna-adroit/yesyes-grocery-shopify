@@ -147,12 +147,14 @@
 {%- endfor -%}
 <script>
   //on click of all-categories-btn add class active to span.header__secondary-menu ans clicking outside removes the class
-  document.getElementById('all-categories-btn').addEventListener('click', function(event) {
+    var menu_btn = document.getElementById('all-categories-btn');
+    document.getElementById('all-categories-btn').addEventListener('click', function(event) {
     event.stopPropagation();
     var menu = this.querySelector('.header__secondary-menu');
     //if menu is already visible, hide it
     if (!menu.classList.contains('hidden-menu')) {
       menu.classList.add('hidden-menu');
+      menu_btn.classList.remove('active-btn');
       return;
     }
     menu.classList.remove('hidden-menu');
@@ -160,6 +162,7 @@
     document.addEventListener('click', function outsideClickListener(event) {
       if (!menu.contains(event.target) && event.target !== document.getElementById('all-categories-btn')) {
         menu.classList.add('hidden-menu');
+        menu_btn.classList.remove('active-btn');
         document.removeEventListener('click', outsideClickListener);
       }
     });
