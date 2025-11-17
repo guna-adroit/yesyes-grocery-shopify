@@ -17,7 +17,7 @@
         "image_1": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].deskop_banner.value }}",
         "mobile_image": "{{ metaobjects.homepage_banner_gs[\"homepage-banner-gs-t1yylqsj\"].mobile_banner.value }}",
         "media_type_2": "image",
-        "link": "",
+        "link": "shopify://collections/grocery",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
