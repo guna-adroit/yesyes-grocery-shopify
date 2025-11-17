@@ -441,6 +441,9 @@ p.category-item_title{
     .add-to-cart-button.card-atc-button{
         margin-top: 8px;
     }
+    .product-grid{
+        gap: 8px;
+    }
 }
 
 
