@@ -468,6 +468,10 @@ p.category-item_title{
         flex-direction: column;
         gap: 10px;
     }
+    .card-product-more-option{
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
 }
 
 
