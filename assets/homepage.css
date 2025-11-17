@@ -29,6 +29,10 @@ span.announcement-menu .menu-item:hover {
 .header__row.header__row--bottom{
     padding-top: 20px;
 }
+.header-logo__image-container {
+    padding-bottom: 15px;
+    padding-top: 4px;
+}
 /* menu */
 .header__column--left{
     gap: 60px;
