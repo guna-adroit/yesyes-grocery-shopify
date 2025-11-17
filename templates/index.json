@@ -1384,7 +1384,6 @@
               "blocks": {
                 "text_qwjP9W": {
                   "type": "text",
-                  "disabled": true,
                   "settings": {
                     "text": "<h2>New arrivals</h2>",
                     "width": "fit-content",
@@ -1411,7 +1410,6 @@
                 },
                 "text_7RHfaN": {
                   "type": "text",
-                  "disabled": true,
                   "settings": {
                     "text": "<p>Introducing our latest products, made especially for the season. Shop your favorites before they're gone!</p>",
                     "width": "fit-content",
@@ -1438,7 +1436,6 @@
                 },
                 "button_hfmiG7": {
                   "type": "button",
-                  "disabled": true,
                   "settings": {
                     "label": "Shop now",
                     "link": "shopify://collections/all",
