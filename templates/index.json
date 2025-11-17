@@ -1783,6 +1783,7 @@
       "block_order": [
         "custom_slider_featured_Jd8qaF"
       ],
+      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
