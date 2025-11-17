@@ -1,3 +1,6 @@
+.header__row.header__row--bottom{
+    border-bottom: 1px solid #828282;
+}
 .product-card{
     border: 1px solid #D1D1D1;
     border-radius: 7px;
