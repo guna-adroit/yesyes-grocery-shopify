@@ -463,6 +463,10 @@ p.category-item_title{
     .variants-container{
         display: block;
     }
+    .variants-container tbody{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 
