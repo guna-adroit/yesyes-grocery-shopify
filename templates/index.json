@@ -1216,6 +1216,7 @@
       "settings": {
         "collection": "all",
         "banner_image": "shopify://shop_images/Screenshot_2025-11-13_151350.png",
+        "banner_link": "shopify://products/kuttanadu-rice-matta-rice",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
