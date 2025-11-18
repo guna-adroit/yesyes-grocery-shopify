@@ -163,7 +163,13 @@
           </button>
         </div>
       {% else %}
-        soldout
+        <div class="sold-out-button-container">
+          <button ref="addToCartButton"
+            class="button button-secondary sold-out-button" 
+            data-variant-id="{{ product.selected_or_first_available_variant.id }}" disabled>
+              Sold out
+          </button>
+        </div>
       {% endif %}
     {% else %}
       {%- liquid
