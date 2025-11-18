@@ -383,6 +383,7 @@ p.category-item_title{
     margin-bottom: 14px;
     color: #676666;
     text-align: center;
+    min-height: 14px;
 }
 .product-grid.product-list-view  .card-product-more-option{
     display: none;
