@@ -435,6 +435,9 @@ p.category-item_title{
     .product-grid{
         gap: 15px;
     }
+    .product-price-container{
+        min-height: 42px;
+    }
 }
 @media screen and (max-width: 600px) {
     .add-to-cart-button {
