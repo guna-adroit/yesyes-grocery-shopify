@@ -553,3 +553,9 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
         min-height: 100px;
     }
 }
+@media (min-width: 1900px) {
+    .predictive-search:has(.predictive-search-dropdown) .search-input {
+        width: 45vw;
+        max-width: 900px;
+    }
+}
