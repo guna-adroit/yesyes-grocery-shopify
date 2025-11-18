@@ -147,30 +147,20 @@
   >
     {{ children }}
     {% if product.variants.size > 1 %}
-      {% if product.selected_variant.available %}
-        <div class="quick-add-button-wrapper">
-          <button class="button quick-add-btn add-to-cart-button button-secondary" data-product-handle="{{ closest.product.handle }}">
-            <span
-            class="add-to-cart-text"
-          >
-              <span class="svg-wrapper add-to-cart-icon">
-                {{- 'icon-trolley.svg' | inline_asset_content -}}
-              </span>
-            <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
-              {{- 'products.product.add_to_cart' | t -}}
+      <div class="quick-add-button-wrapper">
+        <button class="button quick-add-btn add-to-cart-button button-secondary" data-product-handle="{{ closest.product.handle }}">
+          <span
+          class="add-to-cart-text"
+        >
+            <span class="svg-wrapper add-to-cart-icon">
+              {{- 'icon-trolley.svg' | inline_asset_content -}}
             </span>
+          <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
+            {{- 'products.product.add_to_cart' | t -}}
           </span>
-          </button>
-        </div>
-      {% else %}
-          <div class="sold-out-button-container">
-            <button ref="addToCartButton"
-              class="button button-secondary sold-out-button" 
-              data-variant-id="{{ product.selected_or_first_available_variant.id }}" disabled>
-              Sold out
-            </button>
-          </div>
-      {% endif %}
+        </span>
+        </button>
+      </div>
     {% else %}
       {%- liquid
                  
