@@ -1755,7 +1755,7 @@
       },
       "name": "t:names.blog_posts_grid",
       "settings": {
-        "blog": "news",
+        "blog": "soya",
         "layout_type": "grid",
         "carousel_on_mobile": true,
         "post_limit": 3,
