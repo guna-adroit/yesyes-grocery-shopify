@@ -91,7 +91,7 @@
         </span>
       </div>
 
-      {% if block_settings.enable_sorting %}
+      {% comment %} {% if block_settings.enable_sorting %}
         {% render 'sorting',
           results: results,
           sort_by: sort_by,
@@ -101,7 +101,7 @@
           should_use_select_on_mobile: false,
           section_id: section.id
         %}
-      {% endif %}
+      {% endif %} {% endcomment %}
 
       
     </div>
@@ -257,7 +257,7 @@
                 </span>
               </div>
 
-              {% if block_settings.enable_sorting %}
+              {% comment %} {% if block_settings.enable_sorting %}
                 {% render 'sorting',
                   results: results,
                   sort_by: sort_by,
@@ -267,7 +267,7 @@
                   should_use_select_on_mobile: false,
                   section_id: section.id
                 %}
-              {% endif %}
+              {% endif %} {% endcomment %}
 
               {% if block_settings.enable_grid_density %}
                 {% render 'grid-density-controls', viewport: 'desktop' %}
