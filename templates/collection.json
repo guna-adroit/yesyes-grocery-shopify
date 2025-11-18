@@ -119,11 +119,11 @@
             "inherit_color_scheme": true,
             "color_scheme": "",
             "category_list": [
+              "all",
               "grocery",
               "frontpage",
               "milk",
               "rice",
-              "all",
               "pickles"
             ],
             "padding-block-start": 0,
