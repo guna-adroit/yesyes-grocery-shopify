@@ -109,12 +109,12 @@
       </div>
 
       <div class="predictive-search-form__footer">
-        <button
+        {% comment %} <button
           class="button button-primary predictive-search__search-button"
           ref="viewAllButton"
         >
           {{ 'content.search_results_view_all' | t }}
-        </button>
+        </button> {% endcomment %}
       </div>
     </div>
   </form>
@@ -166,7 +166,7 @@
   }
 
   .predictive-search-form__content {
-    max-height: 50dvh;
+    max-height: 60dvh;
     overflow-y: auto;
     background-color: var(--color-background);
 

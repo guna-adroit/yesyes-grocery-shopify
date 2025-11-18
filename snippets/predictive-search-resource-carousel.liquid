@@ -62,6 +62,7 @@
     scroll-padding: 0 var(--padding-xl);
     scrollbar-width: none;
     -ms-overflow-style: none;
+    flex-direction: column;
 
     &::-webkit-scrollbar {
       display: none;
@@ -101,8 +102,8 @@
     gap: var(--gap-md);
     transition: height var(--animation-speed-medium) var(--animation-easing);
 
-    @container (min-width: 550px) {
-      grid-template-columns: repeat(4, 1fr);
+    @container (min-width: 1366px) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

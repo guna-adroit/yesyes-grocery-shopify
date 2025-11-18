@@ -41,7 +41,7 @@
         aria-label="{{ title }}"
       >
         {% liquid
-          assign limit = limit | default: 8
+          assign limit = limit | default: 6
         %}
         {% comment %}
           If we're searching for recently viewed products by id, we need to reorder the products.
@@ -83,16 +83,16 @@
       </ul>
     </div>
   {% else %}
-    <h4 class="predictive-search-results__title">
+    {% comment %} <h4 class="predictive-search-results__title">
       {{ title }}
-    </h4>
+    </h4> {% endcomment %}
     <ul
       class="predictive-search-results__list predictive-search-results__wrapper-products list-unstyled"
       role="listbox"
       aria-label="{{ title }}"
     >
       {% liquid
-        assign limit = limit | default: 8
+        assign limit = limit | default: 6
       %}
       {% for product in products limit: limit %}
         <li
@@ -102,8 +102,8 @@
           {% render 'resource-card',
             resource_type: 'product',
             resource: product,
-            image_width: 500,
-            image_hover: true,
+            image_width: 250,
+            image_hover: false,
             image_aspect_ratio: '4 / 5'
           %}
         </li>

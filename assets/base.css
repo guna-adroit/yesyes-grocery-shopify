@@ -2704,7 +2704,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 /* Pills (used in facets and predictive search) */
 
 .pills__pill {
-  --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15));
+  /* --pills-pill-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5-15)); */
 
   color: var(--color-foreground);
   display: flex;
