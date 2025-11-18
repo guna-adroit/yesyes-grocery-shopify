@@ -16,7 +16,7 @@
         <div class="card-product-more-option">{% if closest.product.variants.size > 1 %}More Options{% endif %}</div>
       
       
-        <span class="card-product-type">{% if block.settings.show_product_type %}{{ closest.product.type }}{%  endif %}</span>
+        <div class="card-product-type">{% if block.settings.show_product_type %}{{ closest.product.type }}{%  endif %}</div>
       
       {% render 'text', fallback_text: product_title, block: block %}
       <div class="list-view card-product-vendor">
