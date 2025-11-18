@@ -29,6 +29,7 @@
     font-size: 14px;
     line-height: 19.6px;
     color: #676666 !important;
+    min-height: 14px;
 }
 .product-card .price{
     font-weight: 700;
