@@ -413,6 +413,10 @@ p.category-item_title{
     .resource-list.hidden--mobile.resource-list--grid{
         gap: 15px;
     }
+    .add-to-cart-button, .sold-out-button{
+        font-size: 14px;
+        height: 45px !important;
+    }
 }
 
 @media screen and (max-width: 820px){
