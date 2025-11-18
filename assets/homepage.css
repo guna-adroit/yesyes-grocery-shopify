@@ -142,6 +142,7 @@ slideshow-controls[controls-on-media] {
     font-family: Inter;
     line-height: 21.4px;
     padding-block: 18px;
+    padding-left: 24px;
 }
 .predictive-search:has(.predictive-search-dropdown) .search-input:hover {
     border: 1px solid #ed1d23;
@@ -555,7 +556,7 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
 }
 @media (min-width: 1900px) {
     .predictive-search:has(.predictive-search-dropdown) .search-input {
-        width: 45vw;
+        width: 43.5vw;
         max-width: 900px;
     }
 }
