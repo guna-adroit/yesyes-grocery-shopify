@@ -331,14 +331,14 @@
             id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
             ref="facetsForm"
           >
-            {% render 'sorting',
+            {% comment %} {% render 'sorting',
               results: results,
               sort_by: sort_by,
               filter_style: block_settings.filter_style,
               sort_position: 'mobile',
               should_use_select_on_mobile: should_use_select_on_mobile,
               section_id: section.id
-            %}
+            %} {% endcomment %}
           </form>
         </facets-form-component>
       {% endif %}
