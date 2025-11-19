@@ -162,7 +162,8 @@
       if (index < 0) index = 0;
       if (index > maxIndex) index = maxIndex;
       const cardWidth = cards[0].offsetWidth;
-      track.style.transform = `translateX(-${index * cardWidth * 1.5 }px)`;
+      // track.style.transform = `translateX(-${index * cardWidth * 1.5 }px)`;
+      track.style.transform = `translateX(-${index * 15 }%)`;
     };
 
     prev.addEventListener('click', () => {
