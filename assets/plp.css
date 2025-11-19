@@ -348,6 +348,14 @@ p.category-item_title{
     padding-left: 8px;
     padding-right: 20px;
 }
+@media screen and (max-width: 600px){
+    .product-page.sale-ribbon{
+        width: 70px;
+        height: 32px;
+        font-weight: 700;
+        font-size: 16px;
+    }
+}
 .wishlist-icon-position .product-badges__badge{
     background: transparent;
 }

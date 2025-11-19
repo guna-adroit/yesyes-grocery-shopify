@@ -114,10 +114,5 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     .product-information .product-information__media{
         padding: 20px;
     }
-    .product-page.sale-ribbon{
-        width: 70px;
-        height: 32px;
-        font-weight: 700;
-        font-size: 16px;
-    }
+    
 }
