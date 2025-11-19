@@ -75,7 +75,7 @@
 .product-details .product-form-buttons > button{
     flex: 1;
 }
-@media screen and (min-width: 1500px){
+@media screen and (min-width: 1200px){
      .product-details .buy-buttons-block{
         display: grid;
         grid-template-columns: 99px 1fr 1fr;
