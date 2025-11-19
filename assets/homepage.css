@@ -329,7 +329,7 @@ span.header__secondary-menu.active .mega-menu {
 dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-button{
     display: flex;
 }
-.email-signup__heading {
+.email-signup__heading.h5 {
     font-family: Inter;
     font-weight: 400;
     font-size: 16px;
