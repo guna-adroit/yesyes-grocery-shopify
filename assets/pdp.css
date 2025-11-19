@@ -72,14 +72,13 @@
 .product-details .product-form-buttons{
     flex-wrap: nowrap !important;
 }
-.product-details .product-form-buttons > span{
-    flex: 1 1 250px;
-}
 .product-details .product-form-buttons > button{
     flex: 1;
 }
 @media screen and (min-width: 1500px){
-    .product-details .product-form-buttons > span{
-    flex: 1;
-}
+     .product-details .buy-buttons-block{
+        display: grid;
+        grid-template-columns: 99px 1fr 1fr;
+     }
+     
 }
