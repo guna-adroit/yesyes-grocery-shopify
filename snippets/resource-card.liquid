@@ -129,13 +129,13 @@
     {% endif %}
   <div class="resource-card__content card-product-title">
     <p class="resource-card__title">
-      By {{- resource.title -}}
+      {{- resource.title -}}
     </p>
   </div>
     {% if resource_type == 'product' %}
           <div class="card-product-vendor">
       <p>
-        {{- resource.vendor -}}
+        By {{ resource.vendor }}
       </p>
     </div>
     <div class="resource-card__content_price_wrapper">
