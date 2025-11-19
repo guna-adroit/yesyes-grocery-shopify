@@ -71,7 +71,7 @@
           class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
           style="{% render 'spacing-style', settings: block_settings %}"
         >
-          {% content_for 'block', type: 'quantity', id: 'quantity' %}
+          {% content_for 'block', type: 'product-quantity', id: 'quantity' %}
 
           {% content_for 'block',
             type: 'add-to-cart',
@@ -480,7 +480,7 @@
       "category": "t:categories.product",
       "blocks": {
         "quantity": {
-          "type": "quantity",
+          "type": "product-quantity",
           "static": true
         },
         "add-to-cart": {
