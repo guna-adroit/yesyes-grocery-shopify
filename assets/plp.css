@@ -401,6 +401,19 @@ p.category-item_title{
         line-height: 20px;
         height: 40px;
     }
+    .card-product-vendor p{
+        font-size: 12px;
+    }
+    .card-product-more-option, .card-product-type{
+        font-size: 12px;
+    }
+    .product-card .price{
+        font-size: 20px;
+    }
+    .compare-at-price{
+        font-size: 15px;
+        padding-left: 5px;
+    }
 }
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
