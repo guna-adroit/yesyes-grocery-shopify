@@ -8,7 +8,7 @@
 
 <div
   ref="cartBubble"
-  class="cart-bubble{% if cart == empty %} visually-hidden{% endif %}"
+  class="cart-bubble {% if cart == empty %} visually-hidden{% endif %}"
   {% assign item_count = cart.item_count %}
   {% if item_count <= 99 %}
     data-maintain-ratio
