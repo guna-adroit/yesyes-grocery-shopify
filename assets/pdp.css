@@ -105,5 +105,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     }
     .product-price-container product-price div div{
         display: flex;
+        align-items: center;
+        gap: 5px;
     }
 }
