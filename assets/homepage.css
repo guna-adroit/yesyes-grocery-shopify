@@ -380,7 +380,7 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
 .featured-blog-posts-card img.image-block__image {
     border-radius: 10px;
 }
-div[id*="blog-post-description"] {
+div[id*=blog-post-description] rte-formatter {
     font-family: Inter;
     font-weight: 500;
     font-size: 18px;
