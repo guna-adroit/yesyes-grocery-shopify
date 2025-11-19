@@ -69,6 +69,6 @@
 .product-details .add-to-cart-button{
     height: 60px !important;
 }
-.product-form-buttons{
-    flex-wrap: nowrap;
+.product-details .product-form-buttons{
+    flex-wrap: nowrap !important;
 }
