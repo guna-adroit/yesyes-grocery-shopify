@@ -366,7 +366,7 @@ p.category-item_title{
     border-radius: 8px;
     height: 55px;
 }
-.add-to-cart-button.card-atc-button {
+.add-to-cart-button.card-atc-button, .sold-out-button {
     margin-top: 18px;
 }
 .product-page.sale-ribbon{
@@ -478,7 +478,7 @@ p.category-item_title{
         font-size: 14px;
         height: 35px !important;
     }
-    .add-to-cart-button.card-atc-button{
+    .add-to-cart-button.card-atc-button, .sold-out-button{
         margin-top: 8px;
     }
     .product-grid{
