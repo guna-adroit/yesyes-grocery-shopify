@@ -115,7 +115,7 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
-                    "type_preset": "h3",
+                    "type_preset": "h1",
                     "font": "var(--font-primary--family)",
                     "font_size": "",
                     "line_height": "normal",
