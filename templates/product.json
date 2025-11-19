@@ -575,6 +575,7 @@
       "settings": {
         "product": "{{ closest.product }}",
         "recommendation_type": "related",
+        "custom_classes": "related-products-slider",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -720,6 +721,7 @@
       "settings": {
         "product": "{{ closest.product }}",
         "recommendation_type": "related",
+        "custom_classes": "",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
