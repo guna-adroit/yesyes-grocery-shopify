@@ -77,6 +77,9 @@
 </quantity-selector-component>
 
 {% stylesheet %}
+    .quantity-selector:has(.quantity-button-container){
+        --quantity-selector-width: 99px;
+    }
    .quantity-selector .quantity-button-container :is(.quantity-minus,.quantity-plus){
     width: 20px;
     height: 20px;
