@@ -227,7 +227,9 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         height: 25px;
         width: 25px;
     }
-    
+    .sorting-filter__container .sorting-filter__select{
+        padding: 0;
+    }
 }
 
 .product-grid.product-list-view {
