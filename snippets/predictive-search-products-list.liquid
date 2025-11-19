@@ -48,7 +48,7 @@
           The order here comes from the search terms, and we display the products in the order of the ids.
         {% endcomment %}
         {% if order_ids != blank %}
-          {% for _id in order_ids %}
+          {% for _id in order_ids limit: 3 %}
             {% assign int_id = _id | times: 1 %}
             {% assign product = products | find: 'id', int_id %}
             <li
