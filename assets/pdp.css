@@ -95,4 +95,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     .product-details .product-price-container .product-low-stock-container{
         width: 150px;
     }
+    .product-page-title h1{
+        font-size: 20px;
+        margin-top: 50px;
+    }
 }
