@@ -48,7 +48,7 @@
           The order here comes from the search terms, and we display the products in the order of the ids.
         {% endcomment %}
         {% if order_ids != blank %}
-          {% for _id in order_ids limit: 3 %}
+          {% for _id in order_ids limit: 6 %}
             {% assign int_id = _id | times: 1 %}
             {% assign product = products | find: 'id', int_id %}
             <li
@@ -120,7 +120,7 @@
   .recently-viewed-wrapper {
     display: grid;
     grid-template-rows: auto auto;
-    max-height: 1000px;
+    /* max-height: 1000px; */
     opacity: 1;
     overflow: visible;
     transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
