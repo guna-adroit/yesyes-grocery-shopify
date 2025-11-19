@@ -114,5 +114,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     .product-information .product-information__media{
         padding: 20px;
     }
-    
+    .product-description-title h5{
+        font-size: 20px;
+        line-height: 24px;
+    }
 }
