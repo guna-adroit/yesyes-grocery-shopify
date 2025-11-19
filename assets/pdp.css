@@ -76,7 +76,7 @@
     flex: 1;
 }
 @media screen and (min-width: 1200px){
-     .product-details .buy-buttons-block{
+     .product-details .product-form-buttons{
         display: grid;
         grid-template-columns: 99px 1fr 1fr;
      }
