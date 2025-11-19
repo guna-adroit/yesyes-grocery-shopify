@@ -207,6 +207,10 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .sorting-filter__select-wrapper svg{
         width: 16px;
         height: 10px;
+        display: none;
+    }
+    .sorting-filter__container .sorting-filter__select{
+        appearance: auto !important;
     }
     .svg-wrapper.collection-wishlist-icon{
         width: 24px;
@@ -227,9 +231,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         height: 25px;
         width: 25px;
     }
-    .sorting-filter__container .sorting-filter__select{
-        padding: 0 !important;
-    }
+    
 }
 
 .product-grid.product-list-view {
