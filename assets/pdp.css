@@ -75,7 +75,7 @@
 .product-details .product-form-buttons > button{
     flex: 1;
 }
-span.svg-wrapper.wishlist-icon {
+span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     width: 32px;
     height: 32px;
 }
