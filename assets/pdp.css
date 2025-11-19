@@ -72,3 +72,6 @@
 .product-details .product-form-buttons{
     flex-wrap: nowrap !important;
 }
+.product-details .product-form-buttons > span, .product-details .product-form-buttons > button{
+    flex: 1;
+}
