@@ -489,7 +489,7 @@ li.predictive-search-results__card.predictive-search-results__card--product {
     padding: 14px 50px;
 }
 .resource-card__media {
-    padding: 48px;
+    padding: 32px;
 }
 .resource-card__content_price_wrapper .compare-at-price{
     display: none;
@@ -498,7 +498,17 @@ li.predictive-search-results__card--query {
     display: flex;
     align-items: center;
 }
-
+img.resource-card__image.resource-card__image--secondary {
+    max-width: calc(100% - 48px);
+    max-height: calc(100% - 48px);
+    top: 24px;
+}
+.pills__pill span {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 21.4px;
+    letter-spacing: 0;
+}
 /* Cart */
 
 .cart-drawer__heading.h3 {
