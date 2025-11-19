@@ -414,6 +414,12 @@ p.category-item_title{
         font-size: 15px;
         padding-left: 5px;
     }
+    .card-product-expiry-container .product-expiry{
+        font-size: 12px;
+    }
+    .add-to-cart-button{
+        font-size: 14px;
+    }
 }
 @media screen and (max-width: 1024px) {
     .resource-list--grid {
