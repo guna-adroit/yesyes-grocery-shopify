@@ -110,3 +110,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         gap: 5px;
     }
 }
+@media screen and (max-width: 600px){
+    .product-information .product-information__media{
+        padding: 20px;
+    }
+}
