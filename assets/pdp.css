@@ -79,6 +79,11 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     width: 32px;
     height: 32px;
 }
+.add-to-whishlist-text__content{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22.4px;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
