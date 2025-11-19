@@ -91,3 +91,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
      }
      
 }
+@media screen and (max-width: 820px){
+    .product-details .product-price-container .product-low-stock-container{
+        width: 150px;
+    }
+}
