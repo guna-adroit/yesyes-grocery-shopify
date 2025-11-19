@@ -209,6 +209,9 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         height: 10px;
         display: none;
     }
+    .sorting-filter__container .sorting-filter__select{
+        appearance: auto;
+    }
     .svg-wrapper.collection-wishlist-icon{
         width: 24px;
     }
