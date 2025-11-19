@@ -207,6 +207,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     .sorting-filter__select-wrapper svg{
         width: 16px;
         height: 10px;
+        display: none;
     }
     .svg-wrapper.collection-wishlist-icon{
         width: 24px;
