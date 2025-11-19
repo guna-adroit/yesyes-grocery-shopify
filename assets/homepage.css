@@ -629,6 +629,13 @@ cart-items-component .close-button{
         padding: 0 4px;
         min-height: 24px;
     }
+    .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) ) .predictive-search__close-modal-button{
+        opacity: 0;
+        pointer-events: none;
+    }
+    .predictive-search-form__header .predictive-search__reset-button{
+        margin-right: 4px;
+    }
 }
 @media (max-width: 767px) {
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
