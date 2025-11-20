@@ -599,7 +599,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<p>Related items bought by customers</p>",
+            "text": "<h4>Related items bought by customers</h4>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
