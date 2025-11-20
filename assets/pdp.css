@@ -130,6 +130,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         line-height: 34px !important;
     }
     .product-information .product-information__media .product-badges--top-right.product.wishlist-icon-position{
-
+        top: 10px;
+        right: 14px;
     }
 }
