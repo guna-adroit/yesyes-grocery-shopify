@@ -62,9 +62,9 @@
     line-height: 25.2px;
 }
 .related-products-heading h4{
-    font-weight: 700;
-    font-size: 34px;
-    line-height: 44px;
+    font-weight: 700 !important;
+    font-size: 34px !important;
+    line-height: 44px !important;
 }
 .product-details .add-to-cart-button{
     height: 60px !important;
