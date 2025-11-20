@@ -188,4 +188,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         width: 24px;
         height: 24px;
     }
+    .product-details .product-price-container product-price div{
+        flex-wrap: nowrap;
+    }
 }
