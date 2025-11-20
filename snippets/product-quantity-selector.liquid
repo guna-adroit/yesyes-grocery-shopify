@@ -85,6 +85,8 @@
     }
     .quantity-selector:has(.quantity-button-container) input[type=number]{
         max-width: 60px;
+        color: #ED1D23;
+        font-size: 20px;
     }
    .quantity-selector .quantity-button-container :is(.quantity-minus,.quantity-plus){
     width: 20px;
@@ -92,5 +94,10 @@
    }
    .quantity-button-container .quantity-plus{
         rotate: 180deg;
+   }
+   @media screen and (max-width: 768px){
+    .quantity-selector:has(.quantity-button-container) input[type=number]{
+        font-size: 16px;
+    }
    }
 {% endstylesheet %}
