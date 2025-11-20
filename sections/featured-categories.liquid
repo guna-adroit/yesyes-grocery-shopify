@@ -79,9 +79,27 @@
     top: -60px;
   }
   @media (max-width: 768px) {
+    .featured-categories__track .slick-prev, .featured-categories__track .slick-next {
+      top: -40px;
+    }
+    .featured-categories__track .slick-next {
+        right: 40px;
+    }
+    .featured-categories__track .slick-prev {
+        left: auto;
+        right: 90px;
+    }
+  }
+  @media (max-width: 768px) {
     .featured-category-card img {
       width: 60px;
       height: 60px;
+    }
+    .featured-categories__track .slick-prev, .featured-categories__track .slick-next {
+      display: none !important;
+    }
+    .slick-dots li.slick-active button:before {
+      color: #ED1D23;
     }
   }
 </style>
@@ -142,7 +160,8 @@
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: {{ section.settings.mobile_slides }}
+            slidesToShow: {{ section.settings.mobile_slides }},
+            dots: true,
           }
         }
       ]
