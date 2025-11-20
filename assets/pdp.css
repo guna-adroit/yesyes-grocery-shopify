@@ -84,6 +84,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 18px;
     line-height: 22.4px;
 }
+.related-products-slider .resource-list__carousel .slideshow-control[disabled]{
+    display: block;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
