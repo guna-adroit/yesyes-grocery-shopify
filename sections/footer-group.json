@@ -23,7 +23,7 @@
             "vertical_alignment": "center",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 6,
             "width": "fill",
             "custom_width": 100,
@@ -84,7 +84,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "custom",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -141,15 +141,15 @@
           "type": "group",
           "name": "t:names.group",
           "settings": {
-            "content_direction": "column",
+            "content_direction": "row",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
+            "vertical_alignment": "flex-start",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
+            "gap": 100,
+            "width": "fit-content",
             "custom_width": 100,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
@@ -177,6 +177,20 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "spacer_ecHtng": {
+              "type": "spacer",
+              "name": "t:names.spacer",
+              "settings": {
+                "size": "pixel",
+                "percent_size": 100,
+                "pixel_size": 160,
+                "custom_mobile_size": false,
+                "size_mobile": "percent",
+                "percent_size_mobile": 100,
+                "pixel_size_mobile": 120
+              },
+              "blocks": {}
+            },
             "menu_UPjeAN": {
               "type": "menu",
               "name": "t:names.menu",
@@ -200,6 +214,7 @@
             }
           },
           "block_order": [
+            "spacer_ecHtng",
             "menu_UPjeAN"
           ]
         },
@@ -213,7 +228,7 @@
             "vertical_alignment": "center",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 12,
             "width": "fill",
             "custom_width": 100,
@@ -277,7 +292,7 @@
                 "width": "fill",
                 "custom_width": 100,
                 "inherit_color_scheme": true,
-                "heading": "Join a Newsletter",
+                "heading": "Your Email",
                 "heading_preset": "h5",
                 "color_scheme": "",
                 "border_style": "all",
@@ -318,7 +333,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "custom",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",

@@ -104,6 +104,37 @@
     "main": {
       "type": "main-collection",
       "blocks": {
+        "filters-list": {
+          "type": "filters-desk",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "category_list": [
+              "all",
+              "grocery",
+              "frontpage",
+              "milk",
+              "rice",
+              "pickles"
+            ],
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
         "filters": {
           "type": "filters",
           "static": true,
@@ -308,8 +339,8 @@
         "products_per_page": 6,
         "product_grid_width": "centered",
         "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
+        "columns_gap_horizontal": 30,
+        "columns_gap_vertical": 30,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",

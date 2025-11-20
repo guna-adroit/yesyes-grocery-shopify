@@ -1,6 +1,8 @@
 <div class="header-contact-wrapper">
     <span>{% render 'call-now-icon' %}</span>
-    <span class="header-phone-number">{{ mobile_number }}
-        <span class="header-contact-label">Help Centre</span>
-    </span>
+    
+        <span class="header-phone-number">
+            <a href="tel:{{ mobile_number | remove: " "  }}">{{ mobile_number }}</a>
+            <span class="header-contact-label">Help Centre</span>
+        </span>
 </div> 

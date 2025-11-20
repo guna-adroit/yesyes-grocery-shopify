@@ -653,6 +653,34 @@
     hydrate('{{ section.id }}', url);
   </script>
 {% endunless %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  document.addEventListener('click', function (e) {
+
+    // 1. Check if click is inside ANY predictive-search component
+    const clickedPredictive = e.target.closest('.predictive-search');
+    const clickedInput = e.target.closest('.search-input');
+
+    // 2. Loop through ALL predictive-search components
+    document.querySelectorAll('.predictive-search').forEach((component) => {
+
+      // If this component contains the clicked input → activate
+      if (clickedInput && component.contains(clickedInput)) {
+        component.classList.add('active-search');
+      }
+      // If click is outside THIS component → deactivate it
+      else if (!component.contains(e.target)) {
+        component.classList.remove('active-search');
+      }
+
+    });
+
+  });
+
+});
+</script>
+
 
 {% schema %}
 {

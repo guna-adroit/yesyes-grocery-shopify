@@ -30,7 +30,9 @@
     data-testid="cart-drawer-trigger"
   >
     {% render 'cart-icon-component' %}
-    <span class="header-icons-label">Cart</span>
+      {% if cart.total_price <= 0 %}
+          <span class="header-icons-label">Cart</span>
+      {% endif %}
   </button>
 
   <dialog
@@ -53,7 +55,7 @@
               aria-label="{{ 'actions.close_dialog' | t }}"
             >
               <span class="svg-wrapper">
-                {{- 'icon-close.svg' | inline_asset_content -}}
+                {{- 'icon-close-red.svg' | inline_asset_content -}}
               </span>
             </button>
           </div>
@@ -93,7 +95,7 @@
               aria-label="{{ 'actions.close_dialog' | t }}"
             >
               <span class="svg-wrapper">
-                {{- 'icon-close.svg' | inline_asset_content -}}
+                {{- 'icon-close-red.svg' | inline_asset_content -}}
               </span>
             </button>
           </div>
@@ -155,6 +157,7 @@
 
     @media screen and (min-width: 750px) {
       padding: var(--cart-drawer-padding-desktop);
+      padding-top: 55px;
     }
   }
 

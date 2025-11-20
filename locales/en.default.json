@@ -103,7 +103,7 @@
     },
     "email_signup": {
       "label": "Email",
-      "placeholder": "Email address",
+      "placeholder": "Enter Your Email",
       "success": "Thanks for subscribing!"
     },
     "filter": "Filter",

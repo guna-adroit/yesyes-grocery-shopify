@@ -40,10 +40,12 @@
       {% if predictive_search.performed %}
         {%- if search_results_count > 0 -%}
           {% assign shared_results_index = 0 %}
+          <div class="search-results-container-one">
           {% if predictive_search.resources.queries.size > 0 %}
             {% assign shared_results_index = shared_results_index
               | plus: predictive_search.resources.collections.size
             %}
+            <div class="search-category-title">Popular Suggestion</div>
             <ul
               class="predictive-search-results__list predictive-search-results__wrapper predictive-search-results__wrapper-queries list-unstyled"
               role="listbox"
@@ -56,6 +58,7 @@
                   data-search-result-index="search-results-{{ shared_results_index | plus: forloop.index }}"
                   on:keydown="/onSearchKeyDown"
                 >
+                  {% render 'pill-search-icon' %}
                   <a
                     class="pills__pill predictive-search-results__pill"
                     href="{{ resource.url }}"
@@ -64,29 +67,63 @@
                       aria-label="{{ resource.text }}"
                     >
                       {{ resource.styled_text }}
+                        {% comment %} {{ resource.styled_text | json }} {% endcomment %}
                     </span>
                   </a>
                 </li>
               {% endfor %}
             </ul>
           {% endif %}
+          {% if predictive_search.resources.collections.size > 0 %}
+            {% assign shared_results_index = shared_results_index | plus: predictive_search.resources.articles.size %}
+            {% assign resource_title = 'content.search_results_resource_collections' | t %}
+            <div class="search-category-title">Collections</div>
+            <ul
+              class="predictive-search-results__list predictive-search-results__wrapper predictive-search-results__wrapper-queries list-unstyled"
+              role="listbox"
+              aria-labelledby="predictive-search-queries"
+            >
+              {%- for collection in predictive_search.resources.collections -%}
+                <li
+                  class="predictive-search-results__card--query"
+                  ref="resultsItems[]"
+                  data-search-result-index="search-results-{{ shared_results_index | plus: forloop.index }}"
+                  on:keydown="/onSearchKeyDown"
+                >
+                {% render 'pill-search-icon' %}
+  
+                <a
+                    class="pills__pill predictive-search-results__pill"
+                    href="{{ collection.url }}"
+                  >
+                    <span
+                      aria-label="{{ collection.title }}"
+                    >
+                      {{ collection.title }}
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            {% comment %} {% render 'predictive-search-resource-carousel',
+              title: resource_title,
+              resource_type: 'collection',
+              resources: predictive_search.resources.collections
+            %} {% endcomment %}
+             <button
+          class="button button-primary predictive-search__search-button section_view_all"
+          ref="viewAllButton"
+        >
+          {{ 'content.search_results_view_all' | t }} {{ predictive_search.resources.products.size }} items
+        </button>
+          {% endif %}
+          </div>
           {% if predictive_search.resources.products.size > 0 %}
             {%- liquid
               assign title = 'content.search_results_resource_products' | t
               assign products = predictive_search.resources.products
               render 'predictive-search-products-list', title: title, products: products
             -%}
-          {% endif %}
-
-          {% if predictive_search.resources.collections.size > 0 %}
-            {% assign shared_results_index = shared_results_index | plus: predictive_search.resources.articles.size %}
-            {% assign resource_title = 'content.search_results_resource_collections' | t %}
-
-            {% render 'predictive-search-resource-carousel',
-              title: resource_title,
-              resource_type: 'collection',
-              resources: predictive_search.resources.collections
-            %}
           {% endif %}
 
           {% if predictive_search.resources.pages.size > 0 %}
@@ -160,6 +197,8 @@
     </div>
   </div>
 {%- endif -%}
+
+
 
 {% stylesheet %}
   input[type='search']::-webkit-search-decoration {
@@ -333,7 +372,7 @@
 
   .predictive-search-results__pill mark {
     background-color: transparent;
-    font-weight: 200;
+    font-weight: 700;
     color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
   }
 
@@ -346,6 +385,7 @@
     outline: var(--border-width-sm) solid var(--color-border);
     border: var(--border-width-sm);
     text-decoration: none;
+    border-radius: 8px;
   }
 
   .predictive-search-results__title {
@@ -369,8 +409,10 @@
 
   .predictive-search-results__wrapper.predictive-search-results__wrapper-queries {
     margin-bottom: var(--margin-lg);
-    padding-inline: var(--padding-xl);
-    gap: var(--gap-2xs);
+    /* padding-inline: var(--padding-xl); */
+    padding-inline: 0;
+    /* gap: var(--gap-2xs); */
+    gap: 9px;
   }
 
   .predictive-search-results__card {
@@ -412,10 +454,11 @@
     }
 
     &:hover {
-      background-color: var(--card-bg-hover);
-      border-radius: var(--product-corner-radius);
+      /* background-color: var(--card-bg-hover); */
+      /* border-radius: var(--product-corner-radius);
       padding: calc(var(--padding-2xs) + 2px);
-      margin: calc((var(--padding-2xs) + 2px) * -1);
+      margin: calc((var(--padding-2xs) + 2px) * -1); */
+      filter: drop-shadow(2px 2px 4px black);
     }
 
     &:is([aria-selected='true'].keyboard-focus, &:focus-visible, &:has(.resource-card:focus-visible)) {

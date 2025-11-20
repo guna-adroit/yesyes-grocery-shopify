@@ -16,7 +16,12 @@
   </span>
 
   {% render 'cart-bubble', limit: 100, live_region: true, test_id: test_id %}
-</cart-icon>
+  </cart-icon>
+  {% if cart.total_price > 0 %}
+    <div class="cart-total">
+    {{ cart.total_price | money }}
+    </div>
+  {% endif %}
 
 {% stylesheet %}
   cart-icon:has(.cart-bubble__text-count:empty) {

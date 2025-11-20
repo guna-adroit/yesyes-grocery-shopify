@@ -39,7 +39,13 @@ endif
             class="resource-list__item span-2"
           >
           {{ max_products }}
+          {% if section.settings.banner_link != blank %}
+            <a href="{{ section.settings.banner_link }}">
+          {% endif %}
           <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="Banner Image"/>
+          {% if section.settings.banner_link != blank %}
+            </a>
+          {% endif %}
           </div>
         {% for product in section.settings.collection.products limit: max_items %}
           <div
@@ -122,6 +128,12 @@ endif
         "type":"image_picker",
         "id":"banner_image",
         "label":"Banner image (optional)"
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Banner link",
+      "visible_if": "{{ section.settings.banner_image != blank }}"
     },
     {
       "type": "select",

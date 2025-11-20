@@ -41,14 +41,14 @@
         aria-label="{{ title }}"
       >
         {% liquid
-          assign limit = limit | default: 8
+          assign limit = limit | default: 6
         %}
         {% comment %}
           If we're searching for recently viewed products by id, we need to reorder the products.
           The order here comes from the search terms, and we display the products in the order of the ids.
         {% endcomment %}
         {% if order_ids != blank %}
-          {% for _id in order_ids %}
+          {% for _id in order_ids limit: 6 %}
             {% assign int_id = _id | times: 1 %}
             {% assign product = products | find: 'id', int_id %}
             <li
@@ -83,7 +83,7 @@
       </ul>
     </div>
   {% else %}
-    <h4 class="predictive-search-results__title">
+     <h4 class="predictive-search-results__title search-panel">
       {{ title }}
     </h4>
     <ul
@@ -92,7 +92,7 @@
       aria-label="{{ title }}"
     >
       {% liquid
-        assign limit = limit | default: 8
+        assign limit = limit | default: 6
       %}
       {% for product in products limit: limit %}
         <li
@@ -102,8 +102,8 @@
           {% render 'resource-card',
             resource_type: 'product',
             resource: product,
-            image_width: 500,
-            image_hover: true,
+            image_width: 250,
+            image_hover: false,
             image_aspect_ratio: '4 / 5'
           %}
         </li>
@@ -120,7 +120,7 @@
   .recently-viewed-wrapper {
     display: grid;
     grid-template-rows: auto auto;
-    max-height: 1000px;
+    /* max-height: 1000px; */
     opacity: 1;
     overflow: visible;
     transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);

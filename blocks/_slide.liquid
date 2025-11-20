@@ -87,6 +87,7 @@
       {{ placeholder_name | placeholder_svg_tag: 'slide__image' }}
     {%- endif -%}
   </div>
+  <a class="slider-overlay-link" href="/collections/all"></a>
   <div
     class="spacing-style slide__content{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %}"
     style="{% render 'spacing-style', settings: block_settings %}"
@@ -200,6 +201,13 @@
       "id": "video_1",
       "label": "t:settings.video",
       "visible_if": "{{ block.settings.media_type_1 == 'video' }}"
+    },
+    {
+      "type": "url",
+      "id": "overlay_link",
+      "label": "Slider Link",
+      "default": "/collections/all"
+      
     },
     {
       "type": "header",

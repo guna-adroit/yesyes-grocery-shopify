@@ -147,12 +147,16 @@
 {%- endfor -%}
 <script>
   //on click of all-categories-btn add class active to span.header__secondary-menu ans clicking outside removes the class
-  document.getElementById('all-categories-btn').addEventListener('click', function(event) {
+    var menu_toggle = document.getElementById('all-categories-btn');
+    if (menu_toggle) {
+      menu_toggle.addEventListener('click', function() {
+    this.classList.toggle('active');
     event.stopPropagation();
     var menu = this.querySelector('.header__secondary-menu');
     //if menu is already visible, hide it
     if (!menu.classList.contains('hidden-menu')) {
       menu.classList.add('hidden-menu');
+      menu_toggle.classList.remove('active');
       return;
     }
     menu.classList.remove('hidden-menu');
@@ -161,7 +165,8 @@
       if (!menu.contains(event.target) && event.target !== document.getElementById('all-categories-btn')) {
         menu.classList.add('hidden-menu');
         document.removeEventListener('click', outsideClickListener);
+        menu_toggle.classList.remove('active');
       }
     });
-  });
+  })};
 </script>

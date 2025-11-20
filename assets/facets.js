@@ -77,11 +77,7 @@ class FacetsFormComponent extends Component {
     this.#updateURLHash();
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
-    setTimeout(() => {
-      observePaginationChange();
-      console.log("UpdateFilter");
-    }, 1000);
-
+    // observePaginationChange();
   };
 
   /**
@@ -426,7 +422,7 @@ class FacetRemoveComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFiltersByURL(url);
-      observePaginationChange();
+      // observePaginationChange();
  
   }
 
@@ -916,164 +912,117 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
-// Infinite scorll
-window.endlessScroll = window.endlessScroll || null;
-let reinitTimer = null;
-let paginationObserver = null;
 
-function localDebounce(fn, delay = 150) {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn.apply(this, args), delay);
-  };
-}
+// Infinite Scroll
+let ajaxinateInstance = null;
 
-function destroyAjaxinate() {
-  const instance = window.endlessScroll;
-
-  if (instance && instance.request && instance.request.readyState !== 4) {
-    try {
-      instance.request.abort();
-      // console.log(' Aborted old Ajaxinate request');
-    } catch (e) {
-      console.warn('Abort error', e);
-    }
-  }
-
-  const oldPagination = document.querySelector('#AjaxinatePagination');
-  if (oldPagination && oldPagination.parentNode) {
-    const newPagination = oldPagination.cloneNode(true);
-    oldPagination.parentNode.replaceChild(newPagination, oldPagination);
-    // console.log('🧹 Old pagination listeners cleared');
-  }
-
-  window.endlessScroll = null;
-}
-
+// SAFE initialize function (prevents duplicates)
 function initAjaxinate() {
-  const container = document.querySelector('#AjaxinateContainer');
-  const pagination = document.querySelector('#AjaxinatePagination');
-  const paginationLink = pagination?.querySelector('a');
 
-  if (!container || !pagination || !paginationLink) {
-    console.warn('Ajaxinate init skipped: container/pagination missing');
-    return;
+  // Destroy previous instance if exists
+  if (ajaxinateInstance && ajaxinateInstance.destroy) {
+    ajaxinateInstance.destroy();
   }
 
-  destroyAjaxinate();
+  ajaxinateInstance = new Ajaxinate({
+    method: 'scroll',
+    container: '#AjaxinateContainer',
+    pagination: '#AjaxinatePagination'
+  });
 
-  try {
-    window.endlessScroll = new Ajaxinate({
-      method: 'scroll',
-      container: '#AjaxinateContainer',
-      pagination: '#AjaxinatePagination',
-    });
-
-    // console.log('✅ Ajaxinate initialized');
-  } catch (err) {
-    console.error('Ajaxinate init failed', err);
-  }
+  console.log("Ajaxinate initialized");
 }
 
-
-function observePaginationChange() {
-  if (paginationObserver) {
-    paginationObserver.disconnect();
-    paginationObserver = null;
-  }
-
-  const parent = document.querySelector('#AjaxinateContainer')?.parentNode;
-  if (!parent) return;
-
-  paginationObserver = new MutationObserver(
-    localDebounce((mutations, obs) => {
-      const pagination = document.querySelector('#AjaxinatePagination');
-      const paginationLink = pagination?.querySelector('a');
-
-      if (pagination && paginationLink) {
-        // console.log('🔁 Pagination updated → initializing Ajaxinate');
-        obs.disconnect();
-        paginationObserver = null;
-        initAjaxinate();
-      }
-    }, 150)
-  );
-
-  paginationObserver.observe(parent, { childList: true, subtree: true });
-}
-
-// Initial load
-document.addEventListener('DOMContentLoaded', initAjaxinate);
-
-
-
-// List view code START
+// INITIAL LOAD
 document.addEventListener('DOMContentLoaded', () => {
-  const productGrid = document.querySelector('.product-grid');
-  const viewButtons = document.querySelectorAll('.product-view_option');
-
-  if (!productGrid || !viewButtons.length) return;
-
-  // Helper to activate the correct button
-  const setActiveButton = (activeView) => {
-    viewButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.view === activeView);
-    });
-  };
-
-  // Restore saved view
-  const savedView = localStorage.getItem('productView') || 'grid-view';
-  setActiveButton(savedView);
-
-  if (savedView === 'list-view') {
-    productGrid.classList.add('product-list-view');
-  } else {
-    productGrid.classList.remove('product-list-view');
-  }
-
-  // Click handlers
-  viewButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const selectedView = button.dataset.view;
-
-      setActiveButton(selectedView);
-      localStorage.setItem('productView', selectedView);
-
-      if (selectedView === 'list-view') {
-        productGrid.classList.add('product-list-view');
-      } else {
-        productGrid.classList.remove('product-list-view');
-      }
-    });
-  });
-  document.addEventListener(ThemeEvents.FilterUpdate, () => {
-    setTimeout(function() {
-      const productGrid = document.querySelector('.product-grid');
-      const viewButtons = document.querySelectorAll('.product-view_option');
-      const setActiveButton = (activeView) => {
-          viewButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.view === activeView);
-            console.log("Active done");
-          });
-        };
-
-        // Restore saved view
-        const savedView = localStorage.getItem('productView') || 'grid-view';
-        setActiveButton(savedView);
-
-        if (savedView === 'list-view') {
-          productGrid.classList.add('product-list-view');
-          console.log("FilterEvent: class added");
-        } else {
-          productGrid.classList.remove('product-list-view');
-          console.log("FilterEvent: class removed");
-        }
-    }, 800);
-    
-  });
+  initAjaxinate();
 });
 
+// Horizon main product wrapper
+const horizonWrapper =
+  document.querySelector('[data-products-root]') ||
+  document.querySelector('#AjaxinateContainer')?.parentNode;
+
+// MutationObserver (PREVENTS duplicates)
+if (horizonWrapper) {
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.addedNodes.length > 0) {
+        initAjaxinate();
+        break;
+      }
+    }
+  });
+
+  observer.observe(horizonWrapper, { childList: true, subtree: true });
+}
+
+// Horizon filter update event (backup)
+document.addEventListener('collection:updated', () => {
+  initAjaxinate();
+});
+
+// Section load (Horizon sometimes reloads this)
+document.addEventListener('shopify:section:load', initAjaxinate);
+
+
+
+// List View Buttons
+  function initViewButtons() {
+    const productGrid = document.querySelector(".product-grid");
+    const viewButtons = document.querySelectorAll(".product-view_option");
+
+    if (!productGrid || viewButtons.length === 0) return;
+
+    // Get saved view
+    const savedView = localStorage.getItem("productView") || "grid-view";
+
+    // Apply active class
+    viewButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.view === savedView);
+    });
+
+    // Apply layout class to grid
+    if (savedView === "list-view") {
+      productGrid.classList.add("product-list-view");
+    } else {
+      productGrid.classList.remove("product-list-view");
+    }
+
+    // Click events
+    viewButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const selectedView = button.dataset.view;
+
+        // Update buttons
+        viewButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        // Save
+        localStorage.setItem("productView", selectedView);
+
+        // Apply to grid
+        if (selectedView === "list-view") {
+          productGrid.classList.add("product-list-view");
+        } else {
+          productGrid.classList.remove("product-list-view");
+        }
+      });
+    });
+  }
+
+  // Initial load
+  initViewButtons();
+
+  // MutationObserver — detects when Shopify replaces product-grid after filtering
+  const observer = new MutationObserver(() => {
+    initViewButtons();
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Support Shopify section reloads
+  document.addEventListener(ThemeEvents.FilterUpdate, initViewButtons);
 
 
 

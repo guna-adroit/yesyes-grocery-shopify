@@ -120,18 +120,32 @@
               | image_tag: loading: 'lazy', class: 'resource-card__collection-image', sizes: image_sizes, widths: widths
             }}
           {% endfor %}
-        </div>
+          </div>
+        {%- endif -%}
       {%- endif -%}
-    {%- endif -%}
-  </div>
-
-  <div class="resource-card__content">
-    <p class="resource-card__title{% if style == 'overlay' %} h5{%else %} paragraph{% endif %}">
+      </div>
+    {% if resource_type == 'product' %}
+      <div class="card-product-type">{{ resource.type }}</div>
+    {% endif %}
+  <div class="resource-card__content card-product-title">
+    <p class="resource-card__title">
       {{- resource.title -}}
     </p>
-
+  </div>
     {% if resource_type == 'product' %}
+          <div class="card-product-vendor">
+      <p>
+        By {{ resource.vendor }}
+      </p>
+    </div>
+    <div class="resource-card__content_price_wrapper">
       {% render 'price', product_resource: resource, show_unit_price: true %}
+      {% if resource.metafields.custom.product_expiry != blank %}
+    <div class="card-product-expiry-container">
+      <p class="product-expiry">{{ resource.metafields.custom.product_expiry }}</p>
+    </div>
+  {% endif %}
+    </div>
     {% elsif resource_type == 'collection' and single_thumbnail_collection == false %}
       <p class="resource-card__subtext paragraph">
         {{- 'content.search_results_resource_products_count' | t: count: resource.all_products_count -}}
@@ -141,7 +155,6 @@
         {{- resource.excerpt | default: resource.content | strip_html | truncate: 65 -}}
       </p>
     {% endif %}
-  </div>
 </div>
 {%- if resource_type == 'product' and settings.transition_to_main_product -%}
   </product-card-link>
