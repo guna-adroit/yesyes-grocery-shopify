@@ -134,6 +134,12 @@
                   },
                   "blocks": {}
                 },
+                "product_sku_j3yAwy": {
+                  "type": "product-sku",
+                  "name": "Product SKU",
+                  "settings": {},
+                  "blocks": {}
+                },
                 "price_tVjtKg": {
                   "type": "price",
                   "settings": {
@@ -156,18 +162,12 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
-                },
-                "product_sku_j3yAwy": {
-                  "type": "product-sku",
-                  "name": "Product SKU",
-                  "settings": {},
-                  "blocks": {}
                 }
               },
               "block_order": [
                 "text_xrnftG",
-                "price_tVjtKg",
-                "product_sku_j3yAwy"
+                "product_sku_j3yAwy",
+                "price_tVjtKg"
               ]
             },
             "divider_VJhene": {
