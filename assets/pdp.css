@@ -129,4 +129,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         font-size: 24px !important;
         line-height: 34px !important;
     }
+    .product-information .product-information__media .product-badges--top-right.product.wishlist-icon-position{
+
+    }
 }
