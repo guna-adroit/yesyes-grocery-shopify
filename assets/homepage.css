@@ -453,6 +453,15 @@ h2.featured-categories__title {
 slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
     min-height: 360px;
 }
+.featured-category-card.slick-slide:not(:last-child) {
+    margin-right: 20px;
+}
+.featured-category-card h3{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+    letter-spacing: 0;
+}
 .predictive-search-results__inner{
     display: flex;
 }
