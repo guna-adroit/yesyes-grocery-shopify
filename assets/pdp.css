@@ -165,6 +165,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         width: 34px;
         min-height: 34px;
     }
+    .product-details .product-form-buttons{
+        gap: 10px;
+    }
     .quantity-selector:has(.quantity-button-container){
         height: 50px !important;
     }
