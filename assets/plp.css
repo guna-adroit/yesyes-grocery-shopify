@@ -50,6 +50,9 @@
     width: 100%;
     flex-basis: 140px;
 }
+td.product_variant-price-container{
+    display: table-cell;
+}
 .product-media{
     padding: 25px;
 }
