@@ -104,7 +104,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     background-color: #ed1d23;
 }
 .related-products-slider slideshow-component[dragging] slideshow-arrows {
-  display: none;
+  display: flex;
 }
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
