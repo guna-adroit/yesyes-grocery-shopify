@@ -89,6 +89,13 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     display: flex;
     opacity: 1;
 }
+.related-products-slider .resource-list__carousel .slideshow-control{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: unset;
+    bottom: unset;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
