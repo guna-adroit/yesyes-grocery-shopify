@@ -89,7 +89,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     display: flex;
     opacity: 1;
 }
-.related-products-slider .resource-list__carousel .slideshow-control{
+.related-products-slider .resource-list__carousel slideshow-arrows{
     position: absolute;
     top: 0;
     right: 0;
