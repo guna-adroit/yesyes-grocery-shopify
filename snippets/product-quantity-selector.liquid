@@ -44,6 +44,21 @@
   >
     <div class="quantity-button-container">
         <button
+            class="button quantity-plus button-unstyled"
+            type="button"
+            name="plus"
+            on:click="/increaseQuantity"
+            ref="quantityButtons[]"
+            {% if can_update_quantity == false %}
+            disabled
+            {% endif %}
+        >
+            <span class="visually-hidden">{{ 'accessibility.increase_quantity' | t }}</span
+            ><span class="svg-wrapper icon-plus">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+        </button>
+        <button
             class="button quantity-minus button-unstyled"
             type="button"
             name="minus"
