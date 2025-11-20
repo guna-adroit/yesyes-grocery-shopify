@@ -53,8 +53,8 @@
 td.product_variant-price-container{
     display: table-cell;
 }
-td.product_variant-price-container .product_variant-price{
-    margin-bottom: 10px;
+td.product_variant-price-container .product_variant-details{
+    margin-top: 10px;
 }
 .product-media{
     padding: 25px;
