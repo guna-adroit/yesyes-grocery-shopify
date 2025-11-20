@@ -278,8 +278,9 @@
       "name": "Featured Categories",
       "settings": {
         "heading": "{{ metaobjects.homepage_featured_categories_heading[\"featured-categories\"].heading.value }}",
-        "desktop_visible": 10,
-        "mobile_visible": 2
+        "desktop_slides": 12,
+        "tablet_slides": 4,
+        "mobile_slides": 3
       }
     },
     "section_wHChnB": {
