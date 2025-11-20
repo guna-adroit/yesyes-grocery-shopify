@@ -156,11 +156,18 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "product_sku_j3yAwy": {
+                  "type": "product-sku",
+                  "name": "Product SKU",
+                  "settings": {},
+                  "blocks": {}
                 }
               },
               "block_order": [
                 "text_xrnftG",
-                "price_tVjtKg"
+                "price_tVjtKg",
+                "product_sku_j3yAwy"
               ]
             },
             "divider_VJhene": {
