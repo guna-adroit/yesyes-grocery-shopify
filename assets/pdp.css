@@ -97,6 +97,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     bottom: unset;
     gap: 10px;
 }
+:not(.media-gallery--carousel)>:is(slideshow-component:hover,slideshow-component:focus-within):not(:has(slideshow-controls:hover))>slideshow-container>slideshow-arrows .slideshow-control{
+    animation: none;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
