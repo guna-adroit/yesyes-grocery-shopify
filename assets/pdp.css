@@ -91,7 +91,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 }
 .related-products-slider .resource-list__carousel slideshow-arrows{
     position: absolute;
-    top: 0;
+    top: -70px;
     right: 0;
     left: unset;
     bottom: unset;
