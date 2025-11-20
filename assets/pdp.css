@@ -175,6 +175,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     button.button.wishlist-button.button-secondary {
         height: 50px;
     }
+    .product-sku{
+        font-size: 14px;
+    }
     .add-to-whishlist-text__content{
         font-size: 14px;
     }
