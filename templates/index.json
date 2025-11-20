@@ -280,7 +280,7 @@
         "heading": "{{ metaobjects.homepage_featured_categories_heading[\"featured-categories\"].heading.value }}",
         "desktop_slides": 12,
         "tablet_slides": 4,
-        "mobile_slides": 3
+        "mobile_slides": 2
       }
     },
     "section_wHChnB": {
