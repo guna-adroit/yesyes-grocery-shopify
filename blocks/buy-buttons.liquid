@@ -71,7 +71,7 @@
           class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
           style="{% render 'spacing-style', settings: block_settings %}"
         >
-          {% content_for 'block', type: 'quantity', id: 'quantity' %}
+          {% content_for 'block', type: 'product-quantity', id: 'quantity' %}
 
           {% content_for 'block',
             type: 'add-to-cart',
@@ -82,7 +82,7 @@
           <button class="button wishlist-button button-secondary">
               <span class="add-to-cart-text">
                   <span class="svg-wrapper wishlist-icon">
-                    {{ 'icon-heart.svg' | inline_asset_content }}
+                    {{ 'icon-wishlist.svg' | inline_asset_content }}
                   </span>
               <span class="add-to-whishlist-text__content">Add to Wishlist</span>
               </span>
@@ -478,7 +478,7 @@
       "category": "t:categories.product",
       "blocks": {
         "quantity": {
-          "type": "quantity",
+          "type": "product-quantity",
           "static": true
         },
         "add-to-cart": {
