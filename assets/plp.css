@@ -369,6 +369,9 @@ p.category-item_title{
 .add-to-cart-button.card-atc-button, .sold-out-button {
     margin-top: 18px;
 }
+.resource-image.collection-card__image{
+    aspect-ratio: unset !important;
+}
 .product-page.sale-ribbon{
     width: 105px;
     height: 48px;
