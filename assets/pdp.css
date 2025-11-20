@@ -111,6 +111,11 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 16px;
     line-height: 21.4px;
 }
+.related-products-slider .button-unstyled.slideshow-control.slideshow-control--shape-circle .svg-wrapper,
+.related-products-slider .button-unstyled.slideshow-control.slideshow-control--shape-circle .svg-wrapper>svg{
+    width: 26px;
+    height: 26px;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
