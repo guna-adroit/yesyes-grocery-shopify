@@ -165,4 +165,11 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         width: 34px;
         min-height: 34px;
     }
+    .quantity-selector:has(.quantity-button-container){
+        height: 50px;
+    }
+    .product-details .add-to-cart-button{
+        height: 50px !important;
+        margin-top: 0;
+    }
 }
