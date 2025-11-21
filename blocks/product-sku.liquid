@@ -3,6 +3,9 @@
 </div>
 
 <product-sku></product-sku>
+<script type="application/json" id="ProductJson-{{ product.id }}">
+  {{ closest.product | json }}
+</script>
 <script type="module">
   class ProductSku extends HTMLElement {
   constructor() {
