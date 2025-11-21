@@ -2,7 +2,7 @@
 
 <predictive-search class="header-search-container">
   <form action="{{ routes.search_url }}" method="get" role="search">
-    <label for="Search"></label>
+    
     <input
       id="Search"
       type="search"
@@ -17,6 +17,7 @@
       aria-haspopup="listbox"
       aria-autocomplete="list"
      />
+     <label for="Search">icon</label>
     <input name="options[prefix]" type="hidden" value="last" />
 
     <div id="predictive-search" class="predictive-search-form__content-wrapper" tabindex="-1"></div>
