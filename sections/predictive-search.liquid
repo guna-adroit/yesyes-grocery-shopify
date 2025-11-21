@@ -222,13 +222,12 @@
   .search-action .search-modal .predictive-search {
     z-index: var(--layer-window-overlay);
   }
-
-  .header__column--right .predictive-search-form__content-wrapper {
+  .predictive-search-form__content-wrapper{
     display: none;
     width: 60dvw;
     height: 70dvh;
     position: absolute;
-    top: 100px;
+    top: 60px;
     right: 0;
     bottom: 0;
     background: white;
@@ -236,6 +235,9 @@
     overflow: auto;
     scrollbar-width: thin;
     box-shadow: 0 0 5px 0px #ccc;
+  }
+  .header__column--right .predictive-search-form__content-wrapper {
+    
     right: 0;
     left: unset;
   }
