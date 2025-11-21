@@ -65,6 +65,7 @@ export class AddToCartComponent extends Component {
     if (animationEnabled && !event.target.closest('.quick-add-modal')) {
       this.#animateFlyToCart();
     }
+    console.log("Add TO cart");
     
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
 
