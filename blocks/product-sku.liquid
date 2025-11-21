@@ -9,48 +9,48 @@
 <script type="module">
   import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
 
-class ProductSku extends HTMLElement {
+  class ProductSku extends HTMLElement {
   constructor() {
     super();
     this.skuElement = document.createElement("span");
     this.appendChild(this.skuElement);
 
     this.onVariantChange = this.onVariantChange.bind(this);
+    document.addEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
   }
 
   connectedCallback() {
     this.productData = this.findProductJson();
     if (!this.productData) return;
 
-    // Initial SKU (first variant)
+    // Initial SKU
     this.updateSku(this.productData.variants[0]);
 
-    // Listen for Horizon variant update event
-    document.addEventListener(ThemeEvents.VariantUpdate, this.onVariantChange);
+    // Listen for variant change events (all themes)
+   document.addEventListener(ThemeEvents.variantUpdate, this.onVariantChange); // Some themes use this
   }
 
   disconnectedCallback() {
-    document.removeEventListener(ThemeEvents.VariantUpdate, this.onVariantChange);
+    document.removeEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
+    document.removeEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
   }
 
   onVariantChange(event) {
     const variant = event.detail?.variant;
-    if (variant) {
-      this.updateSku(variant);
-    }
+    if (variant) this.updateSku(variant);
   }
 
   updateSku(variant) {
-    this.skuElement.textContent = variant?.sku || "";
+    this.skuElement.textContent = variant.sku || "";
   }
 
-  // Find product JSON for Horizon theme (universal fallback)
+  // UNIVERSAL product JSON finder
   findProductJson() {
     const selectors = [
-      '[type="application/json"][data-product-json]',    
-      '[type="application/json"][data-product="true"]',
-      'script[id^="ProductJson-"]',
-      'script.ProductJson',
+      '[type="application/json"][data-product-json]',    // Dawn old
+      '[type="application/json"][data-product="true"]',  // Many themes
+      'script#ProductJson-' + this.getProductId(),       // Dawn new
+      'script.ProductJson',                              // Some premium themes
     ];
 
     for (let sel of selectors) {
@@ -58,10 +58,16 @@ class ProductSku extends HTMLElement {
       if (el) {
         try {
           return JSON.parse(el.textContent);
-        } catch (_) {}
+        } catch (e) {}
       }
     }
+
     return null;
+  }
+
+  getProductId() {
+    const el = document.querySelector("[data-product-id]");
+    return el ? el.getAttribute("data-product-id") : "";
   }
 }
 
