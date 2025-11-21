@@ -74,6 +74,7 @@ export class AddToCartComponent extends Component {
     if (quantityInput){
       const quantityControl = quantityInput.querySelector('product-quantity-control');
       const addToCartButton = quantityInput.querySelector('.card-atc-button') || quantityInput.querySelector('.quick-add-btn');
+      console.log(addToCartButton);
 
       if (addToCartButton) {
         addToCartButton.style.display = 'none'; // Hides the button
