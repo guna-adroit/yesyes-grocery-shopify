@@ -26,6 +26,11 @@
   .header-search-container form{
     position: relative;
   }
+  @media screen and (max-width: 992px){
+    header-search-container{
+        display: none;
+    }
+  }
 {% endstylesheet %}
 <script type="module">
 class PredictiveSearch extends HTMLElement {
