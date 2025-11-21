@@ -119,8 +119,9 @@
             {% when 'localization' %}
               {{ localization }}
             {% when 'search' %}
-              <div class="open-search-modal-wrapper">
-                {% render 'search-header' %}
+              {% render 'search-header' %}
+              {% comment %} <div class="open-search-modal-wrapper">
+                
                      <h2
                       id="search-modal-heading"
                       class="visually-hidden"
@@ -132,7 +133,7 @@
                       search_test_id: 'search-component--modal',
                       products_test_id: 'products-list-default--modal'
                     %}
-              </div>
+              </div> {% endcomment %}
               {% comment %} {{ search }} {% endcomment %}
 
             {% when 'mobile_search' %}
