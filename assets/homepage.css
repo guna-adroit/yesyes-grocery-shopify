@@ -750,15 +750,18 @@ span.disclosure-trigger__label.h6 {
         line-height: 1.1;
     }
     .cart-items-component .cart-drawer__header {
-        padding: 35px 30px;
+        padding: 25px 30px;
     }
     cart-items-component .close-button {
-        top: 25px;
+        top: 15px;
         right: 30px;
     }
     .cart-item-total .total_label,.cart-item-total text-component{
         font-size: 18px;
         line-height: 1.1;
+    }
+    span.cart-quantity-label{
+        display: none;
     }
 }
 @media (max-width: 767px) {
