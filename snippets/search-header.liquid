@@ -28,16 +28,33 @@
   }
 {% endstylesheet %}
 <script type="module">
-    class PredictiveSearch extends HTMLElement {
+class PredictiveSearch extends HTMLElement {
   constructor() {
     super();
 
     this.input = this.querySelector('input[type="search"]');
     this.predictiveSearchResults = this.querySelector('#predictive-search');
 
-    this.input.addEventListener('input', this.debounce((event) => {
-      this.onChange(event);
-    }, 200).bind(this));
+    this.input.addEventListener(
+      'input',
+      this.debounce((event) => {
+        this.onChange(event);
+      }, 200).bind(this)
+    );
+
+    // Close modal when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!this.contains(e.target)) {
+        this.close(true); // true = clear input
+      }
+    });
+
+    // Close when pressing ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.close(true);
+      }
+    });
   }
 
   onChange() {
@@ -63,7 +80,10 @@
         return response.text();
       })
       .then((text) => {
-        const resultsMarkup = new DOMParser().parseFromString(text, 'text/html').querySelector('#shopify-section-predictive-search').innerHTML;
+        const resultsMarkup = new DOMParser()
+          .parseFromString(text, 'text/html')
+          .querySelector('#shopify-section-predictive-search').innerHTML;
+
         this.predictiveSearchResults.innerHTML = resultsMarkup;
         this.open();
       })
@@ -77,8 +97,12 @@
     this.predictiveSearchResults.style.display = 'block';
   }
 
-  close() {
+  close(clearInput = false) {
     this.predictiveSearchResults.style.display = 'none';
+
+    if (clearInput) {
+      this.input.value = '';
+    }
   }
 
   debounce(fn, wait) {
