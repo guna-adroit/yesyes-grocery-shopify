@@ -1,9 +1,8 @@
 
-  <div class="product-sku-container" ref="skuContainer">
-  <span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
-  </div>
 <product-sku>
-  <span ref="sku">{{ product.selected_or_first_available_variant.sku }}</span>
+  <div class="product-sku-container">
+    <span class="product-sku" ref="sku">{{ product.selected_or_first_available_variant.sku }}</span>
+  </div>
 </product-sku>
 <script type="application/json" id="ProductJson-{{ product.id }}">
   {{ closest.product | json }}
