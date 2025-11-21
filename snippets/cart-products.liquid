@@ -294,9 +294,10 @@
                       hidden
                     {% endif %}
                   >
-                    {{- 'icon-delete.svg' | inline_asset_content -}}
+                    <span>DELETE</span>
                     <span class="visually-hidden">Remove</span>
                   </button>
+                  
                 </td>
                 <td
                   class="cart-items__error hidden"
@@ -456,6 +457,7 @@
     justify-content: flex-start;
     gap: var(--gap-xs);
     width: fit-content;
+    flex-wrap: wrap;
   }
 
   .cart-items__quantity .quantity-selector {
@@ -473,8 +475,18 @@
     justify-content: center;
     box-shadow: none;
     padding: 0;
+    flex: 0 0 30%;
   }
-
+  button.button.button--tertiary.cart-items__remove {
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: #ED1D23;
+  }
   .cart-items__media {
     grid-area: media;
     padding: 0;

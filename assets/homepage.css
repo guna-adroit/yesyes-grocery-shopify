@@ -583,6 +583,7 @@ cart-items-component .close-button{
     line-height: 28px;
     letter-spacing: 0;
     color: #000000;
+    margin-left: 8px;
 }
 .cart-items__details .cart-items__title{
     font-weight: 700;
@@ -738,6 +739,26 @@ span.disclosure-trigger__label.h6 {
     }
     .predictive-search-form__header .predictive-search__reset-button{
         margin-right: 4px;
+    }
+    .cart-drawer__heading.h3{
+        font-size: 24px;
+        line-height: 1.1;
+        padding-bottom: 15px;
+    }
+    .cart-drawer__dialog .cart-drawer__heading .cart-bubble__text-count {
+        font-size: 24px;
+        line-height: 1.1;
+    }
+    .cart-items-component .cart-drawer__header {
+        padding: 35px 30px;
+    }
+    cart-items-component .close-button {
+        top: 25px;
+        right: 30px;
+    }
+    .cart-item-total .total_label,.cart-item-total text-component{
+        font-size: 18px;
+        line-height: 1.1;
     }
 }
 @media (max-width: 767px) {
