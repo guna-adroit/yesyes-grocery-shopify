@@ -33,7 +33,6 @@ class ProductSku extends HTMLElement {
   updateSku = (event) => {
     // HTML returned by Horizon’s AJAX for this variant
     const html = event.detail.data.html;
-    console.log(html);
 
     if (!html) return;
 
