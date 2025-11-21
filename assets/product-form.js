@@ -69,6 +69,8 @@ export class AddToCartComponent extends Component {
     
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
 
+    const quickAdd = this.closest('.product_variant_item');
+
     if (productCard){
       const quantityControl = productCard.querySelector('product-quantity-control');
       const addToCartButton = productCard.querySelector('.card-atc-button');
