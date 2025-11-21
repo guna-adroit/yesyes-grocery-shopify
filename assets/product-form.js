@@ -68,13 +68,12 @@ export class AddToCartComponent extends Component {
     console.log("Add TO cart");
     
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
+    const quantityInput = this.closest('.product-card') || this.closest('.product_variant_item');
 
-    const quickAdd = this.closest('.product_variant_item');
-    console.log(quickAdd);
 
-    if (productCard){
-      const quantityControl = productCard.querySelector('product-quantity-control');
-      const addToCartButton = productCard.querySelector('.card-atc-button');
+    if (quantityInput){
+      const quantityControl = quantityInput.querySelector('product-quantity-control');
+      const addToCartButton = quantityInput.querySelector('.card-atc-button', '.quick-add-button');
 
       if (addToCartButton) {
         addToCartButton.style.display = 'none'; // Hides the button
