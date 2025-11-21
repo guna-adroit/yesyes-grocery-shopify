@@ -7,7 +7,9 @@
   {{ closest.product | json }}
 </script>
 <script type="module">
-  class ProductSku extends HTMLElement {
+  import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
+
+class ProductSku extends HTMLElement {
   constructor() {
     super();
     this.skuElement = document.createElement("span");
@@ -20,35 +22,35 @@
     this.productData = this.findProductJson();
     if (!this.productData) return;
 
-    // Initial SKU
+    // Initial SKU (first variant)
     this.updateSku(this.productData.variants[0]);
 
-    // Listen for variant change events (all themes)
-    document.addEventListener("variant:change", this.onVariantChange);
-    document.addEventListener("product:variant-change", this.onVariantChange); // Some themes use this
+    // Listen for Horizon variant update event
+    document.addEventListener(ThemeEvents.VariantUpdate, this.onVariantChange);
   }
 
   disconnectedCallback() {
-    document.removeEventListener("variant:change", this.onVariantChange);
-    document.removeEventListener("product:variant-change", this.onVariantChange);
+    document.removeEventListener(ThemeEvents.VariantUpdate, this.onVariantChange);
   }
 
   onVariantChange(event) {
     const variant = event.detail?.variant;
-    if (variant) this.updateSku(variant);
+    if (variant) {
+      this.updateSku(variant);
+    }
   }
 
   updateSku(variant) {
-    this.skuElement.textContent = variant.sku || "";
+    this.skuElement.textContent = variant?.sku || "";
   }
 
-  // UNIVERSAL product JSON finder
+  // Find product JSON for Horizon theme (universal fallback)
   findProductJson() {
     const selectors = [
-      '[type="application/json"][data-product-json]',    // Dawn old
-      '[type="application/json"][data-product="true"]',  // Many themes
-      'script#ProductJson-' + this.getProductId(),       // Dawn new
-      'script.ProductJson',                              // Some premium themes
+      '[type="application/json"][data-product-json]',    
+      '[type="application/json"][data-product="true"]',
+      'script[id^="ProductJson-"]',
+      'script.ProductJson',
     ];
 
     for (let sel of selectors) {
@@ -56,16 +58,10 @@
       if (el) {
         try {
           return JSON.parse(el.textContent);
-        } catch (e) {}
+        } catch (_) {}
       }
     }
-
     return null;
-  }
-
-  getProductId() {
-    const el = document.querySelector("[data-product-id]");
-    return el ? el.getAttribute("data-product-id") : "";
   }
 }
 
