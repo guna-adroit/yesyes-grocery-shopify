@@ -2640,6 +2640,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   height: var(--minimum-touch-target);
   flex-shrink: 0;
   color: var(--color-input-text);
+  /* border: 1px solid; */
 }
 
 .quantity-selector .quantity-minus {

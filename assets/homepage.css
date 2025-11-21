@@ -217,6 +217,9 @@ a.slider-overlay-link {
     height: 100%;
     transition: 0.5s;
     padding-bottom: 20px;
+    box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.34);
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.34);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.34);
 }
 
 /* Column wrapper */
@@ -244,7 +247,7 @@ a.slider-overlay-link {
     line-height: 30px;
     letter-spacing: 0;
     text-transform: uppercase;
-    text-align: justify;
+    text-align: left;
 }
 .menu-title a {
   color: #e53935; /* red */
@@ -586,6 +589,13 @@ cart-items-component .close-button{
     line-height: 25.2px;
     letter-spacing: 0;
 
+}
+span.cart-quantity-label {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
 }
 /* Responsive behavior */
 @media (max-width: 1100px) {
