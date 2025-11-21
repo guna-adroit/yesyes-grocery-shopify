@@ -1,11 +1,12 @@
 <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 
-<predictive-search>
+<predictive-search class="header-search-container">
   <form action="{{ routes.search_url }}" method="get" role="search">
     <label for="Search">Search</label>
     <input
       id="Search"
       type="search"
+      class="header-search-input"
       name="q"
       value="{{ search.terms | escape }}"
       role="combobox"
@@ -17,7 +18,7 @@
      />
     <input name="options[prefix]" type="hidden" value="last" />
 
-    <div id="predictive-search" tabindex="-1"></div>
+    <div id="predictive-search" class="predictive-search-form__content-wrapper" tabindex="-1"></div>
   </form>
 </predictive-search>
 
