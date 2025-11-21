@@ -1,77 +1,52 @@
-<div class="product-sku-container">
-<span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
-</div>
-
-<product-sku></product-sku>
+<product-sku>
+  <div class="product-sku-container" ref="skuContainer">
+  <span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
+  </div>
+</product-sku>
 <script type="application/json" id="ProductJson-{{ product.id }}">
   {{ closest.product | json }}
 </script>
 <script type="module">
   import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
 
-  class ProductSku extends HTMLElement {
-  constructor() {
-    super();
-    this.skuElement = document.createElement("span");
-    this.appendChild(this.skuElement);
-
-    this.onVariantChange = this.onVariantChange.bind(this);
-    document.addEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
-  }
-
+  class ProductPrice extends HTMLElement {
   connectedCallback() {
-    this.productData = this.findProductJson();
-    if (!this.productData) return;
-
-    // Initial SKU
-    this.updateSku(this.productData.variants[0]);
-
-    // Listen for variant change events (all themes)
-   document.addEventListener(ThemeEvents.variantUpdate, this.onVariantChange); // Some themes use this
+    const closestSection = this.closest('.shopify-section, dialog');
+    if (!closestSection) return;
+    closestSection.addEventListener(ThemeEvents.variantUpdate, this.updateSku);
   }
 
   disconnectedCallback() {
-    document.removeEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
-    document.removeEventListener(ThemeEvents.variantUpdate, this.onVariantChange);
+    const closestSection = this.closest('.shopify-section, dialog');
+    if (!closestSection) return;
+    closestSection.removeEventListener(ThemeEvents.variantUpdate, this.updateSku);
   }
 
-  onVariantChange(event) {
-    const variant = event.detail?.variant;
-    if (variant) this.updateSku(variant);
-  }
-
-  updateSku(variant) {
-    this.skuElement.textContent = variant.sku || "";
-  }
-
-  // UNIVERSAL product JSON finder
-  findProductJson() {
-    const selectors = [
-      '[type="application/json"][data-product-json]',    // Dawn old
-      '[type="application/json"][data-product="true"]',  // Many themes
-      'script#ProductJson-' + this.getProductId(),       // Dawn new
-      'script.ProductJson',                              // Some premium themes
-    ];
-
-    for (let sel of selectors) {
-      const el = document.querySelector(sel);
-      if (el) {
-        try {
-          return JSON.parse(el.textContent);
-        } catch (e) {}
-      }
+  /**
+   * Updates the price.
+   * @param {VariantUpdateEvent} event - The variant update event.
+   */
+  updateSku = (event) => {
+    if (event.detail.data.newProduct) {
+      this.dataset.productId = event.detail.data.newProduct.id;
+    } else if (event.target instanceof HTMLElement && event.target.dataset.productId !== this.dataset.productId) {
+      return;
     }
 
-    return null;
-  }
+    const newSku = event.detail.data.html.querySelector('product-sku [ref="skuContainer"]');
+    const currentSku = this.querySelector('[ref="skuContainer"]');
 
-  getProductId() {
-    const el = document.querySelector("[data-product-id]");
-    return el ? el.getAttribute("data-product-id") : "";
-  }
+    if (!newSku || !currentSku) return;
+
+    if (currentSku.innerHTML !== newSku.innerHTML) {
+      currentPrice.replaceWith(newSku);
+    }
+  };
 }
 
-customElements.define("product-sku", ProductSku);
+if (!customElements.get('product-sku')) {
+  customElements.define('product-sku', ProductPrice);
+}
 
 
 </script>
