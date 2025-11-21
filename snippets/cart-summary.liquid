@@ -36,7 +36,7 @@
     {%- endif -%}
   </div>
 
-  {% if settings.show_cart_note or settings.show_add_discount_code %}
+  {% if settings.show_cart_note or settings.show_add_discount_code and template.name == 'cart' %}
     <div class="cart-actions">
       {% if settings.show_cart_note %}
         {% render 'cart-note' %}

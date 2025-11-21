@@ -23,97 +23,98 @@
     assign disclosure_expanded = true
   endif
 %}
-<disclosure-custom class="cart-discount">
-  {% render 'disclosure-trigger',
-    controls_id: 'cart-discount-disclosure',
-    is_expanded: disclosure_expanded,
-    disclosure_name: 'accessibility.discount_menu',
-    label_text: 'content.discount'
-  %}
-  {% capture discount_content %}
-    <cart-discount-component
-      data-section-id="{{ section_id }}"
-    >
-      <div class="cart-discount__content">
-        <form
-          on:submit="/applyDiscount"
-          onsubmit="return false;"
-          class="cart-discount__form"
-        >
-          <label
-            for="cart-discount"
-            class="visually-hidden"
-          >
-            {{- 'accessibility.discount' | t -}}
-          </label>
-          <input
-            id="cart-discount"
-            class="cart-discount__input"
-            type="text"
-            name="discount"
-            placeholder="{{ 'content.discount_code' | t }}"
-            required
-          >
-          <button
-            type="submit"
-            class="button button--primary cart-discount__button"
-          >
-            {{ 'actions.apply' | t }}
-          </button>
-        </form>
-      </div>
-      <div
-        class="cart-discount__error hidden"
-        role="alert"
-        ref="cartDiscountError"
+{% if template.name == 'cart' %}
+  <disclosure-custom class="cart-discount">
+    {% render 'disclosure-trigger',
+      controls_id: 'cart-discount-disclosure',
+      is_expanded: disclosure_expanded,
+      disclosure_name: 'accessibility.discount_menu',
+      label_text: 'content.discount'
+    %}
+    {% capture discount_content %}
+      <cart-discount-component
+        data-section-id="{{ section_id }}"
       >
-        <span class="svg-wrapper">
-          {{- 'icon-error.svg' | inline_asset_content -}}
-        </span>
-        <small
-          class="cart-discount__error-text cart-primary-typography hidden"
-          ref="cartDiscountErrorDiscountCode"
-        >
-          {{ 'content.discount_code_error' | t: code: 'test' }}
-        </small>
-        <small
-          class="cart-discount__error-text cart-primary-typography hidden"
-          ref="cartDiscountErrorShipping"
-        >
-          {{ 'content.shipping_discount_error' | t }}
-        </small>
-      </div>
-      <ul class="cart-discount__codes">
-        {% for discount_code in discount_codes %}
-          <li
-            class="cart-discount__pill"
-            data-discount-code="{{ discount_code }}"
-            aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
+        <div class="cart-discount__content">
+          <form
+            on:submit="/applyDiscount"
+            onsubmit="return false;"
+            class="cart-discount__form"
           >
-            <p class="cart-discount__pill-code">
-              {{ discount_code }}
-            </p>
-            <button
-              type="button"
-              on:click="/removeDiscount"
-              class="cart-discount__pill-remove svg-wrapper svg-wrapper--smaller button-unstyled"
-              aria-label="{{ 'actions.remove_discount' | t: code: discount_code }}"
+            <label
+              for="cart-discount"
+              class="visually-hidden"
             >
-              {{- 'icon-filters-close.svg' | inline_asset_content -}}
+              {{- 'accessibility.discount' | t -}}
+            </label>
+            <input
+              id="cart-discount"
+              class="cart-discount__input"
+              type="text"
+              name="discount"
+              placeholder="{{ 'content.discount_code' | t }}"
+              required
+            >
+            <button
+              type="submit"
+              class="button button--primary cart-discount__button"
+            >
+              {{ 'actions.apply' | t }}
             </button>
-          </li>
-        {% endfor %}
-      </ul>
-    </cart-discount-component>
-  {% endcapture %}
+          </form>
+        </div>
+        <div
+          class="cart-discount__error hidden"
+          role="alert"
+          ref="cartDiscountError"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-error.svg' | inline_asset_content -}}
+          </span>
+          <small
+            class="cart-discount__error-text cart-primary-typography hidden"
+            ref="cartDiscountErrorDiscountCode"
+          >
+            {{ 'content.discount_code_error' | t: code: 'test' }}
+          </small>
+          <small
+            class="cart-discount__error-text cart-primary-typography hidden"
+            ref="cartDiscountErrorShipping"
+          >
+            {{ 'content.shipping_discount_error' | t }}
+          </small>
+        </div>
+        <ul class="cart-discount__codes">
+          {% for discount_code in discount_codes %}
+            <li
+              class="cart-discount__pill"
+              data-discount-code="{{ discount_code }}"
+              aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
+            >
+              <p class="cart-discount__pill-code">
+                {{ discount_code }}
+              </p>
+              <button
+                type="button"
+                on:click="/removeDiscount"
+                class="cart-discount__pill-remove svg-wrapper svg-wrapper--smaller button-unstyled"
+                aria-label="{{ 'actions.remove_discount' | t: code: discount_code }}"
+              >
+                {{- 'icon-filters-close.svg' | inline_asset_content -}}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      </cart-discount-component>
+    {% endcapture %}
 
-  {% render 'disclosure-content',
-    content: discount_content,
-    is_expanded: disclosure_expanded,
-    content_id: 'cart-discount-disclosure'
-  %}
-</disclosure-custom>
-
+    {% render 'disclosure-content',
+      content: discount_content,
+      is_expanded: disclosure_expanded,
+      content_id: 'cart-discount-disclosure'
+    %}
+  </disclosure-custom>
+{% endif %}
 {% stylesheet %}
   .cart-discount__input {
     background-color: var(--color-input-background);
