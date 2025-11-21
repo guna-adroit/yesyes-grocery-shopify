@@ -1,6 +1,59 @@
 <div class="product-sku-container">
 <span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
 </div>
+
+<product-sku></product-sku>
+<script type="module">
+  class ProductSku extends HTMLElement {
+  constructor() {
+    super();
+    this.skuElement = document.createElement("span");
+    this.appendChild(this.skuElement);
+
+    this.onVariantChange = this.onVariantChange.bind(this);
+  }
+
+  connectedCallback() {
+    // Find product JSON on the page
+    this.productData = this.getProductJson();
+
+    if (this.productData) {
+      // Initial SKU
+      this.updateSku(this.productData.variants[0]);
+    }
+
+    // Listen for Shopify variant change event (Dawn, Refresh, Horizon)
+    document.addEventListener('variant:change', this.onVariantChange);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('variant:change', this.onVariantChange);
+  }
+
+  onVariantChange(event) {
+    const variant = event.detail.variant;
+    this.updateSku(variant);
+  }
+
+  updateSku(variant) {
+    if (!variant) return;
+    this.skuElement.textContent = variant.sku || '';
+  }
+
+  getProductJson() {
+    const script = document.querySelector('[type="application/json"][data-product-json]');
+    if (!script) return null;
+    try {
+      return JSON.parse(script.textContent);
+    } catch(e) {
+      return null;
+    }
+  }
+}
+
+customElements.define("product-sku", ProductSku);
+
+</script>
 {% schema %}
 {
   "name": "Product SKU",
