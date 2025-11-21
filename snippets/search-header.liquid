@@ -2,7 +2,7 @@
 
 <predictive-search class="header-search-container">
   <form action="{{ routes.search_url }}" method="get" role="search">
-    <label for="Search">Search</label>
+    <label for="Search"></label>
     <input
       id="Search"
       type="search"
@@ -10,6 +10,7 @@
       name="q"
       value="{{ search.terms | escape }}"
       role="combobox"
+      placeholder="Search Products"
       aria-expanded="false"
       aria-owns="predictive-search-results"
       aria-controls="predictive-search-results"
