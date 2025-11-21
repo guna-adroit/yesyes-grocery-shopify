@@ -86,21 +86,33 @@
     </div>
   </div>
 </div>
-
 <div class="cart__ctas">
-  <button
-    type="submit"
-    id="checkout"
-    class="cart__checkout-button button"
-    name="checkout"
-    {% if cart == empty %}
-      disabled
-    {% endif %}
-    form="cart-form"
-  >
-    {{ 'content.checkout' | t }}
-  </button>
-
+    {% if template.name == 'cart' %}
+    <button
+      type="submit"
+      id="checkout"
+      class="cart__checkout-button button"
+      name="checkout"
+      {% if cart == empty %}
+        disabled
+      {% endif %}
+      form="cart-form"
+    >
+      {{ 'content.checkout' | t }}
+    </button>
+  {% else %}
+    <a
+      href="/cart"
+      type="submit"
+      class="cart__checkout-button cart_view_cart button"
+      name="cart"
+      {% if cart == empty %}
+        disabled
+      {% endif %}
+    >
+      REVIEW CART
+    </a>
+  {% endif %}
   {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
     <div
       class="

@@ -219,10 +219,10 @@
                       {%- endfor -%}
                     </ul>
                   {% endif %}
-
+                  
                   <div>
                     {{item.variant.id }}
-                    {% if item.original_price != item.final_price %}
+                    {% comment %} {% if item.original_price != item.final_price %}
                       <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
                       <span>{{ item.final_price | money }}</span>
                       <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
@@ -246,7 +246,25 @@
                         <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
                         <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
                       {% endif %}
-                    {% endif %}
+                    {% endif %} {% endcomment %}
+                  </div>
+                  <div class="cart-item-total">
+                    <span class="total_label">Total </span>
+                    {%- liquid
+                      if settings.currency_code_enabled_cart_items
+                        assign price = item.final_line_price | money_with_currency
+                        assign unit_price = item.unit_price | money_with_currency
+                      else
+                        assign price = item.final_line_price | money
+                        assign unit_price = item.unit_price | money
+                      endif
+                    -%}
+                    <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+                    {%- if item.unit_price_measurement -%}
+                      <div class="cart-items__price-unit cart-secondary-typography">
+                        {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
+                      </div>
+                    {%- endif -%}
                   </div>
                 </td>
                 <td
@@ -257,7 +275,7 @@
                   {% # Here I want to pass some arguments to the quantity block so it knows which value should the input be set to. Though quantity block could be a snippet instead %}
                   {% assign can_update_quantity = item.instructions.can_update_quantity
                     | default: true, allow_false: true
-                  %}
+                  %} <span class="cart-quantity-label">QTY</span>
                   {% render 'quantity-selector',
                     product: item.product,
                     in_cart_quantity: item.quantity,
@@ -266,7 +284,6 @@
                     class: 'cart-primary-typography',
                     can_update_quantity: can_update_quantity
                   %}
-
                   <button
                     class="button button--tertiary cart-items__remove"
                     type="button"
@@ -300,27 +317,13 @@
                     ></small>
                   </div>
                 </td>
-                <td
+                {% comment %} <td
                   class="cart-items__price cart-secondary-typography"
                   role="cell"
                   headers="productTotal"
                 >
-                  {%- liquid
-                    if settings.currency_code_enabled_cart_items
-                      assign price = item.final_line_price | money_with_currency
-                      assign unit_price = item.unit_price | money_with_currency
-                    else
-                      assign price = item.final_line_price | money
-                      assign unit_price = item.unit_price | money
-                    endif
-                  -%}
-                  <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
-                  {%- if item.unit_price_measurement -%}
-                    <div class="cart-items__price-unit cart-secondary-typography">
-                      {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
-                    </div>
-                  {%- endif -%}
-                </td>
+                  XXX
+                </td> {% endcomment %}
               </tr>
             {% endfor %}
           </tbody>
@@ -353,10 +356,10 @@
   }
 
   .cart-items__table-row {
-    --cart-item-price-width: 6rem;
+    --cart-item-price-width: 1rem;
 
     display: grid;
-    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) minmax(var(--cart-item-price-width), auto);
+    grid-template-columns: clamp(2.5rem, 25cqi, 8.5rem) minmax(0, 1fr) minmax(var(--cart-item-price-width), auto);
     grid-template-areas:
       'media details price'
       'media quantity price'
@@ -586,7 +589,8 @@
     row-gap: var(--gap-2xs);
 
     &:has(.cart__installments) {
-      row-gap: var(--gap-xs);
+      /* row-gap: var(--gap-xs); */
+      row-gap: 3px;
     }
   }
 

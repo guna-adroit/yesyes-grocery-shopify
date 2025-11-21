@@ -135,7 +135,9 @@
     {% if resource_type == 'product' %}
           <div class="card-product-vendor">
       <p>
-        By {{ resource.vendor }}
+        {% if resource.vendor %}
+          By {{ resource.vendor }}
+        {% endif %}
       </p>
     </div>
     <div class="resource-card__content_price_wrapper">
