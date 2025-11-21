@@ -120,7 +120,9 @@
     /* stylelint-disable-next-line color-named */
     mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));
     padding-bottom: 130px;
-
+    @media screen and (max-width: 992px) {
+      padding-bottom: 60px;
+    }
     @media screen and (min-width: 750px) {
       /* --cart-drawer-summary-padding: var(--padding-2xl); */
       --cart-drawer-summary-padding: 50px;
