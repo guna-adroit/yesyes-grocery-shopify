@@ -1,6 +1,58 @@
-<div class="product-sku-container">
-<span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
-</div>
+
+<product-sku>
+  <div class="product-sku-container">
+    <span class="product-sku" ref="sku">{{ product.selected_or_first_available_variant.sku }}</span>
+  </div>
+</product-sku>
+<script type="application/json" id="ProductJson-{{ product.id }}">
+  {{ closest.product | json }}
+</script>
+<script type="module">
+  import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
+
+class ProductSku extends HTMLElement {
+  connectedCallback() {
+    const closestSection = this.closest('.shopify-section, dialog');
+    if (!closestSection) return;
+
+    // Listen to Horizon’s variant update event
+    closestSection.addEventListener(ThemeEvents.variantUpdate, this.updateSku);
+  }
+
+  disconnectedCallback() {
+    const closestSection = this.closest('.shopify-section, dialog');
+    if (!closestSection) return;
+
+    closestSection.removeEventListener(ThemeEvents.variantUpdate, this.updateSku);
+  }
+
+  /**
+   * Update the SKU when variant changes
+   * @param {VariantUpdateEvent} event
+   */
+  updateSku = (event) => {
+    // HTML returned by Horizon’s AJAX for this variant
+    const html = event.detail.data.html;
+
+    if (!html) return;
+
+    // Look for the new SKU inside the returned HTML
+    const newSkuEl = html.querySelector('product-sku [ref="sku"]');
+    const currentSkuEl = this.querySelector('[ref="sku"]');
+
+    if (!newSkuEl || !currentSkuEl) return;
+
+    if (currentSkuEl.textContent !== newSkuEl.textContent) {
+      currentSkuEl.textContent = newSkuEl.textContent;
+    }
+  };
+}
+
+if (!customElements.get('product-sku')) {
+  customElements.define('product-sku', ProductSku);
+}
+
+</script>
 {% schema %}
 {
   "name": "Product SKU",

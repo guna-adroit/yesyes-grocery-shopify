@@ -116,6 +116,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     width: 26px;
     height: 26px;
 }
+.button.wishlist-button{
+    height: 60px;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;

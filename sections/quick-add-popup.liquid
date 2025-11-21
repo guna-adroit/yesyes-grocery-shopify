@@ -7,7 +7,7 @@
   <div class="popup-overlay"></div>
   <div class="popup-content">
     <button class="popup-close" aria-label="Close">
-      {{- 'icon-close.svg' | inline_asset_content -}}
+      {{- 'icon-close-red.svg' | inline_asset_content -}}
     </button>
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
@@ -94,9 +94,15 @@
                   </button>
                   
                 </add-to-cart-component>
+                
               {% endform %}
             </product-form-component>
-
+            <product-quantity-control
+              class="quantity-control-button"
+              data-product-id="{{ product.id }}"
+              data-variant-id="{{ product.first_available_variant.id }}"
+              hidden
+            ></product-quantity-control>
               {% else %}
                 <button ref="addToCartButton"
                   class="button button-primary quick-add-button" 
@@ -254,18 +260,19 @@ td.product_variant-image {
 }
 .popup-close {
   position: absolute;
-    top: -40px;
-    right: -40px;
+    top: 10px;
+    right: 10px;
     border: none;
     cursor: pointer;
-    width: 44px;
-    height: 44px;
-    background: #D9D9D9;
+    width: 28px;
+    height: 28px;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 200px;
     color: #E90000;
+    z-index: 999999;
 }
 .quick-add_product-variant-details {
     display: flex;
