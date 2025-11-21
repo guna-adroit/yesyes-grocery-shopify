@@ -1,7 +1,9 @@
-<product-sku>
+
   <div class="product-sku-container" ref="skuContainer">
   <span class="product-sku">{{ closest.product.selected_or_first_available_variant.sku }}</span>
   </div>
+<product-sku>
+  <span ref="sku">{{ product.selected_or_first_available_variant.sku }}</span>
 </product-sku>
 <script type="application/json" id="ProductJson-{{ product.id }}">
   {{ closest.product | json }}
@@ -9,45 +11,47 @@
 <script type="module">
   import { ThemeEvents, VariantUpdateEvent } from '@theme/events';
 
-  class ProductPrice extends HTMLElement {
+class ProductSku extends HTMLElement {
   connectedCallback() {
     const closestSection = this.closest('.shopify-section, dialog');
     if (!closestSection) return;
+
+    // Listen to Horizon’s variant update event
     closestSection.addEventListener(ThemeEvents.variantUpdate, this.updateSku);
   }
 
   disconnectedCallback() {
     const closestSection = this.closest('.shopify-section, dialog');
     if (!closestSection) return;
+
     closestSection.removeEventListener(ThemeEvents.variantUpdate, this.updateSku);
   }
 
   /**
-   * Updates the price.
-   * @param {VariantUpdateEvent} event - The variant update event.
+   * Update the SKU when variant changes
+   * @param {VariantUpdateEvent} event
    */
   updateSku = (event) => {
-    if (event.detail.data.newProduct) {
-      this.dataset.productId = event.detail.data.newProduct.id;
-    } else if (event.target instanceof HTMLElement && event.target.dataset.productId !== this.dataset.productId) {
-      return;
-    }
+    // HTML returned by Horizon’s AJAX for this variant
+    const html = event.detail.data.html;
 
-    const newSku = event.detail.data.html.querySelector('product-sku [ref="skuContainer"]');
-    const currentSku = this.querySelector('[ref="skuContainer"]');
+    if (!html) return;
 
-    if (!newSku || !currentSku) return;
+    // Look for the new SKU inside the returned HTML
+    const newSkuEl = html.querySelector('product-sku [ref="sku"]');
+    const currentSkuEl = this.querySelector('[ref="sku"]');
 
-    if (currentSku.innerHTML !== newSku.innerHTML) {
-      currentPrice.replaceWith(newSku);
+    if (!newSkuEl || !currentSkuEl) return;
+
+    if (currentSkuEl.textContent !== newSkuEl.textContent) {
+      currentSkuEl.textContent = newSkuEl.textContent;
     }
   };
 }
 
 if (!customElements.get('product-sku')) {
-  customElements.define('product-sku', ProductPrice);
+  customElements.define('product-sku', ProductSku);
 }
-
 
 </script>
 {% schema %}
