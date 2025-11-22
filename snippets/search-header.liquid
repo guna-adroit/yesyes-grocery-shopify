@@ -91,6 +91,9 @@ class PredictiveSearch extends HTMLElement {
     this.input = this.querySelector('input[type="search"]');
     this.predictiveSearchResults = this.querySelector('#predictive-search');
 
+    /* -------------------------
+       INPUT EVENT (Live Search)
+    ------------------------- */
     this.input.addEventListener(
       'input',
       this.debounce((event) => {
@@ -98,21 +101,27 @@ class PredictiveSearch extends HTMLElement {
       }, 200).bind(this)
     );
 
-    // ADDED — Show default suggestions on focus
+    /* -----------------------------------------
+       FOCUS EVENT → Show default empty section
+    ----------------------------------------- */
     this.input.addEventListener('focus', () => {
       if (!this.input.value.trim().length) {
-        this.getDefaultSearchResults();
+        this.getEmptyState();
       }
     });
 
-    // Close modal when clicking outside
+    /* -----------------------------------------
+       CLOSE when clicking outside
+    ----------------------------------------- */
     document.addEventListener('click', (e) => {
       if (!this.contains(e.target)) {
-        this.close(true); // true = clear input
+        this.close(true);
       }
     });
 
-    // Close when pressing ESC
+    /* -----------------------------------------
+       CLOSE on Escape key
+    ----------------------------------------- */
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.close(true);
@@ -120,6 +129,9 @@ class PredictiveSearch extends HTMLElement {
     });
   }
 
+  /* -------------------------
+     USER IS TYPING A QUERY
+  ------------------------- */
   onChange() {
     const searchTerm = this.input.value.trim();
 
@@ -131,13 +143,15 @@ class PredictiveSearch extends HTMLElement {
     this.getSearchResults(searchTerm);
   }
 
+  /* ---------------------------------
+     FETCH PREDICTIVE SEARCH RESULTS
+  --------------------------------- */
   getSearchResults(searchTerm) {
-    fetch(`/search/suggest?q=${searchTerm}&section_id=predictive-search`)
+    fetch(`/search/suggest?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search`)
       .then((response) => {
         if (!response.ok) {
-          var error = new Error(response.status);
           this.close();
-          throw error;
+          throw new Error(response.status);
         }
 
         return response.text();
@@ -150,31 +164,40 @@ class PredictiveSearch extends HTMLElement {
         this.predictiveSearchResults.innerHTML = resultsMarkup;
         this.open();
       })
-      .catch((error) => {
+      .catch(() => {
         this.close();
-        throw error;
       });
   }
 
-  // ADDED — Fetch default predictive search content
-  getDefaultSearchResults() {
-    fetch(`?section_id=predictive-search-empty`)
+  /* ----------------------------------------------------------
+     FETCH DEFAULT HORIZON SECTION → predictive-search-empty
+  ---------------------------------------------------------- */
+  getEmptyState() {
+    fetch(`/?section_id=predictive-search-empty`)
       .then((res) => res.text())
       .then((text) => {
-        const resultsMarkup = new DOMParser()
+        const html = new DOMParser()
           .parseFromString(text, 'text/html')
-          .querySelector('#shopify-section-predictive-search').innerHTML;
+          .querySelector('#shopify-section-predictive-search-empty');
 
-        this.predictiveSearchResults.innerHTML = resultsMarkup;
+        if (!html) return;
+
+        this.predictiveSearchResults.innerHTML = html.innerHTML;
         this.open();
       })
       .catch(() => {});
   }
 
+  /* -------------------------
+     SHOW PREDICTIVE DROPDOWN
+  ------------------------- */
   open() {
     this.predictiveSearchResults.style.display = 'block';
   }
 
+  /* -------------------------
+     HIDE PREDICTIVE DROPDOWN
+  ------------------------- */
   close(clearInput = false) {
     this.predictiveSearchResults.style.display = 'none';
 
@@ -183,6 +206,9 @@ class PredictiveSearch extends HTMLElement {
     }
   }
 
+  /* -------------------------
+     DEBOUNCE FUNCTION
+  ------------------------- */
   debounce(fn, wait) {
     let t;
     return (...args) => {
