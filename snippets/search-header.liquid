@@ -158,7 +158,7 @@ class PredictiveSearch extends HTMLElement {
 
   // ADDED — Fetch default predictive search content
   getDefaultSearchResults() {
-    fetch(`/search/suggest?q=&section_id=predictive-search-empty`)
+    fetch(`/search/suggest?section_id=predictive-search-empty`)
       .then((res) => res.text())
       .then((text) => {
         const resultsMarkup = new DOMParser()
