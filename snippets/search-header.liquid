@@ -178,7 +178,7 @@ class PredictiveSearch extends HTMLElement {
       .then((text) => {
         const html = new DOMParser()
           .parseFromString(text, 'text/html')
-          .querySelector('#shopify-section-predictive-search-empty');
+          .querySelector('#shopify-section-predictive-search');
 
         if (!html) return;
 
