@@ -98,6 +98,13 @@ class PredictiveSearch extends HTMLElement {
       }, 200).bind(this)
     );
 
+    // ADDED — Show default suggestions on focus
+    this.input.addEventListener('focus', () => {
+      if (!this.input.value.trim().length) {
+        this.getDefaultSearchResults();
+      }
+    });
+
     // Close modal when clicking outside
     document.addEventListener('click', (e) => {
       if (!this.contains(e.target)) {
@@ -149,6 +156,21 @@ class PredictiveSearch extends HTMLElement {
       });
   }
 
+  // ADDED — Fetch default predictive search content
+  getDefaultSearchResults() {
+    fetch(`/search/suggest?q=&section_id=predictive-search-empty`)
+      .then((res) => res.text())
+      .then((text) => {
+        const resultsMarkup = new DOMParser()
+          .parseFromString(text, 'text/html')
+          .querySelector('#shopify-section-predictive-search').innerHTML;
+
+        this.predictiveSearchResults.innerHTML = resultsMarkup;
+        this.open();
+      })
+      .catch(() => {});
+  }
+
   open() {
     this.predictiveSearchResults.style.display = 'block';
   }
@@ -172,3 +194,4 @@ class PredictiveSearch extends HTMLElement {
 
 customElements.define('predictive-search', PredictiveSearch);
 </script>
+
