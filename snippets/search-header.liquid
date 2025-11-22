@@ -158,18 +158,20 @@ class PredictiveSearch extends HTMLElement {
 
   // ADDED — Fetch default predictive search content
   getDefaultSearchResults() {
-    fetch(`/search/suggest?q=&section_id=predictive-search`)
-      .then((res) => res.text())
-      .then((text) => {
-        const resultsMarkup = new DOMParser()
-          .parseFromString(text, 'text/html')
-          .querySelector('#shopify-section-predictive-search').innerHTML;
+  fetch(`/ ?section_id=predictive-search`)
+    .then(res => res.text())
+    .then(text => {
+      const html = new DOMParser()
+        .parseFromString(text, 'text/html')
+        .querySelector('#shopify-section-predictive-search');
 
-        this.predictiveSearchResults.innerHTML = resultsMarkup;
-        this.open();
-      })
-      .catch(() => {});
-  }
+      if (!html) return;
+
+      this.predictiveSearchResults.innerHTML = html.innerHTML;
+      this.open();
+    })
+    .catch(() => {});
+}
 
   open() {
     this.predictiveSearchResults.style.display = 'block';
