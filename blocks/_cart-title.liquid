@@ -15,12 +15,12 @@
       {% comment %} {%- if block_settings.show_count -%}{% render 'cart-bubble' %}{%- endif -%} {% endcomment %}
       {%- if block_settings.show_count -%}( {{- cart.item_count -}} ){%- endif -%}
     {%- endif -%}
-    <span class="cart-title__signup-link">
-      {%- if block_settings.show_signup_link -%}
-        Have an account with us? {{ 'Sign in' | customer_login_link }} or {{ 'Join Us' | customer_login_link }} for a quick checkout. It has never been easier.
-      {%- endif -%}
-    </span>
   </h1>
+  <span class="cart-title__signup-link">
+    {%- if block_settings.show_signup_link -%}
+      Have an account with us? {{ 'Sign in' | customer_login_link }} or {{ 'Join Us' | customer_login_link }} for a quick checkout. It has never been easier.
+    {%- endif -%}
+  </span>
 </div>
 
 {% stylesheet %}
