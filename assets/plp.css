@@ -570,3 +570,7 @@ p.category-item_title{
         display: flex !important; 
     }
 }
+
+.recently-viewed-wrapper{
+    display: none;
+}
