@@ -32,7 +32,19 @@
     </div>
   </div>
 </cart-items-component>
+<script>
+  const resultsWrapper = document.querySelector('.predictive-search-results__inner');
+  if (resultsWrapper) {
+  console.log('resultsWrapper', resultsWrapper);
+  const observer = new MutationObserver(() => {
+    resultsWrapper.classList.remove('active');
+    setTimeout(() => resultsWrapper.classList.add('active'), 20);
+  });
 
+  observer.observe(resultsWrapper, { childList: true, subtree: true });
+}
+
+</script>
 {% stylesheet %}
   .cart-page {
     --cart-font-size--2xs: var(--font-size--2xs);

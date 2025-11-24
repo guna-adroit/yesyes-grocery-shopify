@@ -152,11 +152,15 @@
                     </a>
                   </p>
                   {% if item.product.vendor and block_settings.vendor %}
-                    <p>
-                      {{ item.product.vendor }}
+                    <p class="line-item-info">
+                      Brand: {{ item.product.vendor }}
                     </p>
                   {% endif %}
-
+                  {% if item.product.vendor and block_settings.vendor %}
+                    <p class="line-item-info">
+                    yysm: {{item.variant.sku }}
+                    </p>
+                  {% endif %}
                   {%- if item.item_components.size != 0 -%}
                     <ul class="cart-items__bundle list-unstyled">
                       {%- for component in item.item_components -%}
@@ -221,7 +225,6 @@
                   {% endif %}
                   
                   <div>
-                    {{item.variant.id }}
                     {% comment %} {% if item.original_price != item.final_price %}
                       <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
                       <span>{{ item.final_price | money }}</span>
@@ -248,6 +251,21 @@
                       {% endif %}
                     {% endif %} {% endcomment %}
                   </div>
+                  {% if template.name == 'cart' %}
+                    <button
+                      class="button button--tertiary cart-items__remove"
+                      type="button"
+                      aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
+                      on:click="/onLineItemRemove/{{ item.index | plus: 1 }}"
+                      {% assign can_remove = item.instructions.can_remove | default: true, allow_false: true %}
+                      {% if can_remove == false %}
+                        hidden
+                      {% endif %}
+                    >
+                      <span>REMOVE</span>
+                      <span class="visually-hidden">Remove</span>
+                    </button>
+                  {% endif %}
                   <div class="cart-item-total">
                     <span class="total_label">Total </span>
                     {%- liquid
@@ -284,19 +302,21 @@
                     class: 'cart-primary-typography',
                     can_update_quantity: can_update_quantity
                   %}
-                  <button
-                    class="button button--tertiary cart-items__remove"
-                    type="button"
-                    aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
-                    on:click="/onLineItemRemove/{{ item.index | plus: 1 }}"
-                    {% assign can_remove = item.instructions.can_remove | default: true, allow_false: true %}
-                    {% if can_remove == false %}
-                      hidden
-                    {% endif %}
-                  >
-                    <span>DELETE</span>
-                    <span class="visually-hidden">Remove</span>
-                  </button>
+                  {% if template.name != 'cart' %}
+                    <button
+                      class="button button--tertiary cart-items__remove"
+                      type="button"
+                      aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
+                      on:click="/onLineItemRemove/{{ item.index | plus: 1 }}"
+                      {% assign can_remove = item.instructions.can_remove | default: true, allow_false: true %}
+                      {% if can_remove == false %}
+                        hidden
+                      {% endif %}
+                    >
+                      <span>REMOVE</span>
+                      <span class="visually-hidden">Remove</span>
+                    </button>
+                  {% endif %}
                   
                 </td>
                 <td
@@ -491,6 +511,7 @@
     text-align: center;
     vertical-align: middle;
     color: #ED1D23;
+    width: auto;
   }
   .cart-items__media {
     grid-area: media;

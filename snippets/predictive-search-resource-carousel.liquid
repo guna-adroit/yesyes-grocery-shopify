@@ -12,7 +12,7 @@
       capture children
         render 'resource-card', resource_type: resource_type, resource: resource, image_aspect_ratio: '4 / 5', collection_thumbnails: 'multiple'
       endcapture
-      render 'slideshow-slide', index: forloop.index0, children: children, class: 'predictive-search-results__card'
+      render 'slideshow-slide', index: forloop.index0, children: children, class: 'predictive-search-results__card blogs-rsc-card'
     endfor
   endcapture
 %}
@@ -36,7 +36,7 @@
   </div>
 {% endcapture %}
 
-{% assign slideshow_class = 'predictive-search-results__list predictive-search-results__wrapper list-unstyled slideshow--single-media' %}
+{% assign slideshow_class = 'predictive-search-results__list predictive-search-results__wrapper list-unstyled slideshow--single-media blogs-rsrc-card' %}
 {% if resources.size >= 4 %}
   {% assign slideshow_class = 'predictive-search-results__list predictive-search-results__wrapper list-unstyled' %}
 {% endif %}
