@@ -480,7 +480,7 @@ p.category-item_title{
         width: min-content;
     }
     .add-to-cart-button, .sold-out-button{
-        font-size: 14px;
+        font-size: 10px;
         height: 45px !important;
     }
     .product-grid{
@@ -492,7 +492,7 @@ p.category-item_title{
 }
 @media screen and (max-width: 600px) {
     .add-to-cart-button {
-        font-size: 14px;
+        font-size: 10px;
         height: 35px !important;
     }
     .add-to-cart-button.card-atc-button, .sold-out-button{
