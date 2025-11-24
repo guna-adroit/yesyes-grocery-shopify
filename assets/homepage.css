@@ -207,7 +207,7 @@ a.slider-overlay-link {
 .mega-menu {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 28px;
+    gap: 18px;
     padding: 44px;
     background: #fff;
     border-radius: 6px;
@@ -229,15 +229,17 @@ a.slider-overlay-link {
     align-content: flex-start;
     flex-wrap: wrap;
     position: relative;
+    border-right: 1px solid #ED1D23;
+    padding-right: 10px;
 }
-.menu-column:after {
+/* .menu-column:after {
     content: "";
     width: 1px;
     height: 100%;
     position: absolute;
     background: #ED1D23;
     right: -13px;
-}
+} */
 /* Top-level category title */
 .menu-title {
     margin: 0 0 10px;
