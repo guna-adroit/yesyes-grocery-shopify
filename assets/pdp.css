@@ -215,7 +215,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     color: #000000;
 }
 .about-us-page-main-description{
-    width: 40%;
+    width: 40% !important;
 }
 .about-us-page-main-description p{
     font-weight: 700;
@@ -224,7 +224,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     color: #000000;
 }
 .about-us-page-description{
-    width: 60%;
+    width: 60% !important;
 }
 .about-us-page-description p{
     font-weight: 600;
