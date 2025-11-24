@@ -315,6 +315,9 @@ a.slider-overlay-link {
     gap: 12px;
     font-weight: 600;
 }
+.menu-drawer__menu-item-text{
+    font-size: 18px;
+}
 .drawer-account-popover {
     margin-left: auto;
 }
