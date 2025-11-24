@@ -629,6 +629,13 @@ span.cart-title__signup-link {
     line-height: 25.2px;
     letter-spacing: 0;
     display: block;
+    margin-top: 16px;
+}
+.cart-items__media-container img {
+    border: 1px solid #828282;
+    padding: 10px;
+    max-height: 126px;
+    border-radius: 5px;
 }
 
 
