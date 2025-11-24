@@ -710,7 +710,7 @@ span.cart-title__signup-link {
     .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
         display: none;
     }
-    .header-menu__inner, .featured-categories {
+    .header-menu__inner, ..featured-categories__track.slick-initialized.slick-slider {
         opacity: 0;
         animation: fadeIn 0.2s ease-in-out forwards;
         animation-delay: 1.8s; /* optional */
