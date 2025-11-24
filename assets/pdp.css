@@ -245,8 +245,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         }
         @media screen and (max-width: 1600px){
             .yy-page-banner-arrow-circle{
-                width: calc(20px + 4vw);
-                height: calc(20px + 4vw);
+                width: calc(17px + 4vw);
+                height: calc(17px + 4vw);
             }
             .yy-page-banner-arrow-circle svg{
                 width: calc(18px + 2vw);
