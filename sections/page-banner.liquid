@@ -2,7 +2,11 @@
     <div class="yy-page-banner-wrapper">
         <div class="yy-page-banner-container">
             <div class="yy-page-banner-image-block">
-                <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/about-_age-banner.png?v=1763975117" alt="">
+                {% if section.settings.banner_image != blank %}
+                    {{ section.settings.banner_image | image_url: width: 1600 | image_tag  }}
+                {% else %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag }}
+                {% endif %}
             </div>
             <div class="yy-page-banner-arrow-block">
                 <div class="yy-page-banner-arrow-circle">
