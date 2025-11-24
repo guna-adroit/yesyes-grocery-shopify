@@ -231,6 +231,6 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 
 @media screen and (min-width: 1200px){
     .related-products-slider .resource-list__carousel .resource-list__slide {
-        width: calc((100% - (min(12px, 9999px) * (4 - 1)) - 3rem) / 4);
+        width: calc((100% - (min(12px, 9999px) * (4 - 1)) - 3rem) / 4.5);
     }
 }
