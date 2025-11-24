@@ -638,7 +638,18 @@ span.cart-title__signup-link {
     max-height: 126px;
     border-radius: 5px;
 }
-
+.cart-items__details{
+    margin-left: 20px;
+}
+.line-item-info{
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19.6px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    color: black;
+}
 
 
 
@@ -680,6 +691,14 @@ span.cart-title__signup-link {
     .predictive-search-results__inner{
         flex-direction: column;
         gap: 20px;
+    }
+    .predictive-search-form .predictive-search-form__content-wrapper {
+        box-shadow: 3px -1px 26px 5px #00000000;
+        -webkit-box-shadow: 5px 0px 26px 5px rgba(0, 0, 0, .0);
+        -moz-box-shadow: 3px -1px 26px 5px rgba(0,0,0,.0);
+    }
+    .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
+        display: none;
     }
 }
 @media (max-width: 992px) {
