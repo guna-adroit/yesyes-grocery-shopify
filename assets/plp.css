@@ -447,11 +447,12 @@ p.category-item_title{
     .product-price-container{
         flex-wrap: nowrap;
         flex-direction: column;
+        align-items: flex-start;
     }
     .card-product-expiry-container{
         display: flex;
         justify-content: flex-start;
-        flex-basis: unset;
+        flex-basis: unset;  
     }
     .resource-list.hidden--mobile.resource-list--grid{
         gap: 15px;
