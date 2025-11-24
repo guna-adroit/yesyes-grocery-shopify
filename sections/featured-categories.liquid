@@ -77,7 +77,7 @@
   .featured-categories__track .slick-prev,.featured-categories__track .slick-next{
     top: -60px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .featured-categories__track .slick-prev, .featured-categories__track .slick-next {
       top: -40px;
     }
@@ -87,6 +87,15 @@
     .featured-categories__track .slick-prev {
         left: auto;
         right: 90px;
+    }
+    .slick-next:before{
+      content: "";
+      background-image: url(https://cdn.shopify.com/s/files/1/0979/1825/5185/files/arrow-icon-left.png?v=1763987812);
+      transform: rotate(180deg);
+    }
+    .slick-prev:before{
+      content: "";
+      background-image: url(https://cdn.shopify.com/s/files/1/0979/1825/5185/files/arrow-icon-left.png?v=1763987812);
     }
   }
   @media (max-width: 768px) {
