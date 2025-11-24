@@ -446,10 +446,12 @@ p.category-item_title{
     }
     .product-price-container{
         flex-wrap: nowrap;
+        flex-direction: column;
     }
     .card-product-expiry-container{
         display: flex;
-        justify-content: end;
+        justify-content: flex-start;
+        flex-basis: unset;
     }
     .resource-list.hidden--mobile.resource-list--grid{
         gap: 15px;
