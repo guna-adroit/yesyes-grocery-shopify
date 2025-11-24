@@ -204,3 +204,27 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         flex-wrap: nowrap;
     }
 }
+
+
+
+/* Page CSS Start */
+.about-us-page-title h1{
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 64px;
+    color: #000000;
+}
+.about-us-page-main-description p{
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+    color: #000000;
+}
+.about-us-page-main-description{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #000000;
+}
+
+/* Page CSS End */
