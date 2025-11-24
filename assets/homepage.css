@@ -311,7 +311,7 @@ a.slider-overlay-link {
     display: flex;
     align-items: center;
     background: #fcd816;
-    padding: 16px 19px;
+    padding: 4px 18px;
     gap: 12px;
     font-weight: 600;
 }
