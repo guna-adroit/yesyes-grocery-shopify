@@ -485,6 +485,9 @@ p.category-item_title{
         font-size: 10px;
         height: 35px !important;
     }
+    .product-information .add-to-cart-button {
+        font-size: 14px;
+    }
     .add-to-cart-button.card-atc-button, .sold-out-button{
         margin-top: 8px;
     }
