@@ -58,6 +58,13 @@
         "padding-block-end": 80
       }
     },
+    "page_banner_3kAx9Q": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {
+        "banner_image": "shopify://shop_images/about-_age-banner.png"
+      }
+    },
     "section_gVa8gC": {
       "type": "section",
       "blocks": {
@@ -221,11 +228,6 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
-    },
-    "page_banner_3kAx9Q": {
-      "type": "page-banner",
-      "name": "Page Banner",
-      "settings": {}
     }
   },
   "order": [
