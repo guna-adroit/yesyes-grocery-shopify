@@ -289,7 +289,7 @@ a.slider-overlay-link {
     padding: 0 !important;
     justify-content: center;
     align-items: center;
-    line-height: 1;
+    line-height: -1;
 }
 /* First-level submenu items */
 .submenu > li {
