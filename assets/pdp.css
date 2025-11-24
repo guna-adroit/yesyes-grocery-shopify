@@ -128,10 +128,6 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         display: grid;
         grid-template-columns: 99px 1fr 1fr;
      }
-     .related-products-slider .resource-list__carousel .resource-list__slide {
-         width: calc((100% - (min(12px, 9999px) * (3 - 1)) - 3rem) / 4);
-     }
-     
 }
 .product-details .product-price-container product-price div div{
         display: flex;
