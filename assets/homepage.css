@@ -797,6 +797,9 @@ span.cart-title__signup-link {
     span.cart-quantity-label{
         display: none;
     }
+    .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
+        opacity: 0;
+    }
 }
 @media (max-width: 767px) {
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
