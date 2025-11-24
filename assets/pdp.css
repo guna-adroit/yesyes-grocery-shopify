@@ -213,7 +213,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 38px;
     line-height: 64px;
     color: #000000;
-    margin-bottom: 24px;
+    margin-block-end: 24px !important;
 }
 .about-us-page-main-description{
     width: 40% !important;
