@@ -123,7 +123,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .button.wishlist-button{
     height: 60px;
 }
-.resource-list__carousel .slideshow-control[disabled] {
+.related-products-slider .resource-list__carousel .slideshow-control[disabled] {
     opacity: 0.4;
 }
 @media screen and (min-width: 1200px){
