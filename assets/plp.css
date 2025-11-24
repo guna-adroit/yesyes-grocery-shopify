@@ -480,7 +480,7 @@ p.category-item_title{
         width: min-content;
     }
     .add-to-cart-button, .sold-out-button{
-        font-size: 10px;
+        font-size: 14px;
         height: 45px !important;
     }
     .product-grid{
