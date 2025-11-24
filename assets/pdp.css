@@ -56,7 +56,11 @@
     font-size: 24px;
     line-height: 28px;
 }
-.product-description-content ~ :not(h1, h2, h3, h4, h5, h6) {
+.product-description-content p, 
+.product-description-content ul li, 
+.product-description-content ol li, 
+.product-description-content span,
+.product-description-content > div{
     font-weight: 500;
     font-size: 18px;
     line-height: 25.2px;
