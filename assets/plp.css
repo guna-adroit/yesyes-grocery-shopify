@@ -172,17 +172,6 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 12px;
         line-height: 12px;
     }
-    .card-product-title p {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 22px;
-        height: 44px;
-    }
-    .card-product-vendor p {
-        font-size: 12px;
-        line-height: 16px;
-    }
-    
     .product-price-container{
         gap: 4px;
     }
@@ -420,6 +409,7 @@ p.category-item_title{
     }
     .card-product-vendor p{
         font-size: 12px;
+        line-height: 16px;
     }
     .card-product-more-option, .card-product-type{
         font-size: 12px;
@@ -533,6 +523,9 @@ p.category-item_title{
         font-size: 16px;
         line-height: 24px;
     }
+     .card-product-vendor p{
+        font-size: 11px;
+     }
 }
 
 
