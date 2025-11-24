@@ -206,6 +206,84 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 }
 
 
+/* Page banner css start*/
+.yy-page-banner-container{
+            position: relative;
+        }
+        .yy-page-banner-arrow-block{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding-bottom: 8px;
+            padding-right: 8px;
+        }
+        .yy-page-banner-image-block img{
+            width: 100%;
+            display: block;
+        }
+        .yy-page-banner-arrow-circle{
+            width: calc(30px + 4vw);
+            height: calc(30px + 4vw);
+            background: #F8E300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100px;
+        }
+        .yy-page-banner-arrow-circle svg{
+            rotate: 90deg;
+        }
+        @media screen and (min-width: 2000px){
+            .yy-page-banner-arrow-circle svg{
+                width: calc(26px + 2vw);
+                height: calc(26px + 2vw);
+            }
+        }
+        @media screen and (max-width: 1600px){
+            .yy-page-banner-arrow-circle{
+                width: calc(20px + 4vw);
+                height: calc(20px + 4vw);
+            }
+            .yy-page-banner-arrow-circle svg{
+                width: calc(18px + 2vw);
+                height: calc(18px + 2vw);
+            }
+             
+        }
+         @media screen and (max-width: 1024px){
+            .yy-page-banner-arrow-circle{
+                width: calc(15px + 4vw);
+                height: calc(15px + 4vw);
+            }
+            .yy-page-banner-arrow-circle svg{
+                width: calc(12px + 2vw);
+                height: calc(12px + 2vw);
+            }
+            .yy-page-banner-arrow-block{
+                padding: 0;
+             }
+        }
+         @media screen and (max-width: 600px){
+            .yy-page-banner-arrow-circle{
+                width: calc(8px + 4vw);
+                height: calc(8px + 4vw);
+            }
+            .yy-page-banner-arrow-circle svg{
+                width: calc(6px + 2vw);
+                height: calc(6px + 2vw);
+            }
+        }
+        @media screen and (max-width: 390px){
+            .yy-page-banner-arrow-circle{
+                width: calc(6px + 4vw);
+                height: calc(6px + 4vw);
+            }
+            .yy-page-banner-arrow-circle svg{
+                width: calc(4px + 2vw);
+                height: calc(4px + 2vw);
+            }
+        }
+/* Page banner css end */
 
 /* Page CSS Start */
 .about-us-page-title h1{
