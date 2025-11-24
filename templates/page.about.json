@@ -193,7 +193,7 @@
         "text_j3DPNq",
         "group_RREKgP"
       ],
-      "name": "t:names.custom_section",
+      "name": "About content",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -221,10 +221,16 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "page_banner_3kAx9Q": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "page_banner_3kAx9Q",
     "section_gVa8gC"
   ]
 }

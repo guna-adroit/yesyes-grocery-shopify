@@ -5,7 +5,7 @@
                 {% if section.settings.banner_image != blank %}
                     {{ section.settings.banner_image | image_url: width: 1600 | image_tag  }}
                 {% else %}
-                    {{ 'hero-apparel-1' | placeholder_svg_tag }}
+                    {{ 'hero-apparel-1' | placeholder_svg_tag: 'page-placeholder-image' }}
                 {% endif %}
             </div>
             <div class="yy-page-banner-arrow-block">
