@@ -214,6 +214,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     line-height: 64px;
     color: #000000;
 }
+.about-us-page-main-description{
+    width: 40%;
+}
 .about-us-page-main-description p{
     font-weight: 700;
     font-size: 34px;
@@ -221,6 +224,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     color: #000000;
 }
 .about-us-page-description{
+    width: 60%;
+}
+.about-us-page-description p{
     font-weight: 600;
     font-size: 20px;
     line-height: 30px;
