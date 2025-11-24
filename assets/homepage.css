@@ -692,6 +692,7 @@ span.cart-title__signup-link {
         max-height: 44px;
         height: 44px;
         display: flex;
+        background: green;
         justify-content: center;
         align-items: center;
     }
