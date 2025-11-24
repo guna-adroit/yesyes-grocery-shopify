@@ -34,7 +34,7 @@
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
-        "announcement-menu": "announce-bar-manu",
+        "announcement-menu": "",
         "section_width": "page-width",
         "color_scheme": "scheme-6",
         "divider_width": 1,
@@ -73,9 +73,9 @@
             "image_border_radius": 0,
             "navigation_bar": false,
             "color_scheme_navigation_bar": "",
-            "drawer_accordion": false,
+            "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": true
           },
           "blocks": {}
         }
