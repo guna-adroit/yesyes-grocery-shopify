@@ -492,6 +492,7 @@ p.category-item_title{
         gap: 8px;
     }
     .sold-out-button{
+        font-size: 10px;
         height: 35px !important;
     }
     .product-price-container product-price div {
