@@ -207,6 +207,10 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 
 
 /* Page banner css start*/
+.page-placeholder-image{
+    height: 400px;
+    width: 100%;
+}
 .yy-page-banner-container{
             position: relative;
         }
