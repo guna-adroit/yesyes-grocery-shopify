@@ -245,19 +245,19 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         }
         @media screen and (max-width: 1600px){
             .yy-page-banner-arrow-circle{
-                width: calc(17px + 4vw);
-                height: calc(17px + 4vw);
+                width: calc(16px + 4vw);
+                height: calc(16px + 4vw);
             }
             .yy-page-banner-arrow-circle svg{
-                width: calc(18px + 2vw);
-                height: calc(18px + 2vw);
+                width: calc(16px + 2vw);
+                height: calc(16px + 2vw);
             }
              
         }
          @media screen and (max-width: 1024px){
             .yy-page-banner-arrow-circle{
-                width: calc(15px + 4vw);
-                height: calc(15px + 4vw);
+                width: calc(14px + 4vw);
+                height: calc(14px + 4vw);
             }
             .yy-page-banner-arrow-circle svg{
                 width: calc(12px + 2vw);
