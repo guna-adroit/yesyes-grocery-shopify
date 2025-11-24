@@ -148,6 +148,13 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         align-items: center;
         gap: 5px;
     }
+    .product-details .product-price-container{
+        flex-direction: column;
+    }
+    .product-details .card-product-expiry-container{
+        flex-basis: unset;
+        justify-content: flex-start;
+    }
 }
 @media screen and (max-width: 600px){
     .product-information .product-information__media{
