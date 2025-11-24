@@ -713,7 +713,7 @@ span.cart-title__signup-link {
     .header-menu__inner, .featured-categories {
         opacity: 0;
         animation: fadeIn 0.2s ease-in-out forwards;
-        animation-delay: 1s; /* optional */
+        animation-delay: 1.8s; /* optional */
     }
 
     @keyframes fadeIn {
