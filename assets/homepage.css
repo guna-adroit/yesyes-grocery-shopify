@@ -307,8 +307,29 @@ a.slider-overlay-link {
 .submenu-link:hover {
   color: #e53935;
 }
+.floating-menu-footer {
+    display: flex;
+    align-items: center;
+    background: #fcd816;
+    padding: 16px 19px;
+    gap: 12px;
+    font-weight: 600;
+}
+.drawer-account-popover {
+    margin-left: auto;
+}
+.drawer-account-popover .account-button__icon svg{
+    min-width: 28px;
+    min-height: 28px;
+}
 .menu-column ul li {
     text-align: left;
+}
+.category-menu-mobile .menu-drawer__menu-item--child .menu-drawer__menu-item-text {
+    color: inherit;
+}
+.category-menu-mobile .menu-drawer__menu-item-text {
+    color: #e53935;
 }
 /* Second-level (grandchild) items indentation / smaller */
 .sub-submenu {
@@ -707,13 +728,16 @@ span.cart-title__signup-link {
         -webkit-box-shadow: 5px 0px 26px 5px rgba(0, 0, 0, .0);
         -moz-box-shadow: 3px -1px 26px 5px rgba(0,0,0,.0);
     }
-    .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
+    .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before,{
         display: none;
     }
-    .header-menu__inner, ..featured-categories__track.slick-initialized.slick-slider {
+    .featured-categories__track{
         opacity: 0;
-        animation: fadeIn 0.2s ease-in-out forwards;
-        animation-delay: 1.8s; /* optional */
+    }
+    .header-menu__inner, .featured-categories__track.slick-initialized.slick-slider {
+        opacity: 0;
+        animation: fadeIn 0.3s ease-in-out forwards;
+        animation-delay: 1s; /* optional */
     }
 
     @keyframes fadeIn {
