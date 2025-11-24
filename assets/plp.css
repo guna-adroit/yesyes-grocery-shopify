@@ -553,6 +553,12 @@ p.category-item_title{
         height: 40px !important;
         padding: 5px;
     }
+    .card-product-title p {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+        height: 44px;
+    }
 }
 @media screen and (max-width: 820px){
     .column-options-wrapper:has(.product-view-container){
