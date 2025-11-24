@@ -571,6 +571,6 @@ p.category-item_title{
     }
 }
 
-.recently-viewed-wrapper{
+.recently-viewed-wrapper, .predictive-search-results__title, {
     display: none;
 }
