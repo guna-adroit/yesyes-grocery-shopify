@@ -97,15 +97,21 @@
       content: "";
       background-image: url(https://cdn.shopify.com/s/files/1/0979/1825/5185/files/arrow-icon-left.png?v=1763987812);
     }
+    .slick-track{
+        display: flex !important;
+    }
+    .slick-slide{
+        height: inherit !important;
+    }
   }
   @media (max-width: 768px) {
     .featured-category-card img {
       width: 60px;
       height: 60px;
     }
-    .featured-categories__track .slick-prev, .featured-categories__track .slick-next {
+    /* .featured-categories__track .slick-prev, .featured-categories__track .slick-next {
       display: none !important;
-    }
+    } */
     .slick-dots li.slick-active button:before {
       color: #ED1D23;
     }
@@ -170,6 +176,7 @@
           settings: {
             slidesToShow: {{ section.settings.mobile_slides }},
             dots: true,
+            arrows: true
           }
         }
       ]
