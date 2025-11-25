@@ -66,11 +66,13 @@
         }
         
     </style>
+    {% assign video_url =  section.settings.video_link %}
+    {% assign video_id = video_url | split: 'v=' | last | split: '&' | first %}
     <div class="about-video-section-wrapper">
             <div class="about-video-section-container">
                     <div class="about-video-wrapper">
                         <div class="about-video-container">
-                            <lite-youtube videoid="bmRfA3Pooig"></lite-youtube>
+                            <lite-youtube videoid="{{ video_id }}"></lite-youtube>
                         </div>
                     </div>
                     <div class="about-video-content">
