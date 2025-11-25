@@ -72,7 +72,11 @@
             <div class="about-video-section-container">
                     <div class="about-video-wrapper">
                         <div class="about-video-container">
-                            <lite-youtube videoid="{{ video_id }}"></lite-youtube>
+                            {% if section.settings.video != blank%}
+                                {{ section.settings.video | video_tag: autoplay: false, loop: true, muted: true, controls: false }}
+                            {% elsif section.settings.video_link != blank %}
+                                <lite-youtube videoid="{{ video_id }}"></lite-youtube>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="about-video-content">
