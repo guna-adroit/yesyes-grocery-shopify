@@ -202,6 +202,9 @@ a.slider-overlay-link {
     color: white;
     font-weight: 600;
 }
+button.account-button.header-actions__action{
+    margin-right: 15px;
+}
 /* // Mega Menu */
 /* Mega menu container */
 .mega-menu {
@@ -279,6 +282,13 @@ a.slider-overlay-link {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.featured-blog-posts-card__content div[id*="_blog-post-description"] rte-formatter{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .slick-prev:before, .slick-next:before{
     width: 44px;
@@ -806,13 +816,6 @@ span.cart-title__signup-link {
     .blog-details-wrapper {
         flex-direction: column;
         gap: 10px;
-    }
-    .featured-blog-posts-card__content div[id*="_blog-post-description"] rte-formatter{
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
         min-height: 240px;
