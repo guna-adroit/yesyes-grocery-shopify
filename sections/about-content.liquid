@@ -64,14 +64,47 @@
 
     <div class="yy-about-content-section-wrapper section section--page-width">
         <div class="yy-about-content-section-container">
-            <h1>About Us</h1>
+            <h1>{{ section.settings.title }}</h1>
             <div class="yy-about-content-row">
                 <div class="yy-about-content-column about-main-description">
-                    <p>“Yes Yes” being a customer-focused retailer offer quality products for every dollar spent by the customer.</p>
+                    <p>{{ section.settings.main-description }}</p>
                 </div>
                 <div class="yy-about-content-column about-description">
-                    <p>At Yes Yes Indian Supermarket, we like to say “Yes” to all your grocery needs to stay connected to your cultural identity. As a leading retail chain founded in 2017, we’ve expanded our reach to cater to the Indian, Pakistani, Nepalese, Bangladeshi, Sri Lankan, Islander, and Fijian communities with a wide range of popular brands. Presently, our presence spans five stores across Melbourne, including Tarneit, Burnside, Melton South, Woodlea, and we’re excited to announce the upcoming opening of our newest location in Truganina.</p>
+                    <p>{{ section.settings.description }}</p>
                 </div>
             </div>
         </div>
     </div>
+
+    {% schema %}
+{
+  "name": "About Content",
+  "tag": "section",
+  "class": "about-page-content",
+  "settings": [
+    {
+        "type": "inline_richtext",
+        "id": "title",
+        "default": "About Us",
+        "label": "Heading"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "main-description",
+        "default": "“Yes Yes” being a customer-focused retailer offer quality products for every dollar spent by the customer.",
+        "label": "Main Description"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "description",
+        "default": "At Yes Yes Indian Supermarket, we like to say",
+        "label": "Description"
+    },
+  ],
+  "presets": [
+    {
+      "name": "About Content"
+    }
+  ]
+}
+{% endschema %}
