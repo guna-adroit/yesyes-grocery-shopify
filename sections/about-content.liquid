@@ -1,0 +1,77 @@
+<style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .yy-about-content-section-container{
+            margin-top: 130px;
+            margin-bottom: 80px;
+        }
+        .yy-about-content-section-container > h1{
+            font-weight: 900;
+            font-size: 38px;
+            line-height: 64px;
+            color: #000;
+            margin-block-end: 24px !important;
+        }
+        .yy-about-content-row{
+            display: flex;
+            gap: 100px;
+            align-items: flex-start;
+        }
+        .yy-about-content-column.about-main-description{
+            width: 40%;
+        }
+        .yy-about-content-column.about-description{
+            width: 60%;
+        }
+        .about-main-description > p{
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 44px;
+            color: #000;
+        }
+        .about-description > p{
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 30px;
+            color: #000;
+        }
+        @media screen and (max-width: 1024px){
+            .yy-about-content-section-container{
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+            .yy-about-content-row{
+                gap: 30px;
+            }
+        }
+        @media screen and (max-width: 900px){
+            .yy-about-content-section-container{
+                margin-top: 40px;
+                margin-bottom: 20px;
+            }
+            .yy-about-content-row{
+                flex-direction: column;
+                gap: 20px;
+            }
+            .yy-about-content-column.about-main-description,
+            .yy-about-content-column.about-description{
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="yy-about-content-section-wrapper">
+        <div class="yy-about-content-section-container">
+            <h1>About Us</h1>
+            <div class="yy-about-content-row">
+                <div class="yy-about-content-column about-main-description">
+                    <p>“Yes Yes” being a customer-focused retailer offer quality products for every dollar spent by the customer.</p>
+                </div>
+                <div class="yy-about-content-column about-description">
+                    <p>At Yes Yes Indian Supermarket, we like to say “Yes” to all your grocery needs to stay connected to your cultural identity. As a leading retail chain founded in 2017, we’ve expanded our reach to cater to the Indian, Pakistani, Nepalese, Bangladeshi, Sri Lankan, Islander, and Fijian communities with a wide range of popular brands. Presently, our presence spans five stores across Melbourne, including Tarneit, Burnside, Melton South, Woodlea, and we’re excited to announce the upcoming opening of our newest location in Truganina.</p>
+                </div>
+            </div>
+        </div>
+    </div>
