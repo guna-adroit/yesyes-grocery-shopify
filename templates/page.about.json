@@ -228,11 +228,17 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "video_cP6yWp": {
+      "type": "video",
+      "name": "About Video",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "page_banner_3kAx9Q",
-    "section_gVa8gC"
+    "section_gVa8gC",
+    "video_cP6yWp"
   ]
 }
