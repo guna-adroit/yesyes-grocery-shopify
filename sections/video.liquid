@@ -68,6 +68,7 @@
     </style>
     {% assign video_url =  section.settings.video_link %}
     {% assign video_id = video_url | split: 'v=' | last | split: '&' | first %}
+    {% assign placeholder_video = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4' %}
     <div class="about-video-section-wrapper">
             <div class="about-video-section-container">
                     <div class="about-video-wrapper">
@@ -76,6 +77,8 @@
                                 {{ section.settings.video | video_tag: autoplay: false, loop: true, muted: true, controls: false }}
                             {% elsif section.settings.video_link != blank %}
                                 <lite-youtube videoid="{{ video_id }}"></lite-youtube>
+                            {% else %}
+                                {{ placeholder_video | video_tag: autoplay: false, loop: true, muted: true, controls: false }}
                             {% endif %}
                         </div>
                     </div>
