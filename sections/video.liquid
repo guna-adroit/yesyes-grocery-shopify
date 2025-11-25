@@ -1,5 +1,8 @@
 
+{{ 'youtube-lite.css' | asset_url }}
+{{ 'youtube-lite.js' | asset_url }}
 
+<lite-youtube videoid="goiWrNiaT0I"></lite-youtube>
 {% schema %}
 {
   "name": "About Video",
@@ -8,13 +11,13 @@
   "settings": [
     {
       "type": "video",
-      "id": "about",
+      "id": "video",
       "label": "Video"
     },
     {
     "type": "video_url",
-    "id": "product_description_video",
-    "label": "Product description video",
+    "id": "video_link",
+    "label": "Youtube Video",
     "accept": [
         "youtube"
     ]
@@ -22,7 +25,7 @@
   ],
   "presets": [
     {
-      "name": "Page Banner"
+      "name": "About Video"
     }
   ]
 }
