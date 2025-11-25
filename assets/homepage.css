@@ -404,7 +404,7 @@ dialog.search-modal__content.dialog-modal[open] .predictive-search__close-modal-
     font-size: 18px;
     line-height: 25.2px;
     letter-spacing: 0;
-    border: 1px solid #ED1D23;
+    border: 2px solid #ED1D23;
     margin: 0 auto;
     outline: none;
     --button-border-color: none;
@@ -711,7 +711,13 @@ span.cart-title__signup-link {
     vertical-align: middle;
     color: black;
 }
-
+span.cart__column_title {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+}
 
 
 
