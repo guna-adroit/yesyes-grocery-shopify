@@ -243,7 +243,9 @@
       "type": "video",
       "name": "About Video",
       "settings": {
-        "video_link": ""
+        "video": "shopify://files/videos/file_example_MOV_1920_2_2MB.mov",
+        "video_link": "",
+        "text": "my <em>inline</em> <strong>text</strong>"
       }
     }
   },
