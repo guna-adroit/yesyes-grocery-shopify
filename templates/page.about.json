@@ -243,9 +243,8 @@
       "type": "video",
       "name": "About Video",
       "settings": {
-        "video": "shopify://files/videos/file_example_MOV_1920_2_2MB.mov",
-        "video_link": "",
-        "text": "my <em>inline</em> <strong>text</strong>"
+        "video_link": "https://www.youtube.com/watch?v=bmRfA3Pooig",
+        "text": "For any popular brand of Indian origin;  “you name it and we make sure we have a yes for you.”"
       }
     }
   },
