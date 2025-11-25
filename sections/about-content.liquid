@@ -1,0 +1,125 @@
+<style>
+       
+        .yy-about-content-section-container{
+            margin-top: 130px;
+            margin-bottom: 80px;
+            padding: 20px;
+        }
+        .yy-about-content-section-container > h1{
+            font-weight: 900;
+            font-size: 38px;
+            line-height: 64px;
+            color: #000;
+            margin-block-end: 24px !important;
+        }
+        .yy-about-content-row{
+            display: flex;
+            gap: 100px;
+            align-items: flex-start;
+        }
+        .yy-about-content-column.about-main-description{
+            width: 40%;
+        }
+        .yy-about-content-column.about-description{
+            width: 60%;
+        }
+        .about-main-description > p{
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 44px;
+            color: #000;
+        }
+        .about-description > p{
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 30px;
+            color: #000;
+        }
+        @media screen and (max-width: 1024px){
+            .yy-about-content-section-container{
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+            .yy-about-content-row{
+                gap: 30px;
+            }
+        }
+        @media screen and (max-width: 820px){
+            .yy-about-content-section-container{
+                padding: 10px;
+            }
+            .yy-about-content-section-container > h1{
+                font-size: 28px;
+                line-height: 44px;
+            }
+            .about-main-description > p{
+                font-size: 24px;
+                line-height: 34px;
+            }
+            .about-description > p{
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+        @media screen and (max-width: 900px){
+            .yy-about-content-section-container{
+                margin-top: 40px;
+                margin-bottom: 20px;
+            }
+            .yy-about-content-row{
+                flex-direction: column;
+                gap: 20px;
+            }
+            .yy-about-content-column.about-main-description,
+            .yy-about-content-column.about-description{
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="yy-about-content-section-wrapper section section--page-width">
+        <div class="yy-about-content-section-container">
+            <h1>{{ section.settings.title }}</h1>
+            <div class="yy-about-content-row">
+                <div class="yy-about-content-column about-main-description">
+                    <p>{{ section.settings.main-description }}</p>
+                </div>
+                <div class="yy-about-content-column about-description">
+                    <p>{{ section.settings.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% schema %}
+{
+  "name": "About Content",
+  "tag": "section",
+  "class": "about-page-content",
+  "settings": [
+    {
+        "type": "inline_richtext",
+        "id": "title",
+        "default": "About Us",
+        "label": "Heading"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "main-description",
+        "default": "“Yes Yes” being a customer-focused retailer offer quality products for every dollar spent by the customer.",
+        "label": "Main Description"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "description",
+        "default": "At Yes Yes Indian Supermarket, we like to say",
+        "label": "Description"
+    },
+  ],
+  "presets": [
+    {
+      "name": "About Content"
+    }
+  ]
+}
+{% endschema %}
