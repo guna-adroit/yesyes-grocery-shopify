@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="about-video-content">
-                        <p>For any popular brand of Indian origin;  “you name it and we make sure we have a yes for you.”</p>
+                        <p>{{ section.settings.text }}</p>
                     </div>
             </div>
     </div>
@@ -97,13 +97,19 @@
       "label": "Video"
     },
     {
-    "type": "video_url",
-    "id": "video_link",
-    "label": "Youtube Video",
-    "accept": [
-        "youtube"
-    ]
-}
+        "type": "video_url",
+        "id": "video_link",
+        "label": "Youtube Video",
+        "accept": [
+            "youtube"
+        ]
+    },
+    {
+        "type": "inline_richtext",
+        "id": "text",
+        "default": "my <i>inline</i> <b>text</b>",
+        "label": "Inline rich text"
+    }
   ],
   "presets": [
     {
