@@ -132,28 +132,52 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         display: grid;
         grid-template-columns: 99px 1fr 1fr;
      }
-     
 }
+.product-details .product-price-container product-price div div{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .product-details .product-price-container{
+        flex-direction: column;
+    }
+    .product-details .card-product-expiry-container{
+        flex-basis: unset;
+        justify-content: flex-start;
+    }
 @media screen and (max-width: 820px){
     .product-details .product-price-container .product-low-stock-container{
         width: 150px;
     }
     .product-page-title h1{
         font-size: 20px !important;
-        margin-top: 50px !important;
+        margin-top: 0px !important;
         line-height: 24px !important;
     }
     .product-details .price{
         font-size: 24px;
         line-height: 34px;
     }
-    .product-price-container product-price div div{
+    .product-details .product-price-container product-price div div{
         display: flex;
         align-items: center;
         gap: 5px;
     }
+    .product-details .product-price-container{
+        flex-direction: column;
+    }
+    .product-details .card-product-expiry-container{
+        flex-basis: unset;
+        justify-content: flex-start;
+    }
+    .related-products-heading h4{
+        width: 75%;
+    }
 }
 @media screen and (max-width: 600px){
+    .product-page-title h1{
+        margin-top: 50px !important;
+    }
     .product-information .product-information__media{
         padding: 20px;
     }
@@ -321,3 +345,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 }
 
 /* Page CSS End */
+@media screen and (min-width: 1200px){
+    .related-products-slider .resource-list__carousel .resource-list__slide {
+        width: calc((100% - (min(12px, 9999px) * (4 - 1)) - 3rem) / 4.5);
+    }
+}

@@ -279,8 +279,8 @@
       "settings": {
         "heading": "{{ metaobjects.homepage_featured_categories_heading[\"featured-categories\"].heading.value }}",
         "desktop_slides": 12,
-        "tablet_slides": 4,
-        "mobile_slides": 2
+        "tablet_slides": 6,
+        "mobile_slides": 3
       }
     },
     "section_wHChnB": {
@@ -891,8 +891,7 @@
               },
               "blocks": {
                 "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
+                  "type": "product-quantity",
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -1176,8 +1175,7 @@
               },
               "blocks": {
                 "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
+                  "type": "product-quantity",
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -1496,8 +1494,7 @@
               },
               "blocks": {
                 "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
+                  "type": "product-quantity",
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -1537,6 +1534,7 @@
       "settings": {
         "product": "cow-milk-full-cream-1",
         "recommendation_type": "related",
+        "custom_classes": "",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 4,
