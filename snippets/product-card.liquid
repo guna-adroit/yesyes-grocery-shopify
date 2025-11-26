@@ -227,10 +227,10 @@
               hidden
             ></product-quantity-control>
 
-            <quantity-input product-handle="{{ product.handle }}">
-              <button data-minus class="button ">-</button>
-              <input type="number" data-qty value="0" readonly>
-              <button data-plus class="button ">+</button>
+            <quantity-input data-variant-id="{{ variant.id }}">
+              <button data-minus>-</button>
+              <input type="number" value="0" min="0">
+              <button data-plus>+</button>
             </quantity-input>
 
 
