@@ -521,6 +521,15 @@ p.category-item_title{
         flex-direction: column;
         gap: 10px;
     }
+    .variants-container tbody tr{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        padding: 10px;
+    }
+    .variants-container tbody tr td{
+        width: 100%;
+    }
     .card-product-more-option{
         font-size: 12px;
         margin-bottom: 6px;
