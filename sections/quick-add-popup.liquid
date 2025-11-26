@@ -97,11 +97,11 @@
                 
               {% endform %}
             </product-form-component>
-            <product-quantity-control
+            {% comment %} <product-quantity-control
               class="quantity-control-button"
               
               hidden
-            ></product-quantity-control>
+            ></product-quantity-control> {% endcomment %}
             <quantity-input data-variant-id="{{ variant.id }}">
               <button data-minus>-</button>
               <input type="number" value="0" min="0">
