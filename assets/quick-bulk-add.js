@@ -58,6 +58,7 @@ class QuantityInput extends HTMLElement {
     if(this.input.value > 0){
         this.classList.add('visible');
     }
+    
   }
 
   /** ---------------------------------------------
