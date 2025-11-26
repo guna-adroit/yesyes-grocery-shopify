@@ -123,6 +123,16 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .button.wishlist-button{
     height: 60px;
 }
+.wishlist-button-text{
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    justify-content: center;
+    animation-duration: var(--animation-speed);
+    animation-timing-function: var(--animation-easing);
+    animation-fill-mode: forwards;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+}
 .related-products-slider .resource-list__carousel .slideshow-control[disabled] {
     opacity: 0.4;
     cursor: pointer;
