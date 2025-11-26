@@ -3,13 +3,13 @@ if (!customElements.get("quantity-input")) {
 
     constructor() {
       super();
-      this.productId = null;
+      this.handle = null;
       this.variantId = null;
       this.max = Infinity;
     }
 
     connectedCallback() {
-      this.productId = Number(this.getAttribute("product-id"));
+      this.handle = this.getAttribute("product-handle");
 
       this.minusBtn = this.querySelector("[data-minus]");
       this.plusBtn = this.querySelector("[data-plus]");
@@ -28,10 +28,12 @@ if (!customElements.get("quantity-input")) {
     }
 
     async loadVariant() {
-      const res = await fetch(`/products/${this.productId}.js`);
+      // ✔ Works for product JSON
+      const res = await fetch(`/products/${this.handle}.js`);
       const product = await res.json();
 
       const variant = product.variants[0];
+
       this.variantId = variant.id;
       this.max = variant.inventory_quantity ?? Infinity;
     }
@@ -56,10 +58,8 @@ if (!customElements.get("quantity-input")) {
 
       if (newQty < 0 || newQty > this.max) return;
 
-      if (newQty === 1 && current === 0) {
-        // ---------------------------------------
-        // CASE 1: First time adding => ADD API
-        // ---------------------------------------
+      // First add → use /cart/add.js
+      if (current === 0 && newQty === 1) {
         await fetch("/cart/add.js", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -69,9 +69,7 @@ if (!customElements.get("quantity-input")) {
           })
         });
       } else {
-        // ---------------------------------------
-        // CASE 2: Modify existing line => CHANGE API
-        // ---------------------------------------
+        // Modify quantity → use /cart/change.js
         await fetch("/cart/change.js", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -83,8 +81,6 @@ if (!customElements.get("quantity-input")) {
       }
 
       this.updateUI(newQty);
-
-      // Global cart update event
       document.dispatchEvent(new CustomEvent("cart-updated"));
     }
 
