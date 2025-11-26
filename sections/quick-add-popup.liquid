@@ -102,6 +102,11 @@
               
               hidden
             ></product-quantity-control>
+            <quantity-input data-variant-id="{{ variant.id }}">
+              <button data-minus>-</button>
+              <input type="number" value="0" min="0">
+              <button data-plus>+</button>
+            </quantity-input>
               {% else %}
                 <button ref="addToCartButton"
                   class="button button-primary quick-add-button" 
