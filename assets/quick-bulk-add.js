@@ -1,3 +1,5 @@
+import { ThemeEvents, CartAddEvent } from '@theme/events';
+
 if (!customElements.get("quantity-input")) {
   class QuantityInput extends HTMLElement {
 
