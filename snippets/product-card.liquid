@@ -226,8 +226,11 @@
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
             ></product-quantity-control> {% endcomment %}
+          {% assign handle = product.handle %}
+          {% assign product = all_products[handle] %}
+        {% assign line_items = cart | line_items_for: product %}
 
-            {{ cart | JSON }}
+        quantity : {{ line_items | sum: 'quantity' }}
 
             <quantity-input class="quick-add-quantity" data-variant-id="{{ product.first_available_variant.id }}">
               <button data-minus>-</button>
