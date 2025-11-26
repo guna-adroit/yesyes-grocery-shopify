@@ -12,7 +12,7 @@
     <div id="QuickAddPopupContent" class="quick-add-popup__content">
         <h2>{{ product.title }}</h2>
         {%unless product.has_only_default_variant %}
-        
+        <div class="variants-container-table">
           <table class="variants-container">
         {% for variant in product.variants %}
           <tr class="product_variant_item" style="">
@@ -115,6 +115,7 @@
             </tr>
           {% endfor %}
         </table>
+      </div>
         
           
         
