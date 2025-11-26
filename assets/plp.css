@@ -598,7 +598,7 @@ quantity-input.is-loading {
 quantity-input.is-loading::after {
   content: "";
   position: absolute;
-  right: 8px;
+  left: 50%;
   top: 50%;
   width: 16px;
   height: 16px;
