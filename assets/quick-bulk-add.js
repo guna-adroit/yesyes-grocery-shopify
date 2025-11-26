@@ -3,7 +3,9 @@ import { ThemeEvents, CartAddEvent, CartErrorEvent } from '@theme/events';
 class QuantityInput extends HTMLElement {
   constructor() {
     super();
+
     this.variantId = Number(this.dataset.variantId);
+
     this.input = this.querySelector('input');
     this.plus = this.querySelector('[data-plus]');
     this.minus = this.querySelector('[data-minus]');
@@ -12,23 +14,41 @@ class QuantityInput extends HTMLElement {
   connectedCallback() {
     if (!this.input) return;
 
-    // Load existing cart qty when block renders
-    this.syncWithCart();
+    this.syncWithCart(); // Load current cart qty on page load
 
     this.plus?.addEventListener("click", () => this.addOne());
     this.minus?.addEventListener("click", () => this.removeOne());
   }
 
-  /** -------- LOAD EXISTING CART QTY -------- */
+  /** ---------------------------------------------
+   *  Load existing quantity for this product/variant
+   * --------------------------------------------- */
   async syncWithCart() {
     const res = await fetch('/cart.js');
     const cart = await res.json();
-    const line = cart.items.find(i => i.variant_id === this.variantId);
 
-    this.input.value = line ? line.quantity : 0;
+    const line = cart.items.find(item => item.variant_id === this.variantId);
+
+    const qty = line ? line.quantity : 0;
+
+    this.input.value = qty;
+    this.minus.disabled = qty === 0;
   }
 
-  /** -------- ADD 1 ITEM ALWAYS (NOT FULL QTY) -------- */
+  /** ---------------------------------------------
+   *  Get line item key for this variant
+   * --------------------------------------------- */
+  async getLineItemKey() {
+    const res = await fetch('/cart.js');
+    const cart = await res.json();
+
+    const item = cart.items.find(i => i.variant_id === this.variantId);
+    return item ? item.key : null; // line-item key string
+  }
+
+  /** ---------------------------------------------
+   *  ADD exactly 1 product always
+   * --------------------------------------------- */
   async addOne() {
     try {
       const res = await fetch('/cart/add.js', {
@@ -48,76 +68,67 @@ class QuantityInput extends HTMLElement {
 
       const cartData = await res.json();
 
-      // Update input to new qty
-      await this.syncWithCart();
-
+      await this.syncWithCart(); // Update UI
       this.dispatchCartAdd(cartData);
 
     } catch (err) {
-      console.error('Add error', err);
+      console.error("Add error:", err);
     }
   }
 
-  /** Find the line item key for this variant in the cart */
-async getLineItemKey() {
-  const res = await fetch('/cart.js');
-  const cart = await res.json();
+  /** ---------------------------------------------
+   *  REMOVE exactly 1 product using line-item key
+   * --------------------------------------------- */
+  async removeOne() {
+    let currentQty = parseInt(this.input.value) || 0;
+    if (currentQty < 1) return;
 
-  const item = cart.items.find(i => i.variant_id === this.variantId);
-  return item ? item.key : null;
-}
+    const newQty = currentQty - 1;
 
-/** -------- REMOVE 1 ITEM ALWAYS -------- */
-async removeOne() {
-  let currentQty = parseInt(this.input.value) || 0;
-  if (currentQty === 0) return;
+    const lineKey = await this.getLineItemKey();
+    if (!lineKey) return; // No item in cart
 
-  const newQty = currentQty - 1;
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: lineKey,     // MUST use line-item key string
+          quantity: newQty
+        })
+      });
 
-  // Get the line-item key (required for /change.js)
-  const lineKey = await this.getLineItemKey();
-  if (!lineKey) return; // Item not in cart
+      if (!res.ok) {
+        console.error(await res.text());
+        return;
+      }
 
-  try {
-    const res = await fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        line: lineKey,
-        quantity: newQty
-      })
-    });
+      const cartData = await res.json();
 
-    if (!res.ok) {
-      console.error(await res.text());
-      return;
+      await this.syncWithCart(); // Update UI
+      this.dispatchCartAdd(cartData);
+
+    } catch (err) {
+      console.error("Remove error:", err);
     }
-
-    const cartData = await res.json();
-
-    // Update UI
-    await this.syncWithCart();
-    this.dispatchCartAdd(cartData);
-
-  } catch (err) {
-    console.error('Remove error', err);
   }
-}
 
-  /** -------- DISPATCH TO HORIZON CART DRAWER -------- */
+  /** ---------------------------------------------
+   *  Dispatch Horizon cart update event
+   * --------------------------------------------- */
   dispatchCartAdd(cartData) {
-    const event = new CartAddEvent(
+    const evt = new CartAddEvent(
       cartData,
       this.variantId.toString(),
       {
-        source: 'quick-bulk-add',
+        source: 'quantity-input',
         itemCount: cartData.item_count,
-        sections: cartData.sections,
+        sections: cartData.sections
       }
     );
 
-    this.dispatchEvent(event);
-    document.dispatchEvent(event);
+    this.dispatchEvent(evt);
+    document.dispatchEvent(evt);
   }
 }
 
