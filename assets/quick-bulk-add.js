@@ -6,6 +6,7 @@ if (!customElements.get("quantity-input")) {
       this.handle = null;
       this.variantId = null;
       this.max = Infinity;
+      this.line = null; // line number in cart
     }
 
     connectedCallback() {
@@ -28,20 +29,26 @@ if (!customElements.get("quantity-input")) {
     }
 
     async loadVariant() {
-      // ✔ Works for product JSON
       const res = await fetch(`/products/${this.handle}.js`);
       const product = await res.json();
 
       const variant = product.variants[0];
-
       this.variantId = variant.id;
       this.max = variant.inventory_quantity ?? Infinity;
     }
 
     async syncWithCart() {
       const cart = await fetch("/cart.js").then(r => r.json());
-      const item = cart.items.find(i => i.variant_id === this.variantId);
-      const qty = item ? item.quantity : 0;
+
+      let qty = 0;
+      this.line = null;
+
+      cart.items.forEach((item, index) => {
+        if (item.variant_id === this.variantId) {
+          qty = item.quantity;
+          this.line = index + 1; // Shopify line index is 1-based
+        }
+      });
 
       this.updateUI(qty);
     }
@@ -58,7 +65,7 @@ if (!customElements.get("quantity-input")) {
 
       if (newQty < 0 || newQty > this.max) return;
 
-      // First add → use /cart/add.js
+      // FIRST ADD → /cart/add.js
       if (current === 0 && newQty === 1) {
         await fetch("/cart/add.js", {
           method: "POST",
@@ -68,19 +75,21 @@ if (!customElements.get("quantity-input")) {
             quantity: 1
           })
         });
+
       } else {
-        // Modify quantity → use /cart/change.js
+        // SUBSEQUENT CHANGES → MUST USE line number
         await fetch("/cart/change.js", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: this.variantId,
+            line: this.line,
             quantity: newQty
           })
         });
       }
 
-      this.updateUI(newQty);
+      await this.syncWithCart();
+
       document.dispatchEvent(new CustomEvent("cart-updated"));
     }
 
