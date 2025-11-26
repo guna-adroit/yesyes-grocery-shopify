@@ -287,45 +287,48 @@
 
 <style>
 .product-card__content:has(quantity-input.visible) add-to-cart-component,
-.product_variant_item:has(quantity-input.visible)  add-to-cart-component{
+.product_variant_item:has(quantity-input.visible)  add-to-cart-component,
+.product-card__content:has(quantity-input-popup.visible) add-to-cart-component,
+.product_variant_item:has(quantity-input-popup.visible)  add-to-cart-component{
   display: none !important;
 }
-quantity-input {
+quantity-input,
+quantity-input-popup {
     display: none;
     flex-direction: row;
     background-color: #ed1d23;
     height: 55px;
     border-radius: 8px;
 }
-quantity-input.visible{
+quantity-input.visible, quantity-input-popup.visible{
   display: flex;
 }
-quantity-input input{
+quantity-input input, quantity-input-popup input{
   width: 100%;
   text-align: center;
   border: none;
   background-color: transparent;
   color: white;
 }
-quantity-input input:focus-visible{
+quantity-input input:focus-visible, quantity-input-popup input:focus-visible{
   outline: none;
 }
-quantity-input > button {
+quantity-input > button, quantity-input-popup > button {
     border: none;
     background: transparent;
     color: white;
     cursor: pointer;
 }
-quantity-input > *{
+quantity-input > *, quantity-input-popup > *{
   flex: 1;
 }
 @media screen and (max-width: 820px) {
-  quantity-input {
+  quantity-input, quantity-input-popup {
     height: 45px;
   }
 }
 @media screen and (max-width: 600px) {
-  quantity-input {
+  quantity-input,  quantity-input-popup{
     height: 35px;
   }
 }
