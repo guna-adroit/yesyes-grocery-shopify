@@ -220,12 +220,12 @@
                 </add-to-cart-component>
               {% endform %}
             </product-form-component>
-            <product-quantity-control
+            {% comment %} <product-quantity-control
               class="quantity-control-button"
               data-product-id="{{ product.id }}"
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
-            ></product-quantity-control>
+            ></product-quantity-control> {% endcomment %}
 
             <quantity-input data-variant-id="{{ product.first_available_variant.id }}">
               <button data-minus>-</button>
