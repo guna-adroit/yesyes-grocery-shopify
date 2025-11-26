@@ -227,7 +227,7 @@
               hidden
             ></product-quantity-control>
 
-            <quantity-input data-variant-id="{{ variant.id }}">
+            <quantity-input data-variant-id="{{ product.first_available_variant.id }}">
               <button data-minus>-</button>
               <input type="number" value="0" min="0">
               <button data-plus>+</button>
