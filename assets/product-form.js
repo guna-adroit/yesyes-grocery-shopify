@@ -71,6 +71,8 @@ export class AddToCartComponent extends Component {
     const quantityInput = this.closest('.product-card') || this.closest('.product_variant_item');
     const quantityContainer = this.closest('.quick-add-quantity');
 
+    console.log(quantityContainer);
+
 
     if (quantityInput){
       const quantityControl = quantityInput.querySelector('quantity-input');
