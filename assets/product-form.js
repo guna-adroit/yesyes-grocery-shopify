@@ -77,8 +77,7 @@ export class AddToCartComponent extends Component {
       console.log(addToCartButton);
 
       if (addToCartButton) {
-        addToCartButton.style.display = 'none'; // Hides the button
-        quantityControl.style.display = 'flex';
+        addToCartButton.style.display = 'none'; 
       }
 
       if (quantityControl && quantityControl.hidden) {
