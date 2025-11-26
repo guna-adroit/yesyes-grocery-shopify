@@ -56,7 +56,7 @@ class QuantityInput extends HTMLElement {
     this.minus.disabled = qty === 0;
 
     if(this.input.value > 0){
-        this.container.style.display = 'flex';
+        this.classList.add('visible');
     }
   }
 
