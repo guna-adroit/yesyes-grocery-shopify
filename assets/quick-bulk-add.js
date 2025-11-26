@@ -58,36 +58,51 @@ class QuantityInput extends HTMLElement {
     }
   }
 
-  /** -------- REMOVE 1 ITEM ALWAYS -------- */
-  async removeOne() {
-    let currentQty = parseInt(this.input.value) || 0;
-    if (currentQty === 0) return;
+  /** Find the line item key for this variant in the cart */
+async getLineItemKey() {
+  const res = await fetch('/cart.js');
+  const cart = await res.json();
 
-    const newQty = currentQty - 1;
+  const item = cart.items.find(i => i.variant_id === this.variantId);
+  return item ? item.key : null;
+}
 
-    try {
-      const res = await fetch('/cart/change.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: this.variantId,
-          quantity: newQty
-        })
-      });
+/** -------- REMOVE 1 ITEM ALWAYS -------- */
+async removeOne() {
+  let currentQty = parseInt(this.input.value) || 0;
+  if (currentQty === 0) return;
 
-      if (!res.ok) return;
+  const newQty = currentQty - 1;
 
-      const cartData = await res.json();
+  // Get the line-item key (required for /change.js)
+  const lineKey = await this.getLineItemKey();
+  if (!lineKey) return; // Item not in cart
 
-      // Sync input with actual cart
-      await this.syncWithCart();
+  try {
+    const res = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        line: lineKey,
+        quantity: newQty
+      })
+    });
 
-      this.dispatchCartAdd(cartData);
-
-    } catch (err) {
-      console.error('Remove error', err);
+    if (!res.ok) {
+      console.error(await res.text());
+      return;
     }
+
+    const cartData = await res.json();
+
+    // Update UI
+    await this.syncWithCart();
+    this.dispatchCartAdd(cartData);
+
+  } catch (err) {
+    console.error('Remove error', err);
   }
+}
 
   /** -------- DISPATCH TO HORIZON CART DRAWER -------- */
   dispatchCartAdd(cartData) {
