@@ -164,12 +164,7 @@
           </span>
           </button>
         </div>
-        <quantity-input product-id="{{ product.id }}">
-          <button data-minus>-</button>
-          <input type="number" data-qty value="0" readonly>
-          <button data-plus>+</button>
-        </quantity-input>
-
+        
       {% else %}
         <div class="sold-out-button-container">
           <button ref="addToCartButton"
@@ -231,6 +226,7 @@
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
             ></product-quantity-control>
+            
             <quantity-input product-id="{{ product.id }}">
               <button data-minus class="button ">-</button>
               <input type="number" data-qty value="0" readonly>
