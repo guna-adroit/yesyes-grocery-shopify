@@ -94,7 +94,7 @@ class QuantityInput extends HTMLElement {
         return;
       }
 
-      const cartData = await res.json();
+      const cartData = res.json();
 
       // update line item key from response
       const newItem = cartData.items?.find(i => i.variant_id === this.variantId);
