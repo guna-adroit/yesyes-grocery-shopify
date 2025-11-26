@@ -1,101 +1,99 @@
-import { ThemeEvents, CartAddEvent } from '@theme/events';
+import { ThemeEvents, CartAddEvent, CartErrorEvent } from '@theme/events';
 
-if (!customElements.get("quantity-input")) {
-  class QuantityInput extends HTMLElement {
-
-    constructor() {
-      super();
-      this.handle = null;
-      this.variantId = null;
-      this.max = Infinity;
-      this.line = null; // line number in cart
-    }
-
-    connectedCallback() {
-      this.handle = this.getAttribute("product-handle");
-
-      this.minusBtn = this.querySelector("[data-minus]");
-      this.plusBtn = this.querySelector("[data-plus]");
-      this.input = this.querySelector("[data-qty]");
-
-      this.minusBtn.addEventListener("click", () => this.updateQuantity(-1));
-      this.plusBtn.addEventListener("click", () => this.updateQuantity(1));
-
-      this.init();
-      document.addEventListener("cart-updated", () => this.syncWithCart());
-    }
-
-    async init() {
-      await this.loadVariant();
-      await this.syncWithCart();
-    }
-
-    async loadVariant() {
-      const res = await fetch(`/products/${this.handle}.js`);
-      const product = await res.json();
-
-      const variant = product.variants[0];
-      this.variantId = variant.id;
-      this.max = variant.inventory_quantity ?? Infinity;
-    }
-
-    async syncWithCart() {
-      const cart = await fetch("/cart.js").then(r => r.json());
-
-      let qty = 0;
-      this.line = null;
-
-      cart.items.forEach((item, index) => {
-        if (item.variant_id === this.variantId) {
-          qty = item.quantity;
-          this.line = index + 1; // Shopify line index is 1-based
-        }
-      });
-
-      this.updateUI(qty);
-    }
-
-    updateUI(qty) {
-      this.input.value = qty;
-      this.minusBtn.disabled = qty <= 0;
-      this.plusBtn.disabled = qty >= this.max;
-    }
-
-    async updateQuantity(change) {
-      const current = Number(this.input.value);
-      const newQty = current + change;
-
-      if (newQty < 0 || newQty > this.max) return;
-
-      // FIRST ADD → /cart/add.js
-      if (current === 0 && newQty === 1) {
-        await fetch("/cart/add.js", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: this.variantId,
-            quantity: 1
-          })
-        });
-
-      } else {
-        // SUBSEQUENT CHANGES → MUST USE line number
-        await fetch("/cart/change.js", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            line: this.line,
-            quantity: newQty
-          })
-        });
-      }
-
-      await this.syncWithCart();
-
-      document.dispatchEvent(new CustomEvent("cart-updated"));
-    }
-
+class QuantityInput extends HTMLElement {
+  constructor() {
+    super();
+    this.variantId = this.dataset.variantId;
+    this.input = this.querySelector('input');
+    this.plus = this.querySelector('[data-plus]');
+    this.minus = this.querySelector('[data-minus]');
   }
 
-  customElements.define("quantity-input", QuantityInput);
+  connectedCallback() {
+    if (!this.input) return;
+
+    this.plus?.addEventListener("click", () => this.change(1));
+    this.minus?.addEventListener("click", () => this.change(-1));
+  }
+
+  async change(offset) {
+    const newValue = Math.max(0, (parseInt(this.input.value) || 0) + offset);
+    this.input.value = newValue;
+
+    if (newValue === 0) {
+      this.updateCartLine(0);
+    } else {
+      this.addToCart(newValue);
+    }
+  }
+
+  /**
+   * Add or update quantity using cart/add.js (safer)
+   */
+  async addToCart(quantity) {
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: Number(this.variantId),
+          quantity: quantity
+        })
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        this.dispatchEvent(new CartErrorEvent(error));  
+        return;
+      }
+
+      const result = await res.json();
+      this.dispatchCartAddEvent(result);
+    } catch (err) {
+      console.error("Add to cart error", err);
+    }
+  }
+
+  /**
+   * Remove/Update line using change.js
+   */
+  async updateCartLine(quantity) {
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: Number(this.variantId),
+          quantity: quantity
+        })
+      });
+
+      if (!res.ok) return;
+
+      const result = await res.json();
+      this.dispatchCartAddEvent(result);
+    } catch (err) {
+      console.error("Change error", err);
+    }
+  }
+
+  /**
+   * Horizon method for updating cart drawer + bubble
+   */
+  dispatchCartAddEvent(cartData) {
+    const event = new CartAddEvent(
+      cartData,
+      this.variantId.toString(),
+      {
+        source: 'quick-bulk-add',
+        itemCount: cartData.item_count,
+        sections: cartData.sections,
+      }
+    );
+
+    this.dispatchEvent(event);
+    document.dispatchEvent(event); // required for global listeners
+  }
 }
+
+customElements.define('quantity-input', QuantityInput);
