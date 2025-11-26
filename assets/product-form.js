@@ -69,7 +69,7 @@ export class AddToCartComponent extends Component {
     
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
     const quantityInput = this.closest('.product-card') || this.closest('.product_variant_item');
-    const quantityContainer = this.closest('.quick-add-quantity');
+    const quantityContainer = this.closest('.product-card .quick-add-quantity');
 
     console.log(quantityContainer);
 
