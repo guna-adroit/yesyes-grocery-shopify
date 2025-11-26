@@ -23,13 +23,21 @@ class QuantityInput extends HTMLElement {
     this.minus?.addEventListener("click", () => this.removeOne());
 
     // update from cart drawer changes
-    this.cartUpdateHandler = () => this.syncWithCart();
+    this.cartUpdateHandler = this.debounce(() => this.syncWithCart(), 300);
     document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
 
   disconnectedCallback() {
     document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
+
+  debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
 
   setLoading(isLoading) {
     if (isLoading) {
