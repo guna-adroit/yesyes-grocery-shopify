@@ -18,7 +18,15 @@ class QuantityInput extends HTMLElement {
 
     this.plus?.addEventListener("click", () => this.addOne());
     this.minus?.addEventListener("click", () => this.removeOne());
+
+     // Listen to Horizon cart updates (cart drawer interactions)
+    this.cartUpdateHandler = () => this.syncWithCart();
+    document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
+
+  disconnectedCallback() {
+    document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
+}
 
   /** ---------------------------------------------
    *  Load existing quantity for this product/variant
