@@ -6,7 +6,7 @@ class QuantityInput extends HTMLElement {
 
     this.variantId = Number(this.dataset.variantId);
 
-    this.container = this.querySelector('quick-add-quantity');
+    this.container = this.querySelector('.quick-add-quantity');
     this.input = this.querySelector('input');
     this.plus = this.querySelector('[data-plus]');
     this.minus = this.querySelector('[data-minus]');
