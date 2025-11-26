@@ -99,7 +99,7 @@
             </product-form-component>
             {% assign handle = product.handle %}
             {% assign product = all_products[handle] %}
-            {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
+            {% assign line_quantity = cart | line_items_for: product.variant.id | sum: 'quantity' %}
             <quantity-input class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ variant.id }}">
               <button data-minus>-</button>
               <input type="number" name="quantity" value="0" min="0" readonly>
