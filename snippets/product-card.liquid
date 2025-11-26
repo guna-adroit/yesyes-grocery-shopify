@@ -9,6 +9,8 @@
   @param {number} [product_card_gap] - The gap between the product card children (overrides block settings)
 {%- enddoc -%}
 
+{{ 'quick-bulk-add.js' | assets_url }}
+
 {% assign block_settings = block.settings %}
 
 {% style %}
@@ -223,6 +225,12 @@
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
             ></product-quantity-control>
+            <quantity-input product-id="{{ product.id }}">
+              <button data-minus class="button ">-</button>
+              <input type="number" data-qty value="0" readonly>
+              <button data-plus class="button ">+</button>
+            </quantity-input>
+
 
               {% else %}
                 <div class="sold-out-button-container">
