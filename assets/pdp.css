@@ -137,6 +137,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     opacity: 0.4;
     cursor: pointer;
 }
+.quantity-selector{
+    border: 1px solid #000000;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
