@@ -301,5 +301,12 @@
       "sold_out": "Sold out",
       "unavailable": "Unavailable"
     }
+  },
+  "shopify": {
+    "checkout": {
+      "order_summary": {
+        "subtotal_label": "sub total"
+      }
+    }
   }
 }
