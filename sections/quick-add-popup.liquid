@@ -102,9 +102,9 @@
               
               hidden
             ></product-quantity-control> {% endcomment %}
-            <quantity-input data-variant-id="{{ variant.id }}">
+            <quantity-input class="quick-add-quantity" data-variant-id="{{ variant.id }}">
               <button data-minus>-</button>
-              <input type="number" value="0" min="0">
+              <input type="number" name="quantity" value="0" min="0">
               <button data-plus>+</button>
             </quantity-input>
               {% else %}
