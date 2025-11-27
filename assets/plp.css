@@ -589,13 +589,13 @@ p.category-item_title{
 .recently-viewed-wrapper, .predictive-search-results__title, {
     display: none;
 }
-quantity-input.is-loading {
+quantity-input-bulk.is-loading {
   position: relative;
   pointer-events: none;
   opacity: 0.6;
 }
 
-quantity-input.is-loading::after {
+quantity-input-bulk.is-loading::after {
   content: "";
   position: absolute;
   left: 50%;
