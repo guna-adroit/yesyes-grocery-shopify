@@ -8,6 +8,7 @@ class QuantityInputBulk extends HTMLElement {
     this.container = this.querySelector('.quick-add-quantity');
     this.input = this.querySelector('input');
     this.lineKey = null; // cached cart line item key
+    this._isLoading = false; // prevent multiple API calls
   }
 
   connectedCallback() {
@@ -76,6 +77,9 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   async addOne() {
+    if (this._isLoading) return; // Prevent multiple API calls
+    this._isLoading = true;
+
     this.setLoading(true);
     this.instantUpdate(1);
 
@@ -89,7 +93,6 @@ class QuantityInputBulk extends HTMLElement {
       if (!res.ok) {
         const error = await res.json();
         this.dispatchEvent(new CartErrorEvent(error));
-        this.setLoading(false);
         return;
       }
 
@@ -103,11 +106,14 @@ class QuantityInputBulk extends HTMLElement {
     }
 
     this.setLoading(false);
+    this._isLoading = false;
   }
 
   async removeOne() {
     let qty = parseInt(this.input.value) || 0;
     if (qty < 1) return;
+    if (this._isLoading) return; // Prevent multiple API calls
+    this._isLoading = true;
 
     this.setLoading(true);
     this.instantUpdate(-1);
@@ -121,7 +127,6 @@ class QuantityInputBulk extends HTMLElement {
 
       if (!res.ok) {
         console.error(await res.text());
-        this.setLoading(false);
         return;
       }
 
@@ -132,6 +137,7 @@ class QuantityInputBulk extends HTMLElement {
     }
 
     this.setLoading(false);
+    this._isLoading = false;
   }
 
   dispatchCartAdd(cartData) {
