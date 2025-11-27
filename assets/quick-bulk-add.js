@@ -5,44 +5,24 @@ class QuantityInputBulk extends HTMLElement {
     super();
 
     this.variantId = Number(this.dataset.variantId);
-
     this.container = this.querySelector('.quick-add-quantity');
     this.input = this.querySelector('input');
-    this.plus = this.querySelector('[data-plus]');
-    this.minus = this.querySelector('[data-minus]');
-    this.lineKey = null; // cache line-item key
-
-    // flags to prevent duplicate listeners
-    this._listenersAttached = false;
-    this._cartUpdateAttached = false;
+    this.lineKey = null; // cached cart line item key
   }
 
   connectedCallback() {
     if (!this.input) return;
-    console.log(this.minus);
-    // attach plus/minus only once per element instance
-    if (!this._listenersAttached) {
-      this.plus?.addEventListener("click", () => this.addOne());
-      this.minus?.addEventListener("click", () => this.removeOne());
-      this._listenersAttached = true;
-    }
 
-    // initial sync
+    // Initial cart sync
     this.syncWithCart();
 
-    // attach cart update listener per instance
-    if (!this._cartUpdateAttached) {
-      this.cartUpdateHandler = this.debounce(() => this.syncWithCart(), 300);
-      document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
-      this._cartUpdateAttached = true;
-    }
+    // Debounced cart update listener per instance
+    this.cartUpdateHandler = this.debounce(() => this.syncWithCart(), 300);
+    document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
 
   disconnectedCallback() {
-    if (this._cartUpdateAttached) {
-      document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
-      this._cartUpdateAttached = false;
-    }
+    document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
 
   debounce(fn, delay) {
@@ -56,14 +36,15 @@ class QuantityInputBulk extends HTMLElement {
   setLoading(isLoading) {
     if (isLoading) {
       this.classList.add("is-loading");
-      this.plus.setAttribute("disabled", "disabled");
-      this.minus.setAttribute("disabled", "disabled");
+      this.input.closest('.quick-add-quantity')?.querySelectorAll('button')?.forEach(b => b.setAttribute('disabled', 'disabled'));
     } else {
       this.classList.remove("is-loading");
-      this.plus.removeAttribute("disabled");
-      this.input.value === "0"
-        ? this.minus.setAttribute("disabled", "disabled")
-        : this.minus.removeAttribute("disabled");
+      const qty = parseInt(this.input.value);
+      const minus = this.querySelector('[data-minus]');
+      const plus = this.querySelector('[data-plus]');
+      plus?.removeAttribute('disabled');
+      if (qty === 0) minus?.setAttribute('disabled', 'disabled');
+      else minus?.removeAttribute('disabled');
     }
   }
 
@@ -72,17 +53,16 @@ class QuantityInputBulk extends HTMLElement {
     const cart = await res.json();
 
     const item = cart.items.find(i => i.variant_id === this.variantId);
-
     if (item) {
       this.lineKey = item.key;
       this.input.value = item.quantity;
       this.classList.add('visible');
-      this.minus.disabled = item.quantity === 0;
+      this.querySelector('[data-minus]').disabled = item.quantity === 0;
     } else {
       this.lineKey = null;
       this.input.value = 0;
       this.classList.remove('visible');
-      this.minus.disabled = true;
+      this.querySelector('[data-minus]').disabled = true;
     }
   }
 
@@ -90,7 +70,8 @@ class QuantityInputBulk extends HTMLElement {
     let qty = parseInt(this.input.value) || 0;
     qty += delta;
     this.input.value = qty;
-    this.minus.disabled = qty === 0;
+    const minus = this.querySelector('[data-minus]');
+    minus.disabled = qty === 0;
     if (qty > 0) this.classList.add('visible');
   }
 
@@ -166,3 +147,14 @@ class QuantityInputBulk extends HTMLElement {
 }
 
 customElements.define('quantity-input-bulk', QuantityInputBulk);
+
+// ------------------------
+// Event Delegation for plus/minus buttons
+// ------------------------
+document.addEventListener('click', (e) => {
+  const inputBulk = e.target.closest('quantity-input-bulk');
+  if (!inputBulk) return;
+
+  if (e.target.matches('[data-plus]')) inputBulk.addOne();
+  if (e.target.matches('[data-minus]')) inputBulk.removeOne();
+});
