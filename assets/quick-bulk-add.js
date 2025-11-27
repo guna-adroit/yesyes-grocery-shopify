@@ -175,4 +175,4 @@ class QuantityInputBulk extends HTMLElement {
   }
 }
 
-customElements.define('quantity-input-bulk', QuantityInput);
+customElements.define('quantity-input-bulk', QuantityInputBulk);
