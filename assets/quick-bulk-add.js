@@ -94,16 +94,28 @@ class QuantityInput extends HTMLElement {
   })
     .then(res => {
       if (!res.ok) return res.json().then(err => { throw err; });
-      return res.json();   // <-- IMPORTANT FIX
+      return res.json();
     })
     .then(cartData => {
-      if (!cartData || !cartData.items) {
-        console.error("AddOne: Invalid cartData", cartData);
-        return;
+      console.log("AddOne received:", cartData);
+
+      // --- CASE 1: Full Shopify cart JSON ---
+      if (cartData && Array.isArray(cartData.items)) {
+        const item = cartData.items.find(i => i.variant_id === this.variantId);
+        if (item) this.lineKey = item.key;
       }
 
-      const item = cartData.items.find(i => i.variant_id === this.variantId);
-      if (item) this.lineKey = item.key;
+      // --- CASE 2: Only sections returned (Horizon typical behavior) ---
+      if (!cartData.items && cartData.sections) {
+        return fetch('/cart.js')
+          .then(r => r.json())
+          .then(cart => {
+            const item = cart.items.find(i => i.variant_id === this.variantId);
+            if (item) this.lineKey = item.key;
+
+            this.dispatchCartAdd(cart);
+          });
+      }
 
       this.dispatchCartAdd(cartData);
     })
