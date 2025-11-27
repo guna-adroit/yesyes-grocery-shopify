@@ -226,16 +226,17 @@
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
             ></product-quantity-control> {% endcomment %}
-          {% assign handle = product.handle %}
-          {% assign product = all_products[handle] %}
-          {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
+           <quantity-input-bulk-component id="{{block.id }}">
+            {% assign handle = product.handle %}
+            {% assign product = all_products[handle] %}
+            {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
 
-            <quantity-input-bulk class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
-              <button data-minus>-</button>
-              <input type="number" name="quantity" value="{{ line_quantity }}" min="0" readonly>
-              <button data-plus>+</button>
-            </quantity-input-bulk>
-
+              <quantity-input-bulk class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
+                <button data-minus>-</button>
+                <input type="number" name="quantity" value="{{ line_quantity }}" min="0" readonly>
+                <button data-plus>+</button>
+              </quantity-input-bulk>
+            </quantity-input-bulk-component>
 
               {% else %}
                 <div class="sold-out-button-container">
