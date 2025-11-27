@@ -84,31 +84,35 @@ class QuantityInput extends HTMLElement {
 
   /** ADD exactly 1 */
   addOne() {
-    this.setLoading(true);
-    this.instantUpdate(1);
+  this.setLoading(true);
+  this.instantUpdate(1);
 
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: this.variantId, quantity: 1 })
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: this.variantId, quantity: 1 })
+  })
+    .then(res => {
+      if (!res.ok) return res.json().then(err => { throw err; });
+      return res.json();   // <-- IMPORTANT FIX
     })
-      .then(res => {
-        if (!res.ok) return res.json().then(err => { throw err; });
-        return res.json();
-      })
-      .then(cartData => {
-        // Update line key (from response)
-        const item = cartData.items.find(i => i.variant_id === this.variantId);
-        if (item) this.lineKey = item.key;
+    .then(cartData => {
+      if (!cartData || !cartData.items) {
+        console.error("AddOne: Invalid cartData", cartData);
+        return;
+      }
 
-        this.dispatchCartAdd(cartData);
-      })
-      .catch(err => {
-        console.error("Add error:", err);
-        this.dispatchEvent(new CartErrorEvent(err));
-      })
-      .finally(() => this.setLoading(false));
-  }
+      const item = cartData.items.find(i => i.variant_id === this.variantId);
+      if (item) this.lineKey = item.key;
+
+      this.dispatchCartAdd(cartData);
+    })
+    .catch(err => {
+      console.error("Add error:", err);
+      this.dispatchEvent(new CartErrorEvent(err));
+    })
+    .finally(() => this.setLoading(false));
+}
 
   /** REMOVE exactly 1 */
   removeOne() {
