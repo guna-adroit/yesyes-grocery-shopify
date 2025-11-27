@@ -12,35 +12,24 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   connectedCallback() {
-  if (!this.input) return;
+    if (!this.input) return;
 
-  // Initial sync only once per component
-  this.syncWithCart();
+    // Initial UI sync
+    this.syncWithCart();
 
-  this.plus.addEventListener("click", () => this.addOne());
-  this.minus.addEventListener("click", () => this.removeOne());
+    // Attach only **local** click events
+    this.plus.addEventListener("click", () => this.addOne());
+    this.minus.addEventListener("click", () => this.removeOne());
 
-  // Filter the global cartUpdate event
-  this.cartUpdateHandler = (e) => {
-    const fromElement = e.target?.closest('quantity-input-bulk');
-    const eventVariantId = e.detail?.variantId;
-
-    // CASE 1: event dispatched from THIS component →
-    // update only this one
-    if (fromElement === this) {
-      this.syncWithCart();
-      return;
-    }
-
-    // CASE 2: update only if same variant updated by drawer/other pages
-    // if (eventVariantId && eventVariantId === this.variantId) {
-    //   this.syncWithCart();
-    // }
-    // ❌ otherwise DO NOTHING (skip!)
-  };
-
-  document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
-}
+    // Listen to cart updates, but filter by variantId
+    this.cartUpdateHandler = (e) => {
+      const eventVariantId = e.detail?.variantId;
+      if (!eventVariantId || eventVariantId === this.variantId) {
+        this.syncWithCart();
+      }
+    };
+    document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
+  }
 
   disconnectedCallback() {
     document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
@@ -79,6 +68,7 @@ class QuantityInputBulk extends HTMLElement {
     this.input.value = qty;
     this.minus.disabled = qty === 0;
     if (qty > 0) this.classList.add('visible');
+    console.log("cart.js executed with syncWithCart()")
   }
 
   async addOne() {
@@ -136,18 +126,14 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   dispatchCartAdd(cartData) {
-  const evt = new CartAddEvent(
-    cartData,
-    this.variantId.toString(),
-    {
-      variantId: this.variantId,
-      source: 'quantity-input-bulk'
-    }
-  );
-
-  this.dispatchEvent(evt);
-  document.dispatchEvent(evt);
-}
+    const evt = new CartAddEvent(cartData, this.variantId.toString(), {
+      source: 'quantity-input',
+      itemCount: cartData.item_count,
+      sections: cartData.sections
+    });
+    this.dispatchEvent(evt);
+    // document.dispatchEvent(evt);
+  }
 }
 
 customElements.define('quantity-input-bulk', QuantityInputBulk);
