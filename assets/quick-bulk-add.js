@@ -10,7 +10,7 @@ class QuantityInputBulk extends HTMLElement {
     this.input = this.querySelector('input');
     this.plus = this.querySelector('[data-plus]');
     this.minus = this.querySelector('[data-minus]');
-    console.log(this.minus)
+    console.log(this.minus);
     this.lineKey = null;  // cache line-item key
   }
 
