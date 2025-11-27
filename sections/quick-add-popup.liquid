@@ -97,11 +97,16 @@
                 
               {% endform %}
             </product-form-component>
-            <product-quantity-control
-              class="quantity-control-button"
-              
-              hidden
-            ></product-quantity-control>
+            <quantity-input-bulk-component id="{{section.id }}">
+            {% assign handle = product.handle %}
+            {% assign product = all_products[handle] %}
+            {% assign line_quantity = cart | line_items_for: product.variant.id | sum: 'quantity' %}
+            <quantity-input-bulk class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ variant.id }}">
+              <button data-minus>-</button>
+              <input type="number" name="quantity" value="0" min="0" readonly>
+              <button data-plus>+</button>
+            </quantity-input-bulk>
+          </quantity-input-bulk-component>
               {% else %}
                 <button ref="addToCartButton"
                   class="button button-primary quick-add-button" 
@@ -170,6 +175,9 @@
           </span>
         </div>
       </cart-icon>
+      <div class="confirm-button-container">
+        <button class="button button--primary confirm-button">Confirm</button>
+      </div>
       
       {% if product %}
          {% comment %} {% content_for 'block', type: 'buy-buttons', id: 'buyButton' %} {% endcomment %}
@@ -247,16 +255,16 @@ td.product_variant-image {
 .popup-content {
   position: relative;
   background: #fff;
-  max-width: 700px;
+  max-width: 788px;
   width: 90%;
-  padding: 24px;
+  padding: 60px;
   border-radius: 12px;
   z-index: 2;
   min-height: 400px;
   max-height: 500px;
 }
-.quick-add-popup__content{
-  max-height: 420px;
+.variants-container-table{
+  max-height: 260px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -277,6 +285,10 @@ td.product_variant-image {
     color: #E90000;
     z-index: 999999;
     background-color: #D9D9D9;
+}
+.popup-close svg{
+  width: 14px;
+  height: 14px;
 }
 .quick-add_product-variant-details {
     display: flex;
@@ -330,6 +342,17 @@ td.product_variant-image {
 }
 .quick-add-popup .variant-option__button-label:has(:checked){
   background: black;
+}
+.confirm-button-container{
+  display: flex;
+  justify-content: center;
+}
+.confirm-button{
+  width: 245px;
+  height: 65px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25.2px;
 }
 .product_variant_item{
             /*display: flex;*/
@@ -386,12 +409,26 @@ td.product_variant-image {
             flex-direction: column;
             gap: 15px;
         }
-        @media screen and (max-width: 600px){
-          .popup-close{
-            top: 6px;
-            right: 6px;
-            width: 24px;
-            height: 24px;
+        @media screen and (max-width: 1024px){
+          .popup-content{
+            padding-right: 40px;
+          }
+          .quick-add-popup__content{
+            padding-right: 20px;
+          }
         }
+        @media screen and (max-width: 600px){
+          .popup-content{
+            padding: 20px;
+            padding-top: 40px;
+            padding-right: 0px;
+          }
+          .popup-close{
+              top: 6px;
+              right: 6px;
+              width: 24px;
+              height: 24px;
+          }
+          
         }
 </style>

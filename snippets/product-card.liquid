@@ -9,6 +9,8 @@
   @param {number} [product_card_gap] - The gap between the product card children (overrides block settings)
 {%- enddoc -%}
 
+
+
 {% assign block_settings = block.settings %}
 
 {% style %}
@@ -162,6 +164,7 @@
           </span>
           </button>
         </div>
+        
       {% else %}
         <div class="sold-out-button-container">
           <button ref="addToCartButton"
@@ -217,12 +220,23 @@
                 </add-to-cart-component>
               {% endform %}
             </product-form-component>
-            <product-quantity-control
+            {% comment %} <product-quantity-control
               class="quantity-control-button"
               data-product-id="{{ product.id }}"
               data-variant-id="{{ product.first_available_variant.id }}"
               hidden
-            ></product-quantity-control>
+            ></product-quantity-control> {% endcomment %}
+           <quantity-input-bulk-component id="{{block.id }}">
+            {% assign handle = product.handle %}
+            {% assign product = all_products[handle] %}
+            {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
+
+              <quantity-input-bulk id="{{block.id }}" class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
+                <button data-minus>-</button>
+                <input type="number" name="quantity" value="{{ line_quantity }}" min="0" readonly>
+                <button data-plus>+</button>
+              </quantity-input-bulk>
+            </quantity-input-bulk-component>
 
               {% else %}
                 <div class="sold-out-button-container">
@@ -272,7 +286,54 @@
     }
   </style>
 
-
+<style>
+.product-card__content:has(quantity-input-bulk.visible) add-to-cart-component,
+.product_variant_item:has(quantity-input-bulk.visible)  add-to-cart-component,
+.product-card__content:has(quantity-input-popup.visible) add-to-cart-component,
+.product_variant_item:has(quantity-input-popup.visible)  add-to-cart-component{
+  display: none !important;
+}
+quantity-input-bulk,
+quantity-input-popup {
+    display: none;
+    flex-direction: row;
+    background-color: #ed1d23;
+    height: 55px;
+    border-radius: 8px;
+}
+quantity-input-bulk.visible, quantity-input-popup.visible{
+  display: flex;
+}
+quantity-input-bulk input, quantity-input-popup input{
+  width: 100%;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+quantity-input-bulk input:focus-visible, quantity-input-popup input:focus-visible{
+  outline: none;
+}
+quantity-input-bulk > button, quantity-input-popup > button {
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+quantity-input-bulk > *, quantity-input-popup > *{
+  flex: 1;
+}
+@media screen and (max-width: 820px) {
+  quantity-input-bulk, quantity-input-popup {
+    height: 45px;
+  }
+}
+@media screen and (max-width: 600px) {
+  quantity-input-bulk,  quantity-input-popup{
+    height: 35px;
+  }
+}
+</style>
 {% stylesheet %}
   product-card-link,
   :not(product-card-link) product-card {
