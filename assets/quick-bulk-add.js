@@ -17,17 +17,14 @@ class QuantityInput extends HTMLElement {
   connectedCallback() {
     if (!this.input) return;
 
-    // One real sync on page load
+    // Initial sync
     this.syncWithCart();
 
     this.plus?.addEventListener("click", () => this.addOne());
     this.minus?.addEventListener("click", () => this.removeOne());
 
-    // Debounced sync for external cart actions
-    this.cartUpdateHandler = this.debounce(async (e) => {
-      await this.syncWithCart();
-    }, 250);
-
+    // Debounced refresh on cart update
+    this.cartUpdateHandler = this.debounce(() => this.syncWithCart(), 250);
     document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
   }
 
@@ -43,105 +40,105 @@ class QuantityInput extends HTMLElement {
     };
   }
 
-  /** Load data from actual cart ONCE or on Horizon events */
-  async syncWithCart() {
-    const res = await fetch('/cart.js');
-    const cart = await res.json();
+  /** Sync with cart.js (1 fetch only) */
+  syncWithCart() {
+    fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        const item = cart.items.find(i => i.variant_id === this.variantId);
+        const qty = item ? item.quantity : 0;
 
-    const item = cart.items.find(i => i.variant_id === this.variantId);
+        if (item) {
+          this.lineKey = item.key;
+          this.input.value = qty;
+          this.classList.add('visible');
+        } else {
+          this.lineKey = null;
+          this.input.value = 0;
+          this.classList.remove('visible');
+        }
 
-    if (item) {
-      this.lineKey = item.key;
-      this.input.value = item.quantity;
-      this.classList.add('visible');
-      this.minus.disabled = item.quantity === 0;
-    } else {
-      this.lineKey = null;
-      this.input.value = 0;
-      this.classList.remove('visible');
-      this.minus.disabled = true;
-    }
+        this.updateMinusButton();
+      })
+      .catch(err => console.error("Sync error:", err));
   }
 
-  /** Instant UI update */
+  /** Local fast UI update */
   instantUpdate(delta) {
     let qty = parseInt(this.input.value) || 0;
-    qty += delta;
+    qty = qty + delta;
+
+    if (qty < 0) qty = 0;
 
     this.input.value = qty;
-    this.minus.disabled = qty === 0;
 
     if (qty > 0) this.classList.add('visible');
     else this.classList.remove('visible');
+
+    this.updateMinusButton();
+  }
+
+  updateMinusButton() {
+    this.minus.disabled = parseInt(this.input.value) === 0;
   }
 
   /** ADD exactly 1 */
-  async addOne() {
+  addOne() {
     this.setLoading(true);
-    this.instantUpdate(1); // instant visual feedback
+    this.instantUpdate(1);
 
-    try {
-      const res = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: this.variantId, quantity: 1 })
-      });
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: this.variantId, quantity: 1 })
+    })
+      .then(res => {
+        if (!res.ok) return res.json().then(err => { throw err; });
+        return res.json();
+      })
+      .then(cartData => {
+        // Update line key (from response)
+        const item = cartData.items.find(i => i.variant_id === this.variantId);
+        if (item) this.lineKey = item.key;
 
-      if (!res.ok) {
-        const error = await res.json();
-        this.dispatchEvent(new CartErrorEvent(error));
-        return this.setLoading(false);
-      }
-
-      const cartData = await res.json();
-
-      // Update line key (NO need to call /cart.js)
-      const item = cartData.items.find(i => i.variant_id === this.variantId);
-      if (item) this.lineKey = item.key;
-
-      this.dispatchCartAdd(cartData);
-
-    } catch (err) {
-      console.error("Add error:", err);
-    }
-
-    this.setLoading(false);
+        this.dispatchCartAdd(cartData);
+      })
+      .catch(err => {
+        console.error("Add error:", err);
+        this.dispatchEvent(new CartErrorEvent(err));
+      })
+      .finally(() => this.setLoading(false));
   }
 
   /** REMOVE exactly 1 */
-  async removeOne() {
-    let qty = parseInt(this.input.value);
-    if (qty <= 0) return;
+  removeOne() {
+    const currentQty = parseInt(this.input.value);
+
+    if (currentQty <= 0) return;
 
     this.setLoading(true);
     this.instantUpdate(-1);
 
-    try {
-      const res = await fetch('/cart/change.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: this.lineKey,
-          quantity: qty - 1
-        })
-      });
-
-      if (!res.ok) {
-        console.error(await res.text());
-        return this.setLoading(false);
-      }
-
-      const cartData = await res.json();
-      this.dispatchCartAdd(cartData);
-
-    } catch (err) {
-      console.error("Remove error:", err);
-    }
-
-    this.setLoading(false);
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.lineKey,
+        quantity: currentQty - 1
+      })
+    })
+      .then(res => {
+        if (!res.ok) return res.json().then(err => { throw err; });
+        return res.json();
+      })
+      .then(cartData => {
+        this.dispatchCartAdd(cartData);
+      })
+      .catch(err => console.error("Remove error:", err))
+      .finally(() => this.setLoading(false));
   }
 
-  /** Dispatch Horizon event */
+  /** Dispatch Horizon CartAdd event (cart drawer updates) */
   dispatchCartAdd(cartData) {
     const evt = new CartAddEvent(
       cartData,
@@ -164,7 +161,7 @@ class QuantityInput extends HTMLElement {
     } else {
       this.classList.remove("is-loading");
       this.plus.disabled = false;
-      this.minus.disabled = parseInt(this.input.value) === 0;
+      this.updateMinusButton();
     }
   }
 }
