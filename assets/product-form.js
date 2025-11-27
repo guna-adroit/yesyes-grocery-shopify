@@ -74,10 +74,12 @@ export class AddToCartComponent extends Component {
 
     if (quantityInput){
       const quantityContainer = quantityInput.querySelector('.quick-add-quantity');
+      const quickAddInput = quantityInput.querySelector('.quick-add-quantity input');
       const quantityControl = quantityInput.querySelector('quantity-input');
       const addToCartButton = quantityInput.querySelector('.card-atc-button') || this.closest('.product_variant_item')?.querySelector('product-form-component .quick-add-button') || this.closest('product-form-component .quick-add-button');;
       
       if (addToCartButton) {
+        quickAddInput.value = 1;
         quantityContainer.classList.add('visible');
       }
 
