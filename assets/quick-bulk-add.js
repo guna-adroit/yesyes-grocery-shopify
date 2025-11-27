@@ -16,7 +16,7 @@ class QuantityInputBulk extends HTMLElement {
 
     // Initial sync
     this.syncWithCart();
-
+    
     // Debounced cart update listener per instance
     this.cartUpdateHandler = this.debounce((eventVariantId) => this.syncWithCart(eventVariantId), 300);
     document.addEventListener(ThemeEvents.cartUpdate, (e) => {
