@@ -100,11 +100,11 @@
             {% assign handle = product.handle %}
             {% assign product = all_products[handle] %}
             {% assign line_quantity = cart | line_items_for: product.variant.id | sum: 'quantity' %}
-            <quantity-input class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ variant.id }}">
+            <quantity-input-bulk class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ variant.id }}">
               <button data-minus>-</button>
               <input type="number" name="quantity" value="0" min="0" readonly>
               <button data-plus>+</button>
-            </quantity-input>
+            </quantity-input-bulk>
               {% else %}
                 <button ref="addToCartButton"
                   class="button button-primary quick-add-button" 
