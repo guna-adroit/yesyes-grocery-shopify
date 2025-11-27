@@ -40,16 +40,24 @@ class QuantityInput extends HTMLElement {
 }
 
   setLoading(isLoading) {
-    if (isLoading) {
-      this.classList.add("is-loading");
-      this.plus.disabled = true;
-      this.minus.disabled = true;
+  if (isLoading) {
+    this.classList.add("is-loading");
+
+    this.plus.setAttribute("disabled", "disabled");
+    this.minus.setAttribute("disabled", "disabled");
+
+  } else {
+    this.classList.remove("is-loading");
+
+    this.plus.removeAttribute("disabled");
+
+    if (parseInt(this.input.value) === 0) {
+      this.minus.setAttribute("disabled", "disabled");
     } else {
-      this.classList.remove("is-loading");
-      this.plus.disabled = false;
-      this.minus.disabled = parseInt(this.input.value) === 0;
+      this.minus.removeAttribute("disabled");
     }
   }
+}
 
   /** FAST SYNC — only 1 fetch */
   async syncWithCart() {
