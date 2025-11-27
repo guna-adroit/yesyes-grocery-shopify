@@ -19,7 +19,7 @@ class QuantityInputBulk extends HTMLElement {
 
   connectedCallback() {
     if (!this.input) return;
-
+    console.log(this.minus);
     // attach plus/minus only once per element instance
     if (!this._listenersAttached) {
       this.plus?.addEventListener("click", () => this.addOne());
