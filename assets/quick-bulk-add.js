@@ -12,24 +12,35 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   connectedCallback() {
-    if (!this.input) return;
+  if (!this.input) return;
 
-    // Initial UI sync
-    this.syncWithCart();
+  // Initial sync only once per component
+  this.syncWithCart();
 
-    // Attach only **local** click events
-    this.plus.addEventListener("click", () => this.addOne());
-    this.minus.addEventListener("click", () => this.removeOne());
+  this.plus.addEventListener("click", () => this.addOne());
+  this.minus.addEventListener("click", () => this.removeOne());
 
-    // Listen to cart updates, but filter by variantId
-    this.cartUpdateHandler = (e) => {
-      const eventVariantId = e.detail?.variantId;
-      if (!eventVariantId || eventVariantId === this.variantId) {
-        this.syncWithCart();
-      }
-    };
-    document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
-  }
+  // Filter the global cartUpdate event
+  this.cartUpdateHandler = (e) => {
+    const fromElement = e.target?.closest('quantity-input-bulk');
+    const eventVariantId = e.detail?.variantId;
+
+    // CASE 1: event dispatched from THIS component →
+    // update only this one
+    if (fromElement === this) {
+      this.syncWithCart();
+      return;
+    }
+
+    // CASE 2: update only if same variant updated by drawer/other pages
+    // if (eventVariantId && eventVariantId === this.variantId) {
+    //   this.syncWithCart();
+    // }
+    // ❌ otherwise DO NOTHING (skip!)
+  };
+
+  document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
+}
 
   disconnectedCallback() {
     document.removeEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
