@@ -97,7 +97,7 @@
                 
               {% endform %}
             </product-form-component>
-            <quantity-input-bulk-component id="{{block.id }}">
+            <quantity-input-bulk-component id="{{section.id }}">
             {% assign handle = product.handle %}
             {% assign product = all_products[handle] %}
             {% assign line_quantity = cart | line_items_for: product.variant.id | sum: 'quantity' %}
