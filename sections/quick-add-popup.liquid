@@ -97,6 +97,7 @@
                 
               {% endform %}
             </product-form-component>
+            <quantity-input-bulk-component id="{{block.id }}">
             {% assign handle = product.handle %}
             {% assign product = all_products[handle] %}
             {% assign line_quantity = cart | line_items_for: product.variant.id | sum: 'quantity' %}
@@ -105,6 +106,7 @@
               <input type="number" name="quantity" value="0" min="0" readonly>
               <button data-plus>+</button>
             </quantity-input-bulk>
+          </quantity-input-bulk-component>
               {% else %}
                 <button ref="addToCartButton"
                   class="button button-primary quick-add-button" 
