@@ -46,6 +46,7 @@ class QuantityInputBulk extends HTMLElement {
   async syncWithCart() {
     const res = await fetch('/cart.js');
     const cart = await res.json();
+    console.log("cart.js executed with syncWithCart()");
 
     const item = cart.items.find(i => i.variant_id === this.variantId);
     if (item) {
