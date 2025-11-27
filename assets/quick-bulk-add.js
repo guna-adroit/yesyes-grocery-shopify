@@ -14,12 +14,14 @@ class QuantityInputBulk extends HTMLElement {
   connectedCallback() {
     if (!this.input) return;
 
-    // Initial cart sync
+    // Initial sync
     this.syncWithCart();
 
     // Debounced cart update listener per instance
-    this.cartUpdateHandler = this.debounce(() => this.syncWithCart(), 300);
-    document.addEventListener(ThemeEvents.cartUpdate, this.cartUpdateHandler);
+    this.cartUpdateHandler = this.debounce((eventVariantId) => this.syncWithCart(eventVariantId), 300);
+    document.addEventListener(ThemeEvents.cartUpdate, (e) => {
+      this.cartUpdateHandler(e.detail?.variantId);
+    });
   }
 
   disconnectedCallback() {
@@ -49,11 +51,14 @@ class QuantityInputBulk extends HTMLElement {
     }
   }
 
-  async syncWithCart() {
+  async syncWithCart(eventVariantId) {
+    // Only sync if the event is for this variant, or if no event (initial load)
+    if (eventVariantId && eventVariantId !== this.variantId) return;
+
     const res = await fetch('/cart.js');
     const cart = await res.json();
-
     const item = cart.items.find(i => i.variant_id === this.variantId);
+
     if (item) {
       this.lineKey = item.key;
       this.input.value = item.quantity;
@@ -77,7 +82,7 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   async addOne() {
-    if (this._isLoading) return; // Prevent multiple API calls
+    if (this._isLoading) return;
     this._isLoading = true;
 
     this.setLoading(true);
@@ -112,7 +117,7 @@ class QuantityInputBulk extends HTMLElement {
   async removeOne() {
     let qty = parseInt(this.input.value) || 0;
     if (qty < 1) return;
-    if (this._isLoading) return; // Prevent multiple API calls
+    if (this._isLoading) return;
     this._isLoading = true;
 
     this.setLoading(true);
