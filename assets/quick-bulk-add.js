@@ -18,7 +18,7 @@ class QuantityInputBulk extends HTMLElement {
     if (!this.input) return;
 
     this.syncWithCart(); // initial load
-
+    console.log(this.plus);
     this.plus?.addEventListener("click", () => this.addOne());
     this.minus?.addEventListener("click", () => this.removeOne());
 
