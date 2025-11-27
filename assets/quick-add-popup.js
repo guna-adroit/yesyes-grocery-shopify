@@ -53,7 +53,7 @@ function initQuickAddPopup() {
   popup.addEventListener('click', (e) => {
   if (
     e.target.classList.contains('popup-overlay') ||
-    e.target.closest('.popup-close')
+    e.target.closest('.popup-close') || e.target.closest('.confirm-button')
   ) {
     popup.classList.add('hidden');
     popupContent.innerHTML = '';
