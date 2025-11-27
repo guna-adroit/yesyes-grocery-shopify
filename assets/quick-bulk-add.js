@@ -129,7 +129,7 @@ class QuantityInputBulk extends HTMLElement {
       itemCount: cartData.item_count,
       sections: cartData.sections
     });
-    this.dispatchEvent(evt);
+    // this.dispatchEvent(evt);
     // document.dispatchEvent(evt);
   }
 }
