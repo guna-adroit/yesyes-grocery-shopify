@@ -136,14 +136,18 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   dispatchCartAdd(cartData) {
-    const evt = new CartAddEvent(cartData, this.variantId.toString(), {
-      source: 'quantity-input',
-      itemCount: cartData.item_count,
-      sections: cartData.sections
-    });
-    this.dispatchEvent(evt);
-    document.dispatchEvent(evt);
-  }
+  const evt = new CartAddEvent(
+    cartData,
+    this.variantId.toString(),
+    {
+      variantId: this.variantId,
+      source: 'quantity-input-bulk'
+    }
+  );
+
+  this.dispatchEvent(evt);
+  document.dispatchEvent(evt);
+}
 }
 
 customElements.define('quantity-input-bulk', QuantityInputBulk);
