@@ -1,6 +1,6 @@
 import { ThemeEvents, CartAddEvent, CartErrorEvent } from '@theme/events';
 
-class QuantityInput extends HTMLElement {
+class QuantityInputBulk extends HTMLElement {
   constructor() {
     super();
 
@@ -175,4 +175,4 @@ class QuantityInput extends HTMLElement {
   }
 }
 
-customElements.define('quantity-input', QuantityInput);
+customElements.define('quantity-input-bulk', QuantityInput);
