@@ -230,6 +230,9 @@
             {% assign handle = product.handle %}
             {% assign product = all_products[handle] %}
             {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
+            {% if line_quantity == 0 %}
+              {% assign line_quantity = 1 %}
+            {% endif %}
 
               <quantity-input-bulk id="{{block.id }}" class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
                 <button data-minus>-</button>
