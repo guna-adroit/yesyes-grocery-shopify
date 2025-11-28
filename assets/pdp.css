@@ -266,9 +266,13 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
             width: 100%;
             display: block;
         }
+        
         .yy-page-banner-arrow-circle{
-            width: calc(30px + 4vw);
-            height: calc(30px + 4vw);
+             --circle-size: clamp(30px, 4vw, 70px);
+            width: var(--circle-size);
+            height: var(--circle-size);
+            /* width: calc(30px + 4vw);
+            height: calc(30px + 4vw); */
             background: #F8E300;
             display: flex;
             align-items: center;
@@ -277,8 +281,11 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         }
         .yy-page-banner-arrow-circle svg{
             rotate: 90deg;
+            --svg-size: clamp(26px, 2vw, 60px);
+            width: var(--svg-size);
+            height: var(--svg-size);
         }
-        @media screen and (min-width: 2000px){
+        /* @media screen and (min-width: 2000px){
             .yy-page-banner-arrow-circle svg{
                 width: calc(26px + 2vw);
                 height: calc(26px + 2vw);
@@ -327,7 +334,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
                 width: calc(4px + 2vw);
                 height: calc(4px + 2vw);
             }
-        }
+        } */
 /* Page banner css end */
 
 /* Page CSS Start */
