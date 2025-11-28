@@ -331,6 +331,12 @@
                 "text_UDnifD"
               ]
             },
+            "product_additional_info_YNHkp8": {
+              "type": "product-additional-info",
+              "name": "Product Additional Info",
+              "settings": {},
+              "blocks": {}
+            },
             "group_BEmhBc": {
               "type": "group",
               "name": "t:names.group",
@@ -438,6 +444,7 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "group_NixjBb",
+            "product_additional_info_YNHkp8",
             "group_BEmhBc"
           ]
         }
