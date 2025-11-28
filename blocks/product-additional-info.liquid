@@ -1,0 +1,24 @@
+<div class="product-addditional-info-wrapper">
+    <div class="product-additional-info-container">
+        {% if product.metafields.custom.brand_name %}
+            <span class="product-brand-name_text">Brand: <span>{{ product.metafields.custom.brand_name }}</span></span>
+        {% endif %}
+        {% if product.metafields.custom.brand_name %}
+            <span class="product-manufacture-name_text">MFG: <span>{{ product.metafields.custom.brand_name }}</span></span>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Additional Info",
+  "tag": null,
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Additional Info",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
