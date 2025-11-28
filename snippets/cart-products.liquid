@@ -79,6 +79,13 @@
                 {{ 'content.product_information' | t }}
               </th>
               <th
+                id="unitPrice"
+                scope="col"
+                role="columnheader"
+              >
+                Unit Price
+              </th>
+              <th
                 id="quantity"
                 scope="col"
                 role="columnheader"
@@ -96,6 +103,17 @@
           </thead>
 
           <tbody role="rowgroup">
+            {% if template.name == 'cart' %}
+              <tr>
+                <td class="cart-items__table-row table__items_title" role="cell">
+                  <span class="cart__column_title">Product</span>
+                  <span class="cart__column_title">details</span>
+                  <span class="cart__column_title">Price</span>
+                  <span class="cart__column_title">Qty</span>
+                  <span class="cart__column_title">Total</span>
+                </td>
+              </tr>
+            {% endif %}
             {% for item in cart.items %}
               <tr
                 role="row"
@@ -151,34 +169,7 @@
                       {{- item.product.title -}}
                     </a>
                   </p>
-                  {% if item.product.vendor and block_settings.vendor %}
-                    <p class="line-item-info">
-                      Brand: {{ item.product.vendor }}
-                    </p>
-                  {% endif %}
-                  {% if item.product.vendor and block_settings.vendor %}
-                    <p class="line-item-info">
-                    yysm: {{item.variant.sku }}
-                    </p>
-                  {% endif %}
-                  {%- if item.item_components.size != 0 -%}
-                    <ul class="cart-items__bundle list-unstyled">
-                      {%- for component in item.item_components -%}
-                        <li>
-                          {{- component.title -}}
-                          {%- if component.quantity > 1 -%}
-                            <span> × {{ component.quantity }}</span>
-                          {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-
-                  {%- if item.product.has_only_default_variant == false
-                    or item.properties.size != 0
-                    or item.selling_plan_allocation != null
-                  -%}
-                    <dl class="cart-items__variants">
+                  <dl class="cart-items__variants">
                       {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
                         {%- for option in item.options_with_values -%}
                           <div class="cart-items__variant">
@@ -207,6 +198,33 @@
                         {%- endif -%}
                       {%- endfor -%}
                     </dl>
+                  {% if item.product.vendor and block_settings.vendor %}
+                    <p class="line-item-info">
+                      Brand: {{ item.product.vendor }}
+                    </p>
+                  {% endif %}
+                  {% if item.product.vendor and block_settings.vendor %}
+                    <p class="line-item-info">
+                    yysm: {{item.variant.sku }}
+                    </p>
+                  {% endif %}
+                  {%- if item.item_components.size != 0 -%}
+                    <ul class="cart-items__bundle list-unstyled">
+                      {%- for component in item.item_components -%}
+                        <li>
+                          {{- component.title -}}
+                          {%- if component.quantity > 1 -%}
+                            <span> × {{ component.quantity }}</span>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+
+                  {%- if item.product.has_only_default_variant == false
+                    or item.properties.size != 0
+                    or item.selling_plan_allocation != null
+                  -%}
 
                     {% if item.selling_plan_allocation %}
                       <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
@@ -223,34 +241,7 @@
                       {%- endfor -%}
                     </ul>
                   {% endif %}
-                  
-                  <div>
-                    {% comment %} {% if item.original_price != item.final_price %}
-                      <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                      <span>{{ item.final_price | money }}</span>
-                      <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                      <s class="compare-at-price">
-                        {% if item.variant.compare_at_price > item.original_price %}
-                          {{ item.variant.compare_at_price | money }}
-                        {% else %}
-                          {{ item.original_price | money }}
-                        {% endif %}
-                      </s>
-                    {% else %}
-                      {% if item.variant.compare_at_price > item.original_price %}
-                        <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                      {% else %}
-                        <span class="visually-hidden">{{ 'content.price' | t }}</span>
-                      {% endif %}
 
-                      <span>{{ item.original_price | money }}</span>
-
-                      {% if item.variant.compare_at_price > item.original_price %}
-                        <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                        <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
-                      {% endif %}
-                    {% endif %} {% endcomment %}
-                  </div>
                   {% if template.name == 'cart' %}
                     <button
                       class="button button--tertiary cart-items__remove"
@@ -266,23 +257,57 @@
                       <span class="visually-hidden">Remove</span>
                     </button>
                   {% endif %}
-                  <div class="cart-item-total">
-                    <span class="total_label">Total </span>
-                    {%- liquid
-                      if settings.currency_code_enabled_cart_items
-                        assign price = item.final_line_price | money_with_currency
-                        assign unit_price = item.unit_price | money_with_currency
-                      else
-                        assign price = item.final_line_price | money
-                        assign unit_price = item.unit_price | money
-                      endif
-                    -%}
-                    <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
-                    {%- if item.unit_price_measurement -%}
-                      <div class="cart-items__price-unit cart-secondary-typography">
-                        {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
-                      </div>
-                    {%- endif -%}
+                  {% if template.name != 'cart' %}
+                    <div class="cart-item-total">
+                      <span class="total_label">Total </span>
+                      {%- liquid
+                        if settings.currency_code_enabled_cart_items
+                          assign price = item.final_line_price | money_with_currency
+                          assign unit_price = item.unit_price | money_with_currency
+                        else
+                          assign price = item.final_line_price | money
+                          assign unit_price = item.unit_price | money
+                        endif
+                      -%}
+                      <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+                      {%- if item.unit_price_measurement -%}
+                        <div class="cart-items__price-unit cart-secondary-typography">
+                          {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  {% endif %}
+                </td>
+                <td class="cart-items__price" role="cell" ref="cartItemErrorContainer-1" headers="unitPrice">
+                                      
+                  <div>
+                    {% if template.name == 'cart' %}
+                      {% if item.original_price != item.final_price %}
+                        <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
+                        <span>{{ item.final_price | money }}</span>
+                        <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
+                        <s class="compare-at-price">
+                          {% if item.variant.compare_at_price > item.original_price %}
+                            {{ item.variant.compare_at_price | money }}
+                          {% else %}
+                            {{ item.original_price | money }}
+                          {% endif %}
+                        </s>
+                      {% else %}
+                        {% if item.variant.compare_at_price > item.original_price %}
+                          <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
+                        {% else %}
+                          <span class="visually-hidden">{{ 'content.price' | t }}</span>
+                        {% endif %}
+
+                        <span>{{ item.original_price | money }}</span>
+
+                        {% if item.variant.compare_at_price > item.original_price %}
+                          <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
+                          <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
                   </div>
                 </td>
                 <td
@@ -319,6 +344,27 @@
                   {% endif %}
                   
                 </td>
+                {% if template.name == 'cart' %}
+                  <td  class="cart-items__sum" role="cell" headers="subtotal">
+                    <div class="cart-item-total">
+                      {%- liquid
+                        if settings.currency_code_enabled_cart_items
+                          assign price = item.final_line_price | money_with_currency
+                          assign unit_price = item.unit_price | money_with_currency
+                        else
+                          assign price = item.final_line_price | money
+                          assign unit_price = item.unit_price | money
+                        endif
+                      -%}
+                      <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+                      {%- if item.unit_price_measurement -%}
+                        <div class="cart-items__price-unit cart-secondary-typography">
+                          {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </td>
+                {% endif %}
                 <td
                   class="cart-items__error hidden"
                   role="cell"
@@ -338,13 +384,6 @@
                     ></small>
                   </div>
                 </td>
-                {% comment %} <td
-                  class="cart-items__price cart-secondary-typography"
-                  role="cell"
-                  headers="productTotal"
-                >
-                  XXX
-                </td> {% endcomment %}
               </tr>
             {% endfor %}
           </tbody>
@@ -400,7 +439,11 @@
     /* stylelint-disable-next-line declaration-no-important */
     view-transition-name: none !important;
   }
-
+  .cart-items--dividers .cart-items__table-row.table__items_title:last-child {
+      padding-bottom: 24px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #CCCCCC;
+  }
   .cart-items__table-row.removing {
     overflow: hidden;
     animation: removeRow calc(var(--animation-speed) * 2) var(--animation-easing) forwards;
@@ -436,9 +479,20 @@
   }
 
   .cart-items--dividers .cart-items__table-row:last-child {
-    border-block-end: none;
+    /* border-block-end: none; */
     padding-block-end: 0;
     margin-bottom: 0;
+  }
+  td.cart-items__price, .cart-page .cart-item-total text-component{
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 30px;
+      letter-spacing: 0;
+      align-items: flex-start;
+  }
+    .cart-page .cart-items__quantity .cart-quantity-label {
+      display: none;
   }
 
   .cart-items__details {
@@ -590,7 +644,7 @@
 
   @container cart-items (min-width: 720px) {
     .cart-items__table-row {
-      --cart-item-price-width: 6rem;
+      --cart-item-price-width: 12rem;
 
       grid-template-columns: 7.5rem 1fr 1fr minmax(var(--cart-item-price-width), auto);
       grid-template-rows: min-content 1fr;
@@ -647,10 +701,10 @@
       padding-block-start: 0;
       border-block-start: none;
     }
-
+/* 
     @media screen and (min-width: 750px) {
       padding-block-start: 0;
-    }
+    } */
   }
 
   .cart__original-total-container,
@@ -806,3 +860,19 @@
     display: inline;
   }
 {% endstylesheet %}
+
+{% if template.name == 'cart' %}
+<style>
+  @container cart-items (min-width: 720px) {
+    .cart-items__table-row {
+      --cart-item-price-width: 12rem;
+
+      grid-template-columns: 7.5rem 1fr 1fr minmax(var(--cart-item-price-width), auto);
+      grid-template-rows: min-content 1fr;
+      grid-template-areas:
+        'media details quantity price sum'
+        'media details error error sum';
+    }
+}
+</style>
+{% endif %}

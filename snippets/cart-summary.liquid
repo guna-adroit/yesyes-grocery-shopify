@@ -35,18 +35,22 @@
       </div>
     {%- endif -%}
   </div>
-
+  <div class="shopping-bag-label">SHOPPING BAG</div>
   {% if settings.show_cart_note or settings.show_add_discount_code and template.name == 'cart' %}
     <div class="cart-actions">
-      {% if settings.show_cart_note %}
-        {% render 'cart-note' %}
+      
+      {% if settings.show_add_discount_code %}
+        {% render 'cart-discount', section_id: section.id %}
       {% endif %}
       {% if settings.show_cart_note and settings.show_add_discount_code %}
         <div class="cart-actions__divider"></div>
       {% endif %}
-      {% if settings.show_add_discount_code %}
-        {% render 'cart-discount', section_id: section.id %}
+      {% if settings.show_cart_note %}
+        {% render 'cart-note' %}
       {% endif %}
+      <div class="cart-actions__divider"></div>
+        {% render 'cart-pickup' %}
+
     </div>
   {% endif %}
 

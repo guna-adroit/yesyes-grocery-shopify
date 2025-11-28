@@ -669,11 +669,12 @@ span.cart__total-label.cart-primary-typography, text-component.cart__total-value
     letter-spacing: 0;
     text-transform: uppercase;
 }
-span.disclosure-trigger__label.h6 {
+.disclosure-trigger__label.h6,.cart-note__label.h6 {
     letter-spacing: 0;
     font-weight: 700;
     font-size: 18px;
     line-height: 25.2px;
+    text-transform: uppercase;
 }
 .cart__checkout-button.cart_view_cart.button {
     max-width: 400px;
@@ -717,7 +718,23 @@ span.cart__column_title {
     font-size: 18px;
     line-height: 25.2px;
     letter-spacing: 0;
+    text-transform: uppercase;
 }
+.shopping-bag-label {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0;
+}
+.delivery-options-container .delivery-option{
+    filter: hue-rotate(225deg);
+}
+
+
+
+
+
+
 
 
 
