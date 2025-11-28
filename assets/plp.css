@@ -291,6 +291,8 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     display: flex;
     align-items: center;
     margin: 0;
+    grid-column: 4 / -1;
+    grid-row: 1 / 1;
 }
 .product-grid.product-list-view product-form-component .add-to-cart-button.card-atc-button{
     margin-top: 0;
@@ -608,11 +610,9 @@ quantity-input-bulk.is-loading::after {
   animation: qty-spin 0.6s linear infinite;
   transform: translateY(-50%);
 }
-.product-list-view .card_button-wrapper{
-    grid-column: 4;
-    grid-row: 1;
-    display: flex;
-    align-items: center; 
+.product-list-view quantity-input-bulk-component{
+    grid-column: 4 / -1;
+    grid-row: 1 / 1;
 }
 .product-list-view .card_button-wrapper > *{
     flex: 1;
