@@ -153,6 +153,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .product-additional-info-container{
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
