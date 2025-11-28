@@ -37,6 +37,9 @@ span.announcement-menu .menu-item:hover {
 .header__column--left{
     gap: 60px;
 }
+header-menu {
+    z-index: 4;
+}
 span.modal-button-label {
     font-weight: 700;
     font-size: 18px;
