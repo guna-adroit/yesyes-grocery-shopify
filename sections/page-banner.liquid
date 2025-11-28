@@ -42,7 +42,12 @@
 
     mask-repeat: no-repeat;
 }
-
+@media screen and (min-width: 2160px){
+  .section-{{ section.id }} .block-shape{
+    --r: clamp(14px, 1.2vw, 60px);
+    --s: clamp(20px, 2vw, 60px);
+  }
+}
 @media screen and (max-width: 600px){
   .section-{{ section.id }} .block-shape{
     --s: clamp(12px, 3vw, 60px);
