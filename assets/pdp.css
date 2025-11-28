@@ -150,6 +150,10 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 16px;
     line-height: 21.4px;
 }
+.product-additional-info-container{
+    display: flex;
+    flex-direction: column;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
