@@ -140,6 +140,16 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .quantity-selector{
     border: 1px solid #000000;
 }
+.product-brand-name_text, .product-manufacture-name_text {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 29px;
+}
+.product-brand-name_text span, .product-manufacture-name_text span{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21.4px;
+}
 @media screen and (min-width: 1200px){
      .product-details .product-form-buttons{
         display: grid;
