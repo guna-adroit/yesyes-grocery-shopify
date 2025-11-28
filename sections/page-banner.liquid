@@ -1,7 +1,7 @@
 
     <div class="yy-page-banner-wrapper section section--page-width section-{{ section.id }}">
         <div class="yy-page-banner-container">
-            <div class="yy-page-banner-image-block">
+            <div class="yy-page-banner-image-block block-shape">
                 {% if section.settings.banner_image != blank %}
                     {{ section.settings.banner_image | image_url: width: 1600 | image_tag  }}
                 {% else %}
@@ -20,7 +20,7 @@
     </div>
 
 <style>
-  .section-{{ section.id }} .inverted-radius {
+  .section-{{ section.id }} .block-shape {
     --r: 46px;
     --s: 46px;
     --x: 20px;
