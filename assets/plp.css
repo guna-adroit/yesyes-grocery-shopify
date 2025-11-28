@@ -614,7 +614,9 @@ quantity-input-bulk.is-loading::after {
     display: flex;
     align-items: center;
 }
-
+.product-list-view .card_button-wrapper > *{
+    flex: 1;
+}
 @keyframes qty-spin {
   from { transform: translateY(-50%) rotate(0deg); }
   to   { transform: translateY(-50%) rotate(360deg); }
