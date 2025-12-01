@@ -234,21 +234,12 @@
         "padding-block-start": 100,
         "padding-block-end": 80
       }
-    },
-    "video_cP6yWp": {
-      "type": "video",
-      "name": "About Video",
-      "settings": {
-        "video_link": "https://www.youtube.com/watch?v=WWCiPcs6-7s&t=1s",
-        "text": "For any popular brand of Indian origin;  “you name it and we make sure we have a yes for you.”"
-      }
     }
   },
   "order": [
     "main",
     "page_banner_3kAx9Q",
     "career_content_aBtyER",
-    "section_gVa8gC",
-    "video_cP6yWp"
+    "section_gVa8gC"
   ]
 }
