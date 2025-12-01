@@ -139,25 +139,27 @@
                 </div>
             </div>
             <div class="yy-career-list-container">
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
+                {% for block in section.blocks %}
+                    <div class="yy-career-list-item">
+                        <div class="yy-career-icon-block">
+                            <div class="yy-career-icon">
+                                <img src="{{ block.settings.image | image_url : width: 300 }}" width="" height="" alt="">
                             </div>
                         </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
+                        <div class="yy-career-content-block">
+                            <div class="yy-career-content">
+                                <h2 class="yy-career-content_title">{{ block.settings.heading }}</h2>
+                                <div class="yy-career-content_description">
+                                    <p><span>{{ block.settings.heading-detail-1}}</span> {{ block.settings.description-detail-1}}</p>
+                                    <p><span>{{ block.settings.heading-detail-2}}</span> {{ block.settings.description-detail-1}}</p>
+                                </div>
+                            </div>
+                            <div class="yy-career-button">
+                                <button class="button button--primary">{{ block.settings.heading-detail-2}}</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
                 
                 <div class="yy-career-list-item">
                     <div class="yy-career-icon-block">
@@ -179,47 +181,6 @@
                     </div>
                 </div>
 
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
-                            </div>
-                        </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
-                            </div>
-                        </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
-                    </div>
-                </div>
-
-                
             </div>
         </div>
     </div>
@@ -269,12 +230,6 @@
           "default": "Enter description here."
         },
         {
-            "type": "text",
-            "id": "button-text-detail-1",
-            "label": "Button Text",
-            "default": "Apply Now"
-        },
-        {
             "type": "header",
             "content": "Details 2"
         },
@@ -291,8 +246,12 @@
           "default": "Enter description here."
         },
         {
+            "type": "header",
+            "content": "Button"
+        },
+        {
             "type": "text",
-            "id": "button-text-detail-2",
+            "id": "button-text",
             "label": "Button Text",
             "default": "Apply Now"
         }
