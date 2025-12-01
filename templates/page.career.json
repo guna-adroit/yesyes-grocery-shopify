@@ -67,6 +67,23 @@
     },
     "career_content_aBtyER": {
       "type": "career-content",
+      "blocks": {
+        "job_block_E83WMq": {
+          "type": "job_block",
+          "settings": {
+            "image": "shopify://shop_images/sales-executive.svg",
+            "heading": "Sales Executive",
+            "heading-detail-1": "Qualification",
+            "description-detail-1": "Any Graduation, Good Communication Skills",
+            "heading-detail-2": "Location",
+            "description-detail-2": "Burnside Hub, Opalia Plaza",
+            "button-text": "Apply Now"
+          }
+        }
+      },
+      "block_order": [
+        "job_block_E83WMq"
+      ],
       "name": "Career Content",
       "settings": {}
     },
