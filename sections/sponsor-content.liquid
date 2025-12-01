@@ -45,6 +45,11 @@
             font-size: 18px;
             line-height: 25.2px;
         }
+        .page-section-title{
+            font-weight: 900;
+            font-size: 38px;
+            line-height: 64px;
+        }
         @media screen and (max-width: 768px){
             .yy-sponser-content-container{
                 grid-template-columns: 1fr;
@@ -54,7 +59,7 @@
     <div class="yy-sponser-content-wrapper section section--page-width">
         <div class="yy-sponser-content-container">
             <div class="yy-sponser-content-column form-column">
-                <h1>Sponsorship & Grants</h1>
+                <h1 class="page-section-title">Sponsorship & Grants</h1>
                 {% form 'contact' %}
                 {{ form.errors | default_errors }}
 
