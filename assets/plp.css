@@ -621,6 +621,7 @@ quantity-input-bulk.is-loading::after {
     grid-row: 1 / 1;
     display: flex;
     align-items: center;
+    z-index: 4;
 }
 .product-list-view .card_button-wrapper > *{
     flex: 1;
