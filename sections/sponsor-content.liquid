@@ -25,22 +25,18 @@
                 {{ form.errors | default_errors }}
 
                 <div className="name">
-                    <label htmlFor="name">Name</label>
                     <input type="text" name="contact[name]" placeholder="Name" id="name" />
                 </div>
 
                 <div className="phone">
-                    <label htmlFor="phone">Phone</label>
                     <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" />
                 </div>
 
                 <div className="email">
-                    <label htmlFor="email">Email</label>
                     <input type="email" name="contact[email]" placeholder="Email" id="email" />
                 </div>
 
                 <div className="message">
-                    <label htmlFor="message">Message</label>
                     <textarea name="contact[body]" id="message" placeholder="How can we help you?"></textarea>
                 </div>
 
