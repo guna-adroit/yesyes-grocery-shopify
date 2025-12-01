@@ -13,6 +13,7 @@ class CartCount extends HTMLElement {
     document.addEventListener(ThemeEvents.cartUpdate, () => {
       this.updateCartCount();
     });
+    console.log(this.countElement);
 
     // Initial load
     this.updateCartCount();
