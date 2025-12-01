@@ -3,7 +3,7 @@ import { ThemeEvents } from '@theme/events';
 class CartCount extends HTMLElement {
   connectedCallback() {
     this.updateElementReference();
-    console.log(this.updateElementReference();)
+    console.log(this.updateElementReference());
     // Listen to Horizon's ONLY cart event
     document.addEventListener(ThemeEvents.cartUpdate, () => {
       this.updateCartCount();
