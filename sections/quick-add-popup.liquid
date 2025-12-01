@@ -141,43 +141,6 @@
           <span class="popup-cart-count">Items Total: {{ cart.item_count }}</span>
         </cart-count>
       
-      <cart-icon
-        class=""
-        data-testid="cart-icon"
-      >
-        <div
-          ref="cartBubble"
-          class="cart-bubble "
-          {% assign item_count = cart.item_count %}
-          {% if item_count <= 99 %}
-            data-maintain-ratio
-          {% endif %}
-        >
-          <span class="cart-bubble__background"></span>
-          <span
-            ref="cartBubbleText"
-            id="cart-bubble-text"
-            class="cart-bubble__text"
-            role="status"
-
-          >
-            <span class="visually-hidden">
-              {{- 'accessibility.cart_count' | t -}}
-              : {{ cart.item_count }}
-            </span> Items total : 
-            <span
-              class="cart-bubble__text-count"
-              ref="cartBubbleCount"
-              aria-hidden="true"
-              data-testid="cart-bubble"
-            >
-              {%- if limit == blank or cart.item_count < limit %}
-                {{- cart.item_count -}}
-              {%- endif -%}
-            </span>
-          </span>
-        </div>
-      </cart-icon>
       <div class="confirm-button-container">
         <button class="button button--primary confirm-button">Confirm</button>
       </div>
