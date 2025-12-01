@@ -57,6 +57,12 @@ td.product_variant-price-container{
 td.product_variant-price-container .product_variant-details{
     margin-top: 10px;
 }
+td.product_variant-price-container .product_variant-details span{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0.1px;
+}
 .product-media{
     padding: 25px;
 }
