@@ -298,7 +298,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
     margin: 0;
     grid-column: 4 / -1;
     grid-row: 1 / 1;
-    z-index: 6;
+    z-index: 8;
 }
 .product-grid.product-list-view product-form-component .add-to-cart-button.card-atc-button{
     margin-top: 0;
