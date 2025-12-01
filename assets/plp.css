@@ -51,7 +51,8 @@
     flex-basis: 140px;
 }
 td.product_variant-price-container{
-    display: table-cell;
+    display: flex;
+    margin-top: 10px;
 }
 td.product_variant-price-container .product_variant-details{
     margin-top: 10px;
