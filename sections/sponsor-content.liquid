@@ -1,0 +1,56 @@
+<style>
+        .yy-sponser-content-container{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 89px;
+        }
+        .yy-sponser-content-column{
+            width: 50%;
+        }
+        .yy-sponser-content-column.image-column{
+            width: 100%;
+            height: 100%;
+        }
+        .yy-sponser-content-image{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+    <div class="yy-sponser-content-wrapper">
+        <div class="yy-sponser-content-container">
+            <div class="yy-sponser-content-column form-column">
+                <h1>Sponsorship & Grants</h1>
+                {% form 'contact' %}
+                {{ form.errors | default_errors }}
+
+                <div className="name">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" name="contact[name]" placeholder="Name" id="name" />
+                </div>
+
+                <div className="phone">
+                    <label htmlFor="phone">Phone</label>
+                    <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" />
+                </div>
+
+                <div className="email">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="contact[email]" placeholder="Email" id="email" />
+                </div>
+
+                <div className="message">
+                    <label htmlFor="message">Message</label>
+                    <textarea name="contact[body]" id="message" placeholder="How can we help you?"></textarea>
+                </div>
+
+                <div className="submit">
+                    <input type="submit" value="Create" />
+                </div>
+                {% endform %}
+            </div>
+            <div class="yy-sponser-content-column image-column">
+                <img class="yy-sponser-content-image" src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sponder-content-image.png?v=1764595131" width="" height="" alt="">
+            </div>
+        </div>
+    </div>
