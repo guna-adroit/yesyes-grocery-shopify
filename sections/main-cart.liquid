@@ -123,6 +123,14 @@
       grid-template-columns: 1fr var(--sidebar-width);
     }
   }
+    @media screen and (max-width: 1400px) {
+    .section--page-width .cart-page:has(.cart__container--extend) {
+      grid-template-columns: 1fr minmax(
+          27rem,
+          calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
+        );
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}

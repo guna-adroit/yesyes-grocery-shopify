@@ -268,6 +268,62 @@ button.account-button.header-actions__action{
     line-height: 25.2px;
     border-radius: 5px;
 }
+span.category-menu_button {
+display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 50%;
+    height: fit-content;
+    min-height: 40px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    gap: 6px;
+}
+span.modal-button-label__small {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.all-category-overlay-menu {
+    position: absolute;
+    top: 52px;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    left: -100%;
+    width: 0;
+    overflow: hidden;
+    transition: 0.4s;
+}
+.all-category-overlay-menu.active {
+    transition: 0.4s;
+    width: 100%;
+    left: 0%;
+    z-index: 1;
+}
+span.overlay-back-button{
+    position: absolute; 
+    padding: 18px;
+    width: 52px;
+    height: 52px;
+    z-index: 3;
+    display: none;
+    background: white;
+}
+span.overlay-back-button div {
+    width: 13px;
+    height: 13px;
+    border: 1px solid black;
+    background: #ffffff;
+    border-width: 0px 0px 1px 1px;
+    transform: rotate(45deg);
+}
+.all-category-overlay-menu.active + span.overlay-back-button{
+    display: flex;
+}
 .group-block-content .menu__details .details-content .menu__item + .menu__item a{
     font-weight: 400;
     font-size: 16px;
@@ -334,6 +390,9 @@ button.account-button.header-actions__action{
     padding: 4px 18px;
     gap: 12px;
     font-weight: 600;
+    position: absolute;
+    bottom: 010%;
+    width: 100%;
 }
 .menu-drawer__menu-item-text{
     font-size: 18px;
@@ -732,7 +791,21 @@ span.cart__column_title {
 .delivery-options-container .delivery-option{
     filter: hue-rotate(225deg);
 }
-
+.reward-text {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 21.4px;
+    letter-spacing: 0;
+}
+.reward-program-banner-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 10px 20px;
+}
+.reward-icon {
+    padding: 7px 9px;
+}
 
 
 

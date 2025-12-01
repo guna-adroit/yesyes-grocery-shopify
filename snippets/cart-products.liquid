@@ -203,7 +203,7 @@
                       Brand: {{ item.product.vendor }}
                     </p>
                   {% endif %}
-                  {% if item.product.vendor and block_settings.vendor %}
+                  {% if item.variant.sku and block_settings.vendor %}
                     <p class="line-item-info">
                     yysm: {{item.variant.sku }}
                     </p>
@@ -214,7 +214,7 @@
                         <li>
                           {{- component.title -}}
                           {%- if component.quantity > 1 -%}
-                            <span> × {{ component.quantity }}</span>
+                            <span> {{ component.quantity }}</span>
                           {%- endif -%}
                         </li>
                       {%- endfor -%}
@@ -641,7 +641,11 @@
     margin-inline: var(--margin-3xs) var(--margin-xs);
     margin-block-start: var(--margin-3xs);
   }
-
+    @media (max-width: 767px) {
+    .cart-items__price, .table__items_title, .cart-items__price{
+      display: none;
+    }
+  }
   @container cart-items (min-width: 720px) {
     .cart-items__table-row {
       --cart-item-price-width: 12rem;
