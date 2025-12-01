@@ -1,29 +1,34 @@
 import { ThemeEvents } from '@theme/events';
 
 class CartCount extends HTMLElement {
-  constructor() {
-    super();
-    this.countElement = this.querySelector('.popup-cart-count');
-  }
-
   connectedCallback() {
-    if (!this.countElement) return;
+    this.updateElementReference();
 
-    // Listen to Horizon's universal cart update event
+    // Listen to Horizon's ONLY cart event
     document.addEventListener(ThemeEvents.cartUpdate, () => {
       this.updateCartCount();
     });
-    console.log(this.countElement);
 
-    // Initial load
+    // Initial update
     this.updateCartCount();
+  }
+
+  // Whenever popup is re-rendered, the inner span changes
+  updateElementReference() {
+    this.countElement = this.querySelector('.popup-cart-count');
   }
 
   updateCartCount() {
     fetch('/cart.js')
       .then(res => res.json())
       .then(cart => {
-        this.countElement.textContent = `Items Total: ${cart.item_count}`;
+
+        // Refresh reference in case popup is replaced
+        this.updateElementReference();
+
+        if (this.countElement) {
+          this.countElement.textContent = `Items Total: ${cart.item_count}`;
+        }
       })
       .catch(err => console.error('Cart fetch failed:', err));
   }
