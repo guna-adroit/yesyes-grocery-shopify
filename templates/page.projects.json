@@ -92,7 +92,21 @@
         "project_y7GwyK": {
           "type": "project",
           "settings": {
-            "heading": "Title",
+            "heading": "Deanside",
+            "image-1": "shopify://shop_images/projects-1.webp"
+          }
+        },
+        "project_hJ7tVp": {
+          "type": "project",
+          "settings": {
+            "heading": "Wollert",
+            "image-1": "shopify://shop_images/projects-1.webp"
+          }
+        },
+        "project_Nkckyc": {
+          "type": "project",
+          "settings": {
+            "heading": "Wyndham Vale",
             "image-1": "shopify://shop_images/projects-1.webp"
           }
         }
@@ -100,7 +114,9 @@
       "block_order": [
         "project_DgcL3j",
         "project_RJBzGm",
-        "project_y7GwyK"
+        "project_y7GwyK",
+        "project_hJ7tVp",
+        "project_Nkckyc"
       ],
       "name": "Projects Content",
       "settings": {}
