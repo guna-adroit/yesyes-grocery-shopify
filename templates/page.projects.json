@@ -71,9 +71,12 @@
           "settings": {
             "heading": "Tarneit West",
             "image-1": "shopify://shop_images/projects-1.webp",
-            "image-2": "shopify://shop_images/projects-1.webp",
-            "image-3": "shopify://shop_images/projects-1.webp",
-            "image-4": "shopify://shop_images/projects-1.webp"
+            "image-2": "shopify://shop_images/projects-2.png",
+            "image-3": "shopify://shop_images/projects-3.png",
+            "image-4": "shopify://shop_images/projects-4.png",
+            "image-5": "shopify://shop_images/projects-5.png",
+            "image-6": "shopify://shop_images/projects-6.png",
+            "image-7": "shopify://shop_images/projects-7.png"
           }
         },
         "project_RJBzGm": {
