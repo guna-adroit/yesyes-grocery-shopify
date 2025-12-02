@@ -61,7 +61,9 @@
     "page_banner_7raP7R": {
       "type": "page-banner",
       "name": "Page Banner",
-      "settings": {}
+      "settings": {
+        "banner_image": "shopify://shop_images/about-banner.jpg"
+      }
     },
     "projects_content_3Pdt3M": {
       "type": "projects-content",
