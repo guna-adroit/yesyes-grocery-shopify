@@ -65,6 +65,37 @@
     },
     "projects_content_3Pdt3M": {
       "type": "projects-content",
+      "blocks": {
+        "project_DgcL3j": {
+          "type": "project",
+          "settings": {
+            "heading": "Tarneit West",
+            "image-1": "shopify://shop_images/projects-1.webp",
+            "image-2": "shopify://shop_images/projects-1.webp",
+            "image-3": "shopify://shop_images/projects-1.webp",
+            "image-4": "shopify://shop_images/projects-1.webp"
+          }
+        },
+        "project_RJBzGm": {
+          "type": "project",
+          "settings": {
+            "heading": "Bluestone Estate ( Tarneit)",
+            "image-1": "shopify://shop_images/projects-1.webp",
+            "image-2": "shopify://shop_images/projects-1.webp"
+          }
+        },
+        "project_y7GwyK": {
+          "type": "project",
+          "settings": {
+            "heading": "Title"
+          }
+        }
+      },
+      "block_order": [
+        "project_DgcL3j",
+        "project_RJBzGm",
+        "project_y7GwyK"
+      ],
       "name": "Projects Content",
       "settings": {}
     }
