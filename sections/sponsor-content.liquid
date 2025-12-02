@@ -67,21 +67,24 @@
                 <h1 class="page-section-title">Sponsorship & Grants</h1>
                 {% form 'contact' %}
                 {{ form.errors | default_errors }}
+                <div className="name">
+                    <input hidden type="text" name="contact[name]" placeholder="Name" id="name" required/>
+                </div>
 
                 <div className="name">
-                    <input type="text" name="contact[name]" placeholder="Name" id="name" />
+                    <input type="text" name="contact[name]" placeholder="Name" id="name" required/>
                 </div>
 
                 <div className="phone">
-                    <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" />
+                    <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" required/>
                 </div>
 
                 <div className="email">
-                    <input type="email" name="contact[email]" placeholder="Email" id="email" />
+                    <input type="email" name="contact[email]" placeholder="Email" id="email" required/>
                 </div>
 
                 <div className="message">
-                    <textarea rows="6" name="contact[body]" id="message" placeholder="How can we help you?"></textarea>
+                    <textarea rows="6" name="contact[body]" id="message" placeholder="How can we help you?" required></textarea>
                 </div>
 
                 <div className="submit">
