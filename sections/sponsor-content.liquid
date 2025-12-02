@@ -90,6 +90,11 @@
                 <div className="submit">
                     <button type="submit" class="button button--primary" value="SUBMIT">SUBMIT</button>
                 </div>
+                {% if form.posted_successfully? %}
+                    <div class="form-alert-success">
+                        Thank you! Your message has been sent.
+                    </div>
+                {% endif %}
                 {% endform %}
             </div>
             <div class="yy-sponser-content-column image-column">
