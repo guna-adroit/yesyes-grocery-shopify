@@ -85,29 +85,35 @@
           "type": "project",
           "settings": {
             "heading": "Bluestone Estate ( Tarneit)",
-            "image-1": "shopify://shop_images/projects-1.webp",
-            "image-2": "shopify://shop_images/projects-1.webp"
+            "image-1": "shopify://shop_images/projects-1.png",
+            "image-2": "shopify://shop_images/projects-2.png",
+            "image-3": "shopify://shop_images/projects-3.png"
           }
         },
         "project_y7GwyK": {
           "type": "project",
           "settings": {
             "heading": "Deanside",
-            "image-1": "shopify://shop_images/projects-1.webp"
+            "image-1": "shopify://shop_images/projects-1.png",
+            "image-2": "shopify://shop_images/projects-2.png"
           }
         },
         "project_hJ7tVp": {
           "type": "project",
           "settings": {
             "heading": "Wollert",
-            "image-1": "shopify://shop_images/projects-1.webp"
+            "image-1": "shopify://shop_images/projects-1.png",
+            "image-2": "shopify://shop_images/projects-2.png",
+            "image-3": "shopify://shop_images/projects-3.png",
+            "image-4": "shopify://shop_images/projects-4.png"
           }
         },
         "project_Nkckyc": {
           "type": "project",
           "settings": {
             "heading": "Wyndham Vale",
-            "image-1": "shopify://shop_images/projects-1.webp"
+            "image-1": "shopify://shop_images/projects-1.png",
+            "image-2": "shopify://shop_images/projects-2.png"
           }
         }
       },
