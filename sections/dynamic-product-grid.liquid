@@ -5,7 +5,6 @@
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-
 <div
   class="
     section
@@ -20,79 +19,130 @@
     {% render 'gap-style', value: section.settings.gap %}
   "
 >
-
-  <div class="section-resource-list__header">
+  <div class="section-resource-list__header list-filters-wrapper">
     {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
+    <div class="collection-titles-wrapper">
+      <span class="collection-title active-filter" handle="all">All</span> |
+      {% for collection in section.settings.collections_list %}
+        <span class="collection-title" handle="{{ collection.handle }}">{{ collection.title }}</span> 
+        {% unless forloop.last %}|{% endunless %}
+      {% endfor %}
+    </div>
   </div>
 
-  {%- comment -%}
-    STEP 1 — CAPTURE LIST ITEMS PER COLLECTION
-  {%- endcomment -%}
-
-  {% for collection in section.settings.collection_list %}
-    {% capture var_name %}list_items_{{ forloop.index }}{% endcapture %}
-    {% capture captured_items %}
-      {% if collection != blank and shop.products_count != 0 %}
-        {% paginate collection.products by max_items %}
-          {% for product in collection.products limit: max_items %}
-            <div class="resource-list__item">
+  {% capture list_items %}
+    {% if section.settings.collection != blank and shop.products_count != 0 %}
+      {% paginate section.settings.collection.products by 20 %}
+        {% for product in section.settings.collection.products %}
+          <div
+            class="resource-list__item dynamic_filtering" collections="
+            {% for collection in product.collections %}{{ collection.handle }}{% unless forloop.last %}, {% endunless %}{% endfor %}"
+            {% if forloop.index > max_items %} style="display: none;"{% endif %}
+          >
+            {% # theme-check-disable UniqueStaticBlockId %}
               {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
-            </div>
-            {% unless forloop.last %}<!--@list/split-->{% endunless %}
-          {% endfor %}
-        {% endpaginate %}
-      {% else %}
-        {% for i in (1..max_items) %}
-          <div class="resource-list__item">
-            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: null %}
+            {% # theme-check-enable UniqueStaticBlockId %}
           </div>
-          {% unless forloop.last %}<!--@list/split-->{% endunless %}
+
+          {% unless forloop.last %}
+            <!--@list/split-->
+          {% endunless %}
         {% endfor %}
-      {% endif %}
-    {% endcapture %}
+      {% endpaginate %}
+    {% else %}
+      {% for i in (1..max_items) %}
+        <div
+          class="resource-list__item"
+        >
+          {% # theme-check-disable UniqueStaticBlockId %}
+            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: null %}
+          {% # theme-check-enable UniqueStaticBlockId %}
+        </div>
 
-    {% assign [var_name] = captured_items %}
-  {% endfor %}
+        {% unless forloop.last %}
+          <!--@list/split-->
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  {% endcapture %}
 
-  {%- comment -%}
-    STEP 2 — CREATE ARRAYS FOR EACH LIST_ITEMS VARIABLE
-  {%- endcomment -%}
+  {% liquid
+    # Create an array from the list items to be used for different layout types
+    assign list_items_array = list_items | strip | split: '<!--@list/split-->'
+  %}
 
-  {% for collection in section.settings.collection_list %}
-    {% capture list_var %}list_items_{{ forloop.index }}{% endcapture %}
-    {% capture array_var %}list_items_array_{{ forloop.index }}{% endcapture %}
-    
-    {% assign raw_items = [list_var] %}
-    {% assign split_items = raw_items | split: '<!--@list/split-->' %}
-    {% assign [array_var] = split_items %}
-  {% endfor %}
+  {% render 'resource-list',
+    list_items: list_items,
+    list_items_array: list_items_array,
+    settings: section.settings,
+    slide_count: max_items,
+    content_type: 'products',
+    test_id: 'resource-list-grid'
+  %}
 
-  {%- comment -%}
-    STEP 3 — RENDER RESOURCE LIST FOR EACH COLLECTION
-  {%- endcomment -%}
-
-  {% for collection in section.settings.collection_list %}
-    {% capture list_var %}list_items_{{ forloop.index }}{% endcapture %}
-    {% capture array_var %}list_items_array_{{ forloop.index }}{% endcapture %}
-
-    {% render 'resource-list',
-      list_items: [list_var],
-      list_items_array: [array_var],
-      settings: section.settings,
-      slide_count: max_items,
-      content_type: 'products',
-      test_id: 'resource-list-grid'
-    %}
-  {% endfor %}
-
-  <div class="section-resource-list__content"
-       style="--horizontal-alignment: {{ section.settings.horizontal_alignment }};">
+  <div
+    class="section-resource-list__content"
+    style="--horizontal-alignment: {{ section.settings.horizontal_alignment }};"
+  >
     {%- content_for 'blocks' -%}
   </div>
-
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const filters = document.querySelectorAll(".collection-title");
+  const cards = document.querySelectorAll(".resource-list__item.dynamic_filtering");
+  const MAX_VISIBLE = 8;
+
+  function applyLimit(visibleCards) {
+    visibleCards.forEach((card, index) => {
+      if (index < MAX_VISIBLE) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  filters.forEach(filter => {
+    filter.addEventListener("click", () => {
+      const handle = filter.getAttribute("handle").trim().toLowerCase();
+
+      // highlight active
+      filters.forEach(f => f.classList.remove("active-filter"));
+      filter.classList.add("active-filter");
+
+      let visibleCards = [];
+
+      // If "all", show everything but limited to 8
+      if (handle === "all") {
+        visibleCards = Array.from(cards);
+        applyLimit(visibleCards);
+        return;
+      }
+
+      // Filter cards based on collections
+      cards.forEach(card => {
+        const cardCollections = card.getAttribute("collections")
+          .toLowerCase()
+          .split(",")
+          .map(c => c.trim());
+
+        if (cardCollections.includes(handle)) {
+          visibleCards.push(card);
+        }
+      });
+
+      // First hide all
+      cards.forEach(card => (card.style.display = "none"));
+
+      // Show only first 8 matching cards
+      applyLimit(visibleCards);
+    });
+  });
+});
 
 
+</script>
 {% schema %}
 {
   "name": "t:names.product_list",
@@ -119,8 +169,8 @@
     },
     {
       "type": "collection_list",
-      "id": "collection_list",
-      "label": "t:settings.collection"
+      "id": "collections_list",
+      "label": "Collection List"
     },
     {
       "type": "select",
@@ -362,7 +412,7 @@
   ],
   "presets": [
     {
-      "name": "Dynamic Grid",
+      "name": "Dynamic Products Grid",
       "category": "t:categories.products",
       "settings": {
         "collection": "",

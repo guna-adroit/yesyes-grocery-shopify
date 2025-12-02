@@ -86,6 +86,26 @@ overflow-list.overflow-menu .menu-list__link {
 .all-categories+.header-menu .menu-list {
     padding-left: 32px;
 }
+span.collection-title {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+    cursor: pointer;
+}
+span.collection-title.active-filter {
+  font-weight: 700;
+}
+.list-filters-wrapper{
+    position: relative;
+}
+.collection-titles-wrapper {
+    position: absolute;
+    width: auto;
+    top: 50%;
+    transform: translate(100%, -50%);
+}
 .header-contact-wrapper .header-phone-number {
     font-weight: 700;
     font-size: 24px;
@@ -594,7 +614,7 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
 .predictive-search-results__inner{
     display: flex;
 }
-    .search-results-container-one {
+.search-results-container-one {
     min-width: 360px;
     padding: 30px 24px;
 }
