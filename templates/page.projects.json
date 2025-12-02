@@ -87,7 +87,8 @@
         "project_y7GwyK": {
           "type": "project",
           "settings": {
-            "heading": "Title"
+            "heading": "Title",
+            "image-1": "shopify://shop_images/projects-1.webp"
           }
         }
       },
