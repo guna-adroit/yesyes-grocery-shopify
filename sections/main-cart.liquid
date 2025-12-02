@@ -131,6 +131,21 @@
         );
     }
   }
+  @media screen and (max-width: 1025px) {
+    .cart-page.spacing-style{
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-page.spacing-style {
+      max-width: 95%;
+    }
+    .cart-page__summary{
+        padding-top: 60px;
+    }
+    .cart-page .cart__container--extend .cart__summary-inner {
+      width: 100%;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}

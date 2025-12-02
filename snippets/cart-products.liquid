@@ -641,12 +641,12 @@
     margin-inline: var(--margin-3xs) var(--margin-xs);
     margin-block-start: var(--margin-3xs);
   }
-    @media (max-width: 767px) {
+    @media (max-width: 992px) {
     .cart-items__price, .table__items_title, .cart-items__price{
       display: none;
     }
   }
-  @container cart-items (min-width: 720px) {
+  @container cart-items (min-width: 992px) {
     .cart-items__table-row {
       --cart-item-price-width: 12rem;
 
@@ -867,7 +867,7 @@
 
 {% if template.name == 'cart' %}
 <style>
-  @container cart-items (min-width: 720px) {
+  @container cart-items (min-width: 700px) {
     .cart-items__table-row {
       --cart-item-price-width: 12rem;
 
