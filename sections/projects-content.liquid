@@ -70,10 +70,11 @@
                   <div class="yy-tab-content" id="content{{ forloop.index }}">
                       <div class="yy-tab-image-container">
                           {% for i in (1..10) %}
-                              {% assign imageSrc = block.settings.image- | append: i %}
-                              {% if imageSrc != blank %}
+                            {% assign key = "image-" | append: i %}
+                            {% assign image = block.settings[key] %}
+                              {% if image != blank %}
                                   <div class="yy-tab-image-item">
-                                      {{ imageSrc | image_url: width: 800 | image_tag  }}
+                                      {{ image | image_url: width: 800 | image_tag  }}
                                   </div>
                               {% endif %}
                           {% endfor %}
