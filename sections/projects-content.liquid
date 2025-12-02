@@ -52,41 +52,24 @@
             <h1>Projects</h1>
             <div class="yy-tab-container">
                 <div class="yy-tabs">
-                    <div class="yy-tab" id="tab1" onclick="showTab(1)">Tab 1</div>
-                    <div class="yy-tab" id="tab2" onclick="showTab(2)">Tab 2</div>
-                    <div class="yy-tab" id="tab3" onclick="showTab(3)">Tab 3</div>
+                    {% for block in section.blocks %}
+                      <div class="yy-tab" id="tab{{ forloop.index }}" onclick="showTab({{ forloop.index }})">{{ block.settings.heading }}</div>
+                    {% endfor %}
                 </div>
-                <div class="yy-tab-content" id="content1">
-                    <div class="yy-tab-image-container">
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                        <div class="yy-tab-image-item">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/projects-1.webp?v=1764653470" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="yy-tab-content" id="content2">
-                    <p>This is the content for Tab 2.</p>
-                </div>
-                <div class="yy-tab-content" id="content3">
-                    <p>This is the content for Tab 3.</p>
-                </div>
+                {% for block in section.blocks %}
+                  <div class="yy-tab-content" id="content{{ forloop.index }}">
+                      <div class="yy-tab-image-container">
+                          {% for i in (1..10) %}
+                              {% assign imageSrc = block.settings.image- | append: i %}
+                              {% if imageSrc != blank %}
+                                  <div class="yy-tab-image-item">
+                                      {{ imageSrc | image_url: width: 800 | image_tag  }}
+                                  </div>
+                              {% endif %}
+                          {% endfor %}
+                      </div>
+                  </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -131,62 +114,66 @@ document.addEventListener('DOMContentLoaded', () => {
   ],
   "blocks": [
     {
-        "type": "job_block",
-        "name": "Job",
+        "type": "project",
+        "name": "Project",
         "settings": [
+        {
+          "type": "text",
+          "label": "Project Title",
+          "id": "heading",
+          "default": "Title"
+        },
         {
           "type": "image_picker",
           "label": "Image",
-          "id": "image",
+          "id": "image-1",
         },
         {
-          "type": "text",
-          "label": "Heading",
-          "id": "heading",
-          "default": "Block Heading"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-2",
         },
         {
-            "type": "header",
-            "content": "Details 1"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-3",
         },
         {
-          "type": "text",
-          "label": "Heading",
-          "id": "heading-detail-1",
-          "default": "Qualification"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-4",
         },
         {
-          "type": "textarea",
-          "label": "Description",
-          "id": "description-detail-1",
-          "default": "Enter description here."
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-5",
         },
         {
-            "type": "header",
-            "content": "Details 2"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-6",
         },
         {
-          "type": "text",
-          "label": "Heading",
-          "id": "heading-detail-2",
-          "default": "Location"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-7",
         },
         {
-          "type": "textarea",
-          "label": "Description",
-          "id": "description-detail-2",
-          "default": "Enter description here."
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-8",
         },
         {
-            "type": "header",
-            "content": "Button"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-9",
         },
         {
-            "type": "text",
-            "id": "button-text",
-            "label": "Button Text",
-            "default": "Apply Now"
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image-10",
         }
+        
       ]
             
     }
