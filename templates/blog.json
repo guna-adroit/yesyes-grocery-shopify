@@ -27,6 +27,7 @@
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
+            "custom_classes": "blog-page-title",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -147,7 +148,7 @@
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 12,
+        "gap": 30,
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48
