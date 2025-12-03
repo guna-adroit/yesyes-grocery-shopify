@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "cart-section": {
       "type": "main-cart",
@@ -17,6 +18,7 @@
           "settings": {
             "title": "Cart",
             "show_count": true,
+            "show_signup_link": true,
             "type_preset": "h4",
             "alignment": "left",
             "padding-block-start": 0,
@@ -47,7 +49,7 @@
           "settings": {
             "extend_summary": true,
             "inherit_color_scheme": false,
-            "color_scheme": "scheme-2",
+            "color_scheme": "scheme-1",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -184,6 +186,7 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
+                "show_product_type": true,
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -195,6 +198,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
+                "custom_classes": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -212,6 +216,7 @@
                 "show_sale_price_first": true,
                 "show_installments": false,
                 "show_tax_info": false,
+                "show_product_expiry": true,
                 "type_preset": "h6",
                 "width": "100%",
                 "alignment": "left",
