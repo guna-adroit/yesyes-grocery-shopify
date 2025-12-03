@@ -829,7 +829,9 @@ span.cart__column_title {
 .cart-page__items .cart-items__price{
     text-align: left;
 }
-
+.cart__total-label.points-discount, .cart__total-label.points-discount+text-component {
+    color: #ED1D23;
+}
 
 
 
