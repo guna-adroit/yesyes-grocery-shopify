@@ -636,5 +636,5 @@ quantity-input-bulk.is-loading::after {
 .blog-page-title h1{
     font-weight: 900;
     font-size: 38px;
-    line-height: 64px;
+    line-height: normal;
 }
