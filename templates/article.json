@@ -9,6 +9,13 @@
  */
 {
   "sections": {
+    "page_banner_bjp6GX": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {
+        "banner_image": "{{ article.image }}"
+      }
+    },
     "section": {
       "type": "main-blog-post",
       "blocks": {
@@ -47,6 +54,7 @@
           "settings": {
             "show_date": true,
             "show_author": false,
+            "show_readmore": false,
             "type_preset": "",
             "alignment": "center",
             "show_alignment": true,
@@ -89,13 +97,6 @@
         "color_scheme": "",
         "padding-block-start": 40,
         "padding-block-end": 80
-      }
-    },
-    "page_banner_bjp6GX": {
-      "type": "page-banner",
-      "name": "Page Banner",
-      "settings": {
-        "banner_image": "{{ article.image }}"
       }
     }
   },
