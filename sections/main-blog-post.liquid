@@ -82,6 +82,13 @@
               </div>
             {% endfor %}
             {% assign bundle_product = article.metafields.custom.bundle_product.value %}
+            {% assign bundle_variant = bundle_product.variants.first %}
+            <form method="post" action="/cart/add" class="bundle-add-to-cart-form">
+            <input type="hidden" name="id" value="{{ bundle_variant.id }}">
+            <button type="submit" class="btn btn--bundle">
+              Add Bundle to Cart
+            </button>
+          </form>
             {%- liquid
                   assign product_variant_media = bundle_product.featured_media.preview_image | image_url: width: 100
                   if bundle_product.featured_media.preview_image != blank
