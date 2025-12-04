@@ -65,9 +65,12 @@
             {% assign products = article.metafields.custom.ingredient_products.value %}
             {% for product in products %}
               <div class="blog-ingredient-product-item">
-                <div class="blog-ingredient-product-image-block">
-                  {{ product.featured_image | image_url: width: 300 | image_tag : class: "blog-ingredient-product-image"  }}
+                <div class="">
+                  <div class="blog-ingredient-product-image-block">
+                    {{ product.featured_image | image_url: width: 300 | image_tag : class: "blog-ingredient-product-image"  }}
+                  </div>
                 </div>
+                
                 <div class="blog-ingredient-product-info-block">
                   <h5>{{ product.title }}</h5>
                   <div class="blog-ingredient-product-info_details">
