@@ -70,10 +70,12 @@
                 </div>
                 <div class="blog-ingredient-product-info-block">
                   <h5>{{ product.title }}</h5>
-                  {% if product.metafields.custom.brand_name %}
-                    <p>Brand: {{ product.metafields.custom.brand_name }}</p>
-                  {% endif %}
-                  <p>{{ product.selected_or_first_available_variant.sku }}</p>
+                  <div class="blog-ingredient-product-info_details">
+                    {% if product.metafields.custom.brand_name %}
+                      <p>Brand: {{ product.metafields.custom.brand_name }}</p>
+                    {% endif %}
+                    <p>{{ product.selected_or_first_available_variant.sku }}</p>
+                  </div>
                 </div>
               </div>
             {% endfor %}
