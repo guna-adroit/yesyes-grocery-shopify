@@ -95,7 +95,7 @@
         "content_direction": "column",
         "gap": 32,
         "color_scheme": "",
-        "padding-block-start": 40,
+        "padding-block-start": 0,
         "padding-block-end": 80
       }
     }
