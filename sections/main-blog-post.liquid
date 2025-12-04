@@ -81,7 +81,8 @@
                 </div>
               </div>
             {% endfor %}
-            {{ article.metafields.custom.bundle_product.value }}
+            {% assign bundle_product = article.metafields.custom.bundle_product.value %}
+            {{ bundle_product.title }}
                 <div class="blog-ingredients-button-block">
                   <product-form-component
                   data-section-id="{{ section.id }}"
