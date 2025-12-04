@@ -70,6 +70,8 @@
                 </div>
                 <div class="blog-ingredient-product-info-block">
                   <h5>{{ product.title }}</h5>
+                  <p>{{ product.metafields.custom.brand_name }}</p>
+                  <p>{{ product.selected_or_first_available_variant.sku }}</p>
                 </div>
               </div>
             {% endfor %}
