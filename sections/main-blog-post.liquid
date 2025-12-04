@@ -81,7 +81,45 @@
                 </div>
               </div>
             {% endfor %}
+            {{ article.metafields.custom.bundle_product.value }}
                 <div class="blog-ingredients-button-block">
+                  <product-form-component
+                  data-section-id="{{ section.id }}"
+                  data-product-id="{{ variant.id }}"
+                  data-product-url="{{ variant.url }}"
+                  on:submit="/handleSubmit"
+                  data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                >
+                  <div
+                    class="visually-hidden"
+                    aria-live="assertive"
+                    role="status"
+                    aria-atomic="true"
+                    ref="liveRegion"
+                  ></div>
+                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+                <add-to-cart-component
+                  ref="addToCartButtonContainer" 
+                  data-product-variant-media="{{ product_variant_media }}"
+                  data-add-to-cart-animation="true"
+                  >
+                  <button ref="addToCartButton"
+                  class="button button-primary quick-add-button" 
+                  type="submit"
+                  name="add"
+                  on:click="/handleClick"
+                  data-variant-id="{{ variant.id }}">
+                  <span class="svg-wrapper add-to-cart-icon">
+                    {{- 'icon-trolley.svg' | inline_asset_content -}}
+                  </span>
+                    Add
+                  </button>
+                  
+                </add-to-cart-component>
+                
+              {% endform %}
+            </product-form-component>
                   <button class="blog-ingredients-button button button--primary">BUY INGREDIENT’S</button>
                 </div>
           </div>
