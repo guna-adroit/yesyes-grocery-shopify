@@ -53,7 +53,7 @@
           "static": true,
           "settings": {
             "show_date": true,
-            "show_author": false,
+            "show_author": true,
             "show_readmore": false,
             "type_preset": "",
             "alignment": "center",
