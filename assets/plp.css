@@ -648,7 +648,7 @@ quantity-input-bulk.is-loading::after {
     justify-content: flex-start;
     gap: 74px;
 }
-.blog-content-wrapper .blog-post-content rte-formatter p,
+.blog-post-content rte-formatter p,
 .blog-content-wrapper .blog-post-content rte-formatter span,
 .blog-content-wrapper .blog-post-content rte-formatter ul li,
 .blog-content-wrapper .blog-post-content rte-formatter ol li,{
