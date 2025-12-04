@@ -62,6 +62,15 @@
       <div class="blog-ingredients-content">
        <h4>Ingredients Content</h4>
           <div class="blog-ingredient-products-list">
+            {% assign product_ids = article.metafields.custom.ingredient_products %}
+            {% for product_gid in product_ids %}
+              {% assign product = product_gid %}
+              {% if product %}
+                <div>{{ product.title }}</div>
+              {% else %}
+                <div>Product not found</div>
+              {% endif %}
+            {% endfor %}
             {% assign product_handles = article.metafields.custom.ingredient_products | split: ',' %}
             {% for handle in product_handles %}
               {% assign product = all_products[handle] %}
