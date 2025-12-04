@@ -70,7 +70,9 @@
                 </div>
                 <div class="blog-ingredient-product-info-block">
                   <h5>{{ product.title }}</h5>
-                  <p>Brand: {{ product.metafields.custom.brand_name }}</p>
+                  {% if product.metafields.custom.brand_name %}
+                    <p>Brand: {{ product.metafields.custom.brand_name }}</p>
+                  {% endif %}
                   <p>{{ product.selected_or_first_available_variant.sku }}</p>
                 </div>
               </div>
