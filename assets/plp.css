@@ -644,5 +644,8 @@ quantity-input-bulk.is-loading::after {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-
+.blog-content-wrapper .blog-details-wrapper{
+    justify-content: flex-start;
+    gap: 74px;
+}
 /* Blog CSS End */
