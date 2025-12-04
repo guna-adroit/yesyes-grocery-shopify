@@ -684,8 +684,11 @@ quantity-input-bulk.is-loading::after {
     line-height: 20px;
     margin: 0px;
 }
+.blog-ingredients-button-block{
+    margin: 0 auto;
+}
 .blog-ingredients-button{
-    max-width: 344px;
+    width: 344px;
     height: 65px;
 }
 @media screen and (max-width: 1024px){
