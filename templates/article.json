@@ -65,6 +65,7 @@
         },
         "blog-post-image": {
           "type": "_blog-post-featured-image",
+          "disabled": true,
           "static": true,
           "settings": {
             "image_ratio": "adapt",
