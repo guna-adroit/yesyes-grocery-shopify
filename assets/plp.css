@@ -667,6 +667,11 @@ quantity-input-bulk.is-loading::after {
     font-size: 34px;
     line-height: 44px;
 }
+.blog-ingredient-product-info-block{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
 .blog-ingredient-product-info-block > h5{
     font-weight: 700;
     font-size: 18px;
