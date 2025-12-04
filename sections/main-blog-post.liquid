@@ -104,7 +104,7 @@
                     aria-atomic="true"
                     ref="liveRegion"
                   ></div>
-                {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+                {%- form 'product', bundle_product, data-type: 'add-to-cart-form' -%}
                 <input type="hidden" name="id" ref="variantId" value="{{ bundle_product.selected_or_first_available_variant.id }}">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
