@@ -832,7 +832,9 @@ span.cart__column_title {
 .cart__total-label.points-discount, .cart__total-label.points-discount+text-component {
     color: #ED1D23;
 }
-
+.cart-drawer__content .cart-items__details, .cart-drawer__content .cart-items__quantity{
+    padding-left: 36px;
+}
 
 
 
