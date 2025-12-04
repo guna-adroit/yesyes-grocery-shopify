@@ -667,4 +667,9 @@ quantity-input-bulk.is-loading::after {
     font-size: 34px;
     line-height: 44px;
 }
+@media screen and (max-width: 1024px){
+    .blog-content-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
 /* Blog CSS End */
