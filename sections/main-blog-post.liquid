@@ -86,8 +86,8 @@
                 <div class="blog-ingredients-button-block">
                   <product-form-component
                   data-section-id="{{ section.id }}"
-                  data-product-id="{{ variant.id }}"
-                  data-product-url="{{ variant.url }}"
+                  data-product-id="{{ product.selected_or_first_available_variant.id }}"
+                  data-product-url="{{ product.url }}"
                   on:submit="/handleSubmit"
                   data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
                 >
