@@ -70,7 +70,6 @@
                     {{ product.featured_image | image_url: width: 300 | image_tag : class: "blog-ingredient-product-image"  }}
                   </div>
                 </div>
-                
                 <div class="blog-ingredient-product-info-block">
                   <h5>{{ product.title }}</h5>
                   <div class="blog-ingredient-product-info_details">
@@ -79,6 +78,9 @@
                     {% endif %}
                     <p>{{ product.selected_or_first_available_variant.sku }}</p>
                   </div>
+                </div>
+                <div class="blog-button-ingredients">
+                  <button class="button button--primary">BUY INGREDIENT’S</button>
                 </div>
               </div>
             {% endfor %}
