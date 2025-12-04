@@ -652,8 +652,8 @@ quantity-input-bulk.is-loading::after {
 .blog-content-wrapper .blog-post-content rte-formatter span,
 .blog-content-wrapper .blog-post-content rte-formatter ul li,
 .blog-content-wrapper .blog-post-content rte-formatter ol li,{
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 700 !important;
+    font-size: 18px !important;
     line-height: 25.2px;
 }
 
