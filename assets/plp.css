@@ -657,5 +657,8 @@ quantity-input-bulk.is-loading::after {
     font-size: 18px;
     line-height: 25.2px;
 }
-
+.blog-ingredients-block{
+    background-color: #fffce8;
+    border-radius: 23px;
+}
 /* Blog CSS End */
