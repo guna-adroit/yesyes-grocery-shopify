@@ -638,3 +638,7 @@ quantity-input-bulk.is-loading::after {
     font-size: 38px;
     line-height: normal;
 }
+.blog-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
