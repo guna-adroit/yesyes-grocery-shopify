@@ -684,6 +684,10 @@ quantity-input-bulk.is-loading::after {
     line-height: 20px;
     margin: 0px;
 }
+.blog-ingredients-button{
+    max-width: 344px;
+    height: 65px;
+}
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
         grid-template-columns: 1fr;
