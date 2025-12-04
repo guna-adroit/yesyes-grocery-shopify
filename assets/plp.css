@@ -676,11 +676,13 @@ quantity-input-bulk.is-loading::after {
     font-weight: 700;
     font-size: 18px;
     line-height: 25.2px;
+    margin: 0px;
 }
 .blog-ingredient-product-info_details> p{
     font-weight: 600;
     font-size: 14px;
     line-height: 19.6px;
+    margin: 0px;
 }
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
