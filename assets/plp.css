@@ -681,7 +681,7 @@ quantity-input-bulk.is-loading::after {
 .blog-ingredient-product-info_details> p{
     font-weight: 600;
     font-size: 14px;
-    line-height: 19.6px;
+    line-height: 20px;
     margin: 0px;
 }
 @media screen and (max-width: 1024px){
