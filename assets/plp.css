@@ -643,6 +643,7 @@ quantity-input-bulk.is-loading::after {
 .blog-content-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 62px;
 }
 .blog-content-wrapper .blog-details-wrapper{
     justify-content: flex-start;
