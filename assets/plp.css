@@ -662,4 +662,9 @@ quantity-input-bulk.is-loading::after {
     border-radius: 23px;
     padding: 60px 40px;
 }
+.blog-ingredients-content h4{
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 44px;
+}
 /* Blog CSS End */
