@@ -690,6 +690,9 @@ quantity-input-bulk.is-loading::after {
 .blog-ingredients-button{
     width: 344px;
     height: 65px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
 }
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
