@@ -280,6 +280,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         .yy-page-banner-image-block img{
             width: 100%;
             display: block;
+            object-fit: cover;
+            height: 100%;
         }
         
         .yy-page-banner-arrow-circle{
