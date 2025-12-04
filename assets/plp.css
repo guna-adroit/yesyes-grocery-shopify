@@ -630,10 +630,10 @@ quantity-input-bulk.is-loading::after {
   from { transform: translateY(-50%) rotate(0deg); }
   to   { transform: translateY(-50%) rotate(360deg); }
 }
-.blog-page-title{
+.blog-page-title, .blog-post-title{
     margin-top: 130px;
 }
-.blog-page-title h1{
+.blog-page-title h1, .blog-post-title h1{
     font-weight: 900;
     font-size: 38px;
     line-height: normal;
