@@ -62,7 +62,7 @@
       <div class="blog-ingredients-content">
        <h4>Ingredients Content</h4>
           <div class="blog-ingredient-products-list">
-            {% assign products = article.metafields.custom.ingredient_products.values %}
+            {% assign products = article.metafields.custom.ingredient_products.value %}
             {% for product in products %}
               {{ product.title }}
             {% endfor %}
