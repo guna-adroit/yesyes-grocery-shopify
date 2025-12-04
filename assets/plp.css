@@ -630,6 +630,8 @@ quantity-input-bulk.is-loading::after {
   from { transform: translateY(-50%) rotate(0deg); }
   to   { transform: translateY(-50%) rotate(360deg); }
 }
+
+/* Blog CSS Start */
 .blog-page-title, .blog-content-wrapper{
     margin-top: 130px;
 }
@@ -642,3 +644,5 @@ quantity-input-bulk.is-loading::after {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+/* Blog CSS End */
