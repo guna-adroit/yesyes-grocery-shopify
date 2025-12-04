@@ -766,6 +766,7 @@ span.cart__total-label.cart-primary-typography, text-component.cart__total-value
     font-size: 18px;
     line-height: 25.2px;
     letter-spacing: 0;
+    height: 65px;
 }
 span.cart-title__signup-link {
     font-family: Inter;
@@ -775,6 +776,9 @@ span.cart-title__signup-link {
     letter-spacing: 0;
     display: block;
     margin-top: 16px;
+}
+.cart-title__signup-link a{
+    font-weight: 700;
 }
 .cart-items__media-container img {
     border: 1px solid #828282;
@@ -849,9 +853,23 @@ span.cart__column_title {
     font-weight: 700;
     color: #000;
 }
-.cart-drawer__content .quantity-selector svg{
+.cart-drawer__content .quantity-selector svg path{
     box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.84);
 }
+.cart__summary-item.tax-note small{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+}
+
+
+
+
+
+
+
+
 
 /* Responsive behavior */
 @media (max-width: 1100px) {

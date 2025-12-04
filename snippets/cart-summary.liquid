@@ -82,20 +82,22 @@
         {{ total_price }}
       </text-component>
     </span>
-    <span
-      class="cart__summary-item cart__total"
-      role="status" >
-      <span class="cart__total-label cart-primary-typography points-discount">POINTS DISCOUNT</span>
-      <text-component
-        ref="cartTotal"
-        value="{{ total_price | strip_html }}"
-        class="cart__total-value cart-secondary-typography"
-        {% comment %} Used by payment_terms web component {% endcomment %}
-        data-cart-subtotal
-      >
-        -{{ total_price | divided_by: 10 | money }}
-      </text-component>
-    </span>
+    {% unless template.name != 'cart' %}
+      <span
+        class="cart__summary-item cart__total"
+        role="status" >
+        <span class="cart__total-label cart-primary-typography points-discount">POINTS DISCOUNT</span>
+        <text-component
+          ref="cartTotal"
+          value="{{ total_price | strip_html }}"
+          class="cart__total-value cart-secondary-typography"
+          {% comment %} Used by payment_terms web component {% endcomment %}
+          data-cart-subtotal
+        >
+          -{{ total_price | divided_by: 10 | money }}
+        </text-component>
+      </span>
+    {% endunless %}
     {% if settings.show_installments %}
       <span class="cart__summary-item cart__installments">
         {% form 'cart', cart %}
