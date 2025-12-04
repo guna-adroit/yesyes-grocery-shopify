@@ -62,14 +62,14 @@
       <div class="blog-ingredients-content">
        <h4>Ingredients Content</h4>
           <div class="blog-ingredient-products-list">
+            {{ article.metafields.custom.ingredient_products }}
             {% assign products = article.metafields.custom.ingredient_products.value %}
             {% for product in products %}
-              {{ product.title }}
+              <div class="blog-ingredient-product-item">
+                {{ product.featured_image | image_url: width: 300 | image_tag  }}
+                {{ product.title }}
+              </div>
             {% endfor %}
-            {{ article.metafields.custom.ingredient_products }}
-            <div class="blog-ingredient-product-item">
-              
-            </div>
           </div>
       </div>
     </div>
