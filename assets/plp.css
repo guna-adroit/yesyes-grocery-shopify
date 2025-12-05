@@ -751,6 +751,9 @@ quantity-input-bulk.is-loading::after {
         height: 55px;
         font-size: 16px;
     }
+    .featured-blog-posts-card .resource-image .image-block__image{
+        border-radius: 8px;
+    }
 }
 @media screen and (max-width: 440px){
     .featured-blog-posts-card .resource-image .image-block__image{
