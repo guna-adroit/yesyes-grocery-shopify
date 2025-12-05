@@ -715,5 +715,9 @@ quantity-input-bulk.is-loading::after {
         font-size: 16px;
         line-height: 22px;
     }
+    .blog-ingredient-product-info_details> p{
+        font-size: 12px;
+        line-height: 18px;
+    }
 }
 /* Blog CSS End */
