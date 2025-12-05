@@ -752,4 +752,9 @@ quantity-input-bulk.is-loading::after {
         font-size: 16px;
     }
 }
+@media screen and (max-width: 440px){
+    .featured-blog-posts-card .resource-image .image-block__image{
+        object-fit: cover;
+    }
+}
 /* Blog CSS End */
