@@ -2,7 +2,7 @@
 <script src="{{ 'youtube-lite.js' | asset_url }}" defer></script>
 
 <style>
-        {% comment %} .about-video-section-wrapper{
+       .about-video-section-wrapper{
              position: relative;
         }
         .about-video-section-container{
@@ -15,6 +15,7 @@
             padding-bottom: 56px;
         }
         .about-video-container{
+            position: relative;
             padding: 20px;
             padding-bottom: 0;
             {% comment %} margin-top: 18%; {% endcomment %}
@@ -38,7 +39,7 @@
             line-height: 44px;
             text-align: center;
             color: white;
-        }{% endcomment %}
+        }
         .about-video-container lite-youtube:not(.lyt-activated)::after {
             content: ''; 
             position: absolute;
