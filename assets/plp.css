@@ -704,5 +704,8 @@ quantity-input-bulk.is-loading::after {
     .blog-page-title, .blog-content-wrapper{
         margin-top: 60px;
     }
+    .blog-content-wrapper .blog-details-wrapper{
+        gap: 10px;
+    }
 }
 /* Blog CSS End */
