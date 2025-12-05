@@ -719,5 +719,8 @@ quantity-input-bulk.is-loading::after {
         font-size: 12px;
         line-height: 18px;
     }
+    .blog-ingredients-button{
+        font-size: 16px;
+    }
 }
 /* Blog CSS End */
