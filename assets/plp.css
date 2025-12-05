@@ -700,4 +700,9 @@ quantity-input-bulk.is-loading::after {
         grid-template-columns: 1fr;
     }
 }
+@media screen and (max-width: 768px){
+    .blog-page-title, .blog-content-wrapper{
+        margin-top: 60px;
+    }
+}
 /* Blog CSS End */
