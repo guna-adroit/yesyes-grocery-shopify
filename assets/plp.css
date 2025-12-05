@@ -696,12 +696,16 @@ quantity-input-bulk.is-loading::after {
     line-height: 25.2px;
     justify-content: center;
 }
+
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
         grid-template-columns: 1fr;
     }
 }
 @media screen and (max-width: 768px){
+    .blog-page-title h1, .blog-post-title h1{
+        font-size: 28px;
+    }
     .blog-page-title, .blog-content-wrapper{
         margin-top: 60px;
     }
