@@ -95,6 +95,7 @@
                                 {{ section.settings.video | video_tag: autoplay: false, loop: true, muted: false, controls: true }}
                             {% elsif section.settings.video_link != blank %}
                                 <lite-youtube videoid="{{ video_id }}"></lite-youtube>
+                                <div class="overlay"></div>
                             {% else %}
                                 {{ placeholder_video | video_tag: autoplay: false, loop: true, muted: true, controls: false }}
                             {% endif %}
