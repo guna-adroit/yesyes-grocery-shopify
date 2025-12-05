@@ -661,6 +661,7 @@ quantity-input-bulk.is-loading::after {
     background-color: #fffce8;
     border-radius: 23px;
     padding: 60px 40px;
+    margin-bottom: 30px;
 }
 .blog-ingredients-content h4{
     font-weight: 700;
@@ -709,6 +710,9 @@ quantity-input-bulk.is-loading::after {
     }
     .blog-ingredient-product-image-block{
         width: 62px;
+    }
+    .blog-ingredients-content{
+        padding: 40px 25px;
     }
     .blog-ingredients-content h4{
         font-size: 24px;
