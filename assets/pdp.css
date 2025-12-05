@@ -298,7 +298,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         }
         .yy-page-banner-arrow-circle svg{
             rotate: 90deg;
-            --svg-size: clamp(18px, 2vw, 60px);
+            --svg-size: clamp(18px, 2.6vw, 60px);
             width: var(--svg-size);
             height: var(--svg-size);
         }
