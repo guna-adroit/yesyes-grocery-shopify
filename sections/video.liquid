@@ -2,7 +2,7 @@
 <script src="{{ 'youtube-lite.js' | asset_url }}" defer></script>
 
 <style>
-        .about-video-section-wrapper{
+        {% comment %} .about-video-section-wrapper{
              position: relative;
         }
         .about-video-section-container{
@@ -51,7 +51,7 @@
         }
         lite-youtube>.lyt-playbtn{
             z-index: 2;
-        }
+        } {% endcomment %}
         @media screen and (max-width: 1024px){
             .about-video-container{
                 margin-top: 24%;
