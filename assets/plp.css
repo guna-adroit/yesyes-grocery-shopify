@@ -720,6 +720,8 @@ quantity-input-bulk.is-loading::after {
         line-height: 18px;
     }
     .blog-ingredients-button{
+        width: 244px;
+        height: 55px;
         font-size: 16px;
     }
 }
