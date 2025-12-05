@@ -706,6 +706,13 @@ quantity-input-bulk.is-loading::after {
     .blog-page-title h1, .blog-post-title h1{
         font-size: 28px;
     }
+    .blog-content-wrapper .blog-post-content rte-formatter p,
+    .blog-content-wrapper .blog-post-content rte-formatter span,
+    .blog-content-wrapper .blog-post-content rte-formatter ul li,
+    .blog-content-wrapper .blog-post-content rte-formatter ol li{
+        font-size: 14px;
+        line-height: 20px;
+    }
     .blog-page-title, .blog-content-wrapper{
         margin-top: 60px;
     }
