@@ -326,7 +326,7 @@ span.modal-button-label__small {
 }
 span.overlay-back-button{
     position: absolute; 
-    padding: 0 18px;
+    padding: 0 12px;
     left: 52px;
     top: 6px;
     /* height: 52px; */
