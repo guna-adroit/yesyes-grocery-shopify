@@ -806,6 +806,9 @@ span.cart__column_title {
     letter-spacing: 0;
     text-transform: uppercase;
 }
+.cart-items__table-row .cart__column_title:last-child {
+    padding-right: 16px;
+}
 .shopping-bag-label {
     font-weight: 600;
     font-size: 20px;
