@@ -696,7 +696,9 @@ quantity-input-bulk.is-loading::after {
     line-height: 25.2px;
     justify-content: center;
 }
-
+.blog-post-content{
+    max-width: 100%;
+}
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
         grid-template-columns: 1fr;
