@@ -612,11 +612,28 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
 }
 /* Search Results */
 .predictive-search-results__inner{
-    display: flex;
+    /* display: flex; */
 }
 .search-results-container-one {
     min-width: 360px;
     padding: 30px 24px;
+    width: 30%;
+    float: left;
+}
+.predictive-search-results__products{
+    width: 66.66%;
+    float: left;
+}
+.predictive-search-results__list.blogs-rsrc-card{
+    clear: both;
+    width: 100%;
+}
+.resource-card__media.article-media .resource-card__image {
+    aspect-ratio: auto;
+    object-fit: cover;
+}
+.resource-card__media.article-media {
+    padding: 0;
 }
 .search-category-title {
     font-weight: 700;
