@@ -61,7 +61,7 @@
       "settings": {
         "section_width": "page-width",
         "color_scheme": "",
-        "padding-block-start": 24,
+        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
