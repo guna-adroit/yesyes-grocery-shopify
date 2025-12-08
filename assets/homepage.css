@@ -326,12 +326,22 @@ span.modal-button-label__small {
 }
 span.overlay-back-button{
     position: absolute; 
-    padding: 18px;
-    width: 52px;
-    height: 52px;
+    padding: 0 18px;
+    left: 52px;
+    top: 6px;
+    /* height: 52px; */
     z-index: 3;
-    display: none;
+    /* display: none; */
     background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    gap: 6px;
+    width: calc(50% - 68px);
 }
 span.overlay-back-button div {
     width: 13px;
@@ -340,6 +350,10 @@ span.overlay-back-button div {
     background: #ffffff;
     border-width: 0px 0px 1px 1px;
     transform: rotate(45deg);
+}
+span.category-menu_button.active, span.overlay-back-button.active {
+    background: #e50914;
+    color: white;
 }
 .all-category-overlay-menu.active + span.overlay-back-button{
     display: flex;

@@ -85,7 +85,7 @@
         </span>
       </button>
       <span class="category-menu_button">
-        {{ 'categories-red.svg' | inline_asset_content -}}
+        {% comment %} {{ 'categories-red.svg' | inline_asset_content -}} {% endcomment %}
         <span class="modal-button-label__small">
           All categories
         </span>
@@ -559,8 +559,9 @@
             {% endif %}
           </ul>
         </div>
-        <span class="overlay-back-button">
-          <div></div>
+        <span class="overlay-back-button active">
+          MENU
+          {% comment %} <div></div> {% endcomment %}
         </span>
         <div class="floating-menu-footer">
           {% for link in linklists.announce-bar-menu.links %}
@@ -1138,16 +1139,21 @@
 <script>// on clicking .category-menu_button add class to .all-category-overlay-menu, Else remove the class
   document.addEventListener('DOMContentLoaded', function() {
     const categoryMenuButton = document.querySelector('.category-menu_button');
+    const menuBackdrop = document.querySelector('.overlay-back-button');
     const allCategoryOverlayMenu = document.querySelector('.all-category-overlay-menu');
 
     categoryMenuButton.addEventListener('click', function(event) {
       event.stopPropagation(); // Prevent the click from propagating to the document
       allCategoryOverlayMenu.classList.add('active');
+      categoryMenuButton.classList.add('active');
+      menuBackdrop.classList.remove('active');
     });
-
+    
     document.addEventListener('click', function(event) {
       if (!allCategoryOverlayMenu.contains(event.target) && !categoryMenuButton.contains(event.target)) {
         allCategoryOverlayMenu.classList.remove('active');
+        categoryMenuButton.classList.remove('active');
+        menuBackdrop.classList.add('active');
       }
     });
   });
