@@ -697,7 +697,7 @@ quantity-input-bulk.is-loading::after {
     justify-content: center;
 }
 .blog-post-content{
-    max-width: 100%;
+    max-width: 100% !important;
 }
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
