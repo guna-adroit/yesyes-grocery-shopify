@@ -283,19 +283,38 @@
     <div class="">
         <dialog id="dialog-career" class="dialog-career">
             <h2 class="career-form-title">Apply for Marketing Manager</h2>
-            <form method="dialog" class="dialog-career-form">
+            <form class="dialog-career-form" id="careerForm">
                 <input type="text" hidden name="career_position" value="">
-                <input type="text" name="name" id="name" placeholder="Name" required>
-                <input type="email" name="email" id="email" placeholder="Email" required>
-                <textarea name="" id="" rows="3" placeholder="Attached note" required></textarea>
-                <label class="career-file-input-btn">
-                    <input type="file" name="career_resume" id="resume" accept="application/pdf" required hidden>
-                    <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" height="" alt="">
-                    <span id="file-name">Upload Resume(PDF)</span>
-                </label>
-                
-                <button type="submit" class="button button--primar career-form-submit_button">Confirm</button>
+
+                <div class="field-group">
+                    <input type="text" name="name" id="name" placeholder="Name" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <textarea name="note" id="note" rows="3" placeholder="Attached note" required></textarea>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <label class="career-file-input-btn">
+                        <input type="file" name="career_resume" id="resume" accept="application/pdf" required hidden>
+                        <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" alt="">
+                        <span id="file-name">Upload Resume (PDF)</span>
+                    </label>
+                    <span class="error"></span>
+                </div>
+
+                <button type="submit" class="button button--primary career-form-submit_button">
+                    Confirm
+                </button>
             </form>
+
             <button class="close-dialog popup-close">
                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.5112 2.82825L11.3933 8.9461L17.14 14.6927C17.4448 14.9976 17.6082 15.4188 17.5943 15.8638C17.5804 16.3088 17.3902 16.7411 17.0657 17.0656C16.7412 17.3901 16.3089 17.5803 15.8639 17.5942C15.4189 17.6081 14.9977 17.4447 14.6928 17.1399L8.9462 11.3932L2.82835 17.5111C2.50384 17.8356 2.07153 18.0257 1.62652 18.0397C1.18152 18.0536 0.760272 17.8902 0.455452 17.5853C0.150631 17.2805 -0.012793 16.8593 0.00112992 16.4143C0.0150535 15.9693 0.205183 15.5369 0.529694 15.2124L6.64754 9.09459L0.900905 3.34795C0.596085 3.04313 0.43266 2.62188 0.446583 2.17687C0.460506 1.73187 0.650636 1.29956 0.975148 0.975048C1.29966 0.650537 1.73197 0.460406 2.17697 0.446483C2.62198 0.43256 3.04322 0.595985 3.34805 0.900805L9.09469 6.64744L15.2125 0.529595C15.537 0.205083 15.9694 0.0149526 16.4144 0.00102932C16.8594 -0.0128947 17.2806 0.150531 17.5854 0.455352C17.8903 0.760172 18.0537 1.18142 18.0398 1.62642C18.0258 2.07143 17.8357 2.50374 17.5112 2.82825Z" fill="#ED1D23"></path>
