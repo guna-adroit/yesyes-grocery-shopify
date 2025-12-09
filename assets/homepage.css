@@ -782,6 +782,10 @@ span.cart__total-label.cart-primary-typography, text-component.cart__total-value
     letter-spacing: 0;
     text-transform: uppercase;
 }
+.cart-page span.cart__total-label.cart-primary-typography{
+    font-size: 18px;
+    line-height: 25.2px;
+}
 .disclosure-trigger__label.h6,.cart-note__label.h6 {
     letter-spacing: 0;
     font-weight: 700;
@@ -896,8 +900,12 @@ span.cart__column_title {
     line-height: 25.2px;
     letter-spacing: 0;
 }
-
-
+.cart__summary-inner {
+    border-left: 1px solid #ccc;
+}
+.cart__total-container {
+    margin-top: 24px;
+}
 
 
 
@@ -955,6 +963,9 @@ span.cart__column_title {
         opacity: 0;
         animation: fadeIn 0.3s ease-in-out forwards;
         animation-delay: 1s; /* optional */
+    }
+    .cart__summary-inner {
+        border-left: 0px solid #ccc;
     }
 
     @keyframes fadeIn {
