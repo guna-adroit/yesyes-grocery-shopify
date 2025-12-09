@@ -304,7 +304,7 @@
                 <div class="field-group">
                     <label class="career-file-input-btn">
                         <input type="file" name="career_resume" id="resume" accept="application/pdf" required hidden>
-                        <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" alt="">
+                        <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" height="" alt="">
                         <span id="file-name">Upload Resume (PDF)</span>
                     </label>
                     <span class="error"></span>
@@ -323,11 +323,106 @@
         </dialog>
     </div>
     <script>
-        document.getElementById('resume').addEventListener('change', function() {
-            let fileName = this.files.length > 0 ? this.files[0].name : "Upload Resume(PDF)";
-            document.getElementById('file-name').textContent = fileName;
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("careerForm");
+            const resumeInput = document.getElementById("resume");
+            const fileNameSpan = document.getElementById("file-name");
+
+            function showError(input, message) {
+                const group = input.closest(".field-group");
+                const errorSpan = group.querySelector(".error");
+                errorSpan.textContent = message;
+            }
+
+            function clearError(input) {
+                const group = input.closest(".field-group");
+                const errorSpan = group.querySelector(".error");
+                errorSpan.textContent = "";
+            }
+
+            // Show file name
+            resumeInput.addEventListener("change", () => {
+                const file = resumeInput.files[0];
+                if (file) {
+                    fileNameSpan.textContent = file.name;
+                    clearError(resumeInput);
+                }
+            });
+
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const note = document.getElementById("note");
+                const resume = resumeInput;
+
+                // NAME validation
+                if (name.value.trim() === "") {
+                    showError(name, "Name is required");
+                    isValid = false;
+                } else {
+                    clearError(name);
+                }
+
+                // EMAIL validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value.trim())) {
+                    showError(email, "Enter a valid email");
+                    isValid = false;
+                } else {
+                    clearError(email);
+                }
+
+                // NOTE validation
+                if (note.value.trim() === "") {
+                    showError(note, "Note is required");
+                    isValid = false;
+                } else {
+                    clearError(note);
+                }
+
+                // RESUME validation
+                if (!resume.files[0]) {
+                    showError(resume, "Please upload your resume (PDF)");
+                    isValid = false;
+                } else if (resume.files[0].type !== "application/pdf") {
+                    showError(resume, "Only PDF files are allowed");
+                    isValid = false;
+                } else {
+                    clearError(resume);
+                }
+
+                if (!isValid) return;
+
+                // If valid → submit form
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch("https://yy-form.vercel.app/api/send-email", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        // Optional success UI
+                        form.reset();
+                        fileNameSpan.textContent = "Upload Resume (PDF)";
+
+                        alert("Form submitted successfully!");
+                    } else {
+                        alert("Something went wrong. Try again.");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Network error.");
+                }
+            });
         });
-    </script>
+        </script>
+
     <script>
         const dialog = document.querySelector('#dialog-career');
         const showDialogButtons = document.querySelectorAll('.show-dialog');
