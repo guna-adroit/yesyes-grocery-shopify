@@ -291,7 +291,7 @@
                 <label class="career-file-input-btn">
                     <input type="file" name="career_resume" id="resume" required hidden>
                     <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" height="" alt="">
-                    Upload  Resume
+                    <span id="file-name">Upload Resume</span>
                 </label>
                 
                 <button type="submit" class="button button--primar career-form-submit_button">Confirm</button>
@@ -303,6 +303,12 @@
             </button>
         </dialog>
     </div>
+    <script>
+        document.getElementById('resume').addEventListener('change', function() {
+            let fileName = this.files.length > 0 ? this.files[0].name : "Upload Resume";
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
     <script>
         const dialog = document.querySelector('#dialog-career');
         const showDialogButtons = document.querySelectorAll('.show-dialog');
