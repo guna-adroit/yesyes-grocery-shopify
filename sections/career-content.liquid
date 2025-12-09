@@ -289,9 +289,9 @@
                 <input type="email" name="email" id="email" placeholder="Email" required>
                 <textarea name="" id="" rows="3" placeholder="Attached note" required></textarea>
                 <label class="career-file-input-btn">
-                    <input type="file" name="career_resume" id="resume" required hidden>
+                    <input type="file" name="career_resume" id="resume" accept="application/pdf" required hidden>
                     <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" height="" alt="">
-                    <span id="file-name">Upload Resume</span>
+                    <span id="file-name">Upload Resume(PDF)</span>
                 </label>
                 
                 <button type="submit" class="button button--primar career-form-submit_button">Confirm</button>
@@ -305,7 +305,7 @@
     </div>
     <script>
         document.getElementById('resume').addEventListener('change', function() {
-            let fileName = this.files.length > 0 ? this.files[0].name : "Upload Resume";
+            let fileName = this.files.length > 0 ? this.files[0].name : "Upload Resume(PDF)";
             document.getElementById('file-name').textContent = fileName;
         });
     </script>
