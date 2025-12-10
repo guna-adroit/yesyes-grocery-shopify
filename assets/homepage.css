@@ -786,11 +786,18 @@ span.cart__total-label.cart-primary-typography, text-component.cart__total-value
     font-size: 18px;
     line-height: 25.2px;
 }
-.disclosure-trigger__label.h6,.cart-note__label.h6 {
+.disclosure-trigger__label.h6 {
     letter-spacing: 0;
     font-weight: 700;
     font-size: 18px;
     line-height: 25.2px;
+    text-transform: uppercase;
+}
+.cart-note__label.h6{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 .cart__checkout-button.cart_view_cart.button {
@@ -903,10 +910,34 @@ span.cart__column_title {
 .cart__summary-inner {
     border-left: 1px solid #ccc;
 }
+
 .cart__total-container {
     margin-top: 24px;
 }
 
+.cart-page .cart__summary-inner{
+    margin-block-start: 32px;
+}
+.cart-page .cart__ctas .cart__checkout-button{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+.cart-page .cart-note__summary, .cart-page .disclosure-trigger{
+    padding-block: 0;
+}
+.cart__summary-item.tax-note {
+    padding-bottom: 20px;
+    border-block-end: 1px solid #ccc;
+}
+.cart-page .cart-final-amount {
+    padding-top: 18px;
+}
+.cart-page .cart__total-container{
+    margin-top: 0px;
+}
 
 
 
