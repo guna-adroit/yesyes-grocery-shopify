@@ -424,3 +424,25 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 24px;
     line-height: 25.2px;
 }
+@media screen and (max-width: 768px){
+    .shopify-policy__body p,
+    .shopify-policy__body ul li,
+    .shopify-policy__body ol li, 
+    .shopify-policy__body span,
+    .shopify-policy__body div,
+    .shopify-policy__body strong{
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .shopify-policy__title h1{
+        font-size: 28px;
+        line-height: 44px;
+    }
+    .policy-updated-date{
+        font-size: 20px !important;
+    }
+    .shopify-policy__body h2{
+        font-size: 24px;
+        line-height: 25.2px;
+    }
+}
