@@ -406,6 +406,14 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 20px;
     line-height: 30px;
 }
+.shopify-policy__title{
+    text-align: left;   
+}
+.shopify-policy__title h1{
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 64px;
+}
 .policy-updated-date{
     font-weight: 400 !important;
     font-size: 24px !important;
