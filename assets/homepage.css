@@ -877,21 +877,21 @@ span.cart__column_title {
 .cart-drawer__content .cart-items__details, .cart-drawer__content .cart-items__quantity{
     padding-left: 36px;
 }
-.cart-drawer__content .quantity-selector .quantity-minus {
+.cart-drawer__content .quantity-selector .quantity-minus, .cart-page .quantity-selector .quantity-minus{
     border-right: 1px solid black;
 }
-.cart-drawer__content .quantity-selector .quantity-plus{
+.cart-drawer__content .quantity-selector .quantity-plus, .cart-page .quantity-selector .quantity-plus{
     border-left: 1px solid black;
 }
 .cart-drawer__content .quantity-selector .quantity-minus, .cart-drawer__content .quantity-selector .quantity-plus{
     border-start-end-radius: 0;
     border-end-end-radius: 0;
 }
-.cart-drawer__content .quantity-selector input[type=number]{
+.cart-drawer__content .quantity-selector input[type=number], .cart-page .quantity-selector input[type=number]{
     font-weight: 700;
     color: #000;
 }
-.cart-drawer__content .quantity-selector svg path{
+.cart-drawer__content .quantity-selector svg path, .cart-page .quantity-selector svg path{
     box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.84);
 }
 .cart__summary-item.tax-note small{
