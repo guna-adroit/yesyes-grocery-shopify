@@ -387,3 +387,12 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         width: calc((100% - (min(12px, 9999px) * (4 - 1)) - 3rem) / 4.5);
     }
 }
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+}
+.field-group {
+    margin-bottom: 12px;
+}
