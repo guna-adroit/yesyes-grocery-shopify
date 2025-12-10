@@ -394,5 +394,5 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     display: block;
 }
 .shopify-policy__container{
-    max-width: 1484px;
+    max-width: 1484px !important;
 }
