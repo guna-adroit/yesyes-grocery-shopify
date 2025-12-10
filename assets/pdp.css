@@ -396,3 +396,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .shopify-policy__container{
     max-width: 1484px !important;
 }
+.shopify-policy__body h2{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 25.2px;
+}
