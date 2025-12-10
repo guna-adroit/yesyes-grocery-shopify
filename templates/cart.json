@@ -483,7 +483,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "dh-white-raw-rice-5kg",
+        "product": "double-horse-matta-red-rice",
         "recommendation_type": "related",
         "custom_classes": "related-products-slider",
         "layout_type": "carousel",
