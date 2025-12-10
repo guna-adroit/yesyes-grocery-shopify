@@ -407,7 +407,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     line-height: 30px;
 }
 .shopify-policy__title{
-    text-align: left;   
+    text-align: left !important;   
 }
 .shopify-policy__title h1{
     font-weight: 900;
