@@ -81,8 +81,18 @@
                 </div>
               </div>
             {% endfor %}
-            {% assign bundle_product = article.metafields.custom.bundle_product.value %}
             
+            <button id="add-all-ingredients"
+                  data-products='[
+                  {% for product in products %}
+                    {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
+                    {% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                  ]'>
+            Add All to Cart
+          </button>
+
+            {% assign bundle_product = article.metafields.custom.bundle_product.value %}
             {%- liquid
                   assign product_variant_media = bundle_product.featured_media.preview_image | image_url: width: 100
                   if bundle_product.featured_media.preview_image != blank
@@ -135,6 +145,41 @@
 <script type="application/ld+json">
   {{ article | structured_data }}
 </script>
+
+<script type="module">
+  import { CartAddEvent } from '@theme/events';
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("add-all-ingredients");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+
+      const items = JSON.parse(btn.dataset.products);
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ items })
+      })
+      .then(res => res.json())
+      .then(data => {
+
+        // 🔥 Required for Horizon theme
+        document.dispatchEvent(new CartAddEvent(items));
+
+        // Optional: open mini-cart drawer
+        // document.dispatchEvent(new CustomEvent('popup-cart:open'));
+
+        console.log('Added all metafield products:', data);
+      })
+      .catch(err => console.error('Error adding items:', err));
+    });
+  });
+</script>
+
 
 {% stylesheet %}
   .blog-post-comments-container {
