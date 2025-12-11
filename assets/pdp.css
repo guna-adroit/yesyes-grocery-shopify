@@ -461,3 +461,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         line-height: 25.2px;
     }
 }
+.buy-ingredients-button-wrapper {
+    display: flex;
+    justify-content: center;
+}
