@@ -82,14 +82,14 @@
               </div>
             {% endfor %}
             
-            <button id="add-all-ingredients"
+            <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
                   data-products='[
                   {% for product in products %}
                     {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
                     {% unless forloop.last %},{% endunless %}
                   {% endfor %}
                   ]'>
-            Add All to Cart
+            BUY INGREDIENT’S
           </button>
 
             {% assign bundle_product = article.metafields.custom.bundle_product.value %}
