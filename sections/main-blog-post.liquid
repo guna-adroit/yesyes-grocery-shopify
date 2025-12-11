@@ -170,7 +170,10 @@
 
         // 🔥 Open the cart popup (simulate click on cart icon)
         const cartTrigger = document.querySelector('[data-testid="cart-drawer-trigger"]');
-        if (cartTrigger) cartTrigger.click();
+        setTimeout(() => {
+          if (cartTrigger) cartTrigger.click();
+        }, 1000);
+        
 
         console.log("Added all metafield products:", data);
       })
