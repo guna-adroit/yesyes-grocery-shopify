@@ -915,10 +915,6 @@ span.cart__column_title {
 .cart__total-container {
     margin-top: 24px;
 }
-
-.cart-page .cart__summary-inner{
-    margin-block-start: 32px;
-}
 .cart-page .cart__ctas .cart__checkout-button{
     font-weight: 700;
     font-size: 18px;
