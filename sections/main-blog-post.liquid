@@ -159,26 +159,27 @@
 
       fetch('/cart/add.js', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items })
       })
       .then(res => res.json())
       .then(data => {
 
-        // 🔥 Required for Horizon theme
+        // 🔥 Notify Horizon cart system
         document.dispatchEvent(new CartAddEvent(items));
 
-        // Optional: open mini-cart drawer
-        // document.dispatchEvent(new CustomEvent('popup-cart:open'));
+        // 🔥 Open the cart popup (simulate click on cart icon)
+        const cartTrigger = document.querySelector('[data-testid="cart-drawer-trigger"]');
+        if (cartTrigger) cartTrigger.click();
 
-        console.log('Added all metafield products:', data);
+        console.log("Added all metafield products:", data);
       })
-      .catch(err => console.error('Error adding items:', err));
+      .catch(err => console.error('Error:', err));
+
     });
   });
 </script>
+
 
 
 {% stylesheet %}
