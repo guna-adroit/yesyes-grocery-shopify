@@ -696,7 +696,7 @@ quantity-input-bulk.is-loading::after {
     line-height: 25.2px;
     justify-content: center;
 }
-.blog-post-content{
+.blog-post-content, .blog-post-comments-container{
     max-width: 100% !important;
 }
 @media screen and (max-width: 1024px){
