@@ -415,7 +415,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .shopify-policy__title{
     text-align: left !important;   
 }
-.shopify-policy__title h1, .main-page-content h1{
+.shopify-policy__title h1, .main-page-content .text-block h1{
     font-weight: 900;
     font-size: 38px;
     line-height: 64px;
@@ -449,7 +449,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         font-size: 16px;
         line-height: 24px;
     }
-    .shopify-policy__title h1, .main-page-content h1{
+    .shopify-policy__title h1, .main-page-content .text-block h1{
         font-size: 28px;
         line-height: 44px;
     }
