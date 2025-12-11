@@ -699,6 +699,9 @@ quantity-input-bulk.is-loading::after {
 .blog-post-content, .blog-post-comments-container{
     max-width: 100% !important;
 }
+.blog-post-comments__form-container{
+    margin: 0 !important;
+}
 @media screen and (max-width: 1024px){
     .blog-content-wrapper {
         grid-template-columns: 1fr;
