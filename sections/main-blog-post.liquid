@@ -81,16 +81,17 @@
                 </div>
               </div>
             {% endfor %}
-            
-            <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
-                  data-products='[
-                  {% for product in products %}
-                    {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
-                    {% unless forloop.last %},{% endunless %}
-                  {% endfor %}
-                  ]'>
-            BUY INGREDIENT’S
-          </button>
+            <div class="buy-ingredients-button-wrapper">
+                <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
+                      data-products='[
+                      {% for product in products %}
+                        {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
+                        {% unless forloop.last %},{% endunless %}
+                      {% endfor %}
+                      ]'>
+                  BUY INGREDIENT’S
+                </button>
+            </div>
 
             {% assign bundle_product = article.metafields.custom.bundle_product.value %}
             {%- liquid
