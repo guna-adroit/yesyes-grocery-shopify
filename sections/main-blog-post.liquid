@@ -93,7 +93,7 @@
                 </button>
             </div>
 
-            {% assign bundle_product = article.metafields.custom.bundle_product.value %}
+            {% comment %} {% assign bundle_product = article.metafields.custom.bundle_product.value %}
             {%- liquid
                   assign product_variant_media = bundle_product.featured_media.preview_image | image_url: width: 100
                   if bundle_product.featured_media.preview_image != blank
@@ -101,42 +101,42 @@
                   endif
                 -%}
                 <div class="blog-ingredients-button-block">
-                  <product-form-component
-                  data-section-id="{{ section.id }}"
-                  data-product-id="{{ bundle_product.selected_or_first_available_variant.id }}"
-                  data-product-url="{{ bundle_product.url }}"
-                  on:submit="/handleSubmit"
-                  data-quantity-default="{% if bundle_product.selected_or_first_available_variant.quantity_rule.min %}{{ bundle_product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
-                >
-                  <div
-                    class="visually-hidden"
-                    aria-live="assertive"
-                    role="status"
-                    aria-atomic="true"
-                    ref="liveRegion"
-                  ></div>
-                {%- form 'product', bundle_product, data-type: 'add-to-cart-form' -%}
-                <input type="hidden" name="id" ref="variantId" value="{{ bundle_product.selected_or_first_available_variant.id }}">
-                <add-to-cart-component
-                  ref="addToCartButtonContainer" 
-                  data-product-variant-media="{{ product_variant_media }}"
-                  data-add-to-cart-animation="true"
-                  >
-                  <button ref="addToCartButton"
-                  class="button button--primary blog-ingredients-button" 
-                  type="submit"
-                  name="add"
-                  on:click="/handleClick"
-                  data-variant-id="{{ bundle_product.selected_or_first_available_variant.id }}">
-                    BUY INGREDIENT’S
-                  </button>
-                  
-                </add-to-cart-component>
-                
-              {% endform %}
-            </product-form-component>
+                    <product-form-component
+                        data-section-id="{{ section.id }}"
+                        data-product-id="{{ bundle_product.selected_or_first_available_variant.id }}"
+                        data-product-url="{{ bundle_product.url }}"
+                        on:submit="/handleSubmit"
+                        data-quantity-default="{% if bundle_product.selected_or_first_available_variant.quantity_rule.min %}{{ bundle_product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                      >
+                        <div
+                          class="visually-hidden"
+                          aria-live="assertive"
+                          role="status"
+                          aria-atomic="true"
+                          ref="liveRegion"
+                        ></div>
+                      {%- form 'product', bundle_product, data-type: 'add-to-cart-form' -%}
+                      <input type="hidden" name="id" ref="variantId" value="{{ bundle_product.selected_or_first_available_variant.id }}">
+                      <add-to-cart-component
+                        ref="addToCartButtonContainer" 
+                        data-product-variant-media="{{ product_variant_media }}"
+                        data-add-to-cart-animation="true"
+                        >
+                        <button ref="addToCartButton"
+                        class="button button--primary blog-ingredients-button" 
+                        type="submit"
+                        name="add"
+                        on:click="/handleClick"
+                        data-variant-id="{{ bundle_product.selected_or_first_available_variant.id }}">
+                          BUY INGREDIENT’S
+                        </button>
+                        
+                      </add-to-cart-component>
+                      
+                    {% endform %}
+                  </product-form-component>
                   {% comment %} <button class="blog-ingredients-button button button--primary">BUY INGREDIENT’S</button> {% endcomment %}
-                </div>
+                </div> {% endcomment %}
           </div>
       </div>
     </div>
