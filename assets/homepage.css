@@ -929,6 +929,9 @@ span.cart__column_title {
     padding-bottom: 20px;
     border-block-end: 1px solid #ccc;
 }
+.cart-page .cart__summary-inner {
+    margin-top: -12px;
+}
 .cart-page .cart-final-amount {
     padding-top: 18px;
 }
