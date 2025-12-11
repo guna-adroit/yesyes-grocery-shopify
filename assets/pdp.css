@@ -402,12 +402,12 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .shopify-policy__body span,
 .shopify-policy__body div,
 .shopify-policy__body strong,
-.main-page-content p,
-.main-page-content ul li,
-.main-page-content ol li, 
-.main-page-content span,
-.main-page-content div,
-.main-page-content strong{
+.main-page-content .shopify-block p,
+.main-page-content .shopify-block ul li,
+.main-page-content .shopify-block ol li, 
+.main-page-content .shopify-block span,
+.main-page-content .shopify-block div,
+.main-page-content .shopify-block strong{
     font-weight: 600;
     font-size: 20px;
     line-height: 30px;
@@ -449,14 +449,14 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         font-size: 16px;
         line-height: 24px;
     }
-    .shopify-policy__title h1, .page-width-content h1{
+    .shopify-policy__title h1, .page-width-content .shopify-block h1{
         font-size: 28px;
         line-height: 44px;
     }
     .policy-updated-date{
         font-size: 20px !important;
     }
-    .shopify-policy__body h2, .page-width-content h2{
+    .shopify-policy__body h2, .page-width-content .shopify-block h2{
         font-size: 24px;
         line-height: 25.2px;
     }
