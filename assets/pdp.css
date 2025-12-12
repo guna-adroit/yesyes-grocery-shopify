@@ -434,6 +434,9 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 .page-width-content{
     --page-content-width:1484px;
 }
+.page-width-content hr {
+    margin-block-start: 2em;
+}
 @media screen and (max-width: 768px){
     .shopify-policy__body p,
     .shopify-policy__body ul li,
