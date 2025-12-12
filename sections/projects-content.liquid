@@ -107,13 +107,21 @@
                 </div>
                 {% for block in section.blocks %}
                   <div class="yy-tab-content" id="content{{ forloop.index }}">
-                      <div class="yy-tab-image-container">
+                      <div class="yy-tab-image-container" id="project-gallery-{{ forloop.index }}">
                           {% for i in (1..10) %}
                             {% assign key = "image-" | append: i %}
                             {% assign image = block.settings[key] %}
                               {% if image != blank %}
                                   <div class="yy-tab-image-item">
+                                    <a
+                                      href="{{ image | image_url: width: 1600 }}"
+                                      data-pswp-width="{{ image.width }}"
+                                      data-pswp-height="{{ image.height }}"
+                                      target="_blank"
+                                      class="project-gallery__item"
+                                    >
                                       {{ image | image_url: width: 800 | image_tag  }}
+                                    </a>
                                   </div>
                               {% endif %}
                           {% endfor %}
@@ -149,6 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+<script id="rendered-js" type="module">
+      import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js';
+ 
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#project-gallery-1',
+        children: 'a',
+        pswpModule: () => import('https://unpkg.com/photoswipe') 
+      });
+ 
+      lightbox.init();
+  </script>
 
 {% schema %}
 {
