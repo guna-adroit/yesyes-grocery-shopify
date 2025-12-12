@@ -159,14 +159,16 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 <script id="rendered-js" type="module">
       import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js';
- 
-      const lightbox = new PhotoSwipeLightbox({
-        gallery: '#project-gallery-1',
-        children: 'a',
-        pswpModule: () => import('https://unpkg.com/photoswipe') 
-      });
- 
-      lightbox.init();
+  
+      {% for block in section.blocks %}
+        const lightbox{{ forloop.index }} = new PhotoSwipeLightbox({
+          gallery: '#project-gallery-{{ forloop.index }}',
+          children: 'a',
+          pswpModule: () => import('https://unpkg.com/photoswipe') 
+        });
+  
+        lightbox{{ forloop.index }}.init();
+    {% endfor %}
   </script>
 
 {% schema %}
