@@ -108,7 +108,7 @@
                 {% for block in section.blocks %}
                   <div class="yy-tab-content" id="content{{ forloop.index }}">
                       <div class="yy-tab-image-container" id="project-gallery-{{ forloop.index }}">
-                          {% for i in (1..10) %}
+                          {% for i in (1..15) %}
                             {% assign key = "image-" | append: i %}
                             {% assign image = block.settings[key] %}
                               {% if image != blank %}
