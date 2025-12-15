@@ -469,3 +469,6 @@ hr {
     display: flex;
     justify-content: center;
 }
+.coming-soon-message{
+    text-align: center;
+}
