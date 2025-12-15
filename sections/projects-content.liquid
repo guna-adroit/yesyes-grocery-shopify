@@ -106,12 +106,14 @@
                     {% endfor %}
                 </div>
                 {% for block in section.blocks %}
+                  {% assign has_images = false %}
                   <div class="yy-tab-content" id="content{{ forloop.index }}">
                       <div class="yy-tab-image-container" id="project-gallery-{{ forloop.index }}">
                           {% for i in (1..15) %}
                             {% assign key = "image-" | append: i %}
                             {% assign image = block.settings[key] %}
                               {% if image != blank %}
+                                {% assign has_images = true %}
                                   <div class="yy-tab-image-item">
                                     <a
                                       href="{{ image | image_url: width: 1600 }}"
@@ -128,6 +130,11 @@
                           {% endfor %}
                       </div>
                   </div>
+                  {% unless has_images %}
+                    <div class="coming-soon-message">
+                      <p>Coming Soon</p>
+                    </div>
+                  {% endunless %}
                 {% endfor %}
             </div>
         </div>
