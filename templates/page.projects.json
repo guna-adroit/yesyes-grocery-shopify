@@ -85,9 +85,21 @@
           "type": "project",
           "settings": {
             "heading": "Bluestone Estate ( Tarneit)",
-            "image-1": "shopify://shop_images/projects-1.png",
-            "image-2": "shopify://shop_images/projects-2.png",
-            "image-3": "shopify://shop_images/projects-3.png"
+            "image-1": "shopify://shop_images/yes-yes-Bluestone-1.jpg",
+            "image-2": "shopify://shop_images/yes-yes-Bluestone-2.jpg",
+            "image-3": "shopify://shop_images/yes-yes-Bluestone-3.jpg",
+            "image-4": "shopify://shop_images/yes-yes-Bluestone-4.jpg",
+            "image-5": "shopify://shop_images/yes-yes-Bluestone-5.jpg",
+            "image-6": "shopify://shop_images/yes-yes-Bluestone-6.jpg",
+            "image-7": "shopify://shop_images/yes-yes-Bluestone-7.jpg",
+            "image-8": "shopify://shop_images/yes-yes-Bluestone-8.jpg",
+            "image-9": "shopify://shop_images/yes-yes-Bluestone-9.jpg",
+            "image-10": "shopify://shop_images/yes-yes-Bluestone-10.jpg",
+            "image-11": "shopify://shop_images/yes-yes-Bluestone-11.jpg",
+            "image-12": "shopify://shop_images/yes-yes-Bluestone-12.jpg",
+            "image-13": "shopify://shop_images/yes-yes-Bluestone-13.jpg",
+            "image-14": "shopify://shop_images/yes-yes-Bluestone-14.jpg",
+            "image-15": "shopify://shop_images/yes-yes-Bluestone-15.jpg"
           }
         },
         "project_y7GwyK": {
@@ -102,10 +114,18 @@
           "type": "project",
           "settings": {
             "heading": "Wollert",
-            "image-1": "shopify://shop_images/projects-1.png",
-            "image-2": "shopify://shop_images/projects-2.png",
-            "image-3": "shopify://shop_images/projects-3.png",
-            "image-4": "shopify://shop_images/projects-4.png"
+            "image-1": "shopify://shop_images/yes-yes-wollert-1.jpg",
+            "image-2": "shopify://shop_images/yes-yes-wollert-2.jpg",
+            "image-3": "shopify://shop_images/yes-yes-wollert-3.jpg",
+            "image-4": "shopify://shop_images/yes-yes-wollert-4.jpg",
+            "image-5": "shopify://shop_images/yes-yes-wollert-5.jpg",
+            "image-6": "shopify://shop_images/yes-yes-wollert-6.jpg",
+            "image-7": "shopify://shop_images/yes-yes-wollert-7.jpg",
+            "image-8": "shopify://shop_images/yes-yes-wollert-8.jpg",
+            "image-9": "shopify://shop_images/yes-yes-wollert-9.jpg",
+            "image-10": "shopify://shop_images/yes-yes-wollert-10.jpg",
+            "image-11": "shopify://shop_images/yes-yes-wollert-11.jpg",
+            "image-12": "shopify://shop_images/yes-yes-wollert-12.jpg"
           }
         },
         "project_Nkckyc": {
