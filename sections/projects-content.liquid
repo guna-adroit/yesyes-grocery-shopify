@@ -129,12 +129,13 @@
                               {% endif %}
                           {% endfor %}
                       </div>
+                      {% unless has_images %}
+                        <div class="coming-soon-message">
+                          <p>Coming Soon</p>
+                        </div>
+                      {% endunless %}
                   </div>
-                  {% unless has_images %}
-                    <div class="coming-soon-message">
-                      <p>Coming Soon</p>
-                    </div>
-                  {% endunless %}
+                  
                 {% endfor %}
             </div>
         </div>
