@@ -46,6 +46,8 @@ class QuantityInputBulk extends HTMLElement {
      SHARED CART CACHE
      --------------------------------------------------------- */
   async syncWithCart() {
+    if (this._isLoading) return;
+    
     if (!QuantityInputBulk.cartPromise) {
       QuantityInputBulk.cartPromise = fetch('/cart.js')
         .then(res => res.json())
