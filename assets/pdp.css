@@ -481,3 +481,6 @@ hr {
 .yotpo-sr-bottom-line-summary {
     flex-direction: row !important;
 }
+p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
+    height: auto;
+}
