@@ -626,6 +626,9 @@ quantity-input-bulk.is-loading::after {
     flex: 1;
     width: 100%;
 }
+.plp-grid-container {
+    padding-top: 22px;
+}
 @keyframes qty-spin {
   from { transform: translateY(-50%) rotate(0deg); }
   to   { transform: translateY(-50%) rotate(360deg); }
