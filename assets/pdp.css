@@ -472,6 +472,9 @@ hr {
 .coming-soon-message{
     text-align: center;
 }
+.yotpo-reviews-main-widget svg{
+    margin: 0 auto;
+}
 .shopify-app-block{
     width: 100%;
 }
