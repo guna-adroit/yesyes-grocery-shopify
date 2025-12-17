@@ -223,14 +223,6 @@
               },
               "blocks": {}
             },
-            "custom_liquid_PXyXV7": {
-              "type": "custom-liquid",
-              "name": "t:names.custom_liquid",
-              "settings": {
-                "custom_liquid": "<div class=\"yotpo bottomLine\"\n  data-product-id=\"{{ product.id }}\">\n</div>"
-              },
-              "blocks": {}
-            },
             "product_vendor_MzmUdw": {
               "type": "product-vendor",
               "name": "Product Vendor",
@@ -331,7 +323,6 @@
           "block_order": [
             "card-gallery",
             "product_title_4nY4eT",
-            "custom_liquid_PXyXV7",
             "product_vendor_MzmUdw",
             "price_EzJzMm",
             "buy_buttons_AYGAQw",
