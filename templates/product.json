@@ -134,6 +134,12 @@
                   },
                   "blocks": {}
                 },
+                "yotpo_product_reviews_star_rating_znm7Q3": {
+                  "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+                  "settings": {
+                    "product": "{{closest.product}}"
+                  }
+                },
                 "product_sku_j3yAwy": {
                   "type": "product-sku",
                   "name": "Product SKU",
@@ -166,6 +172,7 @@
               },
               "block_order": [
                 "text_xrnftG",
+                "yotpo_product_reviews_star_rating_znm7Q3",
                 "product_sku_j3yAwy",
                 "price_tVjtKg"
               ]
