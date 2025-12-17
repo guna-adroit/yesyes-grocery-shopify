@@ -478,3 +478,6 @@ hr {
 .shopify-app-block{
     width: 100%;
 }
+.yotpo-sr-bottom-line-summary {
+    flex-direction: row !important;
+}
