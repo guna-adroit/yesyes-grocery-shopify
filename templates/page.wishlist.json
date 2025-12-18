@@ -60,13 +60,39 @@
     "17660483604c23a9cc": {
       "type": "_blocks",
       "blocks": {
-        "wishlist_plus_wishlist_page_section_8q9ArQ": {
-          "type": "shopify://apps/wishlist-plus/blocks/wishlist-page-section/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-          "settings": {}
+        "wishlist_plus_engage_myaccount_wishlisteditems_qmpB3Q": {
+          "type": "shopify://apps/wishlist-plus/blocks/engage-myaccount-wishlisteditems/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
+          "settings": {
+            "swym_engage_wishlist_items_background_color": "transparent",
+            "swym_engage_wishlist_items_text_color": "#000000",
+            "swym_engage_wishlist_items_background_color_secondary": "#e7e7e7",
+            "swym_engage_wishlist_items_highlight_color": "#808080",
+            "swym_engage_wishlist_items_title": 20,
+            "swym_engage_wishlist_items_per_row_desktop": 5,
+            "swym_engage_wishlist_items_per_row_tablet": 3,
+            "swym_engage_wishlist_items_per_row_mobile": 2,
+            "swym_engage_wishlist_items_nav_background_color": "#fff",
+            "swym_engage_wishlist_items_nave_arrow_color": "#000",
+            "swym_engage_Wishlist_items_show_title": true,
+            "swym_engage_Wishlist_items_show_price": true,
+            "swym_engage_Wishlist_items_show_variant": false,
+            "swym_engage_wishlist_items_show_vendor": false,
+            "swym_engage_wishlist_items_font_size": 16,
+            "swym_engage_wishlist_items_compare_price_color": "#EE2E2E",
+            "swym_engage_Wishlist_items_show_add_to_cart_button": true,
+            "swym_engage_Wishlist_items_show_view_product_button": false,
+            "swym_engage_wishlist_items_button_type": "solid",
+            "swym_engage_wishlist_items_button_width": "100%",
+            "swym_engage_wishlist_items_button_align": "center",
+            "swym_engage_wishlist_items_button_border_radious": 0,
+            "swym_engage_wishlist_items_button_background_color": "#434655",
+            "swym_engage_wishlist_items_button_text_color": "#fff",
+            "swym_engage_wishlist_show_product_updates": false
+          }
         }
       },
       "block_order": [
-        "wishlist_plus_wishlist_page_section_8q9ArQ"
+        "wishlist_plus_engage_myaccount_wishlisteditems_qmpB3Q"
       ],
       "settings": {
         "content_direction": "column",
