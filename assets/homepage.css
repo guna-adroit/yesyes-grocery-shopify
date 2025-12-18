@@ -565,7 +565,7 @@ a.popular_products_tabs {
 footer .group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-column {
     align-items: center;
 }
-span.wishlist-wrapper {
+.wishlist-wrapper {
     display: flex;
     align-items: center;
     gap: 5px;
