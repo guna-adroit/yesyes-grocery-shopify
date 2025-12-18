@@ -8,16 +8,15 @@
   {{- block.shopify_attributes -}}
 >
   <a href="/pages/wishlist" style="display: flex;">
-    <span class="wishlist-wrapper">
+    <div class="wishlist-wrapper">
       <div class="wishlist-icon-wrapper"> 
         <span class="wishlist-icons">{% render 'header-wishlist' %}</span>
-        <span class="wishlist-counter-wrapper">
+        <div class="wishlist-counter-wrapper">
           <span class="swym-wishlist-header-counter"></span>
-        </span>
+        </div>
       </div>
       <span class="header-icons-label">Wishlist</span>
-
-    </span>
+    </div>
   </a>
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
