@@ -9,8 +9,12 @@
 >
   <a href="/pages/wishlist" style="display: flex;">
     <span class="wishlist-wrapper">
-      <span class="wishlist-icons">{% render 'header-wishlist' %}</span>
+      <div class="wishlist-icon-wrapper"> 
+        <span class="wishlist-icons">{% render 'header-wishlist' %}</span>
+        <span class="swym-wishlist-header-counter"></span>
+      </div>
       <span class="header-icons-label">Wishlist</span>
+
     </span>
   </a>
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
