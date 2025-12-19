@@ -92,8 +92,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 span.svg-wrapper.wishlist-icon{
     color: #ED1D23;
 }
-.button.wishlist-button:hover + .add-to-whishlist-text__content, 
-.button.wishlist-button:hover + span.svg-wrapper.wishlist-icon{
+.button.wishlist-button:hover .add-to-whishlist-text__content, 
+.button.wishlist-button:hover span.svg-wrapper.wishlist-icon{
     color: white;
 }
 .related-products-slider .resource-list__carousel .slideshow-control,
