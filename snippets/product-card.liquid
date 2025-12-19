@@ -255,11 +255,11 @@
       <div class="sale-ribbon">{{ percent }}%</div>
     </div>
   {% endif %}
-  <div class="product-badges product-badges--top-right wishlist-icon-position">
+  <div class="product-badges product-badges--top-right wishlist-icon-position card-wishlist">
     <div class="product-badges__badge ">
       <button aria-label="Add to Wishlist" 
         data-with-epi="true" 
-        class="swym-button swym-add-to-wishlist-view-product product_{{product.id}}" 
+        class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}" 
         data-swaction="addToWishlist" 
         data-product-id="{{product.id | json}}" 
         data-variant-id="{{product.variants[0].id}}" 
@@ -302,6 +302,9 @@
   background: transparent;
   border: none;
   outline: none;
+}
+.card-wishlist .card-wishlist-button{
+  display: block;
 }
 .product-card__content:has(quantity-input-bulk.visible) add-to-cart-component,
 .product_variant_item:has(quantity-input-bulk.visible)  add-to-cart-component,
