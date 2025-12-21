@@ -563,17 +563,7 @@
           MAIN MENU
           {% comment %} <div></div> {% endcomment %}
         </span>
-        <div class="floating-menu-footer">
-          {% for link in linklists.announce-bar-menu.links %}
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          {% endfor %}
-          <div class="drawer-account-popover">
-              {% if shop.customer_accounts_enabled %}
-                {% render 'account-popover' %}
-                {% render 'account-drawer' %}
-              {% endif %}
-          </div>
-        </div>
+
       <nav
         class="menu-drawer__navigation"
         style="
@@ -1052,6 +1042,17 @@
         
         {% comment %} The categories menu {% endcomment %}
       </nav>
+      <div class="floating-menu-footer">
+        {% for link in linklists.announce-bar-menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+        <div class="drawer-account-popover">
+            {% if shop.customer_accounts_enabled %}
+              {% render 'account-popover' %}
+              {% render 'account-drawer' %}
+            {% endif %}
+        </div>
+      </div>
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"
         style="--menu-drawer-animation-index: {{ linklist.links.size }};"
