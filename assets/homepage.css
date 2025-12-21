@@ -419,14 +419,18 @@ span.category-menu_button.active, span.overlay-back-button.active {
 }
 .floating-menu-footer {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     background: #fcd816;
     padding: 4px 18px;
     gap: 12px;
     font-weight: 600;
-    position: absolute;
     bottom: 010%;
     width: 100%;
+    flex-direction: column;
+    margin-top: auto;
+}
+.menu-drawer-container[open] .menu-drawer__animated-element{
+    margin-block-start: 0;
 }
 .menu-drawer__menu-item-text{
     font-size: 18px;
@@ -437,6 +441,14 @@ span.category-menu_button.active, span.overlay-back-button.active {
 .drawer-account-popover .account-button__icon svg{
     min-width: 28px;
     min-height: 28px;
+}
+.floating-menu-footer a {
+    min-height: calc(1.5 * var(--padding-lg) + var(--icon-size-xs));
+    display: flex;
+    align-items: center;
+}
+.floating-menu-footer .drawer-account-popover{
+    margin-left: 0;
 }
 .menu-column ul li {
     text-align: left;
@@ -1123,10 +1135,20 @@ input.delivery-option:checked::before {
     .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
         opacity: 0;
     }
+    dialog-component.account-drawer:not(.floating-menu-footer dialog-component.account-drawer) {
+        display: none;
+    }
+    .floating-menu-footer dialog-component.account-drawer .account-button{
+        justify-content: flex-start;
+        padding: 0;
+    }
 }
 @media (max-width: 767px) {
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
         min-height: 200px;
+    }
+    account-popover__panel{
+        display: none !important;
     }
 }
 @media (max-width: 440px) {
