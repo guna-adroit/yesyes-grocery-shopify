@@ -62,7 +62,6 @@
       "blocks": {
         "wishlist_plus_engage_myaccount_wishlisteditems_qmpB3Q": {
           "type": "shopify://apps/wishlist-plus/blocks/engage-myaccount-wishlisteditems/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-          "disabled": true,
           "settings": {
             "swym_engage_wishlist_items_background_color": "rgba(0,0,0,0)",
             "swym_engage_wishlist_items_text_color": "#000000",
@@ -93,6 +92,7 @@
         },
         "wishlist_plus_wishlist_page_section_dbKY8K": {
           "type": "shopify://apps/wishlist-plus/blocks/wishlist-page-section/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
+          "disabled": true,
           "settings": {}
         }
       },
