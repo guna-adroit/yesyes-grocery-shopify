@@ -142,7 +142,9 @@ span.svg-wrapper.wishlist-icon{
 }
 .button.wishlist-button.swym-added{
     background-color:  #ed1d23!important;
-    color: white !important;
+}
+.button.wishlist-button.swym-added .add-to-whishlist-text__content{
+    color: white;
 }
 .card-wishlist .card-wishlist-button.swym-added{
     opacity: 1 !important;
