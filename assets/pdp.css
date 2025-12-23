@@ -132,6 +132,10 @@ span.svg-wrapper.wishlist-icon{
 }
 .button.wishlist-button{
     height: 60px;
+    background-color: white !important;
+}
+.button.wishlist-button:hover{
+    background-color:  #ed1d23!important;
 }
 .wishlist-button-text{
     display: flex;
