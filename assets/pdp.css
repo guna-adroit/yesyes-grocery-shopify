@@ -137,9 +137,11 @@ span.svg-wrapper.wishlist-icon{
 .button.wishlist-button:hover{
     background-color:  #ed1d23!important;
 }
+.card-wishlist .card-wishlist-button.swym-added{
+    opacity: 1 !important;
+}
 .card-wishlist .card-wishlist-button.swym-added .svg-wrapper.collection-wishlist-icon svg{
     fill: #ed1d23;
-    opacity: 1;
 }
 .wishlist-button-text{
     display: flex;
