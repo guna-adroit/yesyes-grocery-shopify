@@ -147,7 +147,7 @@ span.svg-wrapper.wishlist-icon{
     color: white;
 }
 .card-wishlist .card-wishlist-button.swym-added{
-    opacity: 1 !important;
+    opacity: 0.7 !important;
 }
 .card-wishlist .card-wishlist-button.swym-added .svg-wrapper.collection-wishlist-icon svg{
     fill: #ed1d23;
