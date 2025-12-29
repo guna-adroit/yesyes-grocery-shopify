@@ -237,6 +237,29 @@
   </local-pickup>
 {% endif %}
 
+<script>
+  function updateWishlistText() {
+    document.querySelectorAll('.wishlist-button').forEach(button => {
+      const textEl = button.querySelector('.add-to-whishlist-text__content');
+      if (!textEl) return;
+
+      if (button.classList.contains('swym-added')) {
+        textEl.textContent = 'Remove from wishlist';
+      } else {
+        textEl.textContent = 'Add To Wishlist';
+      }
+    });
+  }
+
+  // Initial check
+  updateWishlistText();
+
+  // Observe Swym class changes
+  const observer = new MutationObserver(updateWishlistText);
+  observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
+</script>
+
+
 {% stylesheet %}
   .buy-buttons-block {
     width: 100%;
