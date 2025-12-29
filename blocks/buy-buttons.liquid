@@ -242,7 +242,6 @@
   function updateWishlistText() {
     document.querySelectorAll('.wishlist-button').forEach(button => {
       const textEl = button.querySelector('.add-to-whishlist-text__content');
-      if (!textEl) return;
 
       if (button.classList.contains('swym-added')) {
         textEl.textContent = 'Remove from wishlist';
