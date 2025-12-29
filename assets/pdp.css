@@ -517,5 +517,5 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     height: auto;
 }
 .swym-atw-button-container.consent-given.default-position{
-    display: none;
+    display: none !important;
 }
