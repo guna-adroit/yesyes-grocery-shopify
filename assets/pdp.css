@@ -88,6 +88,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-size: 18px;
     line-height: 22.4px;
     color: #ED1D23;
+    text-transform: capitalize;
     transition: color var(--animation-speed) var(--animation-easing), box-shadow var(--animation-speed) var(--animation-easing), background-color var(--animation-speed) var(--animation-easing);
 }
 span.svg-wrapper.wishlist-icon{
