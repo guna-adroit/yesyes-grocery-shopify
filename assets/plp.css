@@ -48,7 +48,7 @@
 }
 .card-product-expiry-container.product-expiry{
     width: 100%;
-    flex-basis: 140px;
+    flex-basis: 110px;
 }
 td.product_variant-price-container{
     display: flex;
