@@ -146,9 +146,7 @@
     <div class="resource-card__content_price_wrapper">
       {% render 'price', product_resource: resource, show_unit_price: true %}
       {% if resource.metafields.custom.product_expiry != blank %}
-    <div class="card-product-expiry-container">
-      <p class="product-expiry">{{ resource.metafields.custom.product_expiry }}</p>
-    </div>
+      <p class="card-product-expiry-container product-expiry">{{ resource.metafields.custom.product_expiry }}</p>
   {% endif %}
     </div>
     {% elsif resource_type == 'collection' and single_thumbnail_collection == false %}
