@@ -433,10 +433,14 @@ p.category-item_title{
     }
     .card-product-expiry-container.product-expiry{
         font-size: 12px;
-        flex-basis: 140px;
     }
     .add-to-cart-button, .add-to-whishlist-text__content{
         font-size: 14px;
+    }
+}
+@media screen and (min-width: 1441px){
+    .card-product-expiry-container.product-expiry{
+        flex-basis: 140px;
     }
 }
 @media screen and (max-width: 1024px) {
