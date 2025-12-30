@@ -78,6 +78,7 @@ td.product_variant-price-container .product_variant-details span{
     background: #fee9e9;
     padding: 5px 13px;
     color: #ED1D23;
+    margin: 0;
     text-align: center;
 }
 @media screen and (max-width: 1250px){
