@@ -453,6 +453,7 @@ p.category-item_title{
     }
     .card-product-expiry-container.product-expiry {
         font-size: 10px;
+        flex-basis: auto;
     }
     .product-price-container{
         flex-wrap: nowrap;
