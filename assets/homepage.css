@@ -1135,8 +1135,14 @@ input.delivery-option:checked::before {
     .dialog-modal .predictive-search-form__header:has( .predictive-search__reset-button:not(.predictive-search__reset-button[hidden]) )::before{
         opacity: 0;
     }
-    dialog-component.account-drawer:not(.floating-menu-footer dialog-component.account-drawer) {
+    dialog-component.account-drawer:not(.floating-menu-footer dialog-component.account-drawer) button.account-button.header-actions__action{
         display: none;
+    }
+    dialog.dialog-modal.dialog-drawer.dialog-bottom-sheet.account-drawer__dialog[open] {
+        z-index: 20;
+    }
+    .hamburger-drawer-account button.account-button.header-actions__action {
+        justify-content: flex-start;
     }
     .floating-menu-footer dialog-component.account-drawer .account-button{
         justify-content: flex-start;
@@ -1167,4 +1173,8 @@ input.delivery-option:checked::before {
     slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--column.mobile-column {
         min-height: 22vw;
     }
+}
+div#PBarNextFrameWrapper
+ {
+    display: none !important;
 }

@@ -1048,8 +1048,16 @@
         {% endfor %}
         <div class="drawer-account-popover">
             {% if shop.customer_accounts_enabled %}
-              {% render 'account-popover' %}
-              {% render 'account-drawer' %}
+              {% comment %} {% render 'account-popover' %} {% endcomment %}
+              {% comment %} {% render 'account-drawer' %} {% endcomment %}
+              <div class="hamburger-drawer-account">
+                {% render 'account-button' %}
+              <script>
+                document.querySelector('.hamburger-drawer-account button.account-button.header-actions__action').addEventListener('click', function() {
+                  document.querySelector('dialog.dialog-modal.dialog-drawer.dialog-bottom-sheet.account-drawer__dialog').showModal();
+                });
+              </script>
+              </div>
             {% endif %}
         </div>
       </div>
