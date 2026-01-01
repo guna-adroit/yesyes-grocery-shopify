@@ -780,5 +780,5 @@ quantity-input-bulk.is-loading::after {
 /* Blog CSS End */
 
 button.swym-wishlist-collections-v2 {
-    transform: unset;
+    transform: unset !important;
 }
