@@ -439,6 +439,11 @@ p.category-item_title{
         font-size: 14px;
     }
 }
+@media screen and (min-width: 1024px and max-width: 1441px){
+    .card-product-expiry-container.product-expiry{
+        flex-basis: 120px;
+    }
+}
 @media screen and (min-width: 1441px){
     .card-product-expiry-container.product-expiry{
         flex-basis: 140px;
