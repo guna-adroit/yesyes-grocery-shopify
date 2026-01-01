@@ -154,7 +154,8 @@ span.svg-wrapper.wishlist-icon{
     fill: #ed1d23;
 }
 .swym-button.swym-add-to-wishlist-view-product{
-    z-index: 9 !important;
+    z-index: 999999 !important;
+    cursor: pointer;
 }
 .wishlist-button-text{
     display: flex;
