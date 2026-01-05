@@ -155,6 +155,7 @@ span.svg-wrapper.wishlist-icon{
 }
 .swym-button.swym-add-to-wishlist-view-product{
     z-index: 9 !important;
+    cursor: pointer;
 }
 .wishlist-button-text{
     display: flex;
@@ -200,7 +201,7 @@ span.svg-wrapper.wishlist-icon{
         gap: 5px;
     }
     .product-details .product-price-container{
-        flex-direction: column;
+        /* flex-direction: column; */
     }
     .product-details .card-product-expiry-container{
         flex-basis: unset;
