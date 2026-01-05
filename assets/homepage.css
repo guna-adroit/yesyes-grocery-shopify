@@ -681,7 +681,7 @@ li.predictive-search-results__card.predictive-search-results__card--product {
     line-height: 28px;
 }
 .resource-card__content_price_wrapper {
-    display: flex;  
+    /* display: flex;   */
     justify-content: space-between;
     flex-direction: column;
 }
