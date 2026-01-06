@@ -1043,15 +1043,13 @@
         {% comment %} The categories menu {% endcomment %}
       </nav>
       <div class="floating-menu-footer">
-        {% for link in linklists.announce-bar-menu.links %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
         <div class="drawer-account-popover">
             {% if shop.customer_accounts_enabled %}
               {% comment %} {% render 'account-popover' %} {% endcomment %}
               {% comment %} {% render 'account-drawer' %} {% endcomment %}
               <div class="hamburger-drawer-account">
                 {% render 'account-button' %}
+                <span class="drawer-account-popover-text">Profile</span>
               <script>
                 document.querySelector('.hamburger-drawer-account button.account-button.header-actions__action').addEventListener('click', function() {
                   document.querySelector('dialog.dialog-modal.dialog-drawer.dialog-bottom-sheet.account-drawer__dialog').showModal();
@@ -1060,6 +1058,10 @@
               </div>
             {% endif %}
         </div>
+        {% for link in linklists.announce-bar-menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+          
       </div>
       <div
         class="menu-drawer__utility-links menu-drawer__animated-element"
