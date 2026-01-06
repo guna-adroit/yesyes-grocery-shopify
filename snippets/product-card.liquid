@@ -182,7 +182,7 @@
                     assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
                   endif
                 -%}
-
+              <div>
               {% if product.selected_or_first_available_variant.available %}
                 <product-form-component
                   data-section-id="{{ section.id }}"
@@ -227,15 +227,15 @@
               hidden
             ></product-quantity-control> {% endcomment %}
            <quantity-input-bulk-component id="{{block.id }}">
-            {% assign handle = product.handle %}
-            {% assign product = all_products[handle] %}
-            {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
+                {% assign handle = product.handle %}
+                {% assign product = all_products[handle] %}
+                {% assign line_quantity = cart | line_items_for: product | sum: 'quantity' %}
 
-              <quantity-input-bulk id="{{block.id }}" class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
-                <button data-minus>-</button>
-                <input type="number" name="quantity" value="{{ line_quantity }}" min="0" readonly>
-                <button data-plus>+</button>
-              </quantity-input-bulk>
+                <quantity-input-bulk id="{{block.id }}" class="quick-add-quantity {% if line_quantity > 0 %} visible {% endif %}" data-variant-id="{{ product.first_available_variant.id }}">
+                  <button data-minus>-</button>
+                  <input type="number" name="quantity" value="{{ line_quantity }}" min="0" readonly>
+                  <button data-plus>+</button>
+                </quantity-input-bulk>
             </quantity-input-bulk-component>
 
               {% else %}
@@ -247,6 +247,7 @@
                   </button>
                 </div>
               {% endif %}
+            </div>
     {% endif %}
   </div>
   {% if product.compare_at_price > product.price %}
@@ -333,6 +334,9 @@ quantity-input-popup {
     background-color: #ed1d23;
     height: 55px;
     border-radius: 8px;
+}
+quantity-input-bulk{
+  margin-top: 18px;
 }
 quantity-input-bulk.visible, quantity-input-popup.visible{
   display: flex;
