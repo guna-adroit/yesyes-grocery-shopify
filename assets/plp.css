@@ -190,6 +190,7 @@ facet-remove-component.custom-filter-reset .svg-wrapper, facet-remove-component.
         font-size: 10px;
         line-height: 14px;
         padding: 3px 9px;
+        min-height: auto;
     }
     .compare-at-price {
         font-size: 14px;
