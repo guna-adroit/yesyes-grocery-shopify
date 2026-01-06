@@ -29,11 +29,18 @@
         assign initial = customer.first_name | first
       endif
     -%}
-    <span
+    {% comment %} <span
       class="account-button__avatar"
       aria-hidden="true"
     >
       {{- initial -}}
+    </span> {% endcomment %}
+    <span
+      class="account-button__icon"
+      aria-hidden="true"
+    >
+      {{- 'icon-account.svg' | inline_asset_content -}}
+      <span class="header-icons-label">Profile</span>
     </span>
   {%- else -%}
     <span

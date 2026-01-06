@@ -978,7 +978,18 @@ input.delivery-option:checked::before {
     top: 1px;
     left: -1px;
 }
-
+.account-actions__main-menu .account-actions__icon svg path {
+    stroke: #ED1D23;
+}
+.account-actions__main-menu .account-actions__icon svg path+path {
+    fill: #ED1D23;
+}
+.account-actions__main-menu .account-actions__list-item:hover .account-actions__icon svg path {
+    stroke: #fff;
+}
+.account-actions__main-menu .account-actions__list-item:hover .account-actions__icon svg path+path {
+    fill: #fff;
+}
 
 
 
