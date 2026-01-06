@@ -518,6 +518,11 @@ hr {
 p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     height: auto;
 }
+@media screen and (max-width: 750px){
+    p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
+        font-size: 14px;
+    }
+}
 .swym-atw-button-container.consent-given.default-position{
     display: none !important;
 }
