@@ -520,7 +520,7 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
 }
 @media screen and (max-width: 750px){
     p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
-        font-size: 14px;
+        font-size: 14px !important;
     }
 }
 .swym-atw-button-container.consent-given.default-position{
