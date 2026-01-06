@@ -1082,7 +1082,7 @@ input.delivery-option:checked::before {
         min-height: 100px;
     }
     span.Additional_menu_flex {
-        display: none;
+        /* display: none; */
     }
     span.footer-utilities__text {
         text-wrap: auto;
@@ -1147,6 +1147,11 @@ input.delivery-option:checked::before {
     .floating-menu-footer dialog-component.account-drawer .account-button{
         justify-content: flex-start;
         padding: 0;
+    }
+    .collection-titles-wrapper {
+        position: unset;
+        transform: none;
+        padding-top: 24px;
     }
 }
 @media (max-width: 767px) {
