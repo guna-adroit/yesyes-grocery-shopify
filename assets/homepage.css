@@ -104,7 +104,7 @@ span.collection-title.active-filter {
     position: absolute;
     width: auto;
     top: 50%;
-    transform: translate(100%, -50%);
+    transform: translate(calc(50% + 50px), -50%);
 }
 .header-contact-wrapper .header-phone-number {
     font-weight: 700;
