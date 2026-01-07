@@ -530,7 +530,8 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     .wishlist-link{
         width: 23px;
     }
-    .yotpo-widget-instance {
+    .yotpo-widget-instance, .yotpo-card-star-rating {
         height: 25px;
     }
+
 }
