@@ -912,6 +912,15 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
+function swymCallbackFn(swat){
+    document.addEventListener("swym:collections-loaded", function(){
+      swat.initializeActionButtons(".product-grid");
+    })
+  }
+  if(!window.SwymCallbacks){
+    window.SwymCallbacks = [];
+  }
+  window.SwymCallbacks.push(swymCallbackFn);
 
 // Infinite Scroll
 let ajaxinateInstance = null;
@@ -949,6 +958,7 @@ if (horizonWrapper) {
     for (const m of mutations) {
       if (m.addedNodes.length > 0) {
         initAjaxinate();
+        swat.initializeActionButtons(".product-grid");
         break;
       }
     }
@@ -960,10 +970,13 @@ if (horizonWrapper) {
 // Horizon filter update event (backup)
 document.addEventListener('collection:updated', () => {
   initAjaxinate();
+  swat.initializeActionButtons(".product-grid");
 });
 
 // Section load (Horizon sometimes reloads this)
 document.addEventListener('shopify:section:load', initAjaxinate);
+
+
 
 
 
