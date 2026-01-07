@@ -199,6 +199,7 @@
             "product_title_4nY4eT": {
               "type": "product-title",
               "name": "t:names.product_title",
+              "disabled": true,
               "settings": {
                 "show_product_type": true,
                 "width": "100%",
