@@ -564,7 +564,13 @@
 
   <div class="product-badges product-badges--top-right product wishlist-icon-position">
     <div class="product-badges__badge ">
-        <span class="svg-wrapper product collection-wishlist-icon">
+        <span class="svg-wrapper product collection-wishlist-icon"
+            data-with-epi="true"
+            data-swaction="addToWishlist"
+            data-product-id="{{ product.id }}"
+            data-variant-id="{{ product.variants[0].id }}"
+            data-product-url="{{ shop.url }}{{ product.url }}
+            >
             {{- 'icon-product-heart.svg' | inline_asset_content -}}
         </span>
     </div>
