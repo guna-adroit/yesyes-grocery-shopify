@@ -530,4 +530,7 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     .wishlist-link{
         width: 23px;
     }
+    .yotpo-widget-instance {
+        height: 25px;
+    }
 }
