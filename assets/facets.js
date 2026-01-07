@@ -913,7 +913,10 @@ const CURRENCY_DECIMALS = {
 };
 
 function swymCallbackFn(swat){
-    document.addEventListener("swym:collections-loaded", function(){
+    document.addEventListener("collection:updated", function(){
+      swat.initializeActionButtons(".product-grid");
+    })
+    document.addEventListener("shopify:section:load", function(){
       swat.initializeActionButtons(".product-grid");
     })
   }
