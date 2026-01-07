@@ -796,3 +796,7 @@ button.swym-wishlist-collections-v2 {
     fill: #ED1D23;
     color: #ED1D23;
 }
+.product.wishlist-icon-position .swym-button.swym-add-to-wishlist,
+.wishlist-button.swym-button.swym-add-to-wishlist{
+    display: block;
+}
