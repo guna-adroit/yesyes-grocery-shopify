@@ -526,3 +526,8 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
 .swym-atw-button-container.consent-given.default-position{
     display: none !important;
 }
+@media screen and (max-width: 750px){
+    .wishlist-link{
+        width: 23px;
+    }
+}
