@@ -961,7 +961,6 @@ if (horizonWrapper) {
     for (const m of mutations) {
       if (m.addedNodes.length > 0) {
         initAjaxinate();
-        swat.initializeActionButtons(".product-grid");
         break;
       }
     }
@@ -973,7 +972,6 @@ if (horizonWrapper) {
 // Horizon filter update event (backup)
 document.addEventListener('collection:updated', () => {
   initAjaxinate();
-  swat.initializeActionButtons(".product-grid");
 });
 
 // Section load (Horizon sometimes reloads this)
