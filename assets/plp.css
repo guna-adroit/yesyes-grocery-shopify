@@ -788,6 +788,7 @@ quantity-input-bulk.is-loading::after {
 button.swym-wishlist-collections-v2 {
     transform: unset !important;
 }
-.product.wishlist-icon-position .swym-added.swym-add-to-wishlist{
+.product.wishlist-icon-position .swym-added.swym-add-to-wishlist,
+.product.wishlist-icon-position .swym-add-to-wishlist{
     background: transparent !important;
 }
