@@ -537,6 +537,6 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
         padding-top: 0px !important;
     }
 }
-.yotpo-card-star-rating .yotpo-sr-bottom-line-text .yotpo-sr-bottom-line-right-panel{
+.yotpo-card-star-rating .yotpo-sr-bottom-line-summary .yotpo-sr-bottom-line-right-panel{
     display: none;
 }
