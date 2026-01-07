@@ -533,5 +533,7 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     .yotpo-widget-instance, .yotpo-card-star-rating {
         height: 25px;
     }
-
+    .yotpo-card-star-rating .yotpo-sr-bottom-line-text{
+        padding-top: 0px !important;
+    }
 }
