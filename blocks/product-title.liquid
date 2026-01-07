@@ -19,6 +19,9 @@
         <div class="card-product-type">{% if block.settings.show_product_type %}{{ closest.product.type }}{%  endif %}</div>
       
       {% render 'text', fallback_text: product_title, block: block %}
+      <div class="yotpo bottomLine"
+  data-product-id="{{ prod.id }}">
+</div>
       <div class="yotpo-widget-instance" data-yotpo-instance-id="1261213" data-yotpo-product-id="{{product.id}}" data-yotpo-cart-product-id="{{item.product.id}}" data-yotpo-section-id="{{template.name}}"></div>
       <div class="list-view card-product-vendor">
         {% assign product_vendor = '<p>by ' | append: closest.product.vendor | append: '</p>' %}
