@@ -518,6 +518,8 @@ hr {
 p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     height: auto;
     padding: 0 !important;
+    font-weight: 400 !important;
+    color: #676666 !important;
 }
 @media screen and (max-width: 750px){
     p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
