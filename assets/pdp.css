@@ -543,5 +543,5 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
 .yotpo-card-star-rating p.yotpo-sr-bottom-line-left-panel{
     font-weight: 400 !important;
     color: #676666 !important;
-
+    height: auto !important;
 }
