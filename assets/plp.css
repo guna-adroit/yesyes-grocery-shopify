@@ -792,3 +792,7 @@ button.swym-wishlist-collections-v2 {
 .product.wishlist-icon-position .swym-add-to-wishlist{
     background: transparent !important;
 }
+.product.wishlist-icon-position .swym-added.swym-add-to-wishlist .svg-wrapper.collection-wishlist-icon svg{
+    fill: #ED1D23;
+    color: #ED1D23;
+}
