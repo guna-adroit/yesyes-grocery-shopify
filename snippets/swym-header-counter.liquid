@@ -1,18 +1,77 @@
-<script class="swym-wishlist-header-counter-custom">
-function renderWishlistCounter(swat) {
-	var counter_elem = document.querySelectorAll(".swym-wishlist-header-counter"); /* Custom header can be added here.*/
-	if (counter_elem) {
-		for (var i = 0; i < counter_elem.length; i++) {
-			if (swat.renderWishlistCount) {
-				swat.renderWishlistCount(counter_elem[i], function(count, element) {
-					console.log("debug - renderWishlistCount", count, element); 
-				});
-			}
-		}
-	}
-}
-if (!window.SwymCallbacks) {
-	window.SwymCallbacks = [];
-}
-window.SwymCallbacks.push(renderWishlistCounter);
+<script defer>
+  function swymCallbackFn(swat) {
+    const DEBOUNCE_MS = 400; 
+    const COUNTER_SELECTOR = ".swym-wishlist-header-counter";//change the relevant header counter class here
+    let updateTimeout;
+
+    const $counters = () => document.querySelectorAll(COUNTER_SELECTOR);
+
+    const getItemKey = i =>
+      i?.epi ?? i?.pid ?? i?.id ?? (i?.du || i?.iu || JSON.stringify(i)).slice(0, 200);
+
+    const showCounters = () =>
+      $counters().forEach(el => {
+        el.style.visibility = "visible";
+        el.classList.add("swym-counter-ready");
+      });
+
+    const renderCount = count =>
+      requestAnimationFrame(() =>
+        $counters().forEach(el => {
+          el.textContent = count;
+          el.classList.add("swym-counter-ready");
+          el.style.visibility = "visible";
+        })
+      );
+
+    const computeCount = (lists, multi) => {
+      if (!Array.isArray(lists) || !lists.length) return 0;
+      if (multi) return lists.reduce((a, l) => a + (l.listcontents?.length || 0), 0);
+
+      const seen = new Set();
+      lists.forEach(l =>
+        l.listcontents?.forEach(i => {
+          const key = getItemKey(i);
+          if (key && !seen.has(key)) seen.add(key);
+        })
+      );
+      return seen.size;
+    };
+
+    const updateWishlistCount = () => {
+      clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => {
+        const multi =
+          typeof SwymEnabledCommonFeatures !== "undefined" &&
+          SwymEnabledCommonFeatures["multiple-wishlist"];
+
+        // Fetch actual wishlist data instead of depending on add/remove events only
+        swat.fetchLists({
+          callbackFn: lists => {
+            try {
+              renderCount(computeCount(lists, multi));
+              console.log(
+                `Wishlist count updated (${multi ? "multi" : "single"} mode)`
+              );
+            } catch (e) {
+              console.error("Error computing wishlist total:", e);
+              showCounters();
+            }
+          },
+          errorFn: e => {
+            console.error("Error fetching lists:", e);
+            showCounters();
+          }
+        });
+      }, DEBOUNCE_MS);
+    };
+
+    updateWishlistCount();
+    ["sw:addedtowishlist", "sw:removedfromwishlist"].forEach(evt =>
+      swat.evtLayer.addEventListener(evt, updateWishlistCount)
+    );
+  }
+
+  window.SwymCallbacks = window.SwymCallbacks || [];
+  window.SwymCallbacks.push(swymCallbackFn);
 </script>
