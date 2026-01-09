@@ -11,7 +11,7 @@
     <div class="wishlist-wrapper">
       <div class="wishlist-icon-wrapper">
         <div class="wishlist-icons">{% render 'header-wishlist' %}</div>
-        {% comment %} <div class="wishlist-counter-wrapper"> {% endcomment %}
+        <div class="wishlist-counter-wrapper">
           <span class="swym-wishlist-header-counter"></span>
         </div>
       </div>
@@ -36,7 +36,7 @@
   {% endif %}
 </header-actions>
 
-<script class="swym-wishlist-header-counter-custom">
+{% comment %} <script class="swym-wishlist-header-counter-custom">
   function renderWishlistCounter(swat) {
     var counter_elem = document.querySelectorAll(
       '.swym-wishlist-header-counter'
@@ -57,7 +57,7 @@
   }
 
   window.SwymCallbacks.push(renderWishlistCounter);
-</script>
+</script> {% endcomment %}
 
 {% stylesheet %}
     .cart-drawer {
