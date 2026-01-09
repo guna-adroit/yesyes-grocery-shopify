@@ -9,8 +9,9 @@
 >
   <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
     <div class="wishlist-wrapper">
-      <div class="wishlist-icon-wrapper">
+      <div class="wishlist-icon-wrapper"> 
         <div class="wishlist-icons">{% render 'header-wishlist' %}</div>
+        <span class="swym-wishlist-header-counter"></span>
         <div class="wishlist-counter-wrapper">
           <span class="swym-wishlist-header-counter"></span>
         </div>
@@ -30,354 +31,300 @@
       {% render 'cart-icon-component' %}
     </a>
   {% endif %}
-  {% if shop.customer_accounts_enabled %}
+    {% if shop.customer_accounts_enabled %}
     {% render 'account-popover' %}
     {% render 'account-drawer' %}
   {% endif %}
 </header-actions>
-<script defer>
-  function swymCallbackFn(swat) {
-    const DEBOUNCE_MS = 400;
-    const COUNTER_SELECTOR = '.swym-wishlist-header-counter'; //change the relevant header counter class here
-    let updateTimeout;
 
-    const $counters = () => document.querySelectorAll(COUNTER_SELECTOR);
 
-    const getItemKey = (i) => i?.epi ?? i?.pid ?? i?.id ?? (i?.du || i?.iu || JSON.stringify(i)).slice(0, 200);
+<script class="swym-wishlist-header-counter-custom">
+  function renderWishlistCounter(swat) {
+    var counter_elem = document.querySelectorAll(".swym-wishlist-header-counter"); /* Targets the span added in Step 1. */
+    if (counter_elem) {
+      for (var i = 0; i < counter_elem.length; i++) {
+        if (swat.renderWishlistCount) {
+          swat.renderWishlistCount(counter_elem[i], function(count, element) {
+            console.log("debug - renderWishlistCount", count, element); 
+          });
+        }
+      }
+    }
+  }
 
-    const showCounters = () =>
-      $counters().forEach((el) => {
-        el.style.visibility = 'visible';
-        el.classList.add('swym-counter-ready');
-      });
+  if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+  }
 
-    const renderCount = (count) =>
-      requestAnimationFrame(() =>
-        $counters().forEach((el) => {
-          el.textContent = count;
-          el.classList.add('swym-counter-ready');
-          el.style.visibility = 'visible';
-        })
-      );
+  window.SwymCallbacks.push(renderWishlistCounter);
+</script>
 
-    const computeCount = (lists, multi) => {
-      if (!Array.isArray(lists) || !lists.length) return 0;
-      if (multi) return lists.reduce((a, l) => a + (l.listcontents?.length || 0), 0);
 
-      const seen = new Set();
-      lists.forEach((l) =>
-        l.listcontents?.forEach((i) => {
-          const key = getItemKey(i);
-          if (key && !seen.has(key)) seen.add(key);
-        })
-      );
-      return seen.size;
-    };
+{% stylesheet %}
+  .cart-drawer {
+    --cart-drawer-padding: var(--padding-lg) var(--padding-xl);
+    --cart-drawer-padding-desktop: var(--padding-xl) var(--padding-2xl);
+    --cart-font-size--2xs: var(--font-size--2xs);
+    --cart-font-size--xs: var(--font-size--xs);
+    --cart-font-size--sm: var(--font-size--sm);
+    --cart-font-size--md: var(--font-size--md);
+    --cart-font-size--2xl: var(--font-size--2xl);
+  }
 
-    const updateWishlistCount = () => {
-      clearTimeout(updateTimeout);
-      updateTimeout = setTimeout(() => {
-        const multi =
-          typeof SwymEnabledCommonFeatures !== 'undefined' && SwymEnabledCommonFeatures['multiple-wishlist'];
+  .cart-drawer__dialog {
+    position: fixed;
+    border-radius: 0;
+    width: var(--sidebar-width);
+    max-width: 95vw;
+    height: 100%;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border-left: var(--style-border-drawer);
+    box-shadow: var(--shadow-drawer);
+    background-color: var(--color-background);
+  }
 
-        // Fetch actual wishlist data instead of depending on add/remove events only
-        swat.fetchLists({
-          callbackFn: (lists) => {
-            try {
-              renderCount(computeCount(lists, multi));
-              console.log(`Wishlist count updated (${multi ? 'multi' : 'single'} mode)`);
-            } catch (e) {
-              console.error('Error computing wishlist total:', e);
-              showCounters();
-            }
-          },
-          errorFn: (e) => {
-            console.error('Error fetching lists:', e);
-            showCounters();
-          },
-        });
-      }, DEBOUNCE_MS);
-    };
+  /* Needed to ensure the drawer is full height */
+  .cart-drawer__dialog:modal {
+    max-height: 100dvh;
+    overflow-y: hidden;
+  }
 
-    updateWishlistCount();
-    ['sw:addedtowishlist', 'sw:removedfromwishlist'].forEach((evt) =>
-      swat.evtLayer.addEventListener(evt, updateWishlistCount)
+  .cart-drawer__inner {
+    height: 100%;
+  }
+
+  .cart-drawer__content {
+    padding: 0;
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .cart-drawer__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .cart-drawer__close-button {
+    margin-right: calc(var(--padding-sm) * -1);
+  }
+
+  .cart-drawer--empty .cart-drawer__content {
+    text-align: center;
+    min-height: auto;
+  }
+
+  .cart-drawer--empty .cart-drawer__heading {
+    margin-bottom: var(--margin-md);
+  }
+
+  .cart-drawer__items .cart-items__table-row {
+    padding-bottom: calc(0.6 * var(--gap-xl));
+    border-bottom: var(--style-border-width) solid var(--color-border);
+    margin-bottom: var(--gap-xl);
+  }
+
+  .cart-drawer__items .cart-items__table-row:has(+ .cart-items__nested-line) {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .cart-drawer__items .cart-items__table-row:last-child {
+    border-bottom: none;
+  }
+
+  .cart-drawer__summary {
+    --cart-drawer-summary-padding: var(--padding-lg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-2xl);
+    padding: var(--cart-drawer-summary-padding);
+    margin-top: auto;
+    background-color: var(--color-background);
+    /* stylelint-disable-next-line color-named */
+    mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));
+    padding-bottom: 60px;
+    @media screen and (max-width: 992px) {
+      padding-bottom: 40px;
+    }
+    @media screen and (min-width: 750px) {
+      /* --cart-drawer-summary-padding: var(--padding-2xl); */
+      --cart-drawer-summary-padding: 50px;
+    }
+  }
+
+  .cart-drawer__summary .cart__summary-totals:not(:has(.cart__original-total-container:empty)) {
+    border-block-start: var(--style-border-width) solid var(--color-border);
+    padding-block-start: var(--padding-2xl);
+  }
+
+  .cart-drawer__summary .cart-note {
+    @media screen and (min-width: 750px) {
+      margin-block-start: var(--margin-3xs);
+    }
+  }
+
+  .cart-drawer__heading--empty {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cart-drawer__items {
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--cart-drawer-padding);
+    overflow-y: auto;
+
+    @media screen and (min-width: 750px) {
+      /* padding-inline: var(--cart-drawer-padding-desktop); */
+      padding-inline: 50px;
+    }
+  }
+
+  .cart-drawer__items .cart-items__table-row {
+    padding-bottom: calc(0.6 * var(--gap-xl));
+    border-bottom: var(--style-border-width) solid var(--color-border);
+    margin-bottom: var(--gap-xl);
+  }
+
+  .cart-drawer__items .cart-items__table-row:last-child {
+    border-bottom: none;
+    padding-block-end: 0;
+    margin-block-end: 0;
+  }
+
+  .cart-drawer--empty .cart-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    margin-top: 0;
+  }
+
+  .cart-drawer:not(:has(.cart-form)) .cart-drawer__content {
+    justify-content: center;
+  }
+
+  .cart-drawer--empty .cart-drawer__header {
+    justify-content: right;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cart-drawer--empty .cart-drawer__heading {
+    text-align: center;
+  }
+
+  .cart-drawer:not(:has(.cart-form)) .cart-items__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  header-actions {
+    display: flex;
+
+    @media screen and (max-width: 749px) {
+      justify-self: flex-end;
+    }
+  }
+
+  .header__column--right header-actions {
+    margin-inline-start: calc(var(--gap-md) * -1);
+  }
+
+  .header-actions__action {
+    --button-color: var(--color-foreground);
+
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header-actions__action .svg-wrapper {
+    height: var(--button-size);
+    width: var(--button-size);
+  }
+
+  .header-actions__action svg {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  .header-actions__cart-icon {
+    --cart-bubble-size: 20px;
+    --cart-bubble-top: 4.5px;
+    --cart-bubble-right: 2.5px;
+
+    position: relative;
+  }
+
+  .header-actions__cart-icon .cart-bubble {
+    position: absolute;
+    width: var(--cart-bubble-size, 20px);
+    top: var(--cart-bubble-top);
+    right: var(--cart-bubble-right);
+  }
+
+  .header-actions__cart-icon .cart-bubble__text,
+  .cart-drawer__heading .cart-bubble__text {
+    font-family: var(--font-paragraph--family);
+    font-weight: var(--font-paragraph--weight);
+  }
+
+  .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+    /* Create donut mask where the cart bubble sits */
+    mask: radial-gradient(
+      calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
+      transparent 45.45%,
+      #fff 45.45%,
+      #fff 100%
     );
   }
 
-  window.SwymCallbacks = window.SwymCallbacks || [];
-  window.SwymCallbacks.push(swymCallbackFn);
-</script>
-
-{% stylesheet %}
-      .cart-drawer {
-        --cart-drawer-padding: var(--padding-lg) var(--padding-xl);
-        --cart-drawer-padding-desktop: var(--padding-xl) var(--padding-2xl);
-        --cart-font-size--2xs: var(--font-size--2xs);
-        --cart-font-size--xs: var(--font-size--xs);
-        --cart-font-size--sm: var(--font-size--sm);
-        --cart-font-size--md: var(--font-size--md);
-        --cart-font-size--2xl: var(--font-size--2xl);
-      }
-
-      .cart-drawer__dialog {
-        position: fixed;
-        border-radius: 0;
-        width: var(--sidebar-width);
-        max-width: 95vw;
-        height: 100%;
-        margin: 0 0 0 auto;
-        padding: 0;
-        border-left: var(--style-border-drawer);
-        box-shadow: var(--shadow-drawer);
-        background-color: var(--color-background);
-      }
-
-      /* Needed to ensure the drawer is full height */
-      .cart-drawer__dialog:modal {
-        max-height: 100dvh;
-        overflow-y: hidden;
-      }
-
-      .cart-drawer__inner {
-        height: 100%;
-      }
-
-      .cart-drawer__content {
-        padding: 0;
-        background-color: var(--color-background);
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        overflow-y: auto;
-      }
-
-      .cart-drawer__heading {
-        display: flex;
-        align-items: center;
-        gap: var(--gap-xs);
-      }
-
-      .cart-drawer__close-button {
-        margin-right: calc(var(--padding-sm) * -1);
-      }
-
-      .cart-drawer--empty .cart-drawer__content {
-        text-align: center;
-        min-height: auto;
-      }
-
-      .cart-drawer--empty .cart-drawer__heading {
-        margin-bottom: var(--margin-md);
-      }
-
-      .cart-drawer__items .cart-items__table-row {
-        padding-bottom: calc(0.6 * var(--gap-xl));
-        border-bottom: var(--style-border-width) solid var(--color-border);
-        margin-bottom: var(--gap-xl);
-      }
-
-      .cart-drawer__items .cart-items__table-row:has(+ .cart-items__nested-line) {
-        border-bottom: none;
-        margin-bottom: 0;
-      }
-
-      .cart-drawer__items .cart-items__table-row:last-child {
-        border-bottom: none;
-      }
-
-      .cart-drawer__summary {
-        --cart-drawer-summary-padding: var(--padding-lg);
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--gap-2xl);
-        padding: var(--cart-drawer-summary-padding);
-        margin-top: auto;
-        background-color: var(--color-background);
-        /* stylelint-disable-next-line color-named */
-        mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));
-        padding-bottom: 60px;
-        @media screen and (max-width: 992px) {
-          padding-bottom: 40px;
-        }
-        @media screen and (min-width: 750px) {
-          /* --cart-drawer-summary-padding: var(--padding-2xl); */
-          --cart-drawer-summary-padding: 50px;
-        }
-      }
-
-      .cart-drawer__summary .cart__summary-totals:not(:has(.cart__original-total-container:empty)) {
-        border-block-start: var(--style-border-width) solid var(--color-border);
-        padding-block-start: var(--padding-2xl);
-      }
-
-      .cart-drawer__summary .cart-note {
-        @media screen and (min-width: 750px) {
-          margin-block-start: var(--margin-3xs);
-        }
-      }
-
-      .cart-drawer__heading--empty {
-        display: flex;
-        justify-content: center;
-      }
-
-      .cart-drawer__items {
-        display: flex;
-        flex-direction: column;
-        padding-inline: var(--cart-drawer-padding);
-        overflow-y: auto;
-
-        @media screen and (min-width: 750px) {
-          /* padding-inline: var(--cart-drawer-padding-desktop); */
-          padding-inline: 50px;
-        }
-      }
-
-      .cart-drawer__items .cart-items__table-row {
-        padding-bottom: calc(0.6 * var(--gap-xl));
-        border-bottom: var(--style-border-width) solid var(--color-border);
-        margin-bottom: var(--gap-xl);
-      }
-
-      .cart-drawer__items .cart-items__table-row:last-child {
-        border-bottom: none;
-        padding-block-end: 0;
-        margin-block-end: 0;
-      }
-
-      .cart-drawer--empty .cart-drawer__inner {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100dvh;
-        margin-top: 0;
-      }
-
-      .cart-drawer:not(:has(.cart-form)) .cart-drawer__content {
-        justify-content: center;
-      }
-
-      .cart-drawer--empty .cart-drawer__header {
-        justify-content: right;
-        border-bottom: none;
-        padding-bottom: 0;
-      }
-
-      .cart-drawer--empty .cart-drawer__heading {
-        text-align: center;
-      }
-
-      .cart-drawer:not(:has(.cart-form)) .cart-items__wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-
-      header-actions {
-        display: flex;
-
-        @media screen and (max-width: 749px) {
-          justify-self: flex-end;
-        }
-      }
-
-      .header__column--right header-actions {
-        margin-inline-start: calc(var(--gap-md) * -1);
-      }
-
-      .header-actions__action {
-        --button-color: var(--color-foreground);
-
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-      }
-
-      .header-actions__action .svg-wrapper {
-        height: var(--button-size);
-        width: var(--button-size);
-      }
-
-      .header-actions__action svg {
-        width: var(--icon-size-md);
-        height: var(--icon-size-md);
-      }
-
-      .header-actions__cart-icon {
-        --cart-bubble-size: 20px;
-        --cart-bubble-top: 4.5px;
-        --cart-bubble-right: 2.5px;
-
-        position: relative;
-      }
-
-      .header-actions__cart-icon .cart-bubble {
-        position: absolute;
-        width: var(--cart-bubble-size, 20px);
-        top: var(--cart-bubble-top);
-        right: var(--cart-bubble-right);
-      }
-
-      .header-actions__cart-icon .cart-bubble__text,
-      .cart-drawer__heading .cart-bubble__text {
-        font-family: var(--font-paragraph--family);
-        font-weight: var(--font-paragraph--weight);
-      }
-
-      .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
-        /* Create donut mask where the cart bubble sits */
-        mask: radial-gradient(
-          calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
-          transparent 45.45%,
-          #fff 45.45%,
-          #fff 100%
-        );
-      }
-
-      .cart-drawer__heading .cart-bubble__background {
-        background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
-      }
-
-      .cart-drawer__heading .cart-bubble__text {
-        color: var(--color-foreground);
-        font-size: var(--font-size--xs);
-      }
-
-      .cart-bubble--animating .cart-bubble__background {
-        animation: grow var(--animation-speed) var(--animation-easing);
-      }
-
-      .cart-bubble--animating .cart-bubble__text {
-        animation: cartBubbleSlideIn var(--animation-speed) var(--animation-easing);
-      }
-      .wishlist-icon-wrapper {
-          position: relative;
-      }
-    span.swym-wishlist-header-counter {
-      /* display: none; */
-      font-size: 10px;
-      position: absolute;
-        top: -6px;
-        right: -9px;
-        background: black;
-        width: 20px;
-        height: 20px;
-        color: white !important;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-    }
-    span.swym-wishlist-header-counter.show-badge {
-      display: flex;
-    }
-    span.swym-wishlist-header-counter.swym-counter-ready {
-      padding-left:6px;
-      padding-top:2px;
+  .cart-drawer__heading .cart-bubble__background {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
   }
+
+  .cart-drawer__heading .cart-bubble__text {
+    color: var(--color-foreground);
+    font-size: var(--font-size--xs);
+  }
+
+  .cart-bubble--animating .cart-bubble__background {
+    animation: grow var(--animation-speed) var(--animation-easing);
+  }
+
+  .cart-bubble--animating .cart-bubble__text {
+    animation: cartBubbleSlideIn var(--animation-speed) var(--animation-easing);
+  }
+  .wishlist-icon-wrapper {
+      position: relative;
+  }
+span.swym-wishlist-header-counter {
+  display: none;
+  font-size: 10px;
+  position: absolute;
+    top: -6px;
+    right: -9px;
+    background: black;
+    width: 20px;
+    height: 20px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+span.swym-wishlist-header-counter.show-badge {
+  display: flex;
+}
 {% endstylesheet %}
