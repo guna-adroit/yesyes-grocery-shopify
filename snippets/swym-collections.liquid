@@ -30,13 +30,21 @@
   window.SwymCallbacks.push(swymCallbackFn);
 </script>
 <style>
-  .swym-button {
-  position: relative;
-  z-index: 999 !important;
+/* Disable pointer events on the product link overlay */
+.product-card__link {
+  pointer-events: none;
 }
 
-.product-card__link {
-  z-index: 1;
+/* Re-enable pointer events for actual interactive elements */
+.product-card__link * {
+  pointer-events: auto;
+}
+
+/* Ensure wishlist button is always clickable */
+.swym-button {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 </style>
