@@ -118,6 +118,7 @@
           "swym_collections_icon_type": "heart",
           "swym_collections_icon_thickness": 1,
           "swym_collections_add_icon": "shopify://shop_images/s-wishlist-icon.svg",
+          "swym_collections_added_icon": "shopify://shop_images/s-wishlist-icon.svg",
           "swym_collections_position": "top-right",
           "swym_collections_vertical_offset": 0,
           "swym_collections_horizontal_offset": 0,
