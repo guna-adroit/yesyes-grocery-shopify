@@ -289,23 +289,34 @@
   window.SwymCallbacks.push(swymCallbackFn);  
 </script>
 <script>
-document.addEventListener('click', function (e) {
-  const card = e.target.closest('product-card');
-  if (!card) return;
+let wishlistClick = false;
 
-  // Ignore wishlist clicks
-  if (e.target.closest('.card-wishlist, .swym-button, .wishlist-icon')) return;
+document.addEventListener(
+  'pointerdown',
+  function (e) {
+    wishlistClick = !!e.target.closest(
+      '.wishlist-icon, .swym-button, .card-wishlist'
+    );
+  },
+  true
+);
 
-  const link = card.querySelector('a[href]');
-  if (link) {
-    window.location.href = link.href;
-  }
-});
+document.addEventListener(
+  'click',
+  function (e) {
+    const link = e.target.closest('product-card a[href]');
+    if (!link) return;
+
+    if (wishlistClick) {
+      e.preventDefault();
+      wishlistClick = false;
+    }
+  },
+  true
+);
 </script>
 <style>
-  product-card > a {
-  pointer-events: none;
-}
+  
   .quick-add-btn{
     width: 100%;
     align-items: center;
