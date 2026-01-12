@@ -1,8 +1,8 @@
 <script defer>
-  function swymCallbackFn(swat){
-    document.addEventListener("swym:collections-loaded", function(){
+  function swymCallbackFn(swat) {
+    document.addEventListener('swym:collections-loaded', function () {
       setTimeout(function () {
-        swat.initializeActionButtons("body");
+        swat.initializeActionButtons('body');
       }, 500); // adjust timeout if needed
     });
   }
@@ -11,4 +11,16 @@
     window.SwymCallbacks = [];
   }
   window.SwymCallbacks.push(swymCallbackFn);
+  document.addEventListener(
+    'click',
+    function (e) {
+      var swymBtn = e.target.closest('.swym-button');
+      if (swymBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    },
+    true
+  ); // capture phase is important
 </script>
