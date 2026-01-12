@@ -1,43 +1,24 @@
 <script defer>
   function swymCallbackFn(swat) {
-    // Re-init Swym after collection updates
+    // Re-init Swym after collection reloads
     document.addEventListener('swym:collections-loaded', function () {
       setTimeout(function () {
         swat.initializeActionButtons('body');
       }, 500);
     });
-
-    // Prevent product link navigation ONLY when wishlist is inside a product card link
-    document.addEventListener(
-      'click',
-      function (e) {
-        var swymBtn = e.target.closest('.swym-button');
-        if (!swymBtn) return;
-
-        var productLink = swymBtn.closest('a.product-card__link');
-        if (productLink) {
-          e.preventDefault();      // stop navigation
-          e.stopImmediatePropagation(); // but allow Swym to handle internally
-        }
-      },
-      true
-    );
   }
 
   if (!window.SwymCallbacks) {
     window.SwymCallbacks = [];
   }
   window.SwymCallbacks.push(swymCallbackFn);
-</script>
-<script>
+
+  // HARD BLOCK product-card-link navigation for wishlist clicks
   document.addEventListener(
     'pointerdown',
     function (e) {
       if (e.target.closest('.swym-button')) {
-        const pcl = e.target.closest('product-card-link');
-        if (pcl) {
-          e.stopImmediatePropagation();
-        }
+        e.stopImmediatePropagation();
       }
     },
     true
@@ -47,26 +28,11 @@
     'click',
     function (e) {
       if (e.target.closest('.swym-button')) {
-        const pcl = e.target.closest('product-card-link');
-        if (pcl) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          return false;
-        }
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return false;
       }
     },
     true
   );
 </script>
-
-<style>
-  .swym-button {
-  position: relative;
-  z-index: 999 !important;
-}
-
-.product-card__link {
-  z-index: 1;
-}
-
-</style>
