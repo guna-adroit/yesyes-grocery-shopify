@@ -256,7 +256,16 @@
       <div class="sale-ribbon">{{ percent }}%</div>
     </div>
   {% endif %}
-  <div class="product-badges product-badges--top-right wishlist-icon-position card-wishlist">
+  <div aria-label="Add to Wishlist" 
+              data-with-epi="true" 
+              class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}" 
+              data-swaction="addToWishlist" 
+              data-product-id="{{product.id | json}}" 
+              data-variant-id="{{product.variants[0].id}}" 
+              data-product-url="{{ shop.url }}{{roduct.url }}">
+
+  </div>
+  {% comment %} <div class="product-badges product-badges--top-right wishlist-icon-position card-wishlist">
     <div class="product-badges__badge ">
       <div aria-label="Add to Wishlist" 
               data-with-epi="true" 
@@ -271,7 +280,7 @@
           </span>
       </div>
     </div>
-  </div>
+  </div> {% endcomment %}
   
 </product-card>
 {%- if settings.transition_to_main_product -%}
