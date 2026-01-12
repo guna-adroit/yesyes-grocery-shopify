@@ -29,22 +29,44 @@
   }
   window.SwymCallbacks.push(swymCallbackFn);
 </script>
+<script>
+  document.addEventListener(
+    'pointerdown',
+    function (e) {
+      if (e.target.closest('.swym-button')) {
+        const pcl = e.target.closest('product-card-link');
+        if (pcl) {
+          e.stopImmediatePropagation();
+        }
+      }
+    },
+    true
+  );
+
+  document.addEventListener(
+    'click',
+    function (e) {
+      if (e.target.closest('.swym-button')) {
+        const pcl = e.target.closest('product-card-link');
+        if (pcl) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          return false;
+        }
+      }
+    },
+    true
+  );
+</script>
+
 <style>
-/* Disable pointer events on the product link overlay */
-.product-card__link {
-  pointer-events: none;
-}
-
-/* Re-enable pointer events for actual interactive elements */
-.product-card__link * {
-  pointer-events: auto;
-}
-
-/* Ensure wishlist button is always clickable */
-.swym-button {
+  .swym-button {
   position: relative;
-  z-index: 10;
-  pointer-events: auto;
+  z-index: 999 !important;
+}
+
+.product-card__link {
+  z-index: 1;
 }
 
 </style>
