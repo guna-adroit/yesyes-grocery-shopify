@@ -293,11 +293,11 @@ document.addEventListener(
   'click',
   function (e) {
     if (e.target.closest('.card-wishlist-button, .swym-button, .card-wishlist')) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
+      e.preventDefault();     // stop anchor navigation
+      e.stopPropagation();    // allow Swym to handle the click
     }
   },
-  true // 👈 capture phase (IMPORTANT)
+  true // capture phase
 );
 </script>
 <style>
