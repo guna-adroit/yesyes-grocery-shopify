@@ -1038,14 +1038,6 @@ document.addEventListener('shopify:section:load', initAjaxinate);
   // Support Shopify section reloads
   document.addEventListener(ThemeEvents.FilterUpdate, initViewButtons);
 
-  document.addEventListener('click', function (e) {
-  const wishlist = e.target.closest('.card-wishlist');
-
-  if (wishlist) {
-    e.preventDefault();      // stops the <a> redirect
-    e.stopPropagation();     // stops bubbling to the <a>
-  }
-});
 
 
 
