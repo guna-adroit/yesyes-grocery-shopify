@@ -1,10 +1,25 @@
 <script defer>
   function swymCallbackFn(swat) {
+    // Re-init Swym buttons after collections load
     document.addEventListener('swym:collections-loaded', function () {
       setTimeout(function () {
         swat.initializeActionButtons('body');
-      }, 500); // adjust timeout if needed
+      }, 500);
     });
+
+    // Prevent product link navigation when clicking wishlist
+    document.addEventListener(
+      'click',
+      function (e) {
+        var swymBtn = e.target.closest('.swym-button');
+        if (swymBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      },
+      true // capture phase
+    );
   }
 
   if (!window.SwymCallbacks) {
