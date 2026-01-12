@@ -288,6 +288,18 @@
   }   
   window.SwymCallbacks.push(swymCallbackFn);  
 </script>
+<script>
+document.addEventListener(
+  'click',
+  function (e) {
+    if (e.target.closest('.card-wishlist-button, .swym-button, .card-wishlist')) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+  },
+  true // 👈 capture phase (IMPORTANT)
+);
+</script>
 <style>
   .quick-add-btn{
     width: 100%;
