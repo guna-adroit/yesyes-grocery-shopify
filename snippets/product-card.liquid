@@ -299,7 +299,24 @@
 </script>
 
 <style>
-  .card-wishlist-button{
+  
+</style>
+
+  <style>
+    #product-card-{{ block.id }} .buy-buttons-block{
+      display: none;
+    } 
+    #product-card-{{ block.id }} .quick-add-btn{
+      display: flex;
+      z-index: 8;
+    }
+  </style>
+
+<style>
+ 
+</style>
+{% stylesheet %}
+.card-wishlist-button{
     position: absolute !important;
     top: 18px;
     right: 18px;
@@ -316,20 +333,7 @@
     margin-top: 18px;
     border-radius: 8px;
   }
-</style>
-
-  <style>
-    #product-card-{{ block.id }} .buy-buttons-block{
-      display: none;
-    } 
-    #product-card-{{ block.id }} .quick-add-btn{
-      display: flex;
-      z-index: 8;
-    }
-  </style>
-
-<style>
- .wishlist-icon-position button.swym-button{
+.wishlist-icon-position button.swym-button{
   padding: 0;
   background: transparent;
   border: none;
@@ -338,9 +342,7 @@
 .card-wishlist .card-wishlist-button{
   display: block !important;
 }
-.swym-button.swym-add-to-wishlist-view-product:after{
-  {% comment %} display: none; {% endcomment %}
-}
+
 .product-card__content:has(quantity-input-bulk.visible) add-to-cart-component,
 .product_variant_item:has(quantity-input-bulk.visible)  add-to-cart-component,
 .product-card__content:has(quantity-input-popup.visible) add-to-cart-component,
@@ -392,8 +394,6 @@ quantity-input-bulk > *, quantity-input-popup > *{
     height: 35px;
   }
 }
-</style>
-{% stylesheet %}
   product-card-link,
   :not(product-card-link) product-card {
     width: 100%;
