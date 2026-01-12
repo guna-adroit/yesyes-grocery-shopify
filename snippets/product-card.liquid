@@ -288,33 +288,7 @@
   }   
   window.SwymCallbacks.push(swymCallbackFn);  
 </script>
-<script>
-let wishlistClick = false;
 
-document.addEventListener(
-  'pointerdown',
-  function (e) {
-    wishlistClick = !!e.target.closest(
-      '.card-wishlist-button, .swym-button, .card-wishlist'
-    );
-  },
-  true
-);
-
-document.addEventListener(
-  'click',
-  function (e) {
-    const link = e.target.closest('product-card a[href]');
-    if (!link) return;
-
-    if (wishlistClick) {
-      e.preventDefault();
-      wishlistClick = false;
-    }
-  },
-  true
-);
-</script>
 <style>
   
   .quick-add-btn{
