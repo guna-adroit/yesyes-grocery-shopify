@@ -1,0 +1,14 @@
+<script defer>
+  function swymCallbackFn(swat){
+    document.addEventListener("swym:collections-loaded", function(){
+      setTimeout(function () {
+        swat.initializeActionButtons("body");
+      }, 500); // adjust timeout if needed
+    });
+  }
+
+  if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+  }
+  window.SwymCallbacks.push(swymCallbackFn);
+</script>
