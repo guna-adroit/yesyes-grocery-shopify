@@ -289,16 +289,18 @@
   window.SwymCallbacks.push(swymCallbackFn);  
 </script>
 <script>
-document.addEventListener(
-  'click',
-  function (e) {
-    if (e.target.closest('.card-wishlist-button, .swym-button, .card-wishlist')) {
-      e.preventDefault();     // stop anchor navigation
-      e.stopPropagation();    // allow Swym to handle the click
-    }
-  },
-  true // capture phase
-);
+document.addEventListener('click', function (e) {
+  const card = e.target.closest('product-card');
+  if (!card) return;
+
+  // Ignore wishlist clicks
+  if (e.target.closest('.card-wishlist, .swym-button, .wishlist-icon')) return;
+
+  const link = card.querySelector('a[href]');
+  if (link) {
+    window.location.href = link.href;
+  }
+});
 </script>
 <style>
   product-card > a {
