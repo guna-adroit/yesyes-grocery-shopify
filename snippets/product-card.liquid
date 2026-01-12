@@ -111,18 +111,18 @@
     data-placeholder="true"
   {% endif %}
 >
- <a
+   <a
     id="{{ product_card_id | md5 }}"
     {% unless onboarding %}
       href="{{ variant_to_link.url }}"
     {% endunless %}
-    
+    class="product-card__link hidden"
     ref="productCardLink"
   >
     <span class="visually-hidden">
       {{ product.title }}
     </span>
-  </a> 
+  </a>
   <div
     class="
       product-card__content
