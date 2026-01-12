@@ -12,17 +12,3 @@
   }
   window.SwymCallbacks.push(swymCallbackFn);
 </script>
-<script>
-  document.addEventListener(
-    'click',
-    function (e) {
-      var swymBtn = e.target.closest('.swym-button');
-      if (swymBtn) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    },
-    true
-  ); // capture phase is important
-</script>
