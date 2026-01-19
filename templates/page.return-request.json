@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -27,6 +28,7 @@
             "case": "none",
             "wrap": "pretty",
             "color": "",
+            "custom_classes": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -41,11 +43,44 @@
           "type": "page-content",
           "settings": {},
           "blocks": {}
+        },
+        "return_request_form_RYKKq6": {
+          "type": "return-request-form",
+          "name": "Return Request Form",
+          "settings": {
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "submit-button": {
+              "type": "contact-form-submit-button",
+              "static": true,
+              "settings": {
+                "label": "Submit",
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
         }
       },
       "block_order": [
         "heading",
-        "page-content"
+        "page-content",
+        "return_request_form_RYKKq6"
       ],
       "settings": {
         "content_direction": "column",
