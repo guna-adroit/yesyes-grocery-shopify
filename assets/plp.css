@@ -806,3 +806,6 @@ button.swym-wishlist-collections-v2 {
 div#swym-wishlist-title svg {
     color: #ED1D23;
 }
+.swym-storefront-layout-grid-item-add-to-cart-button{
+    background: #ED1D23;
+}
