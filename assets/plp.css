@@ -70,6 +70,7 @@ td.product_variant-price-container .product_variant-details span{
 }
 .product-grid.product-list-view .card-product-expiry-container{
     flex-basis: unset;
+    width: auto;
 }
 .card-product-expiry-container.product-expiry{
     font-weight: 600;
