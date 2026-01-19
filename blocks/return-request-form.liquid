@@ -4,7 +4,7 @@
   {% content_for 'block', type: 'contact-form-submit-button', id: 'submit-button' %}
 {% endcapture %}
 
-{% render 'contact-form', settings: block.settings, submit_button: submit_button %}
+{% render 'return-request-form', settings: block.settings, submit_button: submit_button %}
 
 {% schema %}
 {
