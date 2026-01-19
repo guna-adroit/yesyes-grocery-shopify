@@ -1,0 +1,129 @@
+{% assign has_returnable_orders = false %}
+{% assign today_ts = 'now' | date: '%s' %}
+{% assign fourteen_days = 14 | times: 86400 %}
+
+{% if customer %}
+  {% for order in customer.orders %}
+    {% assign order_ts = order.created_at | date: '%s' %}
+    {% assign order_age = today_ts | minus: order_ts %}
+    {% if order_age <= fourteen_days %}
+      {% assign has_returnable_orders = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if customer and has_returnable_orders == false %}
+  <p class="return-message">
+    You do not have any orders eligible for return. Returns are allowed only within 14 days of delivery.
+  </p>
+
+{% else %}
+
+{% form 'contact' %}
+  {{ form.errors | default_errors }}
+
+  <!-- First name -->
+  <div class="field">
+    <label for="first-name">First name</label>
+    <input
+      type="text"
+      id="first-name"
+      name="contact[first_name]"
+      value="{{ customer.first_name }}"
+      required
+    >
+  </div>
+
+  <!-- Last name -->
+  <div class="field">
+    <label for="last-name">Last name</label>
+    <input
+      type="text"
+      id="last-name"
+      name="contact[last_name]"
+      value="{{ customer.last_name }}"
+      required
+    >
+  </div>
+
+  <!-- Phone -->
+  <div class="field">
+    <label for="phone">Phone</label>
+    <input
+      type="tel"
+      id="phone"
+      name="contact[phone]"
+      value="{{ customer.phone }}"
+    >
+  </div>
+
+  <!-- Email -->
+  <div class="field">
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="contact[email]"
+      value="{{ customer.email }}"
+      required
+    >
+  </div>
+
+  <!-- Order selector -->
+  {% if customer %}
+    <div class="field">
+      <label for="order-number">Order number</label>
+      <select name="contact[order_number]" id="order-number" required>
+        <option value="">Select an order</option>
+
+        {% for order in customer.orders %}
+          {% assign order_ts = order.created_at | date: '%s' %}
+          {% assign order_age = today_ts | minus: order_ts %}
+
+          {% if order_age <= fourteen_days %}
+            <option value="{{ order.name }}">
+              {{ order.name }} — {{ order.created_at | date: "%d %b %Y" }}
+            </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  {% else %}
+    <div class="field">
+      <label for="order-number">Order number</label>
+      <input
+        type="text"
+        id="order-number"
+        name="contact[order_number]"
+        placeholder="e.g. #1234"
+        required
+      >
+    </div>
+  {% endif %}
+
+  <!-- Reason -->
+  <div class="field">
+    <label for="message">Reason for return</label>
+    <textarea
+      id="message"
+      name="contact[body]"
+      placeholder="Please explain the reason for return"
+      required
+    ></textarea>
+  </div>
+
+  <!-- Hidden subject (helps inbox filtering) -->
+  <input
+    type="hidden"
+    name="contact[subject]"
+    value="Order Return Request"
+  >
+
+  <div class="actions">
+    <button type="submit" class="button">
+      Submit return request
+    </button>
+  </div>
+
+{% endform %}
+{% endif %}
