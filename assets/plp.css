@@ -803,3 +803,6 @@ button.swym-wishlist-collections-v2 {
 .wishlist-button.swym-button.swym-add-to-wishlist{
     display: block;
 }
+div#swym-wishlist-title svg {
+    color: #ED1D23;
+}
