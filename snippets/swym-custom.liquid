@@ -1,66 +1,17 @@
 <script>
-/**
- * Full Swym Wishlist -> Shopify Cart Refresh
- */
 function onSwymLoadCallback(swat) {
-
-  // Main cart refresh function (mirrors theme behavior)
-  async function refreshCartWithSwym(variantId) {
-    if (!variantId) return;
-
-    try {
-      // Fetch latest cart
-      const res = await fetch('/cart.js');
-      const cartData = await res.json();
-
-      // Dispatch CartAddEvent (theme listens to this)
-      const evt = new CartAddEvent(cartData, variantId.toString(), {
-        source: 'swym',
-        itemCount: cartData.item_count,
-        sections: cartData.sections
-      });
-      document.dispatchEvent(evt);
-
-      // Update quantity inputs for this variant
-      const qtyInputs = document.querySelectorAll(`quantity-input-bulk[data-variant-id="${variantId}"]`);
-      qtyInputs.forEach(input => {
-        if (input.instantUpdate) input.instantUpdate(0);
-      });
-
-      // Optional: Fly-to-cart animation (like normal theme)
-      const flyElement = document.createElement('fly-to-cart');
-      const cartIcon = document.querySelector('.header-actions__cart-icon');
-      if (cartIcon) {
-        const button = document.querySelector(`.swym-product-button[data-variant-id="${variantId}"]`);
-        if (button) {
-          const img = button.dataset.productVariantMedia || '';
-          if (img) {
-            flyElement.style.setProperty('background-image', `url(${img})`);
-            flyElement.source = button;
-            flyElement.destination = cartIcon;
-            document.body.appendChild(flyElement);
-          }
-        }
-      }
-    } catch (err) {
-      console.error('Cart refresh failed', err);
-    }
-  }
-
-  // Listen for single Add To Cart
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, evt => {
-    const variantId = evt.detail?.variantId || evt.detail?.id;
-    refreshCartWithSwym(variantId);
-  });
-
-  // Listen for Move All To Cart
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, evt => {
-    const variantId = evt.detail?.variantId || evt.detail?.id;
-    refreshCartWithSwym(variantId);
-  });
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
+        /* CART REFRESH FUNCTION HERE */
+    });
+    
+    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
+        /* CART REFRESH FUNCTION HERE */
+    });
 }
 
-// Register Swym callback
-if (!window.SwymCallbacks) window.SwymCallbacks = [];
+if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+}
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
