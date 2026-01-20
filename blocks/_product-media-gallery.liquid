@@ -134,142 +134,110 @@
 {%- endif -%}
 
 {% style %}
-  .card-wishlist-button{
-      position: absolute !important;
-      top: 18px;
-      right: 18px;
-      font-size: 30px;
+  {% unless block_settings.aspect_ratio == 'adapt' %}
+    .product-media-container {
+      --media-preview-ratio: {{ block_settings.aspect_ratio }};
     }
-    .swym-button.swym-add-to-wishlist-view-product:after {
-      font-size: 30px;
-      color: #ed1d23 !important;
-  }
-  .swym-button.swym-add-to-wishlist-view-product.swym-heart.swym-added:after{
-    color: #ed1d23 !important;
-  }
-  .swym-button.swym-add-to-wishlist-view-product.swym-added{
-    opacity: 1 !important;
-  }
-    .quick-add-btn{
-      width: 100%;
-      align-items: center;
-      justify-content: center;
-      margin-top: 18px;
-      border-radius: 8px;
-    }
-  .wishlist-icon-position button.swym-button{
-    padding: 0;
-    background: transparent;
-    border: none;
-    outline: none;
-  }
-  .card-wishlist .card-wishlist-button{
-    display: block !important;
-  }
-    {% unless block_settings.aspect_ratio == 'adapt' %}
-      .product-media-container {
-        --media-preview-ratio: {{ block_settings.aspect_ratio }};
-      }
 
-      {% if block_settings.constrain_to_viewport %}
-        .product-media-container.constrain-height {
-          background-color: var(--color-background);
-        }
-
-        .product-media-container.constrain-height:has(.product-media-constraint-wrapper) {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        /* Mobile constraint wrapper sizing - use width-based approach since max-height is disabled */
-        .product-media-constraint-wrapper {
-          width: 100%;
-          max-width: 100%;
-          flex-shrink: 0;
-        }
-
-        /* Desktop constraint wrapper sizing */
-        @media screen and (min-width: 750px) {
-          .product-media-constraint-wrapper {
-            width: min(100%, calc(var(--constrained-height) * {{ block_settings.aspect_ratio }}));
-          }
-        }
-      {% endif %}
-
-      /* Constrain all deferred-media content to parent bounds when specific aspect ratio is set */
-      .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media,
-      .product-media-container:not(.dialog-zoomed-gallery *) .product-media product-model {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-      }
-
-      /* Ensure video and iframe elements respect container aspect ratio */
-      .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media video,
-      .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media iframe {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* 3D models need special handling since they don't support object-fit */
-      .product-media-container:not(.dialog-zoomed-gallery *) .product-media product-model model-viewer {
-        width: 100%;
-        height: 100%;
-      }
-
-      /* Clear gallery aspect ratio for zoom dialog - let media display at natural aspect ratios */
-      .dialog-zoomed-gallery .product-media {
-        --gallery-aspect-ratio: var(--ratio);
-      }
-    {% endunless %}
-
-    {% if block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport %}
-      .media-fit-{{ block_settings.media_fit }} {
-        --product-media-fit: {{ block_settings.media_fit }};
-      }
-
-      /* Media fit for all media elements */
-      .media-fit-{{ block_settings.media_fit }} :is(img, video, iframe, .deferred-media__poster-image) {
-        object-fit: {{ block_settings.media_fit }};
-        width: 100%;
-        height: 100%;
-      }
-
-      /* 3D Models (no object-fit support, just sizing) */
-      .media-fit-{{ block_settings.media_fit }} model-viewer {
-        width: 100%;
-        height: 100%;
-      }
-    {% endif %}
-
-    {% unless block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport %}
-      .media-fit-cover {
-        --product-media-fit: cover;
-      }
-
-      /* Media fit for all media elements - default to cover */
-      .media-fit-cover :is(img, video, iframe, .deferred-media__poster-image) {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-      }
-
-      /* 3D Models (no object-fit support, just sizing) */
-      .media-fit-cover model-viewer {
-        width: 100%;
-        height: 100%;
-      }
-    {% endunless %}
-
-    /* Add background color so carousel arrows' mix-blend-mode works correctly even on transparent areas. */
-    {% if block_settings.media_fit == 'contain' %}
-      .media-fit-contain :is(img, .deferred-media__poster-image) {
+    {% if block_settings.constrain_to_viewport %}
+      .product-media-container.constrain-height {
         background-color: var(--color-background);
       }
+
+      .product-media-container.constrain-height:has(.product-media-constraint-wrapper) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Mobile constraint wrapper sizing - use width-based approach since max-height is disabled */
+      .product-media-constraint-wrapper {
+        width: 100%;
+        max-width: 100%;
+        flex-shrink: 0;
+      }
+
+      /* Desktop constraint wrapper sizing */
+      @media screen and (min-width: 750px) {
+        .product-media-constraint-wrapper {
+          width: min(100%, calc(var(--constrained-height) * {{ block_settings.aspect_ratio }}));
+        }
+      }
     {% endif %}
+
+    /* Constrain all deferred-media content to parent bounds when specific aspect ratio is set */
+    .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media,
+    .product-media-container:not(.dialog-zoomed-gallery *) .product-media product-model {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    /* Ensure video and iframe elements respect container aspect ratio */
+    .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media video,
+    .product-media-container:not(.dialog-zoomed-gallery *) .product-media deferred-media iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 3D models need special handling since they don't support object-fit */
+    .product-media-container:not(.dialog-zoomed-gallery *) .product-media product-model model-viewer {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Clear gallery aspect ratio for zoom dialog - let media display at natural aspect ratios */
+    .dialog-zoomed-gallery .product-media {
+      --gallery-aspect-ratio: var(--ratio);
+    }
+  {% endunless %}
+
+  {% if block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport %}
+    .media-fit-{{ block_settings.media_fit }} {
+      --product-media-fit: {{ block_settings.media_fit }};
+    }
+
+    /* Media fit for all media elements */
+    .media-fit-{{ block_settings.media_fit }} :is(img, video, iframe, .deferred-media__poster-image) {
+      object-fit: {{ block_settings.media_fit }};
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 3D Models (no object-fit support, just sizing) */
+    .media-fit-{{ block_settings.media_fit }} model-viewer {
+      width: 100%;
+      height: 100%;
+    }
+  {% endif %}
+
+  {% unless block_settings.aspect_ratio == 'adapt' and block_settings.constrain_to_viewport %}
+    .media-fit-cover {
+      --product-media-fit: cover;
+    }
+
+    /* Media fit for all media elements - default to cover */
+    .media-fit-cover :is(img, video, iframe, .deferred-media__poster-image) {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 3D Models (no object-fit support, just sizing) */
+    .media-fit-cover model-viewer {
+      width: 100%;
+      height: 100%;
+    }
+  {% endunless %}
+
+  /* Add background color so carousel arrows' mix-blend-mode works correctly even on transparent areas. */
+  {% if block_settings.media_fit == 'contain' %}
+    .media-fit-contain :is(img, .deferred-media__poster-image) {
+      background-color: var(--color-background);
+    }
+  {% endif %}
 {% endstyle %}
 
 {% liquid
@@ -596,7 +564,7 @@
     <div
       aria-label="Add to Wishlist"
       data-with-epi="true"
-      class="card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}"
+      class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}"
       data-swaction="addToWishlist"
       data-product-id="{{product.id | json}}"
       data-variant-id="{{product.variants[0].id}}"
