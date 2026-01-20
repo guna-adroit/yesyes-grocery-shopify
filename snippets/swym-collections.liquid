@@ -1,55 +1,34 @@
 <script defer>
   function swymCallbackFn(swat) {
-    // Re-init Swym buttons after collections load
+    // Re-init Swym after collection updates
     document.addEventListener('swym:collections-loaded', function () {
       setTimeout(function () {
-        // Initialize all action buttons within the product badges container
-        swat.initializeActionButtons('.product-badges');
+        swat.initializeActionButtons('body');
       }, 500);
     });
 
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function () {
-      if (swat) swat.initializeActionButtons('.product-badges');
-    });
-
-    // Prevent navigation when wishlist button is inside a product link
+    // Prevent product link navigation ONLY when wishlist is inside a product card link
     document.addEventListener(
       'click',
       function (e) {
-        const swymBtn = e.target.closest('.swym-button, .collection-wishlist-icon');
+        var swymBtn = e.target.closest('.swym-button');
         if (!swymBtn) return;
 
-        const productLink = swymBtn.closest('a.product-card__link');
+        var productLink = swymBtn.closest('a.product-card__link');
         if (productLink) {
-          e.preventDefault(); // Stop navigation
-          e.stopImmediatePropagation(); // Allow Swym to handle internally
-        }
-      },
-      true
-    );
-
-    // Optional: block pointerdown to prevent early navigation
-    document.addEventListener(
-      'pointerdown',
-      function (e) {
-        const swymBtn = e.target.closest('.swym-button, .collection-wishlist-icon');
-        if (!swymBtn) return;
-
-        const productLink = swymBtn.closest('a.product-card__link');
-        if (productLink) {
-          e.stopImmediatePropagation();
+          e.preventDefault();      // stop navigation
+          e.stopImmediatePropagation(); // but allow Swym to handle internally
         }
       },
       true
     );
   }
 
-  // Add callback to Swym queue
-  if (!window.SwymCallbacks) window.SwymCallbacks = [];
+  if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+  }
   window.SwymCallbacks.push(swymCallbackFn);
 </script>
-
 <script>
   document.addEventListener(
     'pointerdown',
@@ -81,12 +60,13 @@
 </script>
 
 <style>
-    .swym-button {
-    position: relative;
-    z-index: 999 !important;
-  }
+  .swym-button {
+  position: relative;
+  z-index: 999 !important;
+}
 
-  .product-card__link {
-    z-index: 1;
-  }
+.product-card__link {
+  z-index: 1;
+}
+
 </style>
