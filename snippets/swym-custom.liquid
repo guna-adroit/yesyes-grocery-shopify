@@ -1,46 +1,57 @@
-<script>
-function onSwymLoadCallback(swat) {
-  /**
-   * Fetch current cart and dispatch Horizons cart update
-   * @param {Object} detail - Swym event detail
-   */
-  async function handleCartRefresh(detail) {
-    try {
-      // Fetch the updated cart JSON
-      const response = await fetch('/cart.js');
-      const cart = await response.json();
+<script type="module">
+import { CartUpdateEvent } from '@theme/events';
 
-      // Dispatch the CartUpdateEvent the Horizon theme listens for
-      const event = new CartUpdateEvent(cart, 'swym-wishlist', {
+function onSwymLoadCallback(swat) {
+
+  async function updateHorizonCart() {
+    try {
+      // 1️⃣ Fetch the updated cart
+      const cartResponse = await fetch('/cart.js');
+      const cart = await cartResponse.json();
+
+      // 2️⃣ Dispatch Horizon's CartUpdateEvent
+      const cartUpdateEvt = new CartUpdateEvent(cart, 'swym-wishlist', {
         itemCount: cart.item_count,
         source: 'swym',
-        sections: cart.sections || {}
+        sections: {} // optional
       });
-      document.dispatchEvent(event);
+      document.dispatchEvent(cartUpdateEvt);
 
-      // Optionally open the cart drawer
-      const cartDrawer = document.querySelector('cart-drawer-component');
-      if (cartDrawer) {
-        cartDrawer.open = true;
+      // 3️⃣ Update cart drawer content using Shopify section rendering
+      const drawerSectionsResponse = await fetch(`${routes.cart_url}?sections=cart-drawer`);
+      const sectionsHtml = await drawerSectionsResponse.json();
+
+      // Replace existing cart drawer with fresh HTML
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(sectionsHtml['cart-drawer'], 'text/html');
+      const newDrawer = doc.querySelector('cart-drawer');
+      const currentDrawer = document.querySelector('cart-drawer');
+      if (newDrawer && currentDrawer) {
+        currentDrawer.replaceWith(newDrawer);
       }
+
+      // 4️⃣ Optionally open the drawer
+      const updatedDrawer = document.querySelector('cart-drawer');
+      if (updatedDrawer) {
+        updatedDrawer.open = true;
+      }
+
     } catch (err) {
-      console.error('Horizon cart refresh error:', err);
+      console.error('Horizon cart refresh failed:', err);
     }
   }
 
-  // Listen for a single “add to cart” from Swym
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, evt => {
-    handleCartRefresh(evt.detail);
+  // Hook into Swym add events
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, () => {
+    updateHorizonCart();
   });
 
-  // Listen for move‑all/add‑all events (SFL)
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, evt => {
-    handleCartRefresh(evt.detail);
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, () => {
+    updateHorizonCart();
   });
 }
 
-if (!window.SwymCallbacks) {
-  window.SwymCallbacks = [];
-}
+// Register Swym callback
+if (!window.SwymCallbacks) window.SwymCallbacks = [];
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
