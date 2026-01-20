@@ -1,42 +1,56 @@
 <script>
-function refreshCartUI() {
-  // Find all cart section components on the page
+function refreshCartFromSwym(eventData) {
+  // Find all cart section components
   const cartSections = document.querySelectorAll('cart-items-component');
 
   cartSections.forEach((section) => {
     const sectionId = section.dataset.sectionId;
     if (!sectionId) return;
 
-    // Fetch the updated cart HTML from Shopify
-    fetch(`/?sections=${sectionId}`)
-      .then((res) => res.text())
-      .then((html) => {
-        // Parse the returned HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+    // Prepare formData to mimic theme's add-to-cart flow
+    const formData = new FormData();
+    formData.append('sections', sectionId);
+    formData.append('sections_url', window.location.pathname);
 
-        // Replace the section content
-        const newSection = doc.querySelector(`[data-section-id="${sectionId}"]`);
-        if (newSection) {
-          section.innerHTML = newSection.innerHTML;
-        }
+    fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        // Dispatch the cart update event so theme handles UI
+        const itemCount = eventData?.itemCount || 1;
+        const productId = eventData?.productId || '';
+        document.dispatchEvent(
+          new CustomEvent('cart:refresh', {
+            detail: {
+              itemCount,
+              productId,
+            },
+          })
+        );
+
+        // Trigger Shopify cart sections update (like theme AddToCartComponent)
+        section.dispatchEvent(
+          new CustomEvent('cart:update', { detail: response })
+        );
       })
-      .catch((err) => console.error('Cart refresh failed:', err));
+      .catch((err) => console.error('Swym cart refresh failed:', err));
   });
 }
 
-// Swym callback to refresh cart after items are added
 function onSwymLoadCallback(swat) {
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
-    refreshCartUI();
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function(evt) {
+    refreshCartFromSwym(evt.detail);
   });
 
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
-    refreshCartUI();
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function(evt) {
+    refreshCartFromSwym(evt.detail);
   });
 }
 
-// Register callback if not already
-if (!window.SwymCallbacks) window.SwymCallbacks = [];
+if (!window.SwymCallbacks) {
+  window.SwymCallbacks = [];
+}
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
