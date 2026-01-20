@@ -1,51 +1,40 @@
 <script>
-function refreshCartFromSwym(eventData) {
-  // Find all cart section components
-  const cartSections = document.querySelectorAll('cart-items-component');
-
-  cartSections.forEach((section) => {
-    const sectionId = section.dataset.sectionId;
-    if (!sectionId) return;
-
-    // Prepare formData to mimic theme's add-to-cart flow
-    const formData = new FormData();
-    formData.append('sections', sectionId);
-    formData.append('sections_url', window.location.pathname);
-
-    fetch('/cart/add.js', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        // Dispatch the cart update event so theme handles UI
-        const itemCount = eventData?.itemCount || 1;
-        const productId = eventData?.productId || '';
-        document.dispatchEvent(
-          new CustomEvent('cart:refresh', {
-            detail: {
-              itemCount,
-              productId,
-            },
-          })
-        );
-
-        // Trigger Shopify cart sections update (like theme AddToCartComponent)
-        section.dispatchEvent(
-          new CustomEvent('cart:update', { detail: response })
-        );
-      })
-      .catch((err) => console.error('Swym cart refresh failed:', err));
-  });
-}
-
 function onSwymLoadCallback(swat) {
+  function handleSwymCartUpdate(eventData) {
+    // Dispatch the same event your theme uses when adding to cart
+    const itemCount = eventData?.quantity || 1;
+    const productId = eventData?.productId || '';
+    const variantId = eventData?.variantId || '';
+
+    document.dispatchEvent(
+      new CustomEvent('CartAddEvent', {
+        detail: {
+          id: variantId.toString(),
+          source: 'swym',
+          itemCount,
+          productId,
+        },
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+
+    // Optionally trigger any other theme-specific cart refresh logic
+    // E.g., quantity boxes, header cart counter, etc.
+    const cartSections = document.querySelectorAll('cart-items-component');
+    cartSections.forEach((section) => {
+      section.dispatchEvent(
+        new CustomEvent('cart:update', { detail: { itemCount, productId } })
+      );
+    });
+  }
+
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function(evt) {
-    refreshCartFromSwym(evt.detail);
+    handleSwymCartUpdate(evt.detail);
   });
 
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function(evt) {
-    refreshCartFromSwym(evt.detail);
+    handleSwymCartUpdate(evt.detail);
   });
 }
 
