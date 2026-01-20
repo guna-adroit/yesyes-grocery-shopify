@@ -1,77 +1,94 @@
 <script defer>
-  function swymCallbackFn(swat) {
-    const DEBOUNCE_MS = 400; 
-    const COUNTER_SELECTOR = ".swym-wishlist-header-counter";//change the relevant header counter class here
-    let updateTimeout;
+function swymCallbackFn(swat) {
+  const DEBOUNCE_MS = 400;
+  const COUNTER_SELECTOR = ".swym-wishlist-header-counter"; // header counter class
+  const HEADER_CONTAINER_SELECTOR = "header"; // adjust to your theme's header wrapper
+  let updateTimeout;
 
-    const $counters = () => document.querySelectorAll(COUNTER_SELECTOR);
+  const $counters = () => document.querySelectorAll(COUNTER_SELECTOR);
 
-    const getItemKey = i =>
-      i?.epi ?? i?.pid ?? i?.id ?? (i?.du || i?.iu || JSON.stringify(i)).slice(0, 200);
+  const getItemKey = i =>
+    i?.epi ?? i?.pid ?? i?.id ?? (i?.du || i?.iu || JSON.stringify(i)).slice(0, 200);
 
-    const showCounters = () =>
+  const showCounters = () =>
+    $counters().forEach(el => {
+      el.style.visibility = "visible";
+      el.classList.add("swym-counter-ready");
+    });
+
+  const renderCount = count =>
+    requestAnimationFrame(() =>
       $counters().forEach(el => {
-        el.style.visibility = "visible";
+        el.textContent = count;
         el.classList.add("swym-counter-ready");
-      });
+        el.style.visibility = "visible";
+      })
+    );
 
-    const renderCount = count =>
-      requestAnimationFrame(() =>
-        $counters().forEach(el => {
-          el.textContent = count;
-          el.classList.add("swym-counter-ready");
-          el.style.visibility = "visible";
-        })
-      );
+  const computeCount = (lists, multi) => {
+    if (!Array.isArray(lists) || !lists.length) return 0;
+    if (multi) return lists.reduce((a, l) => a + (l.listcontents?.length || 0), 0);
 
-    const computeCount = (lists, multi) => {
-      if (!Array.isArray(lists) || !lists.length) return 0;
-      if (multi) return lists.reduce((a, l) => a + (l.listcontents?.length || 0), 0);
+    const seen = new Set();
+    lists.forEach(l =>
+      l.listcontents?.forEach(i => {
+        const key = getItemKey(i);
+        if (key && !seen.has(key)) seen.add(key);
+      })
+    );
+    return seen.size;
+  };
 
-      const seen = new Set();
-      lists.forEach(l =>
-        l.listcontents?.forEach(i => {
-          const key = getItemKey(i);
-          if (key && !seen.has(key)) seen.add(key);
-        })
-      );
-      return seen.size;
-    };
+  const updateWishlistCount = () => {
+    clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(() => {
+      const multi =
+        typeof SwymEnabledCommonFeatures !== "undefined" &&
+        SwymEnabledCommonFeatures["multiple-wishlist"];
 
-    const updateWishlistCount = () => {
-      clearTimeout(updateTimeout);
-      updateTimeout = setTimeout(() => {
-        const multi =
-          typeof SwymEnabledCommonFeatures !== "undefined" &&
-          SwymEnabledCommonFeatures["multiple-wishlist"];
-
-        // Fetch actual wishlist data instead of depending on add/remove events only
-        swat.fetchLists({
-          callbackFn: lists => {
-            try {
-              renderCount(computeCount(lists, multi));
-              console.log(
-                `Wishlist count updated (${multi ? "multi" : "single"} mode)`
-              );
-            } catch (e) {
-              console.error("Error computing wishlist total:", e);
-              showCounters();
-            }
-          },
-          errorFn: e => {
-            console.error("Error fetching lists:", e);
+      swat.fetchLists({
+        callbackFn: lists => {
+          try {
+            renderCount(computeCount(lists, multi));
+            console.log(`Wishlist count updated (${multi ? "multi" : "single"} mode)`);
+          } catch (e) {
+            console.error("Error computing wishlist total:", e);
             showCounters();
           }
-        });
-      }, DEBOUNCE_MS);
-    };
+        },
+        errorFn: e => {
+          console.error("Error fetching lists:", e);
+          showCounters();
+        }
+      });
+    }, DEBOUNCE_MS);
+  };
 
-    updateWishlistCount();
-    ["sw:addedtowishlist", "sw:removedfromwishlist"].forEach(evt =>
-      swat.evtLayer.addEventListener(evt, updateWishlistCount)
-    );
+  // Initial render
+  updateWishlistCount();
+
+  // Listen to Swym events
+  ["sw:addedtowishlist", "sw:removedfromwishlist"].forEach(evt =>
+    swat.evtLayer.addEventListener(evt, updateWishlistCount)
+  );
+
+  // MutationObserver to handle header refreshes
+  const headerContainer = document.querySelector(HEADER_CONTAINER_SELECTOR);
+  if (headerContainer) {
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList") {
+          // Re-run the update whenever the counter node is replaced
+          if ([...mutation.addedNodes].some(node => node.querySelector && node.querySelector(COUNTER_SELECTOR))) {
+            updateWishlistCount();
+          }
+        }
+      }
+    });
+    observer.observe(headerContainer, { childList: true, subtree: true });
   }
+}
 
-  window.SwymCallbacks = window.SwymCallbacks || [];
-  window.SwymCallbacks.push(swymCallbackFn);
+window.SwymCallbacks = window.SwymCallbacks || [];
+window.SwymCallbacks.push(swymCallbackFn);
 </script>
