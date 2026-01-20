@@ -182,7 +182,7 @@
                     assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
                   endif
                 -%}
-              <div>
+              <div class="product_atc-quantity-container">
               {% if product.selected_or_first_available_variant.available %}
                 <product-form-component
                   data-section-id="{{ section.id }}"

@@ -820,3 +820,6 @@ div#swym-wishlist-title svg {
 .swym-storefront-layout-grid-item-final-price{
     color: #000000 !important;
 }
+.product_atc-quantity-container{
+    display:contents;
+}
