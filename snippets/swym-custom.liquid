@@ -1,49 +1,66 @@
 <script>
 /**
- * Swym Wishlist + Cart Integration
- * Updates the Shopify theme cart dynamically when items are added from Swym Wishlist
+ * Full Swym Wishlist -> Shopify Cart Refresh
  */
 function onSwymLoadCallback(swat) {
 
-  // Utility: refresh cart like theme does
-  function refreshCartWithSwym(evtDetail) {
-    if (!evtDetail || !evtDetail.variantId) return;
+  // Main cart refresh function (mirrors theme behavior)
+  async function refreshCartWithSwym(variantId) {
+    if (!variantId) return;
 
-    // Fetch the latest cart state
-    fetch('/cart.js')
-      .then(res => res.json())
-      .then(cartData => {
-        // Dispatch CartAddEvent (theme listens to this for cart refresh)
-        const evt = new CartAddEvent(cartData, evtDetail.variantId.toString(), {
-          source: 'swym',
-          itemCount: cartData.item_count,
-          sections: cartData.sections
-        });
-        document.dispatchEvent(evt);
+    try {
+      // Fetch latest cart
+      const res = await fetch('/cart.js');
+      const cartData = await res.json();
 
-        // Optional: update QuantityInputBulk if theme uses it
-        const qtyInput = document.querySelector(`quantity-input-bulk[data-variant-id="${evtDetail.variantId}"]`);
-        if (qtyInput && qtyInput.instantUpdate) {
-          qtyInput.instantUpdate(0); // sync quantity with cart
+      // Dispatch CartAddEvent (theme listens to this)
+      const evt = new CartAddEvent(cartData, variantId.toString(), {
+        source: 'swym',
+        itemCount: cartData.item_count,
+        sections: cartData.sections
+      });
+      document.dispatchEvent(evt);
+
+      // Update quantity inputs for this variant
+      const qtyInputs = document.querySelectorAll(`quantity-input-bulk[data-variant-id="${variantId}"]`);
+      qtyInputs.forEach(input => {
+        if (input.instantUpdate) input.instantUpdate(0);
+      });
+
+      // Optional: Fly-to-cart animation (like normal theme)
+      const flyElement = document.createElement('fly-to-cart');
+      const cartIcon = document.querySelector('.header-actions__cart-icon');
+      if (cartIcon) {
+        const button = document.querySelector(`.swym-product-button[data-variant-id="${variantId}"]`);
+        if (button) {
+          const img = button.dataset.productVariantMedia || '';
+          if (img) {
+            flyElement.style.setProperty('background-image', `url(${img})`);
+            flyElement.source = button;
+            flyElement.destination = cartIcon;
+            document.body.appendChild(flyElement);
+          }
         }
-      })
-      .catch(err => console.error('Cart refresh failed:', err));
+      }
+    } catch (err) {
+      console.error('Cart refresh failed', err);
+    }
   }
 
-  // Listen for single Add To Cart from Wishlist
+  // Listen for single Add To Cart
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, evt => {
-    refreshCartWithSwym(evt.detail);
+    const variantId = evt.detail?.variantId || evt.detail?.id;
+    refreshCartWithSwym(variantId);
   });
 
-  // Listen for Move All To Cart (Save For Later)
+  // Listen for Move All To Cart
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, evt => {
-    refreshCartWithSwym(evt.detail);
+    const variantId = evt.detail?.variantId || evt.detail?.id;
+    refreshCartWithSwym(variantId);
   });
 }
 
-// Register callback
-if (!window.SwymCallbacks) {
-  window.SwymCallbacks = [];
-}
+// Register Swym callback
+if (!window.SwymCallbacks) window.SwymCallbacks = [];
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
