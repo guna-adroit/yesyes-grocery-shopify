@@ -1,43 +1,46 @@
 <script>
 function onSwymLoadCallback(swat) {
-  async function refreshCart(variantId, productId) {
-    if (!variantId) return;
-
+  /**
+   * Fetch current cart and dispatch Horizons cart update
+   * @param {Object} detail - Swym event detail
+   */
+  async function handleCartRefresh(detail) {
     try {
-      // Get latest cart
-      const res = await fetch('/cart.js');
-      const cart = await res.json();
+      // Fetch the updated cart JSON
+      const response = await fetch('/cart.js');
+      const cart = await response.json();
 
-      // Dispatch the theme cart event
-      const evt = new CartAddEvent(cart, 'swym-wishlist', {
-        source: 'swym',
-        productId: productId,
-        variantId: variantId,
+      // Dispatch the CartUpdateEvent the Horizon theme listens for
+      const event = new CartUpdateEvent(cart, 'swym-wishlist', {
         itemCount: cart.item_count,
-        sections: cart.sections
+        source: 'swym',
+        sections: cart.sections || {}
       });
-      document.dispatchEvent(evt);
+      document.dispatchEvent(event);
 
+      // Optionally open the cart drawer
+      const cartDrawer = document.querySelector('cart-drawer-component');
+      if (cartDrawer) {
+        cartDrawer.open = true;
+      }
     } catch (err) {
-      console.error('Cart refresh failed:', err);
+      console.error('Horizon cart refresh error:', err);
     }
   }
 
-  // Single Add To Cart from Swym
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, e => {
-    const variantId = e.detail?.variantId;
-    const productId = e.detail?.productId;
-    refreshCart(variantId, productId);
+  // Listen for a single “add to cart” from Swym
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, evt => {
+    handleCartRefresh(evt.detail);
   });
 
-  // Move All To Cart (SFL)
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, e => {
-    const variantId = e.detail?.variantId;
-    const productId = e.detail?.productId;
-    refreshCart(variantId, productId);
+  // Listen for move‑all/add‑all events (SFL)
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, evt => {
+    handleCartRefresh(evt.detail);
   });
 }
 
-if (!window.SwymCallbacks) window.SwymCallbacks = [];
+if (!window.SwymCallbacks) {
+  window.SwymCallbacks = [];
+}
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
