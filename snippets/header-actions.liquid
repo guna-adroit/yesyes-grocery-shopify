@@ -39,34 +39,36 @@
 
 
 <script class="swym-wishlist-header-counter-custom">
-  function renderWishlistCounter(swat) {
-    setTimeout(function () {
-      var counters = document.querySelectorAll(".swym-wishlist-header-counter");
-      if (!counters.length) return;
+function renderWishlistCounter(swat) {
+  const counters = document.querySelectorAll(".swym-wishlist-header-counter");
+  if (!counters.length) return;
 
-      counters.forEach(function (el) {
-        if (swat.renderWishlistCount) {
-          swat.renderWishlistCount(el);
-        }
-      });
-    }, 500); // allows header JS to finish
-  }
-
-  if (!window.SwymCallbacks) {
-    window.SwymCallbacks = [];
-  }
-
-  window.SwymCallbacks.push(renderWishlistCounter);
-
-  // 🔁 Re-run when header is re-rendered
-  document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(function () {
-      if (window._swat) {
-        renderWishlistCounter(window._swat);
-      }
-    }, 800);
+  counters.forEach(el => {
+    if (swat.renderWishlistCount) {
+      swat.renderWishlistCount(el);
+    }
   });
+}
+
+// Add to callback queue
+if (!window.SwymCallbacks) window.SwymCallbacks = [];
+window.SwymCallbacks.push(renderWishlistCounter);
+
+// Initial render
+document.addEventListener("DOMContentLoaded", () => {
+  if (window._swat) renderWishlistCounter(window._swat);
+});
+
+// 🔁 Observe header mutations
+const header = document.querySelector("header-actions");
+if (header) {
+  const observer = new MutationObserver(() => {
+    if (window._swat) renderWishlistCounter(window._swat);
+  });
+  observer.observe(header, { childList: true, subtree: true });
+}
 </script>
+
 
 
 {% stylesheet %}
