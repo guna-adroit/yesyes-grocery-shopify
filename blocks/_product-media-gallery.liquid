@@ -560,33 +560,21 @@
     </script>
   {%- endif -%}
 
-  {% comment %}
-    <div class="product-badges product-badges--top-right product wishlist-icon-position">
-      <div
-        aria-label="Add to Wishlist"
-        data-with-epi="true"
-        class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}"
-        data-swaction="addToWishlist"
-        data-product-id="{{product.id | json}}"
-        data-variant-id="{{product.variants[0].id}}"
-        data-product-url="{{ shop.url }}{{product.url }}"
-      >
-        <span class="svg-wrapper product collection-wishlist-icon">
-          {{- 'icon-product-heart.svg' | inline_asset_content -}}
-        </span>
-      </div>
+  <div class="product-badges product-badges--top-right product wishlist-icon-position">
+    <div
+      aria-label="Add to Wishlist"
+      data-with-epi="true"
+      class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}"
+      data-swaction="addToWishlist"
+      data-product-id="{{product.id | json}}"
+      data-variant-id="{{product.variants[0].id}}"
+      data-product-url="{{ shop.url }}{{product.url }}"
+    >
+      <span class="svg-wrapper product collection-wishlist-icon">
+        {{- 'icon-product-heart.svg' | inline_asset_content -}}
+      </span>
     </div>
-  {% endcomment %}
-  <!-- Wishlist button inside product card -->
-  <div
-    aria-label="Add to Wishlist"
-    data-with-epi="true"
-    class="card-wishlist-button swym-add-to-wishlist-view-product product_{{ product.id }}"
-    data-swaction="addToWishlist"
-    data-product-id="{{ product.id | json }}"
-    data-variant-id="{{ product.variants[0].id }}"
-    data-product-url="{{ shop.url }}{{ product.url }}"
-  ></div>
+  </div>
   {% if product.compare_at_price > product.price %}
     {%- assign percent = product.compare_at_price
       | minus: product.price
