@@ -1,17 +1,49 @@
 <script>
+/**
+ * Swym Wishlist + Cart Integration
+ * Updates the Shopify theme cart dynamically when items are added from Swym Wishlist
+ */
 function onSwymLoadCallback(swat) {
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
-       document.dispatchEvent(new CustomEvent('cart:update'));
-    });
-    
-    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
-       document.dispatchEvent(new CustomEvent('cart:update'));
-    });
+
+  // Utility: refresh cart like theme does
+  function refreshCartWithSwym(evtDetail) {
+    if (!evtDetail || !evtDetail.variantId) return;
+
+    // Fetch the latest cart state
+    fetch('/cart.js')
+      .then(res => res.json())
+      .then(cartData => {
+        // Dispatch CartAddEvent (theme listens to this for cart refresh)
+        const evt = new CartAddEvent(cartData, evtDetail.variantId.toString(), {
+          source: 'swym',
+          itemCount: cartData.item_count,
+          sections: cartData.sections
+        });
+        document.dispatchEvent(evt);
+
+        // Optional: update QuantityInputBulk if theme uses it
+        const qtyInput = document.querySelector(`quantity-input-bulk[data-variant-id="${evtDetail.variantId}"]`);
+        if (qtyInput && qtyInput.instantUpdate) {
+          qtyInput.instantUpdate(0); // sync quantity with cart
+        }
+      })
+      .catch(err => console.error('Cart refresh failed:', err));
+  }
+
+  // Listen for single Add To Cart from Wishlist
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, evt => {
+    refreshCartWithSwym(evt.detail);
+  });
+
+  // Listen for Move All To Cart (Save For Later)
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, evt => {
+    refreshCartWithSwym(evt.detail);
+  });
 }
 
+// Register callback
 if (!window.SwymCallbacks) {
-    window.SwymCallbacks = [];
+  window.SwymCallbacks = [];
 }
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
