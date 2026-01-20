@@ -1,12 +1,12 @@
 <script>
 function onSwymLoadCallback(swat) {
     swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
-        /* CART REFRESH FUNCTION HERE */
+       document.dispatchEvent(new CustomEvent('cart:build'));
     });
     
     /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
     swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
-        /* CART REFRESH FUNCTION HERE */
+       document.dispatchEvent(new CustomEvent('cart:build'));
     });
 }
 
