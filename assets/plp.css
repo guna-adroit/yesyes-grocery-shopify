@@ -811,5 +811,5 @@ div#swym-wishlist-title svg {
 }
 .swym-wishlist-collections-v2-container{
     right: 0;
-    left: unset;
+    left: unset !important;
 }
