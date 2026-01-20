@@ -1,11 +1,11 @@
 <script>
 function onSwymLoadCallback(swat) {
-  function handleSwymCartUpdate(eventData) {
-    // Dispatch the same event your theme uses when adding to cart
+  function refreshCartFromSwym(eventData) {
     const itemCount = eventData?.quantity || 1;
     const productId = eventData?.productId || '';
     const variantId = eventData?.variantId || '';
 
+    // Dispatch theme's cart add event so mini-cart, header counter, and quantity boxes update
     document.dispatchEvent(
       new CustomEvent('CartAddEvent', {
         detail: {
@@ -19,22 +19,32 @@ function onSwymLoadCallback(swat) {
       })
     );
 
-    // Optionally trigger any other theme-specific cart refresh logic
-    // E.g., quantity boxes, header cart counter, etc.
-    const cartSections = document.querySelectorAll('cart-items-component');
-    cartSections.forEach((section) => {
+    // Trigger cart-items-component to refresh sections
+    document.querySelectorAll('cart-items-component').forEach((section) => {
       section.dispatchEvent(
-        new CustomEvent('cart:update', { detail: { itemCount, productId } })
+        new CustomEvent('cart:update', {
+          detail: { itemCount, productId },
+        })
       );
     });
   }
 
+  // Listen for Swym Wishlist “Add To Cart” events
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function(evt) {
-    handleSwymCartUpdate(evt.detail);
+    refreshCartFromSwym(evt.detail);
   });
 
   swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function(evt) {
-    handleSwymCartUpdate(evt.detail);
+    refreshCartFromSwym(evt.detail);
+  });
+
+  // Optional: direct click handler for the Add To Trolley buttons on Wishlist page
+  document.querySelectorAll('.swym-storefront-layout-grid-item-add-to-cart-button').forEach((btn) => {
+    btn.addEventListener('click', function(e) {
+      const productId = btn.dataset.productId;
+      const variantId = btn.dataset.variantId;
+      refreshCartFromSwym({ productId, variantId, quantity: 1 });
+    });
   });
 }
 
