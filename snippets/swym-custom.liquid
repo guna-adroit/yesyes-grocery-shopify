@@ -1,0 +1,42 @@
+<script>
+function refreshCartUI() {
+  // Find all cart section components on the page
+  const cartSections = document.querySelectorAll('cart-items-component');
+
+  cartSections.forEach((section) => {
+    const sectionId = section.dataset.sectionId;
+    if (!sectionId) return;
+
+    // Fetch the updated cart HTML from Shopify
+    fetch(`/?sections=${sectionId}`)
+      .then((res) => res.text())
+      .then((html) => {
+        // Parse the returned HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Replace the section content
+        const newSection = doc.querySelector(`[data-section-id="${sectionId}"]`);
+        if (newSection) {
+          section.innerHTML = newSection.innerHTML;
+        }
+      })
+      .catch((err) => console.error('Cart refresh failed:', err));
+  });
+}
+
+// Swym callback to refresh cart after items are added
+function onSwymLoadCallback(swat) {
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
+    refreshCartUI();
+  });
+
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
+    refreshCartUI();
+  });
+}
+
+// Register callback if not already
+if (!window.SwymCallbacks) window.SwymCallbacks = [];
+window.SwymCallbacks.push(onSwymLoadCallback);
+</script>
