@@ -1,8 +1,7 @@
 <script defer>
 function swymCallbackFn(swat) {
   const DEBOUNCE_MS = 400;
-  const COUNTER_SELECTOR = ".swym-wishlist-header-counter"; // header counter class
-  const HEADER_CONTAINER_SELECTOR = "header"; // adjust to your theme's header wrapper
+  const COUNTER_SELECTOR = ".swym-wishlist-header-counter";
   let updateTimeout;
 
   const $counters = () => document.querySelectorAll(COUNTER_SELECTOR);
@@ -22,6 +21,7 @@ function swymCallbackFn(swat) {
         el.textContent = count;
         el.classList.add("swym-counter-ready");
         el.style.visibility = "visible";
+        el.classList.add("show-badge");
       })
     );
 
@@ -50,7 +50,6 @@ function swymCallbackFn(swat) {
         callbackFn: lists => {
           try {
             renderCount(computeCount(lists, multi));
-            console.log(`Wishlist count updated (${multi ? "multi" : "single"} mode)`);
           } catch (e) {
             console.error("Error computing wishlist total:", e);
             showCounters();
@@ -72,21 +71,46 @@ function swymCallbackFn(swat) {
     swat.evtLayer.addEventListener(evt, updateWishlistCount)
   );
 
-  // MutationObserver to handle header refreshes
-  const headerContainer = document.querySelector(HEADER_CONTAINER_SELECTOR);
-  if (headerContainer) {
+  // --- Robust MutationObserver for dynamic cart/header updates ---
+  const observeHeader = () => {
+    const headerActions = document.querySelector("header-actions");
+    if (!headerActions) return;
+
     const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
+      let shouldUpdate = false;
+
+      mutations.forEach(mutation => {
         if (mutation.type === "childList") {
-          // Re-run the update whenever the counter node is replaced
-          if ([...mutation.addedNodes].some(node => node.querySelector && node.querySelector(COUNTER_SELECTOR))) {
-            updateWishlistCount();
-          }
+          mutation.addedNodes.forEach(node => {
+            if (
+              node.nodeType === 1 && 
+              (node.matches(COUNTER_SELECTOR) || node.querySelector(COUNTER_SELECTOR))
+            ) {
+              shouldUpdate = true;
+            }
+          });
         }
+      });
+
+      if (shouldUpdate) {
+        // Small delay to allow cart module to finish its render
+        setTimeout(updateWishlistCount, 100);
       }
     });
-    observer.observe(headerContainer, { childList: true, subtree: true });
-  }
+
+    observer.observe(headerActions, { childList: true, subtree: true });
+  };
+
+  // Retry until header-actions exists (for modules loading asynchronously)
+  const waitForHeader = () => {
+    if (document.querySelector("header-actions")) {
+      observeHeader();
+    } else {
+      setTimeout(waitForHeader, 200);
+    }
+  };
+
+  waitForHeader();
 }
 
 window.SwymCallbacks = window.SwymCallbacks || [];
