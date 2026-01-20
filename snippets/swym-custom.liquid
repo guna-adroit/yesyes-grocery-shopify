@@ -1,17 +1,43 @@
 <script>
-  function onSwymLoadCallback(swat) {
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function () {
-      document.dispatchEvent(new CustomEvent('cart:update'));
-    });
+function onSwymLoadCallback(swat) {
+  async function refreshCart(variantId, productId) {
+    if (!variantId) return;
 
-    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function () {
-      document.dispatchEvent(new CustomEvent('cart:update'));
-    });
+    try {
+      // Get latest cart
+      const res = await fetch('/cart.js');
+      const cart = await res.json();
+
+      // Dispatch the theme cart event
+      const evt = new CartAddEvent(cart, 'swym-wishlist', {
+        source: 'swym',
+        productId: productId,
+        variantId: variantId,
+        itemCount: cart.item_count,
+        sections: cart.sections
+      });
+      document.dispatchEvent(evt);
+
+    } catch (err) {
+      console.error('Cart refresh failed:', err);
+    }
   }
 
-  if (!window.SwymCallbacks) {
-    window.SwymCallbacks = [];
-  }
-  window.SwymCallbacks.push(onSwymLoadCallback);
+  // Single Add To Cart from Swym
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, e => {
+    const variantId = e.detail?.variantId;
+    const productId = e.detail?.productId;
+    refreshCart(variantId, productId);
+  });
+
+  // Move All To Cart (SFL)
+  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, e => {
+    const variantId = e.detail?.variantId;
+    const productId = e.detail?.productId;
+    refreshCart(variantId, productId);
+  });
+}
+
+if (!window.SwymCallbacks) window.SwymCallbacks = [];
+window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
