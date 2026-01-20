@@ -1,5 +1,3 @@
-
-
 {% assign block_settings = block.settings %}
 
 {%- if block_settings.zoom -%}
@@ -563,25 +561,29 @@
   {%- endif -%}
 
   <div class="product-badges product-badges--top-right product wishlist-icon-position">
-    <div class="product-badges__badge swym-button swym-add-to-wishlist" 
-      data-with-epi="true"
+    <div
+      class="product-badges__badge swym-button swym-add-to-wishlist-view-product product_{{product.id}}"
       data-swaction="addToWishlist"
-      data-product-id="{{ product.id }}"
-      data-variant-id="{{ product.variants[0].id }}"
+      data-product-id="{{product.id | json}}"
+      data-variant-id="{{product.variants[0].id}}"
       data-product-url="{{ shop.url }}{{ product.url }}"
     >
-        <span class="svg-wrapper product collection-wishlist-icon">
-            {{- 'icon-product-heart.svg' | inline_asset_content -}}
-        </span>
+      <span class="svg-wrapper product collection-wishlist-icon">
+        {{- 'icon-product-heart.svg' | inline_asset_content -}}
+      </span>
     </div>
   </div>
   {% if product.compare_at_price > product.price %}
-  {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
+    {%- assign percent = product.compare_at_price
+      | minus: product.price
+      | times: 100
+      | divided_by: product.compare_at_price
+      | round
+    -%}
     <div class="sale-ribbon-container">
       <div class="product-page sale-ribbon">{{ percent }}%</div>
     </div>
   {% endif %}
-
 </media-gallery>
 
 {% stylesheet %}
