@@ -1,55 +1,17 @@
 <script>
 function onSwymLoadCallback(swat) {
-  function refreshCartFromSwym(eventData) {
-    const itemCount = eventData?.quantity || 1;
-    const productId = eventData?.productId || '';
-    const variantId = eventData?.variantId || '';
-
-    // Dispatch theme's cart add event so mini-cart, header counter, and quantity boxes update
-    document.dispatchEvent(
-      new CustomEvent('CartAddEvent', {
-        detail: {
-          id: variantId.toString(),
-          source: 'swym',
-          itemCount,
-          productId,
-        },
-        bubbles: true,
-        cancelable: true,
-      })
-    );
-
-    // Trigger cart-items-component to refresh sections
-    document.querySelectorAll('cart-items-component').forEach((section) => {
-      section.dispatchEvent(
-        new CustomEvent('cart:update', {
-          detail: { itemCount, productId },
-        })
-      );
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
+        /* CART REFRESH FUNCTION HERE */
     });
-  }
-
-  // Listen for Swym Wishlist “Add To Cart” events
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function(evt) {
-    refreshCartFromSwym(evt.detail);
-  });
-
-  swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function(evt) {
-    refreshCartFromSwym(evt.detail);
-  });
-
-  // Optional: direct click handler for the Add To Trolley buttons on Wishlist page
-  document.querySelectorAll('.swym-storefront-layout-grid-item-add-to-cart-button').forEach((btn) => {
-    btn.addEventListener('click', function(e) {
-      const productId = btn.dataset.productId;
-      const variantId = btn.dataset.variantId;
-      refreshCartFromSwym({ productId, variantId, quantity: 1 });
+    
+    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
+        /* CART REFRESH FUNCTION HERE */
     });
-  });
 }
 
 if (!window.SwymCallbacks) {
-  window.SwymCallbacks = [];
+    window.SwymCallbacks = [];
 }
 window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
