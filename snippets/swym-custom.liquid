@@ -1,17 +1,17 @@
 <script>
-function onSwymLoadCallback(swat) {
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function() {
-        /* CART REFRESH FUNCTION HERE */
+  function onSwymLoadCallback(swat) {
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedToCart, function () {
+      document.dispatchEvent(new CustomEvent('cart:update'));
     });
-    
-    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
-    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function() {
-        /* CART REFRESH FUNCTION HERE */
-    });
-}
 
-if (!window.SwymCallbacks) {
+    /* For Move All to Cart buttons - required if SFL/Move All to Cart button is enabled */
+    swat.evtLayer.addEventListener(swat.JSEvents.UIAddedAllToCart, function () {
+      document.dispatchEvent(new CustomEvent('cart:update'));
+    });
+  }
+
+  if (!window.SwymCallbacks) {
     window.SwymCallbacks = [];
-}
-window.SwymCallbacks.push(onSwymLoadCallback);
+  }
+  window.SwymCallbacks.push(onSwymLoadCallback);
 </script>
