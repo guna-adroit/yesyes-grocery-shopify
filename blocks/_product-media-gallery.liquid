@@ -557,6 +557,7 @@
       };
 
       window.ProductModel.loadShopifyXR();
+      document.dispatchEvent(new CustomEvent('swym:collections-loaded'));
     </script>
   {%- endif -%}
 
