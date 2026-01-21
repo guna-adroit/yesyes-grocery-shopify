@@ -4317,12 +4317,10 @@ text-component {
   z-index: 999 !important;
   pointer-events: auto;
 }
-
-/* Prevent image zoom / click-through beneath the wishlist button */
 .swym-atw-btn-wrapper-for-img {
-  pointer-events: auto;
+  position: relative;
+  z-index: 100 !important;
 }
-
 /* Optional: explicitly disable pointer events on the image layer if needed */
 .product_image_top_right img {
   pointer-events: none;
