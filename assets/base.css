@@ -4329,3 +4329,23 @@ text-component {
 .swym-add-to-wishlist-view-product.swym-added .swym-icon-filled {
   display: inline-flex;
 }
+.custom-wishlist-wrapper {
+  position: absolute;
+  top: 10px;   /* adjust */
+  right: 10px; /* adjust */
+  z-index: 999; /* above everything */
+  pointer-events: auto; /* ensures button is clickable */
+}
+
+.custom-wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.swym-icon-filled { display: none; }
+.custom-wishlist-btn.swym-added .swym-icon-unfilled { display: none; }
+.custom-wishlist-btn.swym-added .swym-icon-filled { display: inline; }
