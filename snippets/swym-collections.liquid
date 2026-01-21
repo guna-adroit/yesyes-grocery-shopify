@@ -90,17 +90,3 @@
     z-index: 1;
   }
 </style>
-<script defer>
-  function swymCallbackFn(swat){
-
-    swat.collectionsApi.initializeCollections(
-      swat,
-      false,
-      Shopify.theme.id
-    );
-  }
-  if(!window.SwymCallbacks){
-    window.SwymCallbacks = [];
-  }
-  window.SwymCallbacks.push(swymCallbackFn);
-</script>
