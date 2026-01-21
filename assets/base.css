@@ -4297,26 +4297,35 @@ text-component {
   display: none;
 }
 
-/* Default (unfilled) state */
-/* #swym-atw-pdp-button {
-  background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 48px;
-  min-width: 56px;
-  min-height: 56px;
-} */
-
-/* Filled / added state */
-/* #swym-atw-pdp-button.atw-button-added {
-  background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
-}
-#swym-atw-pdp-button {
-  position: relative;
-  z-index: 999 !important;
+/* Base button reset */
+.swym-add-to-wishlist-view-product {
+  background: none !important;
+  border: none;
+  padding: 0;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  z-index: 10;
   cursor: pointer;
 }
 
-.swym-atw-btn-wrapper-for-img {
-  isolation: isolate !important;
-} */
+/* Icon wrapper */
+.swym-add-to-wishlist-view-product .swym-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Default: show unfilled */
+.swym-add-to-wishlist-view-product .swym-icon-filled {
+  display: none;
+}
+
+/* Added state: swap icons */
+.swym-add-to-wishlist-view-product.swym-added .swym-icon-unfilled {
+  display: none;
+}
+
+.swym-add-to-wishlist-view-product.swym-added .swym-icon-filled {
+  display: inline-flex;
+}
