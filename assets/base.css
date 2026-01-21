@@ -4315,7 +4315,8 @@ text-component {
 #swym-atw-pdp-button {
   position: relative;
   z-index: 999 !important;
-  pointer-events: auto;
+  pointer-events:auto ;
+  cursor: pointer;
 }
 .swym-atw-btn-wrapper-for-img {
   position: relative;
