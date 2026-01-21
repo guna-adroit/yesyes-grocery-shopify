@@ -93,6 +93,13 @@ class ProductRecommendations extends HTMLElement {
         if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
+          if (window.Swym && typeof window.Swym.collectionsApi?.initializeCollections === 'function') {
+              window.Swym.collectionsApi.initializeCollections(
+                window.Swym,
+                false,
+                Shopify.theme.id
+              );
+            }
         } else {
           this.#handleError(new Error('No recommendations available'));
         }
