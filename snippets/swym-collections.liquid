@@ -90,31 +90,3 @@
     z-index: 1;
   }
 </style>
-<script>
-(function () {
-  function blockImageZoom(e) {
-    const swymBtn = e.target.closest('#swym-atw-pdp-button');
-    if (!swymBtn) return;
-
-    e.stopImmediatePropagation();
-  }
-
-  document.documentElement.addEventListener(
-    'pointerdown',
-    blockImageZoom,
-    true
-  );
-
-  document.documentElement.addEventListener(
-    'mousedown',
-    blockImageZoom,
-    true
-  );
-
-  document.documentElement.addEventListener(
-    'touchstart',
-    blockImageZoom,
-    true
-  );
-})();
-</script>
