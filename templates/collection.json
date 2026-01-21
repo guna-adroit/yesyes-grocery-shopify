@@ -287,8 +287,7 @@
               },
               "blocks": {
                 "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
+                  "type": "product-quantity",
                   "static": true,
                   "settings": {},
                   "blocks": {}

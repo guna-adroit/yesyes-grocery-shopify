@@ -87,6 +87,17 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     font-weight: 700;
     font-size: 18px;
     line-height: 22.4px;
+    color: #ED1D23;
+    text-transform: capitalize;
+    transition: color var(--animation-speed) var(--animation-easing), box-shadow var(--animation-speed) var(--animation-easing), background-color var(--animation-speed) var(--animation-easing);
+}
+span.svg-wrapper.wishlist-icon{
+    color: #ED1D23;
+    transition: color var(--animation-speed) var(--animation-easing), box-shadow var(--animation-speed) var(--animation-easing), background-color var(--animation-speed) var(--animation-easing);
+}
+.button.wishlist-button:hover .add-to-whishlist-text__content, 
+.button.wishlist-button:hover span.svg-wrapper.wishlist-icon{
+    color: white;
 }
 .related-products-slider .resource-list__carousel .slideshow-control,
 .related-products-slider .resource-list__carousel .slideshow-control[disabled]{
@@ -122,6 +133,29 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
 }
 .button.wishlist-button{
     height: 60px;
+    background-color: white !important;
+}
+.button.wishlist-button:hover{
+    background-color:  #ed1d23!important;
+}
+.button.wishlist-button.disabled{
+    opacity: 0.7;
+}
+.button.wishlist-button.swym-added{
+    background-color:  #ed1d23!important;
+}
+.button.wishlist-button.swym-added .add-to-whishlist-text__content, .button.wishlist-button.swym-added span.svg-wrapper.wishlist-icon{
+    color: white;
+}
+.card-wishlist .card-wishlist-button.swym-added{
+    opacity: 1 !important;
+}
+.card-wishlist .card-wishlist-button.swym-added .svg-wrapper.collection-wishlist-icon svg{
+    fill: #ed1d23;
+}
+.swym-button.swym-add-to-wishlist-view-product{
+    z-index: 9 !important;
+    cursor: pointer;
 }
 .wishlist-button-text{
     display: flex;
@@ -167,7 +201,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         gap: 5px;
     }
     .product-details .product-price-container{
-        flex-direction: column;
+        /* flex-direction: column; */
     }
     .product-details .card-product-expiry-container{
         flex-basis: unset;
@@ -280,6 +314,8 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         .yy-page-banner-image-block img{
             width: 100%;
             display: block;
+            object-fit: cover;
+            height: 100%;
         }
         
         .yy-page-banner-arrow-circle{
@@ -296,7 +332,7 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
         }
         .yy-page-banner-arrow-circle svg{
             rotate: 90deg;
-            --svg-size: clamp(18px, 2vw, 60px);
+            --svg-size: clamp(18px, 2.6vw, 60px);
             width: var(--svg-size);
             height: var(--svg-size);
         }
@@ -384,4 +420,132 @@ span.svg-wrapper.wishlist-icon, span.svg-wrapper.wishlist-icon svg{
     .related-products-slider .resource-list__carousel .resource-list__slide {
         width: calc((100% - (min(12px, 9999px) * (4 - 1)) - 3rem) / 4.5);
     }
+}
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+}
+.shopify-policy__container{
+    max-width: 1484px !important;
+}
+.shopify-policy__body p,
+.shopify-policy__body ul li,
+.shopify-policy__body ol li, 
+.shopify-policy__body span,
+.shopify-policy__body div,
+.shopify-policy__body strong,
+.main-page-content .shopify-block p,
+.main-page-content .shopify-block ul li,
+.main-page-content .shopify-block ol li, 
+.main-page-content .shopify-block span,
+.main-page-content .shopify-block div,
+.main-page-content .shopify-block strong{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+}
+.shopify-policy__title{
+    text-align: left !important;   
+}
+.shopify-policy__title h1, .main-page-content .text-block h1{
+    font-weight: 900;
+    font-size: 38px;
+    text-transform: capitalize;
+    line-height: 64px;
+}
+.policy-updated-date{
+    font-weight: 400 !important;
+    font-size: 24px !important;
+    line-height: 25.2px;
+}
+.shopify-policy__body h2, .main-page-content .shopify-block h2{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 25.2px;
+}
+.page-width-content{
+    --page-content-width:1484px;
+}
+hr {
+    margin-block-start: 2em;
+}
+@media screen and (max-width: 768px){
+    .shopify-policy__body p,
+    .shopify-policy__body ul li,
+    .shopify-policy__body ol li, 
+    .shopify-policy__body span,
+    .shopify-policy__body div,
+    .shopify-policy__body strong,
+    .main-page-content p,
+    .main-page-content ul li,
+    .main-page-content ol li, 
+    .main-page-content span,
+    .main-page-content div,
+    .main-page-content strong{
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .shopify-policy__title h1, .main-page-content .text-block h1{
+        font-size: 28px;
+        line-height: 44px;
+    }
+    .policy-updated-date{
+        font-size: 20px !important;
+    }
+    .shopify-policy__body h2, .page-width-content .shopify-block h2{
+        font-size: 24px;
+        line-height: 25.2px;
+    }
+}
+.buy-ingredients-button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.coming-soon-message{
+    text-align: center;
+}
+.yotpo-reviews-main-widget svg{
+    margin: 0 auto;
+}
+.shopify-app-block{
+    width: 100%;
+}
+.yotpo-sr-bottom-line-summary {
+    flex-direction: row !important;
+}
+p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
+    height: auto;
+    padding: 0 !important;
+    font-weight: 400 !important;
+    color: #676666 !important;
+}
+@media screen and (max-width: 750px){
+    p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
+        font-size: 14px !important;
+    }
+}
+.swym-atw-button-container.consent-given.default-position{
+    display: none !important;
+}
+@media screen and (max-width: 750px){
+    .wishlist-link{
+        width: 23px;
+    }
+    .yotpo-card-star-rating {
+        height: 25px;
+    }
+    .yotpo-card-star-rating .yotpo-sr-bottom-line-text{
+        padding-top: 0px !important;
+    }
+}
+/* .yotpo-card-star-rating .yotpo-sr-bottom-line-summary .yotpo-sr-bottom-line-right-panel{
+    display: none;
+} */
+.yotpo-card-star-rating p.yotpo-sr-bottom-line-left-panel{
+    font-weight: 400 !important;
+    color: #676666 !important;
+    height: auto !important;
+    display: none !important;
 }

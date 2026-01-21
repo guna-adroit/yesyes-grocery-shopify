@@ -35,23 +35,27 @@
       </div>
     {%- endif -%}
   </div>
-  <div class="shopping-bag-label">SHOPPING BAG</div>
+  {% if template.name == 'cart' %}
+    <div class="shopping-bag-label">SHOPPING BAG</div>
+  {% endif %}
   {% if settings.show_cart_note or settings.show_add_discount_code and template.name == 'cart' %}
-    <div class="cart-actions">
-      
-      {% if settings.show_add_discount_code %}
-        {% render 'cart-discount', section_id: section.id %}
-      {% endif %}
-      {% if settings.show_cart_note and settings.show_add_discount_code %}
+    {% if template.name == 'cart' %}
+      <div class="cart-actions">
+        
+        {% if settings.show_add_discount_code %}
+          {% render 'cart-discount', section_id: section.id %}
+        {% endif %}
+        {% if settings.show_cart_note and settings.show_add_discount_code %}
+          <div class="cart-actions__divider"></div>
+        {% endif %}
+        {% if settings.show_cart_note %}
+          {% render 'cart-note' %}
+        {% endif %}
         <div class="cart-actions__divider"></div>
-      {% endif %}
-      {% if settings.show_cart_note %}
-        {% render 'cart-note' %}
-      {% endif %}
-      <div class="cart-actions__divider"></div>
-        {% render 'cart-pickup' %}
+          {% render 'cart-pickup' %}
 
-    </div>
+      </div>
+    {% endif %}
   {% endif %}
 
   {%- liquid
@@ -78,6 +82,22 @@
         {{ total_price }}
       </text-component>
     </span>
+    {% unless template.name != 'cart' %}
+      <span
+        class="cart__summary-item cart__total"
+        role="status" >
+        <span class="cart__total-label cart-primary-typography points-discount">POINTS DISCOUNT</span>
+        <text-component
+          ref="cartTotal"
+          value="{{ total_price | strip_html }}"
+          class="cart__total-value cart-secondary-typography"
+          {% comment %} Used by payment_terms web component {% endcomment %}
+          data-cart-subtotal
+        >
+          -{{ total_price | divided_by: 10 | money }}
+        </text-component>
+      </span>
+    {% endunless %}
     {% if settings.show_installments %}
       <span class="cart__summary-item cart__installments">
         {% form 'cart', cart %}
@@ -85,9 +105,25 @@
         {% endform %}
       </span>
     {% endif %}
+    
     <div class="cart__summary-item tax-note cart-primary-typography">
       {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
     </div>
+    <span
+      class="cart__summary-item cart__total"
+      role="status"
+    >
+      <span class="cart__total-label cart-final-amount cart-primary-typography">{{ 'content.cart_estimated_total' | t |  remove: 'sub' }}</span>
+      <text-component
+        ref="cartTotal"
+        value="{{ total_price | strip_html }}"
+        class="cart__total-value cart-secondary-typography"
+        {% comment %} Used by payment_terms web component {% endcomment %}
+        data-cart-subtotal
+      >
+        {{ total_price }}
+      </text-component>
+    </span>
   </div>
 </div>
 <div class="cart__ctas">
@@ -134,7 +170,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-sm);
-    border-block: 1px solid var(--color-border);
+    /* border-block: 1px solid var(--color-border); */
+    border-block: 1px solid #ccc;
     padding-block: var(--padding-sm);
     margin-block-start: var(--margin-3xs);
   }

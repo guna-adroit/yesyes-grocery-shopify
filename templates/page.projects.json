@@ -1,0 +1,154 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "custom_classes": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "page_banner_7raP7R": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {
+        "banner_image": "shopify://shop_images/about-banner.jpg"
+      }
+    },
+    "projects_content_3Pdt3M": {
+      "type": "projects-content",
+      "blocks": {
+        "project_DgcL3j": {
+          "type": "project",
+          "settings": {
+            "heading": "Tarneit West",
+            "image-1": "shopify://shop_images/yes-yes-tarneit-west-1.jpg",
+            "image-2": "shopify://shop_images/yes-yes-tarneit-west-2.jpg",
+            "image-3": "shopify://shop_images/yes-yes-tarneit-west-3.jpg",
+            "image-4": "shopify://shop_images/yes-yes-tarneit-west-4.jpg",
+            "image-5": "shopify://shop_images/yes-yes-tarneit-west-5.jpg",
+            "image-6": "shopify://shop_images/yes-yes-tarneit-west-6.jpg",
+            "image-7": "shopify://shop_images/yes-yes-tarneit-west-7.jpg"
+          }
+        },
+        "project_RJBzGm": {
+          "type": "project",
+          "settings": {
+            "heading": "Bluestone Estate ( Tarneit)",
+            "image-1": "shopify://shop_images/yes-yes-Bluestone-1.jpg",
+            "image-2": "shopify://shop_images/yes-yes-Bluestone-2.jpg",
+            "image-3": "shopify://shop_images/yes-yes-Bluestone-3.jpg",
+            "image-4": "shopify://shop_images/yes-yes-Bluestone-4.jpg",
+            "image-5": "shopify://shop_images/yes-yes-Bluestone-5.jpg",
+            "image-6": "shopify://shop_images/yes-yes-Bluestone-6.jpg",
+            "image-7": "shopify://shop_images/yes-yes-Bluestone-7.jpg",
+            "image-8": "shopify://shop_images/yes-yes-Bluestone-8.jpg",
+            "image-9": "shopify://shop_images/yes-yes-Bluestone-9.jpg",
+            "image-10": "shopify://shop_images/yes-yes-Bluestone-10.jpg",
+            "image-11": "shopify://shop_images/yes-yes-Bluestone-11.jpg",
+            "image-12": "shopify://shop_images/yes-yes-Bluestone-12.jpg",
+            "image-13": "shopify://shop_images/yes-yes-Bluestone-13.jpg",
+            "image-14": "shopify://shop_images/yes-yes-Bluestone-14.jpg",
+            "image-15": "shopify://shop_images/yes-yes-Bluestone-15.jpg"
+          }
+        },
+        "project_y7GwyK": {
+          "type": "project",
+          "settings": {
+            "heading": "Deanside"
+          }
+        },
+        "project_hJ7tVp": {
+          "type": "project",
+          "settings": {
+            "heading": "Wollert",
+            "image-1": "shopify://shop_images/yes-yes-wollert-1.jpg",
+            "image-2": "shopify://shop_images/yes-yes-wollert-2.jpg",
+            "image-3": "shopify://shop_images/yes-yes-wollert-3.jpg",
+            "image-4": "shopify://shop_images/yes-yes-wollert-4.jpg",
+            "image-5": "shopify://shop_images/yes-yes-wollert-5.jpg",
+            "image-6": "shopify://shop_images/yes-yes-wollert-6.jpg",
+            "image-7": "shopify://shop_images/yes-yes-wollert-7.jpg",
+            "image-8": "shopify://shop_images/yes-yes-wollert-8.jpg",
+            "image-9": "shopify://shop_images/yes-yes-wollert-9.jpg",
+            "image-10": "shopify://shop_images/yes-yes-wollert-10.jpg",
+            "image-11": "shopify://shop_images/yes-yes-wollert-11.jpg",
+            "image-12": "shopify://shop_images/yes-yes-wollert-12.jpg"
+          }
+        },
+        "project_Nkckyc": {
+          "type": "project",
+          "settings": {
+            "heading": "Wyndham Vale",
+            "image-1": "shopify://shop_images/projects-1.png",
+            "image-2": "shopify://shop_images/projects-2.png"
+          }
+        }
+      },
+      "block_order": [
+        "project_DgcL3j",
+        "project_RJBzGm",
+        "project_y7GwyK",
+        "project_hJ7tVp",
+        "project_Nkckyc"
+      ],
+      "name": "Projects Content",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "page_banner_7raP7R",
+    "projects_content_3Pdt3M"
+  ]
+}

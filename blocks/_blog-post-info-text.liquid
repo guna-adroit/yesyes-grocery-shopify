@@ -49,13 +49,15 @@
 
   </div>
 {% endif %}
-<a class="section_view_all blog_read_more" href="{{ blog_url }}">Read More</a>
+{%- if block_settings.show_readmore -%}
+  <a class="section_view_all blog_read_more" href="{{ blog_url }}">Read More</a>
+{%- endif -%}
 {% stylesheet %}
   .blog-post-details {
     display: flex;
     gap: var(--gap-sm);
     font-size: var(--font-paragraph-size);
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    color: #000;
     white-space: nowrap;
     flex-wrap: wrap;
   }
@@ -80,6 +82,12 @@
       "type": "checkbox",
       "id": "show_author",
       "label": "t:settings.show_author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_readmore",
+      "label": "Show Read More",
       "default": true
     },
     {

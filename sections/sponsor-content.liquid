@@ -24,6 +24,9 @@
             height: 55px;
             padding: 15px 24px;
             border-radius: 6px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 21.4px;
         }
         .form-column form textarea{
             width: 100%;
@@ -31,38 +34,90 @@
             margin-bottom: 30px;
             border-radius: 6px;
             padding: 15px 24px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 21.4px;
+        }
+        .form-column form button{
+            width: 230px;
+            height: 60px;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 25.2px;
+        }
+        .page-section-title{
+            font-weight: 900;
+            font-size: 38px;
+            line-height: 38px;
+            margin-bottom: 30px;
+        }
+        .form-alert-success{
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 20px;
+        }
+        @media screen and (min-width: 1200px){
+            .yy-sponser-content-container{
+                padding: 0 32px;
+            }
+        }
+        @media screen and (max-width: 820px){
+            .yy-sponser-content-wrapper {
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+            .yy-sponser-content-container{
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <div class="yy-sponser-content-wrapper section section--page-width">
         <div class="yy-sponser-content-container">
             <div class="yy-sponser-content-column form-column">
-                <h1>Sponsorship & Grants</h1>
+                <h1 class="page-section-title">Sponsorship & Grants</h1>
                 {% form 'contact' %}
                 {{ form.errors | default_errors }}
+                <div className="name">
+                    <input hidden type="text" name="contact[page]" placeholder="Name" id="page" value="From Sponsorship & Grants"/>
+                </div>
 
                 <div className="name">
-                    <input type="text" name="contact[name]" placeholder="Name" id="name" />
+                    <input type="text" name="contact[name]" placeholder="Name" id="name" required/>
                 </div>
 
                 <div className="phone">
-                    <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" />
+                    <input type="tel" name="contact[phone]" placeholder="Phone" id="phone" required/>
                 </div>
 
                 <div className="email">
-                    <input type="email" name="contact[email]" placeholder="Email" id="email" />
+                    <input type="email" name="contact[email]" placeholder="Email" id="email" required/>
                 </div>
 
                 <div className="message">
-                    <textarea name="contact[body]" id="message" placeholder="How can we help you?"></textarea>
+                    <textarea rows="6" name="contact[body]" id="message" placeholder="How can we help you?" required></textarea>
                 </div>
 
                 <div className="submit">
-                    <input type="submit" class="button button--primary" value="SUBMIT" />
+                    <button type="submit" class="button button--primary" value="SUBMIT">SUBMIT</button>
                 </div>
+                {% if form.posted_successfully? %}
+                    <div class="form-alert-success">
+                        <svg aria-hidden="true" focusable="false" class="icon icon-success" viewBox="0 0 13 13">
+                            <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="#428445" stroke="white" stroke-width="0.7"></path>
+                            <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"></path>
+                            <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+                            </path>
+                        </svg>
+                        Thanks for contacting us. We'll get back to you as soon as possible.
+                    </div>
+                {% endif %}
                 {% endform %}
             </div>
             <div class="yy-sponser-content-column image-column">
-                <img class="yy-sponser-content-image" src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sponder-content-image.png?v=1764595131" width="" height="" alt="">
+                <div class="yy-sponser-content-image-wrapper">
+                    <img class="yy-sponser-content-image" src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sponder-content-image.png?v=1764595131" width="" height="" alt="">
+                </div>
             </div>
         </div>
     </div>

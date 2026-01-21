@@ -78,10 +78,13 @@
             margin: 0;
         }
         .yy-career-button .button{
+            height: 60px;
+            width: 174px;
             font-weight: 700;
             font-size: 18px;
             line-height: 25.2px;
-            padding: 17px 33px
+            padding: 17px 33px;
+            text-transform: uppercase;
         }
         @media screen and (max-width: 1024px){
             .yy-career-content-section-container{
@@ -120,12 +123,125 @@
                 width: 62px;
                 height: 62px;
             }
+            .yy-career-content-column p{
+                font-size: 16px;
+            }
          }
          @media screen and (max-width: 600px){
             .yy-career-list-item{
                 flex-direction: column;
             }
         }
+
+        {% comment %} Dialog CSS {% endcomment %}
+         .dialog-career{
+            border: none;
+            max-width: 788px;
+            width: 100%;
+            padding: 60px;
+            overflow: visible;
+            border-radius: 13px;
+        }
+        .dialog-career::backdrop{
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .career-form-title{
+            font-weight: 700;
+            font-size: 24px;
+            line-height: normal;
+            letter-spacing: 0.1px;
+            margin: 0;
+            margin-bottom: 50px;
+        }
+        .dialog-career-form input, .dialog-career-form textarea{
+            width: 100%;
+            border: 1px solid #CCCCCC;
+            height: 55px;
+            border-radius: 6px;
+            padding: 15px 24px;
+            color: #000000;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 21.4px;
+        }
+        .dialog-career-form textarea{
+            height: unset;
+        }
+        .dialog-career-form input::placeholder, .dialog-career-form textarea::placeholder{
+            color: #000;
+        }
+        .dialog-career-form{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .career-file-input-btn{
+            border: 1px solid #CCCCCC;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+            width: 225px;
+            height: 58px;
+            padding: 15px;
+        }
+        .career-file-input-btn img{
+            width: 28px;
+        }
+        .career-form-submit_button {
+            text-transform: uppercase;
+            text-align: center;
+            margin: 0 auto;
+            width: 243px;
+            height: 65px;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 25.2px;
+        }
+        .popup-close {
+            position: absolute;
+            top: -44px;
+            right: -44px;
+            border: none;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 200px;
+            color: #E90000;
+            z-index: 999999;
+            background-color: #D9D9D9;
+        }
+        @media screen and (max-width: 1024px){
+            .dialog-career{
+                width: calc(100% - 80px);
+                max-width: 600px;
+                padding: 25px;
+            }
+            .dialog-career-form{
+                max-height: 450px;
+                overflow: auto;
+            }
+        }
+         @media screen and (max-width: 600px){
+             .dialog-career{
+                margin-left: 40px;
+                margin-right: 40px;
+                width: calc(100% - 80px);
+                max-width: 600px;
+                padding: 25px;
+            }
+            .dialog-career-form input, .dialog-career-form textarea{
+                height: 40px;
+            }
+            .dialog-career-form textarea{
+                height: unset;
+            }
+         }
     </style>
 
     <div class="yy-career-content-section-wrapper section section--page-width">
@@ -139,90 +255,210 @@
                 </div>
             </div>
             <div class="yy-career-list-container">
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
+                {% for block in section.blocks %}
+                    <div class="yy-career-list-item">
+                        <div class="yy-career-icon-block">
+                            <div class="yy-career-icon">
+                                <img src="{{ block.settings.image | image_url : width: 300 }}" width="" height="" alt="">
                             </div>
                         </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
+                        <div class="yy-career-content-block">
+                            <div class="yy-career-content">
+                                <h2 class="yy-career-content_title">{{ block.settings.heading }}</h2>
+                                <div class="yy-career-content_description">
+                                    <p><span>{{ block.settings.heading-detail-1}}</span> {{ block.settings.description-detail-1}}</p>
+                                    <p><span>{{ block.settings.heading-detail-2}}</span> {{ block.settings.description-detail-1}}</p>
+                                </div>
+                            </div>
+                            <div class="yy-career-button">
+                                <button class="button button--primary show-dialog"  data-position="{{ block.settings.heading }}">{{ block.settings.button-text}}</button>
                             </div>
                         </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
                     </div>
-                </div>
+                {% endfor %}
 
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
-                            </div>
-                        </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="yy-career-list-item">
-                    <div class="yy-career-icon-block">
-                        <div class="yy-career-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/sales-executive.svg?v=1764334416" width="" height="" alt="">
-                        </div>
-                    </div>
-                    <div class="yy-career-content-block">
-                        <div class="yy-career-content">
-                            <h2 class="yy-career-content_title">Sales Executive</h2>
-                            <div class="yy-career-content_description">
-                                <p><span>Qualification :</span> Any Graduation, Good Communication Skills</p>
-                                <p><span>Location :</span> Burnside Hub, Opalia Plaza  </p>
-                            </div>
-                        </div>
-                        <div class="yy-career-button">
-                            <button class="button button--primary">APPLY NOW</button>
-                        </div>
-                    </div>
-                </div>
-
-                
             </div>
         </div>
     </div>
+
+    <div class="">
+        <dialog id="dialog-career" class="dialog-career">
+            <h2 class="career-form-title">Apply for Marketing Manager</h2>
+            <form class="dialog-career-form" id="careerForm">
+                <input type="text" hidden name="career_position" value="">
+
+                <div class="field-group">
+                    <input type="text" name="name" id="name" placeholder="Name" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <textarea name="note" id="note" rows="3" placeholder="Attached note" required></textarea>
+                    <span class="error"></span>
+                </div>
+
+                <div class="field-group">
+                    <label class="career-file-input-btn">
+                        <input type="file" name="career_resume" id="resume" accept="application/pdf" required hidden>
+                        <img src="https://cdn.shopify.com/s/files/1/0979/1825/5185/files/upload-icon.svg?v=1765183044" width="28px" height="" alt="">
+                        <span id="file-name">Upload Resume (PDF)</span>
+                    </label>
+                    <span class="error"></span>
+                </div>
+
+                <button type="submit" class="button button--primary career-form-submit_button">
+                    Confirm
+                </button>
+            </form>
+
+            <button class="close-dialog popup-close">
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.5112 2.82825L11.3933 8.9461L17.14 14.6927C17.4448 14.9976 17.6082 15.4188 17.5943 15.8638C17.5804 16.3088 17.3902 16.7411 17.0657 17.0656C16.7412 17.3901 16.3089 17.5803 15.8639 17.5942C15.4189 17.6081 14.9977 17.4447 14.6928 17.1399L8.9462 11.3932L2.82835 17.5111C2.50384 17.8356 2.07153 18.0257 1.62652 18.0397C1.18152 18.0536 0.760272 17.8902 0.455452 17.5853C0.150631 17.2805 -0.012793 16.8593 0.00112992 16.4143C0.0150535 15.9693 0.205183 15.5369 0.529694 15.2124L6.64754 9.09459L0.900905 3.34795C0.596085 3.04313 0.43266 2.62188 0.446583 2.17687C0.460506 1.73187 0.650636 1.29956 0.975148 0.975048C1.29966 0.650537 1.73197 0.460406 2.17697 0.446483C2.62198 0.43256 3.04322 0.595985 3.34805 0.900805L9.09469 6.64744L15.2125 0.529595C15.537 0.205083 15.9694 0.0149526 16.4144 0.00102932C16.8594 -0.0128947 17.2806 0.150531 17.5854 0.455352C17.8903 0.760172 18.0537 1.18142 18.0398 1.62642C18.0258 2.07143 17.8357 2.50374 17.5112 2.82825Z" fill="#ED1D23"></path>
+                </svg>
+            </button>
+        </dialog>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("careerForm");
+            const resumeInput = document.getElementById("resume");
+            const fileNameSpan = document.getElementById("file-name");
+
+            function showError(input, message) {
+                const group = input.closest(".field-group");
+                const errorSpan = group.querySelector(".error");
+                errorSpan.textContent = message;
+            }
+
+            function clearError(input) {
+                const group = input.closest(".field-group");
+                const errorSpan = group.querySelector(".error");
+                errorSpan.textContent = "";
+            }
+
+            // Show file name
+            resumeInput.addEventListener("change", () => {
+                const file = resumeInput.files[0];
+                if (file) {
+                    fileNameSpan.textContent = file.name;
+                    clearError(resumeInput);
+                }
+            });
+
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const note = document.getElementById("note");
+                const resume = resumeInput;
+
+                // NAME validation
+                if (name.value.trim() === "") {
+                    showError(name, "Name is required");
+                    isValid = false;
+                } else {
+                    clearError(name);
+                }
+
+                // EMAIL validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value.trim())) {
+                    showError(email, "Enter a valid email");
+                    isValid = false;
+                } else {
+                    clearError(email);
+                }
+
+                // NOTE validation
+                if (note.value.trim() === "") {
+                    showError(note, "Note is required");
+                    isValid = false;
+                } else {
+                    clearError(note);
+                }
+
+                // RESUME validation
+                if (!resume.files[0]) {
+                    showError(resume, "Please upload your resume (PDF)");
+                    isValid = false;
+                } else if (resume.files[0].type !== "application/pdf") {
+                    showError(resume, "Only PDF files are allowed");
+                    isValid = false;
+                } else {
+                    clearError(resume);
+                }
+
+                if (!isValid) return;
+
+                // If valid → submit form
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch("https://yy-form.vercel.app/api/send-email", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        // Optional success UI
+                        form.reset();
+                        fileNameSpan.textContent = "Upload Resume (PDF)";
+
+                        alert("Form submitted successfully!");
+                    } else {
+                        alert("Something went wrong. Try again.");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Network error.");
+                }
+            });
+        });
+        </script>
+
+    <script>
+        const dialog = document.querySelector('#dialog-career');
+        const showDialogButtons = document.querySelectorAll('.show-dialog');
+        const closeDialog = document.querySelector('.close-dialog');
+
+        const careerInput = document.querySelector('input[name="career_position"]');
+        const careerTitle = document.querySelector('.career-form-title');
+
+        showDialogButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const position = this.dataset.position;
+
+                careerInput.value = position;
+
+                careerTitle.textContent = `Apply for ${position}`;
+                console.log(careerTitle);
+                careerInput.value = careerTitle.textContent;
+
+                dialog.showModal();
+            });
+        });
+
+        closeDialog.addEventListener('click', () => dialog.close());
+
+        dialog.addEventListener('click', (event) => {
+            const rect = dialog.getBoundingClientRect();
+            const isInDialog =
+                event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom;
+
+            if (!isInDialog) dialog.close();
+        });
+    </script>
 
 {% schema %}
 {
@@ -269,12 +505,6 @@
           "default": "Enter description here."
         },
         {
-            "type": "text",
-            "id": "button-text-detail-1",
-            "label": "Button Text",
-            "default": "Apply Now"
-        },
-        {
             "type": "header",
             "content": "Details 2"
         },
@@ -291,8 +521,12 @@
           "default": "Enter description here."
         },
         {
+            "type": "header",
+            "content": "Button"
+        },
+        {
             "type": "text",
-            "id": "button-text-detail-2",
+            "id": "button-text",
             "label": "Button Text",
             "default": "Apply Now"
         }

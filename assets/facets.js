@@ -912,6 +912,18 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
+function swymCallbackFn(swat){
+    document.addEventListener("collection:updated", function(){
+      swat.initializeActionButtons(".product-grid");
+    })
+    document.addEventListener("shopify:section:load", function(){
+      swat.initializeActionButtons(".product-grid");
+    })
+  }
+  if(!window.SwymCallbacks){
+    window.SwymCallbacks = [];
+  }
+  window.SwymCallbacks.push(swymCallbackFn);
 
 // Infinite Scroll
 let ajaxinateInstance = null;
@@ -964,6 +976,8 @@ document.addEventListener('collection:updated', () => {
 
 // Section load (Horizon sometimes reloads this)
 document.addEventListener('shopify:section:load', initAjaxinate);
+
+
 
 
 
@@ -1023,6 +1037,7 @@ document.addEventListener('shopify:section:load', initAjaxinate);
 
   // Support Shopify section reloads
   document.addEventListener(ThemeEvents.FilterUpdate, initViewButtons);
+
 
 
 

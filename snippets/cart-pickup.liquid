@@ -1,24 +1,28 @@
 <div class="disclosure-trigger__label h6">DELIVERY OPTION</div>
 <div class="delivery-options-container">
-    <input
-    type="radio"
-    id="delivery-option-delivery"
-    name="delivery-option"
-    value="pickup"
-    class="delivery-option"
-    checked
-    on:change="/updateDeliveryOption">
-    <label for="delivery-option-delivery" class="delivery-option-label">
-    <span class="delivery-option-label__title">Store Pickup</span>
-    </label>
-    <input
-    type="radio"
-    id="delivery-option-pickup"
-    name="delivery-option"
-    value="delivery"
-    class="delivery-option"
-    on:change="/updateDeliveryOption">
-    <label for="delivery-option-pickup" class="delivery-option-label">
-    <span class="delivery-option-label__title">Online Delivery</span>
-    </label>
+    <span>
+        <input
+        type="radio"
+        id="delivery-option-delivery"
+        name="delivery-option"
+        value="pickup"
+        class="delivery-option"
+        checked
+        on:change="/updateDeliveryOption">
+        <label for="delivery-option-delivery" class="delivery-option-label">
+            <span class="delivery-option-label__title">Store Pickup</span>
+        </label>
+    </span>
+    <span>
+        <input
+        type="radio"
+        id="delivery-option-pickup"
+        name="delivery-option"
+        value="delivery"
+        class="delivery-option"
+        on:change="/updateDeliveryOption">
+        <label for="delivery-option-pickup" class="delivery-option-label">
+            <span class="delivery-option-label__title">Online Delivery</span>
+        </label>
+    </span>
 </div>

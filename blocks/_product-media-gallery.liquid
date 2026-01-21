@@ -563,7 +563,13 @@
   {%- endif -%}
 
   <div class="product-badges product-badges--top-right product wishlist-icon-position">
-    <div class="product-badges__badge ">
+    <div class="product-badges__badge swym-button swym-add-to-wishlist" 
+      data-with-epi="true"
+      data-swaction="addToWishlist"
+      data-product-id="{{ product.id }}"
+      data-variant-id="{{ product.variants[0].id }}"
+      data-product-url="{{ shop.url }}{{ product.url }}"
+    >
         <span class="svg-wrapper product collection-wishlist-icon">
             {{- 'icon-product-heart.svg' | inline_asset_content -}}
         </span>

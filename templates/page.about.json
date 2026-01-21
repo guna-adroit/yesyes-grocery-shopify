@@ -69,7 +69,7 @@
       "type": "about-content",
       "name": "About Content",
       "settings": {
-        "title": "About Us",
+        "title": "{{ page.title }}",
         "main-description": "“Yes Yes” being a customer-focused retailer offer quality products for every dollar spent by the customer.",
         "description": "At Yes Yes Indian Supermarket, we like to say “Yes” to all your grocery needs to stay connected to your cultural identity.As a leading retail chain founded in 2017, we’ve expanded our reach to cater to the Indian, Pakistani, Nepalese, Bangladeshi, Sri Lankan, Islander, and Fijian communities with a wide range of popular brands. Presently, our presence spans five stores across Melbourne, including Tarneit, Burnside, Melton South, Woodlea, and we’re excited to announce the upcoming opening of our newest location in Truganina."
       }

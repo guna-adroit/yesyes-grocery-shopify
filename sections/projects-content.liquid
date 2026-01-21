@@ -1,0 +1,292 @@
+<style>
+  .yy-project-content-container{
+            margin-top: 130px;
+            margin-bottom: 80px;
+        }
+.yy-tab-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.yy-tabs {
+    display: flex;
+    gap: 44px;
+}
+
+.yy-tab {
+    padding: 10px 0px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.yy-tab:hover {
+    border-bottom: 3px solid #ED1D23;
+}
+
+.yy-tab{
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 25.2px;
+}
+
+.yy-tab.active {
+    border-bottom: 3px solid #ED1D23;
+    font-weight: bold;
+    font-weight: 700;
+    line-height: 25.2px;
+}
+
+.yy-tab-content {
+    display: none;
+    padding: 50px 0px;
+    margin-top: 10px;
+}
+
+.yy-tab-content.active {
+    display: block;
+}
+.yy-project-content-container h1{
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 64px;
+}
+
+.yy-tab-image-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 50px 27px;
+}
+.yy-tab-image-item img{
+    width: 100%;
+    display:block;
+    border-radius: 4px;
+}
+@media screen and (max-width: 1024px){
+  .yy-tabs{
+    gap: 24px;
+  }
+  .yy-tab{
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1200px){
+    .yy-project-content-container{
+      padding: 0 32px;
+    }
+}
+ @media screen and (max-width: 820px){
+    .yy-tabs{
+      gap: 24px;
+      overflow-x: auto;
+      padding: 1rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .yy-tab{
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    .yy-project-content-container{
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    .yy-tab-image-container{
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+ <link rel='stylesheet' href='{{ 'photoswipe.css' | asset_url }}'>
+<div class="yy-projects-content-wrapper section section--page-width">
+        <div class="yy-project-content-container">
+            <h1>Projects</h1>
+            <div class="yy-tab-container">
+                <div class="yy-tabs">
+                    {% for block in section.blocks %}
+                      <div class="yy-tab" id="tab{{ forloop.index }}" onclick="showTab({{ forloop.index }})">{{ block.settings.heading }}</div>
+                    {% endfor %}
+                </div>
+                {% for block in section.blocks %}
+                  {% assign has_images = false %}
+                  <div class="yy-tab-content" id="content{{ forloop.index }}">
+                      <div class="yy-tab-image-container" id="project-gallery-{{ forloop.index }}">
+                          {% for i in (1..15) %}
+                            {% assign key = "image-" | append: i %}
+                            {% assign image = block.settings[key] %}
+                              {% if image != blank %}
+                                {% assign has_images = true %}
+                                  <div class="yy-tab-image-item">
+                                    <a
+                                      href="{{ image | image_url: width: 1600 }}"
+                                      data-pswp-width="{{ image.width }}"
+                                      data-pswp-height="{{ image.height }}"
+                                      target="_blank"
+                                      class="project-gallery__item"
+                                    >
+                                      {{ image | image_url: width: 800 | image_tag  }}
+                                    </a>
+                                  </div>
+                            
+                              {% endif %}
+                          {% endfor %}
+                      </div>
+                      {% unless has_images %}
+                        <div class="coming-soon-message">
+                          <p>Coming Soon....</p>
+                        </div>
+                      {% endunless %}
+                  </div>
+                  
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+<script>
+function showTab(tabNumber) {
+    const allContent = document.querySelectorAll('.yy-tab-content');
+    allContent.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    const allTabs = document.querySelectorAll('.yy-tab');
+    allTabs.forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    const activeContent = document.getElementById('content' + tabNumber);
+    activeContent.classList.add('active');
+
+    const activeTab = document.getElementById('tab' + tabNumber);
+    activeTab.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    showTab(1);
+});
+
+</script>
+<script id="rendered-js" type="module">
+      import PhotoSwipeLightbox from '{{ 'photoswipe-lightbox.esm.js' | asset_url }}';
+  
+      {% for block in section.blocks %}
+        const lightbox{{ forloop.index }} = new PhotoSwipeLightbox({
+          gallery: '#project-gallery-{{ forloop.index }}',
+          children: 'a',
+          pswpModule: () => import('{{ 'photoswipe.esm.js' | asset_url }}') 
+        });
+  
+        lightbox{{ forloop.index }}.init();
+    {% endfor %}
+  </script>
+
+{% schema %}
+{
+  "name": "Projects Content",
+  "tag": "section",
+  "class": "projects-content-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ],
+  "blocks": [
+    {
+        "type": "project",
+        "name": "Project",
+        "settings": [
+        {
+          "type": "text",
+          "label": "Project Title",
+          "id": "heading",
+          "default": "Title"
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 1",
+          "id": "image-1",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 2",
+          "id": "image-2",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 3",
+          "id": "image-3",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 4",
+          "id": "image-4",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 5",
+          "id": "image-5",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 6",
+          "id": "image-6",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 7",
+          "id": "image-7",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 8",
+          "id": "image-8",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 9",
+          "id": "image-9",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 10",
+          "id": "image-10",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 11",
+          "id": "image-11",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 12",
+          "id": "image-12",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 13",
+          "id": "image-13",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 14",
+          "id": "image-14",
+        },
+        {
+          "type": "image_picker",
+          "label": "Image 15",
+          "id": "image-15",
+        }
+        
+      ]
+            
+    }
+  ],
+  "presets": [
+    {
+      "name": "Projects Content"
+    }
+  ]
+}
+{% endschema %}

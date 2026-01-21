@@ -62,11 +62,41 @@
       "type": "page-banner",
       "name": "Page Banner",
       "settings": {
-        "banner_image": "shopify://shop_images/Vector_108_1.png"
+        "banner_image": "shopify://shop_images/career-page-banner.png"
       }
     },
     "career_content_aBtyER": {
       "type": "career-content",
+      "blocks": {
+        "job_block_E83WMq": {
+          "type": "job_block",
+          "settings": {
+            "image": "shopify://shop_images/sales-executive.svg",
+            "heading": "Sales Executive",
+            "heading-detail-1": "Qualification",
+            "description-detail-1": "Any Graduation, Good Communication Skills",
+            "heading-detail-2": "Location",
+            "description-detail-2": "Burnside Hub, Opalia Plaza",
+            "button-text": "Apply Now"
+          }
+        },
+        "job_block_GnECRC": {
+          "type": "job_block",
+          "settings": {
+            "image": "shopify://shop_images/marketing-manager.svg",
+            "heading": "Marketing Manager",
+            "heading-detail-1": "Qualification",
+            "description-detail-1": "Any Graduation, Good Communication Skills",
+            "heading-detail-2": "Location",
+            "description-detail-2": "Burnside Hub, Opalia Plaza",
+            "button-text": "Apply Now"
+          }
+        }
+      },
+      "block_order": [
+        "job_block_E83WMq",
+        "job_block_GnECRC"
+      ],
       "name": "Career Content",
       "settings": {}
     },

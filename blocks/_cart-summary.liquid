@@ -116,11 +116,11 @@
 
   .cart__container--extend .cart__summary-inner {
     height: 100%;
-    padding: var(--padding-md) 0 var(--padding-4xl);
+    padding: 4px 0 var(--padding-2xl);
 
     @media screen and (min-width: 750px) {
       grid-row: 2 / -1;
-      padding-inline: var(--page-margin);
+      padding-inline: var(--padding-2xl);
       width: var(--sidebar-width);
     }
     @media screen and (max-width: 1400px) {
@@ -132,7 +132,6 @@
   .cart__summary-inner.has-border-radius {
     border-radius: var(--border-radius);
   }
-
   @media screen and (max-width: 749px) {
     .inherit-parent-scheme--mobile {
       --color-background: inherit;
@@ -143,7 +142,7 @@
       --color-primary-rgb: inherit;
       --color-primary-hover: inherit;
       --color-primary-hover-rgb: inherit;
-      --color-border: inherit;
+      --color-border: #ccc;
       --color-border-rgb: inherit;
       --color-shadow: inherit;
       --color-shadow-rgb: inherit;
@@ -165,6 +164,7 @@
       --color-input-background: inherit;
     }
   }
+
 {% endstylesheet %}
 
 {% schema %}

@@ -7,11 +7,18 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
-  
-  <span class="wishlist-wrapper">
-    <span class="wishlist-icons">{% render 'header-wishlist' %}</span>
-    <span class="header-icons-label">Wishlist</span>
-  </span>
+  <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
+    <div class="wishlist-wrapper">
+      <div class="wishlist-icon-wrapper"> 
+        <div class="wishlist-icons">{% render 'header-wishlist' %}</div>
+        {% comment %} <span class="swym-wishlist-header-counter"></span> {% endcomment %}
+        <div class="wishlist-counter-wrapper">
+          <span class="swym-wishlist-header-counter"></span>
+        </div>
+      </div>
+      <span class="header-icons-label">Wishlist</span>
+    </div>
+  </a>
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
   {% else %}
@@ -29,6 +36,38 @@
     {% render 'account-drawer' %}
   {% endif %}
 </header-actions>
+
+
+<script class="swym-wishlist-header-counter-custom">
+  function renderWishlistCounter(swat) {
+    setTimeout(function () {
+      var counters = document.querySelectorAll(".swym-wishlist-header-counter");
+      if (!counters.length) return;
+
+      counters.forEach(function (el) {
+        if (swat.renderWishlistCount) {
+          swat.renderWishlistCount(el);
+        }
+      });
+    }, 500); // allows header JS to finish
+  }
+
+  if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+  }
+
+  window.SwymCallbacks.push(renderWishlistCounter);
+
+  // 🔁 Re-run when header is re-rendered
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      if (window._swat) {
+        renderWishlistCounter(window._swat);
+      }
+    }, 800);
+  });
+</script>
+
 
 {% stylesheet %}
   .cart-drawer {
@@ -277,4 +316,24 @@
   .cart-bubble--animating .cart-bubble__text {
     animation: cartBubbleSlideIn var(--animation-speed) var(--animation-easing);
   }
+  .wishlist-icon-wrapper {
+      position: relative;
+  }
+span.swym-wishlist-header-counter {
+  display: none;
+  font-size: 10px;
+  position: absolute;
+    top: -6px;
+    right: -9px;
+    background: black;
+    width: 20px;
+    height: 20px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+span.swym-wishlist-header-counter.show-badge {
+  display: flex;
+}
 {% endstylesheet %}

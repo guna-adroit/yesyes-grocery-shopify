@@ -1,0 +1,183 @@
+{% assign today_ts = 'now' | date: '%s' | plus: 0 %}
+{% assign fourteen_days = 14 | times: 86400 %}
+{% assign has_returnable_orders = false %}
+
+{% if customer %}
+  {% for order in customer.orders %}
+    {% assign order_ts = order.created_at | date: '%s' | plus: 0 %}
+    {% assign order_age = today_ts | minus: order_ts %}
+
+    {% if order_age <= fourteen_days %}
+      {% assign has_returnable_orders = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<div
+  class="
+    contact-form
+    spacing-style size-style
+    {% if settings.inherit_color_scheme == false %}color-{{ settings.color_scheme }}{% endif %}
+  "
+  style="
+    {% render 'spacing-style', settings: settings %}
+    {% render 'size-style', settings: settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {% assign form_id = block.id | default: section.id | prepend: 'ContactForm-' %}
+
+  {% if customer and has_returnable_orders == false %}
+    <div class="contact-form__notice">
+      Returns are only accepted within 14 days of purchase.  
+      You currently have no eligible orders for return.
+    </div>
+
+  {% else %}
+    {%- form 'contact', id: form_id, class: 'contact-form__form' -%}
+
+      {%- if form.errors -%}
+        <div class="contact-form__error" tabindex="-1" autofocus>
+          {{ 'icon-error.svg' | inline_asset_content }}
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? -%}
+        <div class="contact-form__success" tabindex="-1" autofocus>
+          {{ 'icon-checkmark.svg' | inline_asset_content }}
+          {{ 'blocks.contact_form.post_success' | t }}
+        </div>
+      {%- endif -%}
+
+      <!-- Name + Email -->
+      <div class="contact-form__form-row">
+        <input
+          type="text"
+          id="ContactForm-name"
+          class="contact-form__input"
+          autocomplete="name"
+          name="contact[name]"
+          value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+          placeholder="{{ 'blocks.contact_form.name' | t }}"
+          required
+        >
+
+        <input
+          type="email"
+          id="ContactForm-email"
+          class="contact-form__input"
+          autocomplete="email"
+          name="contact[email]"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          placeholder="{{ 'blocks.contact_form.email' | t }}"
+          required
+        >
+      </div>
+
+      <!-- Phone -->
+      <input
+        type="tel"
+        id="ContactForm-phone"
+        class="contact-form__input"
+        autocomplete="tel"
+        name="contact[phone]"
+        value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+        placeholder="{{ 'blocks.contact_form.phone' | t }}"
+      >
+
+      <!-- Order selector -->
+      {% if customer %}
+        <select
+          class="contact-form__input"
+          name="contact[order_number]"
+          required
+        >
+          <option value="">Select order for return</option>
+
+          {% for order in customer.orders %}
+            {% assign order_ts = order.created_at | date: '%s' %}
+            {% assign order_age = today_ts | minus: order_ts %}
+            {% if order_age <= fourteen_days %}
+              <option value="{{ order.name }}">
+                {{ order.name }} — {{ order.created_at | date: "%d %b %Y" }}
+              </option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      {% else %}
+        <input
+          type="text"
+          class="contact-form__input"
+          name="contact[order_number]"
+          placeholder="Order number"
+          required
+        >
+      {% endif %}
+
+      <!-- Return reason -->
+      <textarea
+        rows="6"
+        id="ContactForm-body"
+        class="contact-form__input contact-form__input--textarea"
+        name="contact[body]"
+        placeholder="Reason for return"
+        required
+      >
+        {{ form.body }}
+      </textarea>
+
+      <!-- Hidden subject -->
+      <input
+        type="hidden"
+        name="contact[subject]"
+        value="Order Return Request"
+      >
+
+      {{ submit_button }}
+
+    {%- endform -%}
+  {% endif %}
+</div>
+{% stylesheet %}
+  .contact-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .contact-form__form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+
+    @media screen and (min-width: 750px) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .contact-form__input {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-input-text);
+    background-color: var(--color-input-background);
+    padding: var(--padding-lg) var(--padding-xl);
+    border-radius: var(--style-border-radius-inputs);
+    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .contact-form__input--textarea {
+    resize: vertical;
+    min-height: var(--input-textarea-min-height);
+  }
+
+  .contact-form__error,
+  .contact-form__success {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+{% endstylesheet %}

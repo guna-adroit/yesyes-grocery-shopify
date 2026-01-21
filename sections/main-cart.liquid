@@ -108,8 +108,12 @@
     .section--page-width .cart-page:has(.cart__container--extend) {
       grid-column: 2 / 4;
       grid-template-columns: 1fr minmax(
-          var(--sidebar-width),
-          calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
+          var(--cart-summary-width),
+          calc((100vw - var(--page-width)) / 2 + var(--cart-summary-width))
+        );
+      grid-template-columns: 1fr minmax(
+          38rem,
+          calc((100vw - var(--page-width)) / 2 + 38rem)
         );
     }
 
@@ -129,6 +133,27 @@
           27rem,
           calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
         );
+    }
+  }
+  @media screen and (max-width: 1025px) {
+    .cart-page.spacing-style{
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-page.spacing-style {
+      max-width: 95%;
+    }
+    .cart-page__summary{
+        padding-top: 60px;
+    }
+    .cart-page .cart__container--extend .cart__summary-inner {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .cart-items__details .cart-items__title{
+        font-size: 16px;
+        line-height: 1.4;
     }
   }
 {% endstylesheet %}
