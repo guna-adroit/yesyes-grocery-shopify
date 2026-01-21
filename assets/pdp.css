@@ -153,7 +153,7 @@ span.svg-wrapper.wishlist-icon{
 .card-wishlist .card-wishlist-button.swym-added .svg-wrapper.collection-wishlist-icon svg{
     fill: #ed1d23;
 }
-.swym-button.swym-add-to-wishlist-view-product{
+/* .swym-button.swym-add-to-wishlist-view-product{
     z-index: 9 !important;
     cursor: pointer;
 }
@@ -166,7 +166,7 @@ span.svg-wrapper.wishlist-icon{
     animation-timing-function: var(--animation-easing);
     animation-fill-mode: forwards;
     transition: opacity var(--animation-speed) var(--animation-easing);
-}
+} */
 .related-products-slider .resource-list__carousel .slideshow-control[disabled] {
     opacity: 0.4;
     cursor: pointer;
