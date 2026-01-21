@@ -90,10 +90,28 @@ class ProductRecommendations extends HTMLElement {
         html.innerHTML = result.data || '';
         const recommendations = html.querySelector(`product-recommendations[id="${id}"]`);
 
-        if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
-          this.dataset.recommendationsPerformed = 'true';
-          this.innerHTML = recommendations.innerHTML;
-        } else {
+if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
+  this.dataset.recommendationsPerformed = 'true';
+  this.innerHTML = recommendations.innerHTML;
+
+  // --- SWYM INIT FOR NEWLY INJECTED BUTTONS ---
+  const initSwymButtons = () => {
+    if (window.Swym && typeof window.Swym.initializeActionButtons === 'function') {
+      // Initialize only buttons inside this recommendations section
+      window.Swym.initializeActionButtons(this);
+      return true;
+    }
+    return false;
+  };
+
+  // Try immediately, otherwise retry until Swym is ready
+  if (!initSwymButtons()) {
+    const swymRetry = setInterval(() => {
+      if (initSwymButtons()) clearInterval(swymRetry);
+    }, 200);
+  }
+}
+ else {
           this.#handleError(new Error('No recommendations available'));
         }
       })
