@@ -4288,12 +4288,12 @@ text-component {
 
 /* SWYM CUSTOM CSS */
 /* Hide the native SVG icon in all states */
-/* #swym-atw-pdp-button-icon {
+#swym-atw-pdp-button-icon {
   display: none;
 }
 
 /* Hide text if not required */
 #swym-atw-pdp-button-text {
   display: none;
-} */
+}
 
