@@ -62,63 +62,45 @@ class ProductRecommendations extends HTMLElement {
    * Load the product recommendations
    */
   #loadRecommendations() {
-    const { productId, recommendationsPerformed, sectionId, intent } = this.dataset;
-    const id = this.id;
+  const { productId, recommendationsPerformed, sectionId, intent } = this.dataset;
+  const id = this.id;
 
-    if (!productId || !id) {
-      throw new Error('Product ID and an ID attribute are required');
-    }
+  if (!productId || !id) return;
 
-    // If the recommendations have already been loaded, accounts for the case where the Theme Editor
-    // is loaded the section from the editor's visual preview context.
-    if (recommendationsPerformed === 'true') {
-      return;
-    }
+  if (recommendationsPerformed === 'true') return;
 
-    this.#fetchCachedRecommendations(productId, sectionId, intent)
-      .then((result) => {
-        if (!result.success) {
-          // The Theme Editor will place a section element element in the DOM whose section_id is not available
-          // to the Section Renderer API. In this case, we can safely ignore the error.
-          if (!Shopify.designMode) {
-            this.#handleError(new Error(`Server returned ${result.status}`));
+  this.#fetchCachedRecommendations(productId, sectionId, intent)
+    .then((result) => {
+      if (!result.success) return;
+
+      const html = document.createElement('div');
+      html.innerHTML = result.data || '';
+      const recommendations = html.querySelector(`product-recommendations[id="${id}"]`);
+
+      if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
+        this.dataset.recommendationsPerformed = 'true';
+        this.innerHTML = recommendations.innerHTML;
+
+        // --- SWYM INIT AFTER HTML IS INJECTED ---
+        const initSwymButtons = () => {
+          if (window.Swym && typeof window.Swym.initializeActionButtons === 'function') {
+            // Initialize buttons inside this recommendations container
+            window.Swym.initializeActionButtons(this);
+            return true;
           }
-          return;
+          return false;
+        };
+
+        // Try immediately, otherwise retry until Swym is ready
+        if (!initSwymButtons()) {
+          const swymRetry = setInterval(() => {
+            if (initSwymButtons()) clearInterval(swymRetry);
+          }, 200);
         }
-
-        const html = document.createElement('div');
-        html.innerHTML = result.data || '';
-        const recommendations = html.querySelector(`product-recommendations[id="${id}"]`);
-
-if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
-  this.dataset.recommendationsPerformed = 'true';
-  this.innerHTML = recommendations.innerHTML;
-
-  // --- SWYM INIT FOR NEWLY INJECTED BUTTONS ---
-  const initSwymButtons = () => {
-    if (window.Swym && typeof window.Swym.initializeActionButtons === 'function') {
-      // Initialize only buttons inside this recommendations section
-      window.Swym.initializeActionButtons(this);
-      return true;
-    }
-    return false;
-  };
-
-  // Try immediately, otherwise retry until Swym is ready
-  if (!initSwymButtons()) {
-    const swymRetry = setInterval(() => {
-      if (initSwymButtons()) clearInterval(swymRetry);
-    }, 200);
-  }
+      }
+    })
+    .catch((e) => this.#handleError(e));
 }
- else {
-          this.#handleError(new Error('No recommendations available'));
-        }
-      })
-      .catch((e) => {
-        this.#handleError(e);
-      });
-  }
 
   /**
    * Fetches the recommendations and cached the result for future use
