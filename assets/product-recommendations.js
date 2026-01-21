@@ -90,17 +90,29 @@ class ProductRecommendations extends HTMLElement {
         html.innerHTML = result.data || '';
         const recommendations = html.querySelector(`product-recommendations[id="${id}"]`);
 
-        if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
-          this.dataset.recommendationsPerformed = 'true';
-          this.innerHTML = recommendations.innerHTML;
-          if (window.Swym && typeof window.Swym.collectionsApi?.initializeCollections === 'function') {
-              window.Swym.collectionsApi.initializeCollections(
-                window.Swym,
-                false,
-                Shopify.theme.id
-              );
-            }
-        } else {
+if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
+  this.dataset.recommendationsPerformed = 'true';
+  this.innerHTML = recommendations.innerHTML;
+
+  // --- Safely initialize Swym collections for newly injected recommendations ---
+  const initSwym = () => {
+    if (window.Swym && typeof window.Swym.collectionsApi?.initializeCollections === 'function') {
+      window.Swym.collectionsApi.initializeCollections(window.Swym, false, Shopify.theme.id);
+      return true;
+    }
+    return false;
+  };
+
+  // Try immediately, or retry after a short delay if Swym isn’t ready yet
+  if (!initSwym()) {
+    const swymInterval = setInterval(() => {
+      if (initSwym()) {
+        clearInterval(swymInterval);
+      }
+    }, 200); // retry every 200ms until Swym is ready
+  }
+}
+else {
           this.#handleError(new Error('No recommendations available'));
         }
       })
