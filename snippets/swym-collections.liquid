@@ -98,8 +98,8 @@
 
     // Kill the theme zoom
     {% comment %} e.preventDefault(); {% endcomment %}
-    e.stopPropagation();
-    e.stopImmediatePropagation();
+    {% comment %} e.stopPropagation(); {% endcomment %}
+    {% comment %} e.stopImmediatePropagation(); {% endcomment %}
 
     return false;
   }
