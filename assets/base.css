@@ -4314,7 +4314,7 @@ text-component {
 /* Ensure wishlist button always sits above the product image */
 #swym-atw-pdp-button {
   position: relative;
-  z-index: 100 !important;
+  z-index: 999 !important;
   pointer-events: auto;
 }
 
