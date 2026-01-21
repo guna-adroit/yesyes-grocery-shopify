@@ -99,7 +99,7 @@
     // Kill the theme zoom
     {% comment %} e.preventDefault(); {% endcomment %}
     {% comment %} e.stopPropagation(); {% endcomment %}
-    {% comment %} e.stopImmediatePropagation(); {% endcomment %}
+    e.stopImmediatePropagation();
 
     return false;
   }
