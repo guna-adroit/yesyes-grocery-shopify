@@ -4298,17 +4298,17 @@ text-component {
 }
 
 /* Default (unfilled) state */
-#swym-atw-pdp-button {
+/* #swym-atw-pdp-button {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 48px;
   min-width: 56px;
   min-height: 56px;
-}
+} */
 
 /* Filled / added state */
-#swym-atw-pdp-button.atw-button-added {
+/* #swym-atw-pdp-button.atw-button-added {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
 }
 #swym-atw-pdp-button {
@@ -4319,4 +4319,4 @@ text-component {
 
 .swym-atw-btn-wrapper-for-img {
   isolation: isolate !important;
-}
+} */
