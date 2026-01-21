@@ -4287,9 +4287,17 @@ text-component {
 }
 
 /* SWYM CUSTOM CSS */
-/* #swym-atw-pdp-button-icon {
+/* Hide the native SVG icon in all states */
+#swym-atw-pdp-button-icon {
   display: none;
 }
+
+/* Hide text if not required */
+#swym-atw-pdp-button-text {
+  display: none;
+}
+
+/* Default (unfilled) state */
 #swym-atw-pdp-button {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
   background-repeat: no-repeat;
@@ -4299,6 +4307,7 @@ text-component {
   min-height: 56px;
 }
 
-#swym-atw-pdp-button-text {
-  display: none;
-} */
+/* Filled / added state */
+#swym-atw-pdp-button.atw-button-added {
+  background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
+}
