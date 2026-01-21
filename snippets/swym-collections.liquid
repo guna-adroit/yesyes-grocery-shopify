@@ -90,3 +90,16 @@
     z-index: 1;
   }
 </style>
+<script>
+document.addEventListener(
+  'pointerdown',
+  function (e) {
+    const swymBtn = e.target.closest('#swym-atw-pdp-button');
+    if (!swymBtn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+  },
+  true
+);
+</script>
