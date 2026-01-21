@@ -97,7 +97,7 @@
     if (!swymBtn) return;
 
     // Kill the theme zoom
-    e.preventDefault();
+    {% comment %} e.preventDefault(); {% endcomment %}
     e.stopPropagation();
     e.stopImmediatePropagation();
 
