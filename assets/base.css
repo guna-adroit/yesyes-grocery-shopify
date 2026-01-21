@@ -4311,3 +4311,12 @@ text-component {
 #swym-atw-pdp-button.atw-button-added {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
 }
+#swym-atw-pdp-button {
+  position: relative;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.swym-atw-btn-wrapper-for-img {
+  isolation: isolate;
+}
