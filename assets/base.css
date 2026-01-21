@@ -4294,7 +4294,7 @@ text-component {
   font-size: 30px;
 }
 
-/* .swym-button.swym-add-to-wishlist-view-product:after {
+.swym-button.swym-add-to-wishlist-view-product:after {
   font-size: 30px;
   color: #ed1d23 !important;
 }
@@ -4312,7 +4312,7 @@ text-component {
   background: transparent;
   border: none;
   outline: none;
-} */
+}
 
 .card-wishlist .card-wishlist-button {
   display: block !important;
