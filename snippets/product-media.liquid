@@ -25,7 +25,30 @@
   style="--ratio: {{ media.aspect_ratio }}"
   data-media-id="{{ media.id }}"
 >
-  <h1>ugh</h1>
+  <button
+    class="swym-add-to-wishlist-view-product product_{{ product.id }} custom-wishlist-btn"
+    data-with-epi="true"
+    data-swaction="addToWishlist"
+    data-product-id="{{ product.id }}"
+    data-variant-id="{{ product.variants[0].id }}"
+    data-product-url="{{ shop.url }}{{ product.url }}"
+    aria-label="Add to wishlist"
+  >
+    <!-- Unfilled icon -->
+    <span class="swym-icon swym-icon-unfilled" aria-hidden="true">
+      <svg viewBox="-20 -20 552 552" width="32" height="32" fill="#666">
+        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+      </svg>
+    </span>
+
+    <!-- Filled icon -->
+    <span class="swym-icon swym-icon-filled" aria-hidden="true">
+      <svg viewBox="-20 -20 552 552" width="32" height="32" fill="#FF474D">
+        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+      </svg>
+    </span>
+  </button>
+
   {% liquid
     assign high_res_url = media.preview_image | image_url: width: 3840
     assign fetch_priority = 'auto'
