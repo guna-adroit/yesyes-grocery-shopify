@@ -92,17 +92,12 @@
 </style>
 <script>
 (function () {
-  function blockZoom(e) {
+  document.addEventListener('click', function (e) {
     const swymBtn = e.target.closest('#swym-atw-pdp-button');
     if (!swymBtn) return;
 
-    // Block zoom initiation
-    e.preventDefault();
+    // Allow Swym to run, block slideshow zoom
     e.stopPropagation();
-  }
-
-  document.addEventListener('pointerdown', blockZoom, true);
-  document.addEventListener('mousedown', blockZoom, true);
-  document.addEventListener('touchstart', blockZoom, true);
+  }, false); // IMPORTANT: bubble phase
 })();
 </script>
