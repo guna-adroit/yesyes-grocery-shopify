@@ -4285,3 +4285,20 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
+
+/* SWYM CUSTOM CSS */
+#swym-atw-pdp-button-icon {
+  display: none;
+}
+#swym-atw-pdp-button {
+  background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48px;
+  min-width: 56px;
+  min-height: 56px;
+}
+
+#swym-atw-pdp-button-text {
+  display: none;
+}
