@@ -90,3 +90,12 @@
     z-index: 1;
   }
 </style>
+<script>
+document.addEventListener("click", function (e) {
+  const swymBtn = e.target.closest("#swym-atw-pdp-button");
+  if (!swymBtn) return;
+
+  // Prevent image zoom / parent click handlers
+  e.stopPropagation();
+}, true);
+</script>
