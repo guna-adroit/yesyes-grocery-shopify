@@ -92,12 +92,31 @@
 </style>
 <script>
 (function () {
-  document.addEventListener('click', function (e) {
-    const swymBtn = e.target.closest('#swym-atw-pdp-button');
-    if (!swymBtn) return;
+  function attachHandler(btn) {
+    if (btn.__zoomFixApplied) return;
+    btn.__zoomFixApplied = true;
 
-    // Allow Swym to run, block slideshow zoom
-    e.stopPropagation();
-  }, false); // IMPORTANT: bubble phase
+    btn.addEventListener('click', function (e) {
+      // Let Swym run, but kill slideshow zoom
+      e.stopPropagation();
+    });
+
+    btn.addEventListener('pointerdown', function (e) {
+      e.stopPropagation();
+    });
+  }
+
+  // Initial pass
+  document.querySelectorAll('#swym-atw-pdp-button').forEach(attachHandler);
+
+  // Observe for async injections / rerenders
+  const observer = new MutationObserver(function () {
+    document.querySelectorAll('#swym-atw-pdp-button').forEach(attachHandler);
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 })();
 </script>
