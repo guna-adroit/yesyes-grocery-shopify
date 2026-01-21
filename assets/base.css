@@ -4313,10 +4313,10 @@ text-component {
 }
 #swym-atw-pdp-button {
   position: relative;
-  z-index: 999;
+  z-index: 999 1important;
   cursor: pointer;
 }
 
 .swym-atw-btn-wrapper-for-img {
-  isolation: isolate;
+  isolation: isolate !important;
 }
