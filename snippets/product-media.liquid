@@ -47,7 +47,8 @@
       fetchpriority: fetch_priority,
       style: focal_point_style
   }}
-  <!-- Manual Wishlist Button -->
+  <!-- Wishlist Button -->
+  <div class="custom-wishlist-wrapper">
   <button
     class="swym-add-to-wishlist-view-product product_{{ product.id }} custom-wishlist-btn"
     data-with-epi="true"
@@ -71,6 +72,7 @@
       </svg>
     </span>
   </button>
+  </div>
 
   {% unless preview_image_only %}
     {%- case media.media_type -%}
