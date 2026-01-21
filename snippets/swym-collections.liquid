@@ -91,15 +91,22 @@
   }
 </style>
 <script>
-document.addEventListener(
-  'pointerdown',
-  function (e) {
+(function () {
+  function blockZoom(e) {
     const swymBtn = e.target.closest('#swym-atw-pdp-button');
     if (!swymBtn) return;
 
+    // Kill the theme zoom
     e.preventDefault();
     e.stopPropagation();
-  },
-  true
-);
+    e.stopImmediatePropagation();
+
+    return false;
+  }
+
+  ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (evt) {
+    document.addEventListener(evt, blockZoom, true);
+  });
+})();
 </script>
+
