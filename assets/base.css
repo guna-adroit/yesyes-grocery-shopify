@@ -4311,3 +4311,19 @@ text-component {
 #swym-atw-pdp-button.atw-button-added {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
 }
+/* Ensure wishlist button always sits above the product image */
+#swym-atw-pdp-button {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Prevent image zoom / click-through beneath the wishlist button */
+.swym-atw-btn-wrapper-for-img {
+  pointer-events: auto;
+}
+
+/* Optional: explicitly disable pointer events on the image layer if needed */
+.product_image_top_right img {
+  pointer-events: none;
+}
