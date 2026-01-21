@@ -4285,35 +4285,3 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
-
-/* Swym CSS */
-.card-wishlist-button {
-  position: absolute !important;
-  top: 18px;
-  right: 18px;
-  font-size: 30px;
-}
-
-/* .swym-button.swym-add-to-wishlist-view-product:after {
-  font-size: 30px;
-  color: #ed1d23 !important;
-}
-
-.swym-button.swym-add-to-wishlist-view-product.swym-heart.swym-added:after {
-  color: #ed1d23 !important;
-}
-
-.swym-button.swym-add-to-wishlist-view-product.swym-added {
-  opacity: 1 !important;
-}
-
-.wishlist-icon-position button.swym-button {
-  padding: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-} */
-
-.card-wishlist .card-wishlist-button {
-  display: block !important;
-}
