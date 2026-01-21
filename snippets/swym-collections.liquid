@@ -90,33 +90,17 @@
     z-index: 1;
   }
 </style>
-<script>
-(function () {
-  function attachHandler(btn) {
-    if (btn.__zoomFixApplied) return;
-    btn.__zoomFixApplied = true;
+<script defer>
+  function swymCallbackFn(swat){
 
-    btn.addEventListener('click', function (e) {
-      // Let Swym run, but kill slideshow zoom
-      e.stopPropagation();
-    });
-
-    btn.addEventListener('pointerdown', function (e) {
-      e.stopPropagation();
-    });
+    swat.collectionsApi.initializeCollections(
+      swat,
+      false,
+      Shopify.theme.id
+    );
   }
-
-  // Initial pass
-  document.querySelectorAll('#swym-atw-pdp-button').forEach(attachHandler);
-
-  // Observe for async injections / rerenders
-  const observer = new MutationObserver(function () {
-    document.querySelectorAll('#swym-atw-pdp-button').forEach(attachHandler);
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-})();
+  if(!window.SwymCallbacks){
+    window.SwymCallbacks = [];
+  }
+  window.SwymCallbacks.push(swymCallbackFn);
 </script>
