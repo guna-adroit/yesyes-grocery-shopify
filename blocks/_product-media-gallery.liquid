@@ -290,19 +290,7 @@
   data-presentation="{{ block_settings.media_presentation }}"
   {{ block.shopify_attributes }}
 >
-  {% capture slides %}
-    {% for media in sorted_media %}
-      {% capture children %}
-        {%- liquid
-            if needs_both_sizes and forloop.first
-              assign media_sizes = sizes_single
-            else
-              assign media_sizes = sizes
-            endif
-        -%}
-        {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
-          <div class="product-media-constraint-wrapper">
-            <button
+              <button
   class="swym-add-to-wishlist-view-product product_{{ product.id }} custom-wishlist-btn"
   data-with-epi="true"
   data-swaction="addToWishlist"
@@ -325,7 +313,18 @@
     </svg>
   </span>
 </button>
-
+  {% capture slides %}
+    {% for media in sorted_media %}
+      {% capture children %}
+        {%- liquid
+            if needs_both_sizes and forloop.first
+              assign media_sizes = sizes_single
+            else
+              assign media_sizes = sizes
+            endif
+        -%}
+        {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
+          <div class="product-media-constraint-wrapper">
             {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
           </div>
         {% else %}
