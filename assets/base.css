@@ -4346,6 +4346,6 @@ text-component {
   align-items: center;
 }
 
-.swym-icon-filled { display: none; }
+/* .swym-icon-filled { display: none; }
 .custom-wishlist-btn.swym-added .swym-icon-unfilled { display: none; }
-.custom-wishlist-btn.swym-added .swym-icon-filled { display: inline; }
+.custom-wishlist-btn.swym-added .swym-icon-filled { display: inline; } */
