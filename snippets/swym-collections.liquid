@@ -96,17 +96,13 @@
     const swymBtn = e.target.closest('#swym-atw-pdp-button');
     if (!swymBtn) return;
 
-    // Kill the theme zoom
-    {% comment %} e.preventDefault(); {% endcomment %}
-    {% comment %} e.stopPropagation(); {% endcomment %}
-    e.stopImmediatePropagation();
-
-    return false;
+    // Block zoom initiation
+    e.preventDefault();
+    e.stopPropagation();
   }
 
-  ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (evt) {
-    document.addEventListener(evt, blockZoom, true);
-  });
+  document.addEventListener('pointerdown', blockZoom, true);
+  document.addEventListener('mousedown', blockZoom, true);
+  document.addEventListener('touchstart', blockZoom, true);
 })();
 </script>
-
