@@ -4289,8 +4289,8 @@ text-component {
 /* SWYM CUSTOM CSS */
 
 button.swym-add-to-wishlist-view-product.custom-wishlist-btn.swym-icontext.swym-heart.swym-loaded {
-    z-index:999 !important;
-     all:unset !important;
+  all:unset !important;
+  z-index:999 !important;  
 }
 /* Hide the native SVG icon in all states */
 #swym-atw-pdp-button-icon {
