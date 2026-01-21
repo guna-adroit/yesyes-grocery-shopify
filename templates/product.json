@@ -12,33 +12,6 @@
     "main": {
       "type": "product-information",
       "blocks": {
-        "wishlist_plus_wishlist_pdp_button_gKD8xE": {
-          "type": "shopify://apps/wishlist-plus/blocks/wishlist-pdp-button/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-          "settings": {
-            "swym_atw_button_icon": "heart",
-            "swym_atw_icon_thickness": 1.7,
-            "swym_atw_custom_icon": "shopify://shop_images/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg",
-            "swym_atw_display_btn_text": false,
-            "swym_button_position": "product_image_top_right",
-            "swym_atw_button_vertical_offset": 0,
-            "swym_atw_full_width": true,
-            "swym_atw_button_alignment": "center",
-            "swym_add_to_wishlist_color": "#ffffff",
-            "swym_added_to_wishlist_color": "#ffffff",
-            "swym_button_text_color": "#ed1d23",
-            "swym_atw_border_color": "#000",
-            "swym_atw_border_thickness": 0,
-            "swym_atw_button_border_radius": 0,
-            "swym_enable_hover_customization": false,
-            "swym_hover_add_to_wishlist_color": "#000000",
-            "swym_hover_added_to_wishlist_color": "#222222",
-            "swym_hover_button_text_color": "#fff",
-            "swym_hover_atw_border_color": "#000",
-            "swym_hover_atw_border_thickness": 0,
-            "swym_hover_atw_button_border_radius": 0,
-            "swym_custom_css": ""
-          }
-        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -511,9 +484,6 @@
           ]
         }
       },
-      "block_order": [
-        "wishlist_plus_wishlist_pdp_button_gKD8xE"
-      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
