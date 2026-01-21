@@ -561,7 +561,7 @@
       window.ProductModel.loadShopifyXR();
     </script>
   {%- endif -%}
-
+{% comment %} 
   <div class="product-badges product-badges--top-right product wishlist-icon-position">
     <div class="product-badges__badge swym-button swym-add-to-wishlist" data-with-epi="true"
             data-swaction="addToWishlist"
@@ -573,7 +573,7 @@
             {{- 'icon-product-heart.svg' | inline_asset_content -}}
         </span>
     </div>
-  </div>
+  </div> {% endcomment %}
   {% if product.compare_at_price > product.price %}
   {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
     <div class="sale-ribbon-container">
