@@ -4326,3 +4326,6 @@ text-component {
 .product_image_top_right img {
   pointer-events: none;
 }
+.swym-atw-btn-wrapper-for-img {
+  isolation: isolate;
+}
