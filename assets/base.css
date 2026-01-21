@@ -4296,4 +4296,35 @@ text-component {
 #swym-atw-pdp-button-text {
   display: none;
 }
+.product-media {
+  position: relative; /* must be relative for absolute child */
+}
+
+.custom-wishlist-btn {
+  position: absolute;
+  top: 10px;    /* adjust as needed */
+  right: 10px;  /* adjust as needed */
+  z-index: 20;  /* above the image and zoom overlay */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon swapping via Swym state */
+.custom-wishlist-btn .swym-icon-filled {
+  display: none;
+}
+
+.custom-wishlist-btn.swym-added .swym-icon-unfilled {
+  display: none;
+}
+
+.custom-wishlist-btn.swym-added .swym-icon-filled {
+  display: inline-flex;
+}
+
 
