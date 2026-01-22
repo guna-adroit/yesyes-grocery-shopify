@@ -809,3 +809,17 @@ div#swym-wishlist-title svg {
 .swym-storefront-layout-grid-item-add-to-cart-button{
     background: #ED1D23 !important;
 }
+.swym-wishlist-collections-v2-container{
+    right: 0;
+    left: unset !important;
+}
+.swym-wishlist-collections-v2, .swym-wishlist-collections-v2 svg{
+    width: 48px !important;
+    height: 48px !important;
+}
+.swym-storefront-layout-grid-item-final-price{
+    color: #000000 !important;
+}
+.product_atc-quantity-container{
+    display:contents;
+}
