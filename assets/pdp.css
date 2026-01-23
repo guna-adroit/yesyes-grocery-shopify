@@ -552,3 +552,6 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
 .swym-atw-button-container.product_image_top_right{
     display: none !important;
 }
+quantity-input-bulk-component:not(:has(.quick-add-quantity.visible)) {
+  display: none;
+}
