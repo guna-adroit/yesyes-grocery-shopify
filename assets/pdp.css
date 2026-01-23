@@ -549,3 +549,6 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
     height: auto !important;
     display: none !important;
 }
+.swym-atw-button-container.product_image_top_right{
+    display: none !important;
+}
