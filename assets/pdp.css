@@ -555,3 +555,6 @@ p.yotpo-sr-bottom-line-text.yotpo-sr-bottom-line-text--right-panel {
 quantity-input-bulk-component:not(:has(.quick-add-quantity.visible)) {
   display: none;
 }
+.product-grid.product-list-view quantity-input-bulk{
+    margin-top: 0;
+}
