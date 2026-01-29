@@ -1,28 +1,103 @@
 <div class="disclosure-trigger__label h6">DELIVERY OPTION</div>
 <div class="delivery-options-container">
-    <span>
-        <input
-        type="radio"
-        id="delivery-option-delivery"
-        name="delivery-option"
-        value="pickup"
-        class="delivery-option"
-        checked
-        on:change="/updateDeliveryOption">
-        <label for="delivery-option-delivery" class="delivery-option-label">
-            <span class="delivery-option-label__title">Store Pickup</span>
-        </label>
-    </span>
-    <span>
-        <input
-        type="radio"
-        id="delivery-option-pickup"
-        name="delivery-option"
-        value="delivery"
-        class="delivery-option"
-        on:change="/updateDeliveryOption">
-        <label for="delivery-option-pickup" class="delivery-option-label">
-            <span class="delivery-option-label__title">Online Delivery</span>
-        </label>
-    </span>
+  <span>
+    <input
+      type="radio"
+      id="delivery-option-pickup"
+      name="delivery-option"
+      value="pickup"
+      class="delivery-option"
+      checked
+    >
+    <label for="delivery-option-pickup">
+      <span>Store Pickup</span>
+    </label>
+  </span>
+
+  <span>
+    <input
+      type="radio"
+      id="delivery-option-delivery"
+      name="delivery-option"
+      value="delivery"
+      class="delivery-option"
+    >
+    <label for="delivery-option-delivery">
+      <span>Online Delivery</span>
+    </label>
+  </span>
 </div>
+
+<!-- Pickup details -->
+<div id="pickup-details" style="display:none; margin-top:15px;">
+  <div>
+    <label for="pickup-store">Select Store</label>
+    <select id="pickup-store">
+      <option value="">Select a store</option>
+      <option value="Store A">Store A</option>
+      <option value="Store B">Store B</option>
+      <option value="Store C">Store C</option>
+    </select>
+  </div>
+
+  <div style="margin-top:10px;">
+    <label for="pickup-time">Select Time Slot</label>
+    <select id="pickup-time">
+      <option value="">Select a time slot</option>
+      <option value="10:00 - 12:00">10:00 - 12:00</option>
+      <option value="12:00 - 14:00">12:00 - 14:00</option>
+      <option value="16:00 - 18:00">16:00 - 18:00</option>
+    </select>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const pickupRadio = document.getElementById('delivery-option-pickup');
+  const deliveryRadio = document.getElementById('delivery-option-delivery');
+  const pickupDetails = document.getElementById('pickup-details');
+
+  const storeSelect = document.getElementById('pickup-store');
+  const timeSelect = document.getElementById('pickup-time');
+
+  function updateVisibility() {
+    if (pickupRadio.checked) {
+      pickupDetails.style.display = 'block';
+    } else {
+      pickupDetails.style.display = 'none';
+      updateOrderNote('', '');
+    }
+  }
+
+  function updateOrderNote(store, time) {
+    let note = '';
+
+    if (pickupRadio.checked && store && time) {
+      note =
+        'Delivery Method: Store Pickup\n' +
+        'Pickup Store: ' + store + '\n' +
+        'Pickup Time Slot: ' + time;
+    } else if (deliveryRadio.checked) {
+      note = 'Delivery Method: Online Delivery';
+    }
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note: note })
+    });
+  }
+
+  pickupRadio.addEventListener('change', updateVisibility);
+  deliveryRadio.addEventListener('change', updateVisibility);
+
+  storeSelect.addEventListener('change', function () {
+    updateOrderNote(storeSelect.value, timeSelect.value);
+  });
+
+  timeSelect.addEventListener('change', function () {
+    updateOrderNote(storeSelect.value, timeSelect.value);
+  });
+
+  updateVisibility();
+});
+</script>
