@@ -77,6 +77,9 @@
                       <p>Brand: {{ product.metafields.custom.brand_name }}</p>
                     {% endif %}
                     <p>{{ product.selected_or_first_available_variant.sku }}</p>
+                    {%unless product.selected_or_first_available_variant.available %}
+                      Soldout
+                    {%endunless %}
                   </div>
                 </div>
               </div>
