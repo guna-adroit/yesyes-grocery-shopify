@@ -629,6 +629,12 @@
               },
               "blocks": {}
             },
+            "yotpo_product_reviews_star_rating_MDBHTf": {
+              "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+              "settings": {
+                "product": "{{closest.product}}"
+              }
+            },
             "price_gLWgA6": {
               "type": "price",
               "settings": {
@@ -656,6 +662,7 @@
           "block_order": [
             "product_card_gallery_DNizbJ",
             "product_title_M7MJkb",
+            "yotpo_product_reviews_star_rating_MDBHTf",
             "price_gLWgA6"
           ]
         }
