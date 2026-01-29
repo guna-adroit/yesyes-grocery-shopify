@@ -88,8 +88,10 @@
                 <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
                       data-products='[
                       {% for product in products %}
-                        {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
-                        {% unless forloop.last %},{% endunless %}
+                        {% if product.selected_or_first_available_variant.available  %}
+                          {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
+                          {% unless forloop.last %},{% endunless %}
+                        {% endif %}
                       {% endfor %}
                       ]'>
                   BUY INGREDIENT’S
