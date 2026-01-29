@@ -78,7 +78,7 @@
                     {% endif %}
                     <p>{{ product.selected_or_first_available_variant.sku }}</p>
                     {%unless product.selected_or_first_available_variant.available %}
-                      Soldout
+                      <p class="blog-ingredient-product__soldout">Soldout</p>
                     {%endunless %}
                   </div>
                 </div>
