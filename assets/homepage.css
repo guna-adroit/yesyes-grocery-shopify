@@ -207,6 +207,7 @@ span.header-icons-label {
     align-items: center;
     margin: auto;
     font-size: 16px;
+    
 }
 a.slider-overlay-link {
     position: absolute;
@@ -1221,4 +1222,7 @@ input.delivery-option:checked::before {
 div#PBarNextFrameWrapper
  {
     display: none !important;
+}
+.yotpo-review-border-smooth.yotpo-border-margin {
+    background: red;
 }
