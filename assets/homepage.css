@@ -104,7 +104,7 @@ span.collection-title.active-filter {
     position: absolute;
     width: auto;
     top: 50%;
-    transform: translate(calc(50% + 50px), -50%);
+    transform: translate(calc(50% + 130px), -50%);
 }
 .header-contact-wrapper .header-phone-number {
     font-weight: 700;
@@ -417,7 +417,8 @@ span.category-menu_button.active, span.overlay-back-button.active {
     letter-spacing: 0;
 }
 .submenu-link:hover {
-  color: #e53935;
+    color: #000;
+    font-weight: 600;
 }
 .floating-menu-footer {
     display: flex;
