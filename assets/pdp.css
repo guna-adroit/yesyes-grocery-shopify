@@ -558,9 +558,3 @@ quantity-input-bulk-component:not(:has(.quick-add-quantity.visible)) {
 .product-grid.product-list-view quantity-input-bulk{
     margin-top: 0;
 }
-.blog-ingredient-product__soldout {
-    border: 1px solid #000000;
-    padding: 2px 10px;
-    border-radius: 20px;
-    color: #000000;
-}
