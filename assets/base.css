@@ -4286,30 +4286,35 @@ text-component {
   }
 }
 
-/* 1. Kill Swym's native SVG + text */
+/* 1. Free the wrapper from font-based sizing */
+#swym-atw-button-container {
+  line-height: normal !important;
+  font-size: 0 !important;
+}
+
+/* 2. Force the button dimensions */
+#swym-atw-pdp-button {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  border: none;
+  background-size: 32px 32px !important;
+}
+
+/* 3. Kill SVG + text (safety) */
 #swym-atw-pdp-button-icon,
 #swym-atw-pdp-button-text {
   display: none !important;
 }
 
-/* 2. Normalize the PDP button */
-#swym-atw-pdp-button {
-  width: 20px;
-  height: 20px;
-  padding: 0 !important;
-  border: none;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-color: transparent;
-}
-
-/* 3. EMPTY state */
+/* 4. EMPTY */
 #swym-atw-pdp-button[aria-label*="Add"] {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
 }
 
-/* 4. FILLED state */
+/* 5. FILLED */
 #swym-atw-pdp-button[aria-label*="Added"],
 #swym-atw-pdp-button[aria-pressed="true"] {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
