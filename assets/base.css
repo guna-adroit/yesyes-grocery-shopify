@@ -4317,5 +4317,5 @@ text-component {
 /* FILLED – use PDP-correct SVG */
 #swym-atw-pdp-button[aria-label*="Added"],
 #swym-atw-pdp-button[aria-pressed="true"] {
-  background-image: url("https://YOUR_CDN_PATH/pdp-wishlist-filled.svg");
+  background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
 }
