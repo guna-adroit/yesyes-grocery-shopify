@@ -4286,17 +4286,18 @@ text-component {
   }
 }
 
-/* 1. Kill Swym's <img> completely */
-.swym-wishlist-collections-v2 img {
+/* 1. Kill Swym's native SVG + text */
+#swym-atw-pdp-button-icon,
+#swym-atw-pdp-button-text {
   display: none !important;
 }
 
-/* 2. Base button sizing */
-.swym-wishlist-collections-v2 {
+/* 2. Normalize the PDP button */
+#swym-atw-pdp-button {
   width: 20px;
   height: 20px;
   padding: 0 !important;
-  border: 0;
+  border: none;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -4304,12 +4305,13 @@ text-component {
 }
 
 /* 3. EMPTY state */
-.swym-wishlist-collections-v2[aria-pressed="false"] {
+#swym-atw-pdp-button[aria-label*="Add"] {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-icon_7719f424-976d-479b-92fc-d03a5d97b86d.svg");
 }
 
 /* 4. FILLED state */
-.swym-wishlist-collections-v2[aria-pressed="true"] {
+#swym-atw-pdp-button[aria-label*="Added"],
+#swym-atw-pdp-button[aria-pressed="true"] {
   background-image: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
 }
 
