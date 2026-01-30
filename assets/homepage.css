@@ -793,7 +793,7 @@ span.cart-quantity-label {
 span.cart__total-label.cart-primary-typography, text-component.cart__total-value.cart-secondary-typography {
     font-family: Inter;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 28px;
     letter-spacing: 0;
     text-transform: uppercase;
