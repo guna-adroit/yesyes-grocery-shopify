@@ -4286,4 +4286,15 @@ text-component {
   }
 }
 
+/* Default (empty state) – no change needed if already correct */
+
+/* Filled state */
+.swym-wishlist-collections-v2[aria-pressed="true"]
+  .swym-atw-collections-img-icon {
+  content: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
+}
+.swym-wishlist-collections-v2[aria-pressed="true"]
+  .swym-atw-collections-img-icon {
+  content: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg") !important;
+}
 
