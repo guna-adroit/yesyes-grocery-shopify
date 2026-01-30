@@ -986,8 +986,8 @@ span.cart__column_title {
 input.delivery-option:checked::before {
     content: "";
     background: #ED1D23;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     display: block;
     position: absolute;
     z-index: 2;
