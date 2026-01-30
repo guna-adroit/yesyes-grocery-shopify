@@ -4291,7 +4291,7 @@ text-component {
 /* Filled state */
 .swym-wishlist-collections-v2[aria-pressed="true"]
   .swym-atw-collections-img-icon {
-  content: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg");
+  content: url("https://yesyes-grocerz.myshopify.com/cdn/shop/files/swym-wishlist-added.svg") !important;
 }
 .swym-wishlist-collections-v2[aria-pressed="true"]
   .swym-atw-collections-img-icon {
