@@ -798,8 +798,8 @@ span.cart__total-label.cart-primary-typography, text-component.cart__total-value
     letter-spacing: 0;
     text-transform: uppercase;
 }
-.cart-page span.cart__total-label.cart-primary-typography{
-    font-size: 18px;
+.cart-page span.cart__total-label.cart-primary-typography.cart-final-amount{
+    font-size: 20px;
     line-height: 25.2px;
 }
 .disclosure-trigger__label.h6 {
@@ -957,6 +957,19 @@ span.cart__column_title {
 .delivery-options-container {
     display: flex;
     gap: 20px;
+}
+.delivery-option+label span {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 0;
+}
+.cart-page__title h1.h4 {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: 0;
 }
 .delivery-option::after {
     content: "";
