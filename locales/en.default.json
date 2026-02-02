@@ -306,6 +306,9 @@
     "checkout": {
       "order_summary": {
         "subtotal_label": "sub total"
+      },
+      "general": {
+        "pay_now_button_label": "PAY NOW"
       }
     }
   }
