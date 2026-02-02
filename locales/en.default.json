@@ -305,7 +305,7 @@
   "shopify": {
     "checkout": {
       "order_summary": {
-        "subtotal_label": "sub total"
+        "subtotal_label": "Subtotal"
       },
       "general": {
         "pay_now_button_label": "PAY NOW"
