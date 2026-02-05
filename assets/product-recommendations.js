@@ -93,6 +93,8 @@ class ProductRecommendations extends HTMLElement {
         if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
+          document.dispatchEvent(new 
+CustomEvent("swym:collections-loaded"));
         } else {
           this.#handleError(new Error('No recommendations available'));
         }
