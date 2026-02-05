@@ -84,7 +84,10 @@ export class AddToCartComponent extends Component {
       }
 
     }
-    renderWishlistCounter(_swat);
+    setTimeout(
+      renderWishlistCounter(_swat), 2000
+    );
+    
   }
 
   #preloadImage = () => {
