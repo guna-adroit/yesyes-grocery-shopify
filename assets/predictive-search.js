@@ -96,7 +96,7 @@ class PredictiveSearchComponent extends Component {
    * Handles the dialog close event.
    */
   #handleDialogClose = () => {
-    // this.#resetSearch();
+    this.#resetSearch();
   };
 
   get #allResultsItems() {
