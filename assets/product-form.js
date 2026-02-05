@@ -84,9 +84,9 @@ export class AddToCartComponent extends Component {
       }
 
     }
-    setTimeout(
-      renderWishlistCounter(_swat), 2000
-    );
+    // setTimeout(
+    //   renderWishlistCounter(_swat), 2000
+    // );
     
   }
 
