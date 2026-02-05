@@ -50,6 +50,21 @@
     </select>
   </div>
 </div>
+
+
+<div id="order-note-debug" style="
+  margin-top:15px;
+  padding:10px;
+  border:1px dashed #ccc;
+  font-size:12px;
+  white-space:pre-wrap;
+">
+  <strong>Current Order Note:</strong>
+  <div id="order-note-value">Loading…</div>
+</div>
+
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const pickupRadio = document.getElementById('delivery-option-pickup');
@@ -59,45 +74,65 @@ document.addEventListener('DOMContentLoaded', function () {
   const storeSelect = document.getElementById('pickup-store');
   const timeSelect = document.getElementById('pickup-time');
 
-  function updateVisibility() {
-    if (pickupRadio.checked) {
-      pickupDetails.style.display = 'block';
-    } else {
-      pickupDetails.style.display = 'none';
-      updateOrderNote('', '');
-    }
+  const debugEl = document.getElementById('order-note-value');
+
+  function fetchCart() {
+    return fetch('/cart.js')
+      .then(res => res.json());
   }
 
-  function updateOrderNote(store, time) {
+  function renderDebugNote(note) {
+    debugEl.textContent = note || '(empty)';
+  }
+
+  function updateVisibility() {
+    pickupDetails.style.display = pickupRadio.checked ? 'block' : 'none';
+  }
+
+  async function updateOrderNote() {
     let note = '';
 
-    if (pickupRadio.checked && store && time) {
+    if (pickupRadio.checked) {
+      const store = storeSelect.value;
+      const time = timeSelect.value;
+
+      if (!store || !time) {
+        return;
+      }
+
       note =
         'Delivery Method: Store Pickup\n' +
         'Pickup Store: ' + store + '\n' +
         'Pickup Time Slot: ' + time;
-    } else if (deliveryRadio.checked) {
+    } else {
       note = 'Delivery Method: Online Delivery';
     }
 
-    fetch('/cart/update.js', {
+    await fetch('/cart/update.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ note: note })
+      body: JSON.stringify({ note })
     });
+
+    const cart = await fetchCart();
+    renderDebugNote(cart.note);
   }
 
-  pickupRadio.addEventListener('change', updateVisibility);
-  deliveryRadio.addEventListener('change', updateVisibility);
-
-  storeSelect.addEventListener('change', function () {
-    updateOrderNote(storeSelect.value, timeSelect.value);
+  document.querySelectorAll('.delivery-option').forEach(radio => {
+    radio.addEventListener('change', function () {
+      updateVisibility();
+      updateOrderNote();
+    });
   });
 
-  timeSelect.addEventListener('change', function () {
-    updateOrderNote(storeSelect.value, timeSelect.value);
-  });
+  storeSelect.addEventListener('change', updateOrderNote);
+  timeSelect.addEventListener('change', updateOrderNote);
 
+  console.log('Cart Pickup script initialized.');
+  console.log('Pickup Radio:', pickupRadio);
+  console.log('Delivery Radio:', deliveryRadio);
+  console.log('Pickup Details Container:', pickupDetails);
+  fetchCart().then(cart => renderDebugNote(cart.note));
   updateVisibility();
 });
 </script>
