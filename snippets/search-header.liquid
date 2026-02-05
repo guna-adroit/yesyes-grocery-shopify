@@ -98,6 +98,14 @@ class PredictiveSearch extends HTMLElement {
       }, 500).bind(this)
     );
 
+    this.input.addEventListener('focus', () => {
+      this.predictiveSearchResults.style.display = 'block';
+    });
+
+    this.input.addEventListener('blur', () => {
+      this.predictiveSearchResults.style.display = 'none';
+    });
+
     // Close modal when clicking outside
     document.addEventListener('click', (e) => {
       if (!this.contains(e.target)) {
