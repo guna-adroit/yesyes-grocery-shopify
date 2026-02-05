@@ -98,9 +98,12 @@ class PredictiveSearch extends HTMLElement {
       }, 500).bind(this)
     );
 
-    this.input.addEventListener('focus', () => {
-      this.predictiveSearchResults.style.display = 'block';
-    });
+    if(this.input.value > 0){
+      this.input.addEventListener('focus', () => {
+        this.predictiveSearchResults.style.display = 'block';
+      });
+    }
+    
 
     this.input.addEventListener('blur', () => {
       this.predictiveSearchResults.style.display = 'none';
