@@ -95,8 +95,22 @@ class PredictiveSearch extends HTMLElement {
       'input',
       this.debounce((event) => {
         this.onChange(event);
-      }, 500).bind(this)
+      }, 350).bind(this)
     );
+
+    
+      this.input.addEventListener('focus', () => {
+        if(this.input.value.length > 0){
+          this.open();
+          this.predictiveSearchResults.style.display = 'block';
+        }
+      });
+    
+    
+
+    this.input.addEventListener('blur', () => {
+      this.predictiveSearchResults.style.display = 'none';
+    });
 
     // Close modal when clicking outside
     document.addEventListener('click', (e) => {
@@ -157,7 +171,7 @@ class PredictiveSearch extends HTMLElement {
     this.predictiveSearchResults.style.display = 'none';
 
     if (clearInput) {
-      this.input.value = '';
+      //this.input.value = ''; 
     }
   }
 

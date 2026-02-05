@@ -162,7 +162,7 @@ class PredictiveSearchComponent extends Component {
    */
   onSearchKeyDown = (event) => {
     if (event.key === 'Escape') {
-      this.#resetSearch();
+      // this.#resetSearch();
       return;
     }
 
