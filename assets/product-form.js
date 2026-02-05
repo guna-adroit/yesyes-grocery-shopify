@@ -66,7 +66,7 @@ export class AddToCartComponent extends Component {
       this.#animateFlyToCart();
     }
     console.log("Add TO cart");
-    
+    renderWishlistCounter(_swat);
     const productCard = this.closest('.product-card'); // Adjust the class name as needed to target the parent card
     const quantityInput = this.closest('.product-card') || this.closest('.product_variant_item');
 
