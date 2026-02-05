@@ -253,7 +253,7 @@ class PredictiveSearchComponent extends Component {
     if (keepFocus) {
       this.refs.searchInput.focus();
     }
-    this.#resetSearch();
+    // this.#resetSearch();
   }, 100);
 
   /**
