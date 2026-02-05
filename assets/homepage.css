@@ -645,7 +645,7 @@ slideshow-slides .group-block-content.layout-panel-flex.layout-panel-flex--colum
     /* display: flex; */
 }
 .search-results-container-one {
-    min-width: 320px;
+    min-width: 290px;
     padding: 30px 24px;
     width: 30%;
     float: left;
