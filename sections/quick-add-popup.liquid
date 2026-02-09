@@ -140,6 +140,17 @@
         <cart-count>
           <text-component><span class="popup-cart-count">Items Total: {{ cart.item_count }}</span></text-component>
         </cart-count>
+
+        {% assign product_cart_quantity = 0 %}
+
+        {% for item in cart.items %}
+          {% if item.product_id == product.id %}
+            {% assign product_cart_quantity = product_cart_quantity | plus: item.quantity %}
+          {% endif %}
+        {% endfor %}
+        <product-count>
+          Item Total: {{ product_cart_quantity }}
+        </product-count>
       
       <div class="confirm-button-container">
         <button class="button button--primary confirm-button">Confirm</button>
