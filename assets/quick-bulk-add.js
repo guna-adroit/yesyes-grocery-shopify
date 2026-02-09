@@ -177,7 +177,7 @@ customElements.define('quantity-input-bulk', QuantityInputBulk);
      THEME CART EVENT (FIXED)
      --------------------------------------------------------- */
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
-    console.log('CART UPDATE EVENT', e.detail.cart);
+    console.log('CART UPDATE EVENT', e.detail.resource);
     const cart = e.detail?.cart || e.detail?.cartData;
     
     updateProductCount(cart);
