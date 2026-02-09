@@ -138,10 +138,15 @@ class QuantityInputBulk extends HTMLElement {
   }
 }
 
+
+customElements.define('quantity-input-bulk', QuantityInputBulk);
+
 (function () {
   function updateProductCount(cart) {
+    if (!cart || !Array.isArray(cart.items)) return;
+
     const productCountEl = document.querySelector('product-count[data-product-id]');
-    if (!productCountEl || !cart) return;
+    if (!productCountEl) return;
 
     const productId = Number(productCountEl.dataset.productId);
     const countEl = productCountEl.querySelector('.product-total-count');
@@ -158,9 +163,9 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   /* ---------------------------------------------------------
-     INITIAL SYNC (when popup opens)
+     INITIAL LOAD
      --------------------------------------------------------- */
-  if (QuantityInputBulk.cart) {
+  if (QuantityInputBulk.cart?.items) {
     updateProductCount(QuantityInputBulk.cart);
   } else {
     fetch('/cart.js')
@@ -169,13 +174,12 @@ class QuantityInputBulk extends HTMLElement {
   }
 
   /* ---------------------------------------------------------
-     LISTEN TO EXISTING THEME EVENT
+     THEME CART EVENT (FIXED)
      --------------------------------------------------------- */
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
-    const cart = e.detail?.cart || e.detail;
+    const cart = e.detail?.cart || e.detail?.cartData;
     updateProductCount(cart);
   });
+
 })();
 
-
-customElements.define('quantity-input-bulk', QuantityInputBulk);
