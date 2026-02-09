@@ -138,4 +138,44 @@ class QuantityInputBulk extends HTMLElement {
   }
 }
 
+(function () {
+  function updateProductCount(cart) {
+    const productCountEl = document.querySelector('product-count[data-product-id]');
+    if (!productCountEl || !cart) return;
+
+    const productId = Number(productCountEl.dataset.productId);
+    const countEl = productCountEl.querySelector('.product-total-count');
+
+    let totalQty = 0;
+
+    cart.items.forEach(item => {
+      if (item.product_id === productId) {
+        totalQty += item.quantity;
+      }
+    });
+
+    countEl.textContent = totalQty;
+  }
+
+  /* ---------------------------------------------------------
+     INITIAL SYNC (when popup opens)
+     --------------------------------------------------------- */
+  if (QuantityInputBulk.cart) {
+    updateProductCount(QuantityInputBulk.cart);
+  } else {
+    fetch('/cart.js')
+      .then(r => r.json())
+      .then(cart => updateProductCount(cart));
+  }
+
+  /* ---------------------------------------------------------
+     LISTEN TO EXISTING THEME EVENT
+     --------------------------------------------------------- */
+  document.addEventListener(ThemeEvents.cartUpdate, (e) => {
+    const cart = e.detail?.cart || e.detail;
+    updateProductCount(cart);
+  });
+})();
+
+
 customElements.define('quantity-input-bulk', QuantityInputBulk);
