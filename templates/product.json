@@ -544,6 +544,7 @@
     },
     "reviews_JDA7AU": {
       "type": "reviews",
+      "disabled": true,
       "name": "Reviews",
       "settings": {
         "color_scheme": "",
