@@ -49,21 +49,26 @@
       flex-direction: row;
     }
     label.star {
-      padding: 10px;
       font-size: 36px;
-      color: #c70000;
+      color: #FFCA27;
       transition: all .2s;
     }
-
+    .stars-details label.star {
+      font-size: 25px;
+      padding: 0;
+    }
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+    }
     input.star:checked ~ label.star:before, label.star.filled:before, input.star:hover ~ label.star:before {
       content:'\f005';
-      color: #c70000;
+      color: #FFCA27;
       transition: all .25s;
     }
-
-
+    
     input.star-5:checked ~ label.star:before {
-      color:#c70000;
+      color:#FFCA27;
       text-shadow: 0 0 20px #952;
     }
 
@@ -72,15 +77,21 @@
     }
 
     label.star:hover{
-      transform: rotate(144deg) scale(1.3);
-      color: #c70000;
+      /* transform: rotate(144deg) scale(1.3); */
+      color: #FFCA27;
     }
 
     label.star:before{
-      content:'\f006';
+      content:'\f005';
+      color: #BDBDBD;
       font-family: FontAwesome;
     }
-
+    label.star.half-filled:before {
+      color: #FFCA27;
+      background: linear-gradient(to right, #FFCA27 50%, #BDBDBD 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     .rev-box{
       overflow: hidden;
       height: 0;
@@ -129,8 +140,6 @@
         overflow: visible;
         padding-top: 24px;
     }
-
-
     .review-form {
       margin-top: 36px;
       display: flex;
@@ -174,9 +183,49 @@
         padding: 4px;
     }
     .user-info{
-      font-size: 18px;
-      font-weight: 500;
-      margin-right: 16px;
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 19.6px;
+      letter-spacing: 0;
+
+    }
+    span.user-avatar {
+        height: 55px;
+        width: 55px;
+        display: flex;
+        background: #D9D9D9;
+        border-radius: 50%;
+    }
+    .user-avatar::before {
+      content: '';
+      display: block;
+      width: 50%;
+      height: 50%;
+      background-image: url(https://cdn.shopify.com/s/files/1/0979/1825/5185/files/user-icon.png?v=1770630235);
+      position: relative;
+      background-repeat: no-repeat;
+      top: 25%;
+      left: 25%;
+    }
+    p.comment-title {
+        font-family: Inter;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 25.2px;
+        letter-spacing: 0;
+    }
+    p.comment-content {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21.4px;
+        letter-spacing: 0;
+    }
+    .user-details {
+        display: flex;
+        align-items: center;
+        gap: 13px;
     }
     .comment-title {
       font-weight: 600;
@@ -185,21 +234,132 @@
     div#yesyes-reviews-list {
         display: flex;
         gap: 16px;
-        padding: 16px;
+        padding-top: 20px;
+        flex-direction: column;
     }
     .yesyes-review {
       padding: 10px;
-      border: 1px solid #dddddd;
-      width: fit-content;
-      max-width: 400px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
     }
     .user {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    .stars-details {
+        display: flex;
+        flex-direction: column;
+    }
+    .reviews-count p {
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 0;
+    }
+    .review-section-wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10%;
+    }
+    .reviews-section {
+        flex: 0 0 60%;
+    }
+    .section-stars-wrapper {
+        flex: 0 0 25%;
+    }
+    h2.yesyes-heading {
+        font-family: Inter;
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 44px;
+        letter-spacing: 0;
+    }
+    .average-stars {
+      padding-top: 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-family: Inter;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: 0;
+
+    }
+    div#total-reviews {
+        font-family: Inter;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 25.2px;
+        letter-spacing: 0;
+        padding: 20px 0;
+    }
+    span.count-label, .count-percentage {
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 19.6px;
+        letter-spacing: 0;
+    }
+    .count-label{
+      margin-right: 13px;
+    }
+    .count-percentage {
+      margin-left: 17px;
+    }
+    .star-single {
         display: flex;
         align-items: center;
-        justify-content: space-between;
     }
+    select#review-filter, .review-wrapper {
+      display: none;
+    }
+    select {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #000000;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 10px;
+        background-color: rgb(251 210 211);
+    }
+    option {
+      padding: 10px;
+      border-top: 1px solid  rgb(127, 8, 8);
+      cursor: pointer;
+      transition-property: color, background;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-out;
+      &:where(:hover, :focus, :active) {
+        background: rgb(192, 142, 142);
+        color: white;
+    }
+    &:checked {
+      background: #e50914;
+      color: white;
+    }
+    &::checkmark {
+      display: none;
+    }
+    &:first-child {
+      border: 0;
+    }
+}
+@media screen and (max-width: 768px) {
+  .review-section-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .reviews-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
 </style>
 
 {% assign full_width = false %}
@@ -212,8 +372,7 @@
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
 >
-  {% render 'divider', id: section.id, settings: section.settings, attributes: true, full_width: full_width %}
-</div>
+
 {% comment %}
   YesYes Reviews – Core Section
   Secure integration via Shopify App Proxy
@@ -228,31 +387,101 @@
   {% endcomment %}
   data-customer-id="{% if customer %}gid://shopify/Customer/23979636457553{% endif %}"
 >
+<div class="review-section-wrapper">
+<div class="section-stars-wrapper">
   <h2 class="yesyes-heading">Customer Reviews</h2>
-
-  <!-- Reviews List -->
-  <div class="review-controls">
-<select id="review-sort">
-  <option value="latest">Latest</option>
-  <option value="oldest">Oldest</option>
-  <option value="rating-high">Rating: High to Low</option>
-  <option value="rating-low">Rating: Low to High</option>
-</select>
-
-<select id="review-filter">
-  <option value="all">All Ratings</option>
-  <option value="5">5 Stars</option>
-  <option value="4">4 Stars</option>
-  <option value="3">3 Stars</option>
-  <option value="2">2 Stars</option>
-  <option value="1">1 Star</option>
-</select> 
-</div>
-  <div id="yesyes-reviews-list">
-
-    <p>Loading reviews...</p>
+  <div class="average-stars">
+    <div id="average-stars">
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+    </div>
+    <div id="average-rating">
+      5 out of 5
+    </div>
   </div>
+  <div id="total-reviews">
+    0 Ratings
+  </div>
+  <div class="stars-details">
+    <span class="star-single" id="rating-5">
+      <span class="count-label">5 Star</span>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <span class="count-percentage">0%</span>
+    </span>
+    <span class="star-single" id="rating-4">
+      <span class="count-label">4 Star</span>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star"></label>
+      <span class="count-percentage">0%</span>
+    </span>
+    <span class="star-single" id="rating-3">
+      <span class="count-label">3 Star</span>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <span class="count-percentage">0%</span>
+    </span>
+    <span class="star-single" id="rating-2">
+      <span class="count-label">2 Star</span>
+      <label class="star filled"></label>
+      <label class="star filled"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <span class="count-percentage">0%</span>
+    </span>
+    <span class="star-single" id="rating-1">
+      <span class="count-label">1 Star</span>
+      <label class="star filled"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <span class="count-percentage">0%</span>
+    </span>
+  </div>
+</div>
+  <!-- Reviews List -->
+  <div class="reviews-section">
+   <div class="reviews-header">
+    <div class="reviews-count">
+      <p id="reviews-count">0 Customer Reviews</p>
+    </div>
+    <div class="review-controls">
+      <select id="review-sort">
+        <option value="latest">Latest</option>
+        <option value="oldest">Oldest</option>
+        <option value="rating-high">Rating: High to Low</option>
+        <option value="rating-low">Rating: Low to High</option>
+      </select>
 
+      <select id="review-filter">
+        <option value="all">All Ratings</option>
+        <option value="5">5 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="2">2 Stars</option>
+        <option value="1">1 Star</option>
+      </select> 
+    </div>
+   </div>
+    <div id="yesyes-reviews-list">
+      <p>Loading reviews...</p>
+    </div>
+  </div>
+</div>
   <!-- Review Form -->
    <div class="review-wrapper">
     <div id="yesyes-review-status" class="review-status" hidden></div>
@@ -291,7 +520,7 @@
       {% endif %}
     </div>
 </section>
-
+</div>
 <script>
 (function () {
   const section = document.getElementById('yesyes-reviews');
@@ -306,11 +535,8 @@
   const formEl = document.getElementById('yesyes-review-form');
   const statusEl = document.getElementById('yesyes-review-status');
 
-  const BASE = '/apps/reviews';
+  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
 
-  /* -----------------------------
-     FETCH REVIEWS (existing)
-  ----------------------------- */
 
 /* -----------------------------
    FETCH REVIEWS + SORT + FILTER
@@ -337,7 +563,8 @@ function renderReviews(reviews) {
       data-created="${r.createdAt}"
     >
       <div class="user">
-        <div>
+        <div class="user-details">
+          <span class="user-avatar"></span>
           <span class="user-info">${r.reviewerName || 'User'}</span>
         </div>
         <div class="stars-wrapper">
@@ -397,6 +624,13 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
 
   ALL_REVIEWS = data?.reviews || [];
   applySortAndFilter(); // default sort + render
+  console.log('Reviews data:', data);
+
+  ALL_REVIEWS = data.reviews || [];
+  CURRENT_REVIEWS = [...ALL_REVIEWS];
+
+  renderRatingSummaryFromAPI(data);
+  renderReviews(CURRENT_REVIEWS);
 })
 .catch(() => {
   listEl.innerHTML = '<p>Unable to load reviews.</p>';
@@ -455,6 +689,68 @@ document.getElementById('review-filter').addEventListener('change', e => {
     statusEl.hidden = false;
     statusEl.innerHTML = '<p>Unable to check review eligibility.</p>';
   });
+
+
+  /* -----------------------------
+     RATING SUMMARY RENDER
+  ----------------------------- */
+
+  function renderRatingSummaryFromAPI(data) {
+  const total = data.totalReviews || 0;
+  const dist = data.ratingDistribution || {};
+
+  /* ---------- Total ---------- */
+  document.getElementById('total-reviews').innerText =
+    `${total} Ratings`;
+  document.getElementById('reviews-count').innerText =
+    `${total} Customer Reviews`;
+
+  if (!total) {
+    document.getElementById('average-rating').innerText = '0 out of 5';
+    return;
+  }
+
+  /* ---------- Average ---------- */
+  let sum = 0;
+  for (let i = 1; i <= 5; i++) {
+    sum += (dist[i] || 0) * i;
+  }
+
+  const avg = (sum / total).toFixed(1);
+  document.getElementById('average-rating').innerText =
+    `${avg} out of 5`;
+
+  /* ---------- Fill average stars ---------- */
+  const avgStars = document.querySelectorAll('#average-stars .star');
+
+  avgStars.forEach((star, idx) => {
+    const starValue = idx + 1;
+
+    star.classList.remove('filled', 'half-filled');
+
+    if (avg >= starValue) {
+      star.classList.add('filled');
+    } else if (avg >= starValue - 0.5) {
+      star.classList.add('half-filled');
+    }
+  });
+
+  /* ---------- Distribution ---------- */
+  for (let i = 1; i <= 5; i++) {
+    const count = dist[i] || 0;
+    const percent = Math.round((count / total) * 100);
+
+    const row = document.getElementById(`rating-${i}`);
+    if (!row) continue;
+
+    row.querySelector('.count-percentage').innerText = `${percent}%`;
+
+    const stars = row.querySelectorAll('.star');
+    stars.forEach((star, idx) => {
+      star.classList.toggle('filled', idx < i);
+    });
+  }
+}
 
   /* -----------------------------
      SUBMIT REVIEW
