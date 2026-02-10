@@ -509,6 +509,7 @@
       "block_order": [
         "yotpo_product_reviews_reviews_UhYRMW"
       ],
+      "disabled": true,
       "custom_css": [
         ".yotpo-review-border-smooth.yotpo-border-margin {background: red;}"
       ],
@@ -539,6 +540,20 @@
         "gradient_direction": "to top",
         "padding-block-start": 22,
         "padding-block-end": 0
+      }
+    },
+    "reviews_JDA7AU": {
+      "type": "reviews",
+      "name": "Reviews",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "product_recommendations_qggXJq": {
@@ -837,6 +852,7 @@
   "order": [
     "main",
     "17659755547f471d3c",
+    "reviews_JDA7AU",
     "product_recommendations_qggXJq",
     "product_recommendations_dYtaDz"
   ]
