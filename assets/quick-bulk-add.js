@@ -141,45 +141,57 @@ class QuantityInputBulk extends HTMLElement {
 
 customElements.define('quantity-input-bulk', QuantityInputBulk);
 
+import { ThemeEvents } from '@theme/events';
+
 (function () {
-  function updateProductCount(cart) {
+
+  function updateProductCounts(cart) {
     if (!cart || !Array.isArray(cart.items)) return;
 
-    const productCountEl = document.querySelector('product-count[data-product-id]');
-    if (!productCountEl) return;
+    document.querySelectorAll('product-count[data-product-id]').forEach(el => {
+      const productId = Number(el.dataset.productId);
+      const countEl = el.querySelector('.product-total-count');
+      if (!countEl) return;
 
-    const productId = Number(productCountEl.dataset.productId);
-    const countEl = productCountEl.querySelector('.product-total-count');
+      let totalQty = 0;
 
-    let totalQty = 0;
+      cart.items.forEach(item => {
+        if (Number(item.product_id) === productId) {
+          totalQty += item.quantity;
+        }
+      });
 
-    cart.items.forEach(item => {
-      if (item.product_id === productId) {
-        totalQty += item.quantity;
-      }
+      countEl.textContent = totalQty;
     });
-
-    countEl.textContent = totalQty;
   }
 
-  /* ---------------------------------------------------------
-     INITIAL LOAD
-     --------------------------------------------------------- */
-  if (QuantityInputBulk.cart?.items) {
-    updateProductCount(QuantityInputBulk.cart);
-  } else {
+  function fetchCartAndUpdate() {
     fetch('/cart.js')
       .then(r => r.json())
-      .then(cart => updateProductCount(cart));
+      .then(cart => updateProductCounts(cart))
+      .catch(() => {});
   }
 
-  /* ---------------------------------------------------------
-     THEME CART EVENT (FIXED)
-     --------------------------------------------------------- */
+  /* --------------------------
+     INITIAL LOAD
+  --------------------------- */
+
+  fetchCartAndUpdate();
+
+  /* --------------------------
+     HORIZON CART UPDATE EVENT
+  --------------------------- */
+
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
     const cart = e.detail?.resource || e.detail?.cartData;
-    updateProductCount(cart);
+
+    if (cart?.items) {
+      updateProductCounts(cart);
+    } else {
+      fetchCartAndUpdate();
+    }
   });
 
 })();
+
 
