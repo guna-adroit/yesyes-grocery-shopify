@@ -390,7 +390,9 @@
 <div class="review-section-wrapper">
 <div class="section-stars-wrapper">
   <h2 class="yesyes-heading">Customer Reviews</h2>
-  <p id="write-review" class="write-review">Write a Review</p>
+  {% if customer %}
+    <p id="write-review" class="write-review">Write a Review</p>
+  {% endif %}
   <div class="average-stars">
     <div id="average-stars">
       <label class="star filled"></label>
@@ -710,9 +712,9 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
     console.log('Ready data:', data);
     if (!data.eligible) {
       formEl.style.display = 'none';
+      document.getElementById('write-review').style.display = 'none';
       statusEl.hidden = false;
       statusEl.innerHTML = '<p>You are not eligible to review this product.</p>';
-      document.getElementById('write-review').style.display = 'none';
       return;
     }
 
