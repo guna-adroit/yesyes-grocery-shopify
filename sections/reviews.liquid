@@ -298,6 +298,9 @@
         display: flex;
         align-items: center;
     }
+    #view-all-reviews{
+      margin-top: 24px;
+    }
     select#review-filter, .review-wrapper {
       display: none;
     }
@@ -329,7 +332,7 @@
       color: white;
     }
     &::checkmark {
-      display: none;
+      /* display: none; */
     }
     &:first-child {
       border: 0;
@@ -355,9 +358,10 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
->
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}" style="padding-top: {{ section.settings.padding-block-start }}px; padding-bottom: {{ section.settings.padding-block-end }}px;"
+> <span style="opacity: 0;">
   {% render 'divider', id: section.id, settings: section.settings, attributes: true, full_width: full_width %}
+  </span>
 
 {% comment %}
   YesYes Reviews – Core Section
@@ -441,31 +445,41 @@
 </div>
   <!-- Reviews List -->
   <div class="reviews-section">
-   <div class="reviews-header">
-    <div class="reviews-count">
-      <p id="reviews-count">0 Customer Reviews</p>
+    <div class="reviews-header">
+      <div class="reviews-count">
+        <p id="reviews-count">0 Customer Reviews</p>
+      </div>
+      {% if template.suffix == 'reviews' %}
+        <div class="review-controls">
+            <select id="review-sort">
+              <option value="latest">Latest</option>
+              <option value="oldest">Oldest</option>
+              <option value="rating-high">Rating: High to Low</option>
+              <option value="rating-low">Rating: Low to High</option>
+            </select>
+            <select id="review-filter">
+              <option value="all">All Ratings</option>
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
+            </select> 
+        </div>
+      {% endif %}
     </div>
-    <div class="review-controls">
-      <select id="review-sort">
-        <option value="latest">Latest</option>
-        <option value="oldest">Oldest</option>
-        <option value="rating-high">Rating: High to Low</option>
-        <option value="rating-low">Rating: Low to High</option>
-      </select>
-
-      <select id="review-filter">
-        <option value="all">All Ratings</option>
-        <option value="5">5 Stars</option>
-        <option value="4">4 Stars</option>
-        <option value="3">3 Stars</option>
-        <option value="2">2 Stars</option>
-        <option value="1">1 Star</option>
-      </select> 
-    </div>
-   </div>
     <div id="yesyes-reviews-list">
       <p>Loading reviews...</p>
     </div>
+    {% if template.name == 'product' %}
+      <div class="view-all-wrapper {{ template.suffix }}">
+        <a id="view-all-reviews" 
+        class="size-style section_view_all button"
+        href="/pages/reviews?product={{ product.id }}">
+          View all reviews
+        </a>
+      </div>
+    {% endif %}
   </div>
 </div>
   <!-- Review Form -->
@@ -512,10 +526,22 @@
   const section = document.getElementById('yesyes-reviews');
   if (!section) return;
 
-  const productId = section.dataset.productId;
+  //extract id from pageurl
+  idValue = new URLSearchParams(window.location.search).get('product');
+  if (location.pathname === '/pages/reviews') {
+    var isReviewsPage = true;
+    var productId = idValue ? `gid://shopify/Product/${idValue}` : null;
+    console.log('Product ID from URL:', productId );
+  }
+  else {
+    var isReviewsPage = false;
+    var productId = section.dataset.productId;
+    console.log('Product ID from PDP:', productId );
+
+  }
   const customerId = "{% if customer %}{{ customer.id }}{% else %}000{% endif %}";
   const reviewerName = "{% if customer %}{{ customer.first_name }}{% else %}Guest{% endif %}";
-  console.log('customer ID:', customerId);
+  console.log('productId ID:', productId);
 
   const listEl = document.getElementById('yesyes-reviews-list');
   const formEl = document.getElementById('yesyes-review-form');
@@ -537,13 +563,21 @@ const SORT_STATE = {
 };
 
 /* ---------- Render ---------- */
+if (isReviewsPage) {
+  var MAX_PDP_REVIEWS = 250;
+}
+else {
+  var MAX_PDP_REVIEWS = 2;
+}
 function renderReviews(reviews) {
   if (!reviews.length) {
     listEl.innerHTML = '<p>No reviews found.</p>';
     return;
   }
+// limit with 2
 
-  listEl.innerHTML = reviews.map(r => `
+  const limitedReviews = reviews.slice(0, MAX_PDP_REVIEWS);
+  listEl.innerHTML = limitedReviews.map(r => `
     <div class="yesyes-review"
       data-rating="${r.rating}"
       data-created="${r.createdAt}"
