@@ -649,17 +649,22 @@ function applySortAndFilter() {
   /* -----------------------------
      Open review modal on "Write a Review" click
   ----------------------------- */
-  document.getElementById('write-review').addEventListener('click', () => {
-    formEl.style.display = 'block';
-    statusEl.hidden = true;
-    document.querySelector('.review-wrapper-bg').classList.add('active');
-  });
-  // close modal on outside click
-  document.querySelector('.review-wrapper-bg').addEventListener('click', (e) => {
-    if (e.target.classList.contains('review-wrapper-bg')) {
-      e.target.classList.remove('active');
-    }
-  });
+  check if element exists before adding event listener
+  
+  const writeReviewEl = document.getElementById('write-review');
+  if (writeReviewEl) {
+    writeReviewEl.addEventListener('click', () => {
+      formEl.style.display = 'block';
+      statusEl.hidden = true;
+      document.querySelector('.review-wrapper-bg').classList.add('active');
+    });
+    // close modal on outside click
+    document.querySelector('.review-wrapper-bg').addEventListener('click', (e) => {
+      if (e.target.classList.contains('review-wrapper-bg')) {
+        e.target.classList.remove('active');
+      }
+    });
+  }
 /* ---------- Fetch ---------- */
 fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   method: 'POST',
