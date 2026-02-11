@@ -133,7 +133,7 @@ class QuantityInputBulk extends HTMLElement {
       itemCount: cartData.item_count,
       sections: cartData.sections
     });
-
+    console.log("Added");
     document.dispatchEvent(evt);
   }
 }
@@ -176,6 +176,7 @@ customElements.define('quantity-input-bulk', QuantityInputBulk);
      THEME CART EVENT (FIXED)
      --------------------------------------------------------- */
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
+     console.log("Added cart");
     const cart = e.detail?.resource || e.detail?.cartData;
     updateProductCount(cart);
   });
