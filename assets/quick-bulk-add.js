@@ -181,7 +181,17 @@ import { ThemeEvents } from '@theme/events';
   /* --------------------------
      HORIZON CART UPDATE EVENT
   --------------------------- */
+document.addEventListener(ThemeEvents.CartAddEvent, (e) => {
+    const cart = e.detail?.resource || e.detail?.cartData;
+  console.log("Added cart");
+    if (cart?.items) {
+      updateProductCounts(cart);
+    } else {
+      fetchCartAndUpdate();
+    }
+  });
 
+})();
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
     const cart = e.detail?.resource || e.detail?.cartData;
 
