@@ -47,7 +47,13 @@
       async
       blocking="render"
     ></script>
-
+    {% if customer %}
+      <script
+        src="{{ 'theme-sync.js' | asset_url }}"
+        type="module"
+        async
+      ></script>
+    {% endif %}
     <main
       id="MainContent"
       class="content-for-layout"
