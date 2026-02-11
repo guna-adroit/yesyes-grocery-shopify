@@ -194,16 +194,5 @@ document.addEventListener(ThemeEvents.CartAddEvent, (e) => {
   });
 
 })();
-  document.addEventListener(ThemeEvents.cartUpdate, (e) => {
-    const cart = e.detail?.resource || e.detail?.cartData;
-
-    if (cart?.items) {
-      updateProductCounts(cart);
-    } else {
-      fetchCartAndUpdate();
-    }
-  });
-
-})();
-
+  
 
