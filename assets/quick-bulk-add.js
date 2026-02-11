@@ -172,6 +172,8 @@ import { ThemeEvents } from '@theme/events';
       .catch(() => {});
   }
 
+  window.updateProductCounts = updateProductCounts;
+  window.refreshProductCounts = fetchCartAndUpdate;
   /* --------------------------
      INITIAL LOAD
   --------------------------- */
