@@ -648,8 +648,8 @@ quantity-input-bulk.is-loading::after {
     padding-top: 22px;
 }
 @keyframes qty-spin {
-  from { transform: translateY(-50%) rotate(0deg); }
-  to   { transform: translateY(-50%) rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Blog CSS Start */
