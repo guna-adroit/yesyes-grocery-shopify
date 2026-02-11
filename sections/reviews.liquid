@@ -7,21 +7,14 @@
       padding: 0;
       font-family: roboto;
     }
-    form#yesyes-review-form {
-        max-width: 300px;
-        border: 1px solid red;
-        padding: 16px;
-        border-radius: 10px;
-        background: #f5f5f5;
-    }
-
     div.stars{
       width: 270px;
       display: inline-block;
     }
 
     input.star{
-      display: none;
+      opacity: 0;
+      height: 0;
     }
 
     .stars-wrapper {
@@ -78,13 +71,12 @@
     }
     .rev-box{
       overflow: hidden;
-      height: 0;
       width: 100%;
       transition: all .25s;
       display: flex;  
       flex-direction: column;
-      max-width: 260px;
-      padding: 0 10px;
+      overflow: visible;
+      padding-top: 24px;
     }
 
     textarea.review{
@@ -110,7 +102,6 @@
         gap: 14px;
     }
     .review-wrapper {
-        display: flex;
         flex-direction: column;
         max-width: 400px;
         gap: 14px;
@@ -118,25 +109,24 @@
         margin-top: 18px;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+        background: #fff;
+        display: none;
     }
     div:has(input.star:checked) ~ .rev-box{
-        height: 240px;
-        overflow: visible;
-        padding-top: 24px;
+
     }
     .review-form {
-      margin-top: 36px;
+      margin-top: 24px;
       display: flex;
       flex-direction: column;
-      width: 300px;
     }
 
     .review-form input, .review-form textarea {
-      height: 54px;
-      border-radius: 5px;
+      min-height: 48px;
+      border-radius: 10px;
       background: white;
       margin-bottom: 15px;
-      border: none;
+      border: 1px solid #d1d5db;
       padding: 0 20px;
       font-weight: 300;
       font-size: 14px;
@@ -271,7 +261,6 @@
       font-size: 20px;
       line-height: 28px;
       letter-spacing: 0;
-
     }
     div#total-reviews {
         font-family: Inter;
@@ -301,20 +290,41 @@
     #view-all-reviews{
       margin-top: 24px;
     }
-    select#review-filter, .review-wrapper {
+    .review-wrapper-bg.active{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0000006e;
+      z-index: 10;
+    }
+    .review-wrapper-bg.active .review-wrapper {
+        display: flex;  
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .write-review{
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+    select#review-filter {
       display: none;
     }
     select#review-sort {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #000000;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 700;
-        padding: 10px;
-        background-color: #feefef;
-        border: 1px solid #e5d8d8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 700;
+      padding: 10px;
+      background-color: #feefef;
+      border: 1px solid #e5d8d8;
     }
     option {
       padding: 10px;
@@ -380,6 +390,7 @@
 <div class="review-section-wrapper">
 <div class="section-stars-wrapper">
   <h2 class="yesyes-heading">Customer Reviews</h2>
+  <p id="write-review" class="write-review">Write a Review</p>
   <div class="average-stars">
     <div id="average-stars">
       <label class="star filled"></label>
@@ -483,42 +494,44 @@
   </div>
 </div>
   <!-- Review Form -->
-   <div class="review-wrapper">
-    <div id="yesyes-review-status" class="review-status" hidden></div>
-     {% if customer %}
-      <h4 class="review-heading">Share your thoughts </h4>
-      <p class="review-product-title"> {{ product.title }}</p>
-      <hr style="width: 100%; border: 1px solid #ccc;" />
-        <form id="yesyes-review-form" class="review-form">
-          <div class="stars-wrapper">
-            <input name="rating" class="star" id="star-5-2" type="radio" value="5" required  />
-            <label class="star" for="star-5-2"></label>
+   <div class="review-wrapper-bg">
+    <div class="review-wrapper">
+      <div id="yesyes-review-status" class="review-status" hidden></div>
+      {% if customer %}
+        <h4 class="review-heading">Share your thoughts </h4>
+        <p class="review-product-title"> {{ product.title }}</p>
+        <hr style="width: 100%;border: 1px solid #ccc;margin-top: 0px;" />
+          <form id="yesyes-review-form" class="review-form">
+            <div class="stars-wrapper">
+              <input name="rating" class="star" id="star-5-2" type="radio" value="5" required  />
+              <label class="star" for="star-5-2"></label>
 
-            <input name="rating" class="star" id="star-4-2" type="radio" value="4" />
-            <label class="star" for="star-4-2"></label>
+              <input name="rating" class="star" id="star-4-2" type="radio" value="4" />
+              <label class="star" for="star-4-2"></label>
 
-            <input name="rating" class="star" id="star-3-2" type="radio" value="3" />
-            <label class="star" for="star-3-2"></label>
+              <input name="rating" class="star" id="star-3-2" type="radio" value="3" />
+              <label class="star" for="star-3-2"></label>
 
-            <input name="rating" class="star" id="star-2-2" type="radio" value="2" />
-            <label class="star" for="star-2-2"></label>
+              <input name="rating" class="star" id="star-2-2" type="radio" value="2" />
+              <label class="star" for="star-2-2"></label>
 
-            <input name="rating" class="star" id="star-1-2" type="radio" value="1" />
-            <label class="star" for="star-1-2"></label>
-          </div>
-          <div class="rev-box">
-            <input type="text" name="title" placeholder="Review Title" required />
-            <textarea rows="20" name="body" placeholder="Write a review" required></textarea>
-            <button class="button_submit">Submit Review</button>
-          </div>
-        </form>
+              <input name="rating" class="star" id="star-1-2" type="radio" value="1" />
+              <label class="star" for="star-1-2"></label>
+            </div>
+            <div class="rev-box">
+              <input type="text" name="title" placeholder="Review Title" required />
+              <textarea rows="4" name="body" placeholder="Write a review" required></textarea>
+              <button class="button_submit">Submit Review</button>
+            </div>
+          </form>
 
-      {% else %}
-        <p>
-          <a href="/account/login">Log in to write a review</a>
-        </p>
-      {% endif %}
+        {% else %}
+          <p>
+            <a href="/account/login">Log in to write a review</a>
+          </p>
+        {% endif %}
     </div>
+  </div>
 </section>
 </div>
 <script>
@@ -631,7 +644,20 @@ function applySortAndFilter() {
   CURRENT_REVIEWS = result;
   renderReviews(CURRENT_REVIEWS);
 }
-
+  /* -----------------------------
+     Open review modal on "Write a Review" click
+  ----------------------------- */
+  document.getElementById('write-review').addEventListener('click', () => {
+    formEl.style.display = 'block';
+    statusEl.hidden = true;
+    document.querySelector('.review-wrapper-bg').classList.add('active');
+  });
+  // close modal on outside click
+  document.querySelector('.review-wrapper-bg').addEventListener('click', (e) => {
+    if (e.target.classList.contains('review-wrapper-bg')) {
+      e.target.classList.remove('active');
+    }
+  });
 /* ---------- Fetch ---------- */
 fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   method: 'POST',
@@ -656,16 +682,18 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   listEl.innerHTML = '<p>Unable to load reviews.</p>';
 });
 
-document.getElementById('review-sort').addEventListener('change', e => {
-  SORT_STATE.sort = e.target.value;
-  applySortAndFilter();
-});
+  // if on reviews page, show filter and sort options
+  if (isReviewsPage) {
+    document.getElementById('review-sort').addEventListener('change', e => {
+      SORT_STATE.sort = e.target.value;
+      applySortAndFilter();
+    });
 
-document.getElementById('review-filter').addEventListener('change', e => {
-  SORT_STATE.filter = e.target.value;
-  applySortAndFilter();
-});
-
+    document.getElementById('review-filter').addEventListener('change', e => {
+      SORT_STATE.filter = e.target.value;
+      applySortAndFilter();
+    });
+  }
 
   /* -----------------------------
      READY CHECK
