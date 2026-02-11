@@ -62,7 +62,7 @@
       "name": "Reviews",
       "settings": {
         "color_scheme": "",
-        "section_width": "full-width",
+        "section_width": "page-width",
         "thickness": 1,
         "corner_radius": "square",
         "width_percent": 100,
