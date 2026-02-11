@@ -140,49 +140,45 @@ class QuantityInputBulk extends HTMLElement {
 
 customElements.define('quantity-input-bulk', QuantityInputBulk);
 
-import { ThemeEvents } from '@theme/events';
-
 (function () {
-
-  function updateProductCounts(cart) {
+  function updateProductCount(cart) {
     if (!cart || !Array.isArray(cart.items)) return;
 
-    document.querySelectorAll('product-count[data-product-id]').forEach(el => {
-      const productId = Number(el.dataset.productId);
-      const countEl = el.querySelector('.product-total-count');
-      if (!countEl) return;
+    const productCountEl = document.querySelector('product-count[data-product-id]');
+    if (!productCountEl) return;
 
-      let totalQty = 0;
+    const productId = Number(productCountEl.dataset.productId);
+    const countEl = productCountEl.querySelector('.product-total-count');
 
-      cart.items.forEach(item => {
-        if (Number(item.product_id) === productId) {
-          totalQty += item.quantity;
-        }
-      });
+    let totalQty = 0;
 
-      countEl.textContent = totalQty;
+    cart.items.forEach(item => {
+      if (item.product_id === productId) {
+        totalQty += item.quantity;
+      }
     });
+
+    countEl.textContent = totalQty;
   }
 
-  function fetchCartAndUpdate() {
+  /* ---------------------------------------------------------
+     INITIAL LOAD
+     --------------------------------------------------------- */
+  if (QuantityInputBulk.cart?.items) {
+    updateProductCount(QuantityInputBulk.cart);
+  } else {
     fetch('/cart.js')
       .then(r => r.json())
-      .then(cart => updateProductCounts(cart));
+      .then(cart => updateProductCount(cart));
   }
 
-  /* 👇 EXPOSE IT GLOBALLY */
-  window.updateProductCounts = updateProductCounts;
-  window.refreshProductCounts = fetchCartAndUpdate;
-
-  fetchCartAndUpdate();
-
+  /* ---------------------------------------------------------
+     THEME CART EVENT (FIXED)
+     --------------------------------------------------------- */
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
+     console.log("Added cart");
     const cart = e.detail?.resource || e.detail?.cartData;
-    if (cart?.items) {
-      updateProductCounts(cart);
-    } else {
-      fetchCartAndUpdate();
-    }
+    updateProductCount(cart);
   });
 
 })();
