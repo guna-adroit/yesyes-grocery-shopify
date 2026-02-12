@@ -80,6 +80,7 @@
     {% render 'swym-collections'%}
     <script type="module">
       document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
         renderWishlistCounter(_swat);
           function renderWishlistCounter(swat) {
             var counter_elem = document.querySelectorAll(".swym-wishlist-header-counter"); /* Targets the span added in Step 1. */
@@ -99,7 +100,7 @@
           }
 
           window.SwymCallbacks.push(renderWishlistCounter);
-        
+        }, 2000);
       });
     </script>
     {% render 'swym-custom'%}
