@@ -23,6 +23,7 @@
         data-product-id="{{ closest.product.id }}">
       </div> {% endcomment %}
       {% comment %} <div class="yotpo-widget-instance yotpo-card-star-rating" data-yotpo-instance-id="1261213" data-yotpo-product-id="{{closest.product.id}}" data-yotpo-cart-product-id="{{item.closest.product.id}}" data-yotpo-section-id="{{template.name}}"></div> {% endcomment %}
+       <div class="card-stars-container skeleton"></div>
       <div class="list-view card-product-vendor">
         {% assign product_vendor = '<p>by ' | append: closest.product.vendor | append: '</p>' %}
         {{ product_vendor }}
