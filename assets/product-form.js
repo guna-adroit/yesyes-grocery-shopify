@@ -26,6 +26,7 @@ export class AddToCartComponent extends Component {
     super.connectedCallback();
 
     this.addEventListener('pointerenter', this.#preloadImage);
+    this.addEventListener('click', this.clickUpdate);
   }
 
   disconnectedCallback() {
@@ -49,7 +50,9 @@ export class AddToCartComponent extends Component {
   enable() {
     this.refs.addToCartButton.disabled = false;
   }
-
+  clickUpdate(){
+    console.log("Click updated function");
+  }
   /**
    * Handles the click event for the add to cart button.
    * @param {MouseEvent & {target: HTMLElement}} event - The click event.
