@@ -781,6 +781,7 @@
       "block_order": [
         "text_U9byy3"
       ],
+      "disabled": true,
       "name": "t:names.product_recommendations",
       "settings": {
         "product": "{{ closest.product }}",
