@@ -84,7 +84,7 @@ export class AddToCartComponent extends Component {
       }
 
     }
-    (function () {
+    
         function updateProductCount(cart) {
           if (!cart || !Array.isArray(cart.items)) return;
 
@@ -125,7 +125,7 @@ export class AddToCartComponent extends Component {
           updateProductCount(cart);
         });
 
-      })();
+      
   }
 
   #preloadImage = () => {
