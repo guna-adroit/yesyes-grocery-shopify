@@ -53,7 +53,10 @@ export class AddToCartComponent extends Component {
   clickUpdate(){
     fetch('/cart.js')
             .then(r => r.json())
-            .then(cart => updateProductCount(cart));
+            .then(cart => {
+              console.log(cart);
+              updateProductCount(cart);
+            });
     console.log("Click updated function");
     function updateProductCount(cart) {
           if (!cart || !Array.isArray(cart.items)) return;
