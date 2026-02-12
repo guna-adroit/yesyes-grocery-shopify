@@ -102,10 +102,12 @@
      Event Listeners for Dynamic Content
   ---------------------------------- */
   
-  // Initial load
-  initStarRatings();
+  // Initial load with delay to catch late-loading sections
+  setTimeout(initStarRatings, 100);
+  setTimeout(initStarRatings, 500);
+  setTimeout(initStarRatings, 1000);
 
-  // Listen for Shopify section load events (Theme Editor)
+  // Listen for Shopify section load events (Theme Editor & Dynamic Sections)
   document.addEventListener('shopify:section:load', function(event) {
     console.log('Section loaded, re-initializing stars');
     setTimeout(initStarRatings, 200);
@@ -117,7 +119,13 @@
     setTimeout(initStarRatings, 200);
   });
 
-  // Fallback: MutationObserver to detect new product cards
+  // Listen for product recommendations loaded
+  document.addEventListener('product-recommendations-loaded', function(event) {
+    console.log('Product recommendations loaded');
+    setTimeout(initStarRatings, 200);
+  });
+
+  // MutationObserver to detect new product cards ANYWHERE on the page
   const observer = new MutationObserver(function(mutations) {
     let newProductsAdded = false;
     
@@ -143,14 +151,24 @@
     }
   });
 
-  // Observe the product grid container
-  const productGrid = document.querySelector('.collection, .product-grid, #product-grid, [data-ajaxinate-container]');
-  if (productGrid) {
-    observer.observe(productGrid, {
-      childList: true,
-      subtree: true
-    });
-    console.log('MutationObserver attached to product grid');
-  }
+  // Observe the entire body to catch all dynamic content
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  console.log('MutationObserver attached to document.body');
+
+  // Fallback: Re-check periodically for the first 5 seconds
+  // (useful for sections that load very late)
+  let checkCount = 0;
+  const intervalCheck = setInterval(function() {
+    checkCount++;
+    initStarRatings();
+    
+    if (checkCount >= 10) { // Stop after 5 seconds (10 x 500ms)
+      clearInterval(intervalCheck);
+      console.log('Periodic check stopped');
+    }
+  }, 500);
 
 })();
