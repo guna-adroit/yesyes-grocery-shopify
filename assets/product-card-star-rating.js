@@ -69,12 +69,12 @@ console.log("0: initialized");
       container.classList.remove('skeleton');
 
       container.innerHTML = `
-        <span class="card-review-avg">
-          ${avg}/5
-        </span>
         <div class="card-stars" data-rating="${avg}">
           ${generateStars(avg)}
         </div>
+        <span class="card-review-avg">
+          ${avg}
+        </span>
         <span class="card-review-count">
           (${total})
         </span>

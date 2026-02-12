@@ -451,16 +451,18 @@
         font-size: 18px;
         padding: 1px;
     }
-    span.card-review-count{
+    span.card-review-count,span.card-review-avg{
         display: flex;
         align-content: center;
+        vertical-align: middle;
         flex-wrap: wrap;
-        margin-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 12.6px;
+        letter-spacing: 0px;
+        margin-left: 2px;
     }
     span.card-review-avg {
-        display: flex;
-        align-content: center;
-        flex-wrap: wrap;
-        margin-right: 5px;
+        margin-left: 5px;
     }
 }
