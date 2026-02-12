@@ -72,21 +72,6 @@ class ProductRecommendations extends HTMLElement {
     // If the recommendations have already been loaded, accounts for the case where the Theme Editor
     // is loaded the section from the editor's visual preview context.
     if (recommendationsPerformed === 'true') {
-      setTimeout(() => {
-            document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
-            function swymCallbackFn(swat){
-                // your API calls go here
-                document.addEventListener("swym:collections-loaded", function(){
-                  swat.initializeActionButtons('body');
-                  // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
-                })
-              }
-              if(!window.SwymCallbacks){
-                window.SwymCallbacks = [];
-              }
-              window.SwymCallbacks.push(swymCallbackFn);
-            
-          }, 2000);
       return;
     }
 
@@ -147,22 +132,6 @@ class ProductRecommendations extends HTMLElement {
 
     const cachedResponse = this.#cachedRecommendations[url];
     if (cachedResponse) {
-      if (recommendationsPerformed === 'true') {
-      setTimeout(() => {
-            document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
-            function swymCallbackFn(swat){
-                // your API calls go here
-                document.addEventListener("swym:collections-loaded", function(){
-                  swat.initializeActionButtons('body');
-                  // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
-                })
-              }
-              if(!window.SwymCallbacks){
-                window.SwymCallbacks = [];
-              }
-              window.SwymCallbacks.push(swymCallbackFn);
-            
-          }, 2000);
       return { success: true, data: cachedResponse };
     }
 
