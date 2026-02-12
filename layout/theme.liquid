@@ -104,6 +104,25 @@
       });
     </script>
     {% render 'swym-custom'%}
+    <script>
+      const shopifyEvents = [
+        'shopify:section:load',
+        'shopify:section:unload', 
+        'shopify:section:select',
+        'shopify:section:deselect',
+        'shopify:section:reorder',
+        'shopify:block:select',
+        'shopify:block:deselect',
+        'shopify:inspector:activate',
+        'shopify:inspector:deactivate'
+      ];
+
+      shopifyEvents.forEach(eventName => {
+        document.addEventListener(eventName, function(event) {
+          console.log(`Event: ${eventName}`, event.detail);
+        });
+      });
+    </script>
   </body>
 </html>
 
