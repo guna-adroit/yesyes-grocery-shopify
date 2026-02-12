@@ -48,13 +48,13 @@
       async
       blocking="render"
     ></script>
-    {% if template.name == 'collection' %}
+    
       <script
           src="{{ 'product-card-star-rating.js' | asset_url }}"
           type="module"
         >
       </script>
-    {% endif %}
+  
     {% if customer %}
       <script
         src="{{ 'theme-sync.js' | asset_url }}"
