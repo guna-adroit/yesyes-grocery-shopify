@@ -181,6 +181,14 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "custom_liquid_Uawcex": {
+              "type": "custom-liquid",
+              "name": "Star Rating",
+              "settings": {
+                "custom_liquid": "<div class=\"card-stars-container skeleton\"></div>"
+              },
+              "blocks": {}
+            },
             "card-gallery": {
               "type": "_product-card-gallery",
               "settings": {
@@ -321,6 +329,7 @@
             }
           },
           "block_order": [
+            "custom_liquid_Uawcex",
             "card-gallery",
             "product_title_4nY4eT",
             "product_vendor_MzmUdw",
