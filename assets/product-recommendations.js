@@ -93,6 +93,23 @@ class ProductRecommendations extends HTMLElement {
         if (recommendations?.innerHTML && recommendations.innerHTML.trim().length) {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
+
+          setTimeout(() => {
+            document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
+            function swymCallbackFn(swat){
+                // your API calls go here
+                document.addEventListener("swym:collections-loaded", function(){
+                  swat.initializeActionButtons('body');
+                  // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
+                })
+              }
+              if(!window.SwymCallbacks){
+                window.SwymCallbacks = [];
+              }
+              window.SwymCallbacks.push(swymCallbackFn);
+            console.log("SWYM init related products")
+          }, 3000);
+          
         } else {
           this.#handleError(new Error('No recommendations available'));
         }
