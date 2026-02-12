@@ -103,7 +103,7 @@
     }
     .review-wrapper {
         flex-direction: column;
-        max-width: 400px;
+        width: 35%;
         gap: 14px;
         padding: 24px 16px;
         margin-top: 18px;
@@ -128,7 +128,7 @@
       margin-bottom: 15px;
       border: 1px solid #d1d5db;
       padding: 0 20px;
-      font-weight: 300;
+      font-weight: 500;
       font-size: 14px;
       color: #4B4B4B;
     }
@@ -146,7 +146,7 @@
       height: 54px;
       font-size: 14px;
       color: white;
-      background: red;
+      background: #ed1d23;
       border-radius: 5px;
       border: none;
       font-weight: 500;
@@ -298,6 +298,8 @@
       height: 100%;
       background: #0000006e;
       z-index: 10;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .review-wrapper-bg.active .review-wrapper {
         display: flex;  
@@ -311,43 +313,116 @@
       cursor: pointer;
       margin-top: 16px;
     }
+    span.review-label {
+      font-weight: 500;
+    }
+    span.mandatory-star {
+        color: #ed1d23;
+    }
     select#review-filter {
       display: none;
     }
-    select#review-sort {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #000000;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 700;
-      padding: 10px;
-      background-color: #feefef;
-      border: 1px solid #e5d8d8;
-    }
-    option {
-      padding: 10px;
-      border-top: 1px solid  rgb(127, 8, 8);
-      cursor: pointer;
-      transition-property: color, background;
-      transition-duration: 0.2s;
-      transition-timing-function: ease-out;
-      &:where(:hover, :focus, :active) {
-        background: rgb(192, 142, 142);
-        color: white;
-    }
-    &:checked {
-      background: #e50914;
-      color: white;
-    }
-    &::checkmark {
-      /* display: none; */
-    }
-    &:first-child {
-      border: 0;
-    }
+
+
+  select,
+::picker(select) {
+  appearance: base-select;
 }
+  select {
+    flex: 1;
+  }
+  select {
+    border: 2px solid #e50914;
+    background: #fff;
+    padding: 10px;
+    transition: 0.4s;
+    border-radius: 8px;
+    width: 175px;
+  }
+  select:hover,
+  select:focus {
+    background: #fbd2d3;
+  }
+  select::picker-icon {
+    color: #000000;
+    transition: 0.4s rotate;
+  }
+  select:open::picker-icon {
+    rotate: 180deg;
+  }
+  ::picker(select) {
+    border: none;
+  }
+  option {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 2px solid #e50914;
+    background: #fff;
+    padding: 10px;
+    transition: 0.4s;
+  }
+  option:first-of-type {
+    border-radius: 8px 8px 0 0;
+  }
+  option:last-of-type {
+    border-radius: 0 0 8px 8px;
+  }
+
+  ::picker(select) {
+    border-radius: 8px;
+  }
+
+  option:not(option:last-of-type) {
+    border-bottom: none;
+  }
+
+  option:hover {
+    background: #fbd2d3;
+    color: #000;
+  }
+  option:focus{
+    background: #e50914;
+    color: #fff;
+  }
+  option .icon {
+    font-size: 1.6rem;
+    text-box: trim-both cap alphabetic;
+  }
+  selectedcontent .icon {
+    display: none;
+  }
+  option:checked {
+    font-weight: bold;
+  }
+  option::checkmark {
+    display: none;
+  }
+  ::picker(select) {
+    opacity: 0;
+    transition: all 0.4s allow-discrete;
+  }
+  ::picker(select):popover-open {
+    opacity: 1;
+  }
+  @starting-style {
+    ::picker(select):popover-open {
+      opacity: 0;
+    }
+  }
+  ::picker(select) {
+    top: calc(anchor(bottom) + 10px);
+  }
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
   .review-section-wrapper {
     flex-direction: column;
@@ -504,6 +579,7 @@
         <p class="review-product-title"> {{ product.title }}</p>
         <hr style="width: 100%;border: 1px solid #ccc;margin-top: 0px;" />
           <form id="yesyes-review-form" class="review-form">
+            <span class="review-label">Rate your experience <span class="mandatory-star">*</span></span>
             <div class="stars-wrapper">
               <input name="rating" class="star" id="star-5-2" type="radio" value="5" required  />
               <label class="star" for="star-5-2"></label>
@@ -521,7 +597,9 @@
               <label class="star" for="star-1-2"></label>
             </div>
             <div class="rev-box">
+              <span class="review-label">Review Title <span class="mandatory-star">*</span></span>
               <input type="text" name="title" placeholder="Review Title" required />
+              <span class="review-label">Write a review <span class="mandatory-star">*</span></span>
               <textarea rows="4" name="body" placeholder="Write a review" required></textarea>
               <button class="button_submit">Submit Review</button>
             </div>
