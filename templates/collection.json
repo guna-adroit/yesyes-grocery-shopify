@@ -226,6 +226,7 @@
             "custom_liquid_Uawcex": {
               "type": "custom-liquid",
               "name": "Star Rating",
+              "disabled": true,
               "settings": {
                 "custom_liquid": "<div class=\"card-stars-container skeleton\"></div>"
               },
