@@ -108,8 +108,8 @@ class ProductRecommendations extends HTMLElement {
               }
               window.SwymCallbacks.push(swymCallbackFn);
             console.log("SWYM init related products")
-          }, 3000);
-          
+          }, 2000);
+
         } else {
           this.#handleError(new Error('No recommendations available'));
         }
