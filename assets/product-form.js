@@ -84,6 +84,48 @@ export class AddToCartComponent extends Component {
       }
 
     }
+    (function () {
+        function updateProductCount(cart) {
+          if (!cart || !Array.isArray(cart.items)) return;
+
+          const productCountEl = document.querySelector('product-count[data-product-id]');
+          if (!productCountEl) return;
+
+          const productId = Number(productCountEl.dataset.productId);
+          const countEl = productCountEl.querySelector('.product-total-count');
+
+          let totalQty = 0;
+
+          cart.items.forEach(item => {
+            if (item.product_id === productId) {
+              totalQty += item.quantity;
+            }
+          });
+
+          countEl.textContent = totalQty;
+        }
+
+        /* ---------------------------------------------------------
+          INITIAL LOAD
+          --------------------------------------------------------- */
+        if (QuantityInputBulk.cart?.items) {
+          updateProductCount(QuantityInputBulk.cart);
+        } else {
+          fetch('/cart.js')
+            .then(r => r.json())
+            .then(cart => updateProductCount(cart));
+        }
+
+        /* ---------------------------------------------------------
+          THEME CART EVENT (FIXED)
+          --------------------------------------------------------- */
+        document.addEventListener(ThemeEvents.cartUpdate, (e) => {
+          console.log("Added cart");
+          const cart = e.detail?.resource || e.detail?.cartData;
+          updateProductCount(cart);
+        });
+
+      })();
   }
 
   #preloadImage = () => {
