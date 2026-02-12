@@ -26,6 +26,7 @@
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
     <link rel="stylesheet" href="{{ 'plp.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'reviews.css' | asset_url }}">
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
@@ -47,6 +48,13 @@
       async
       blocking="render"
     ></script>
+    {% if template.name == 'collection' %}
+      <script
+          src="{{ 'product-card-star-rating.js' | asset_url }}"
+          type="module"
+        >
+      </script>
+    {% endif %}
     {% if customer %}
       <script
         src="{{ 'theme-sync.js' | asset_url }}"
