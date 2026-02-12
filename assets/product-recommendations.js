@@ -100,6 +100,7 @@ class ProductRecommendations extends HTMLElement {
                 // your API calls go here
                 document.addEventListener("swym:collections-loaded", function(){
                   swat.initializeActionButtons('body');
+                  console.log("SWYM init related products");
                   // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
                 })
               }
@@ -107,7 +108,7 @@ class ProductRecommendations extends HTMLElement {
                 window.SwymCallbacks = [];
               }
               window.SwymCallbacks.push(swymCallbackFn);
-            console.log("SWYM init related products")
+            
           }, 2000);
 
         } else {
