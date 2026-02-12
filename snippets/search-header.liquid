@@ -108,9 +108,9 @@ class PredictiveSearch extends HTMLElement {
     
     
 
-    this.input.addEventListener('blur', () => {
+    {% comment %} this.input.addEventListener('blur', () => {
       this.predictiveSearchResults.style.display = 'none';
-    });
+    }); {% endcomment %}
 
     // Close modal when clicking outside
     document.addEventListener('click', (e) => {
@@ -145,7 +145,7 @@ class PredictiveSearch extends HTMLElement {
           var error = new Error(response.status);
           this.close();
           throw error;
-        }
+        } 
 
         return response.text();
       })
