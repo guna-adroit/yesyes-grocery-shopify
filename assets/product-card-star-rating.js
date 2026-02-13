@@ -154,3 +154,81 @@
   }
 
 })();
+
+// Product page star rating
+
+(function () {
+  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+
+  function initProductPageStars() {
+    const container = document.querySelector('.product-stars-container[data-product-id]');
+    if (!container || container.dataset.initialized) return;
+
+    const productId = container.dataset.productId;
+    if (!productId) return;
+
+    container.dataset.initialized = "true";
+
+    const gid = `gid://shopify/Product/${productId}`;
+
+    fetch(`${BASE}/api/v1/product-reviews/integration/stats`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productIds: [gid] })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data?.stats || !data.stats[gid]) {
+        container.style.display = 'none';
+        return;
+      }
+
+      const stats = data.stats[gid];
+
+      if (!stats.totalReviews || stats.totalReviews === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      const avg = stats.averageRating;
+      const total = stats.totalReviews;
+
+      container.classList.remove('skeleton');
+      container.style.display = 'flex';
+
+      container.innerHTML = `
+        <div class="product-stars" data-rating="${avg}">
+          ${generateStars(avg)}
+        </div>
+        <span class="product-review-avg">${avg}</span>
+        <span class="product-review-count">(${total})</span>
+      `;
+    })
+    .catch(err => {
+      console.error('Product review stats error:', err);
+    });
+  }
+
+  function generateStars(avg) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      let className = 'star';
+      if (avg >= i) {
+        className += ' filled';
+      } else if (avg > i - 1) {
+        className += ' half-filled';
+      }
+      html += `<label class="${className}"></label>`;
+    }
+    return html;
+  }
+
+  // Initial load
+  document.addEventListener('DOMContentLoaded', initProductPageStars);
+
+  // Theme editor support
+  document.addEventListener('shopify:section:load', function () {
+    setTimeout(initProductPageStars, 200);
+  });
+
+})();
