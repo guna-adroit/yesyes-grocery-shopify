@@ -175,6 +175,9 @@ customElements.define('quantity-input-bulk', QuantityInputBulk);
   /* ---------------------------------------------------------
      THEME CART EVENT (FIXED)
      --------------------------------------------------------- */
+     document.addEventListener(ThemeEvents.CartAddEvent, (e) => {
+        console.log("Event Add");
+     });
   document.addEventListener(ThemeEvents.cartUpdate, (e) => {
      console.log("Added cart");
     const cart = e.detail?.resource || e.detail?.cartData;
