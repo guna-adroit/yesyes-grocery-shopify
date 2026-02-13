@@ -51,7 +51,8 @@ export class AddToCartComponent extends Component {
     this.refs.addToCartButton.disabled = false;
   }
   clickUpdate(){
-    fetch('/cart.js')
+    setTimeout( () => {
+        fetch('/cart.js')
             .then(r => r.json())
             .then(cart => {
               console.log("Add Button:",cart);
@@ -78,6 +79,8 @@ export class AddToCartComponent extends Component {
 
           countEl.textContent = totalQty;
         }
+    }, 3000);
+    
   }
   /**
    * Handles the click event for the add to cart button.
