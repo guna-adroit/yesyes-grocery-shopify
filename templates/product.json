@@ -167,7 +167,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<div class=\"card-stars-container skeleton\"></div>"
+                    "custom_liquid": "<div \n  class=\"product-stars-container skeleton\"\n  data-product-id=\"{{ product.id }}\">\n</div>"
                   },
                   "blocks": {}
                 }
