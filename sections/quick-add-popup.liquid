@@ -137,9 +137,9 @@
         {% endif %} {% endcomment %}
 
         {% endunless %}
-        <cart-count>
+        {% comment %} <cart-count>
           <text-component><span class="popup-cart-count">Items Total: {{ cart.item_count }}</span></text-component>
-        </cart-count>
+        </cart-count> {% endcomment %}
 
         {% assign product_cart_quantity = 0 %}
 
@@ -149,7 +149,7 @@
           {% endif %}
         {% endfor %}
         
-        <product-count data-product-id="{{ product.id }}">
+        <product-count class="product-counter" data-product-id="{{ product.id }}">
           <span class="popup-cart-count">Item Total: <span class="product-total-count">{{ product_cart_quantity }}</span></span>
         </product-count>
       
@@ -358,6 +358,11 @@ td.product_variant-image {
 .quick-add-popup__content quantity-input-bulk input,
 quantity-input-bulk input{
   margin-left: 15px;
+}
+.product-counter{
+  text-align: center;
+  display: block;
+  padding: 20px 5px;
 }
 .product_variant_item{
             /*display: flex;*/
