@@ -55,16 +55,14 @@ export class AddToCartComponent extends Component {
         fetch('/cart.js')
             .then(r => r.json())
             .then(cart => {
-              console.log("Add Button:",cart);
+              // console.log("Add Button:",cart);
               updateProductCount(cart);
             });
-    console.log("Click updated function");
     function updateProductCount(cart) {
           if (!cart || !Array.isArray(cart.items)) return;
             
           const productCountEl = document.querySelector('product-count[data-product-id]');
           if (!productCountEl) return;
-        console.log("Click updated function");
           const productId = Number(productCountEl.dataset.productId);
           const countEl = productCountEl.querySelector('.product-total-count');
 
