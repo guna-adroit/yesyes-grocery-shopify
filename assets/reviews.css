@@ -469,3 +469,6 @@
 .product-details label.star, .product-details .product-review-avg, .product-details .product-review-count {
     font-size: 16px;
 }
+.product-details .product-review-avg{
+  margin-left: 5px;
+}
