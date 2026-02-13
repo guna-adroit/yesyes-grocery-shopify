@@ -54,7 +54,7 @@ export class AddToCartComponent extends Component {
     fetch('/cart.js')
             .then(r => r.json())
             .then(cart => {
-              console.log(cart);
+              console.log("Add Button:",cart);
               updateProductCount(cart);
             });
     console.log("Click updated function");
