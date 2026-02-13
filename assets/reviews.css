@@ -4,7 +4,6 @@
     *{
       margin: 0;
       padding: 0;
-      font-family: roboto;
     }
     div.stars{
       width: 270px;
@@ -465,4 +464,8 @@
     span.card-review-avg {
         margin-left: 5px;
     }
+}
+
+.product-details label.star, .product-details .product-review-avg, .product-details .product-review-count {
+    font-size: 16px;
 }
