@@ -72,6 +72,7 @@ export class AddToCartComponent extends Component {
           cart.items.forEach(item => {
             if (item.product_id === productId) {
               totalQty += item.quantity;
+              console.log(totalQty);
             }
           });
 
