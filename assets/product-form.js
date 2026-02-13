@@ -79,7 +79,7 @@ export class AddToCartComponent extends Component {
 
           countEl.textContent = totalQty;
         }
-    }, 3000);
+    }, 2000);
     
   }
   /**
