@@ -287,7 +287,7 @@
   </product-card-link>
 {%- endif -%}
 
-<script defer>   function swymCallbackFn(swat){     
+{% comment %} <script defer>   function swymCallbackFn(swat){     
   // your API calls go here     
   document.addEventListener("swym:collections-loaded", function(){       
     swat.initializeActionButtons("<<Collections Grid PARENT Selector >>");     
@@ -296,7 +296,7 @@
     window.SwymCallbacks = [];   
   }   
   window.SwymCallbacks.push(swymCallbackFn);  
-</script>
+</script> {% endcomment %}
 
 <style>
   
