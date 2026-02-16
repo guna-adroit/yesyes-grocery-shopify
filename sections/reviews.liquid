@@ -37,11 +37,11 @@
   {% endif %}
   <div class="average-stars">
     <div id="average-stars">
-      <label class="star filled"></label>
-      <label class="star filled"></label>
-      <label class="star filled"></label>
-      <label class="star filled"></label>
-      <label class="star filled"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
+      <label class="star"></label>
     </div>
     <div id="average-rating">
       5 out of 5
@@ -191,17 +191,14 @@
   if (location.pathname === '/pages/reviews') {
     var isReviewsPage = true;
     var productId = idValue ? `gid://shopify/Product/${idValue}` : null;
-    console.log('Product ID from URL:', productId );
   }
   else {
     var isReviewsPage = false;
     var productId = section.dataset.productId;
-    console.log('Product ID from PDP:', productId );
 
   }
   const customerId = "{% if customer %}{{ customer.id }}{% else %}000{% endif %}";
   const reviewerName = "{% if customer %}{{ customer.first_name }}{% else %}Guest{% endif %}";
-  console.log('productId ID:', productId);
 
   const listEl = document.getElementById('yesyes-reviews-list');
   const formEl = document.getElementById('yesyes-review-form');
@@ -318,11 +315,9 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
 })
 .then(res => res.json())
 .then(data => {
-  console.log('Reviews data:', data);
 
   ALL_REVIEWS = data?.reviews || [];
   applySortAndFilter(); // default sort + render
-  console.log('Reviews data:', data);
 
   ALL_REVIEWS = data.reviews || [];
   CURRENT_REVIEWS = [...ALL_REVIEWS];
@@ -359,7 +354,6 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   })
   .then(res => res.json())
   .then(data => {
-    console.log('Ready data:', data);
     if (!data.eligible) {
       formEl.style.display = 'none';
       document.getElementById('write-review').style.display = 'none';
@@ -405,6 +399,8 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
     `${total} Ratings`;
   document.getElementById('reviews-count').innerText =
     `${total} Customer Reviews`;
+  document.getElementById('total-reviews-mini').innerText =
+    `${total}`;
 
   if (!total) {
     document.getElementById('average-rating').innerText = '0 out of 5';
@@ -421,20 +417,29 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   document.getElementById('average-rating').innerText =
     `${avg} out of 5`;
 
-  /* ---------- Fill average stars ---------- */
-  const avgStars = document.querySelectorAll('#average-stars .star');
+/* ---------- Utility: Fill stars ---------- */
+function fillStars(containerSelector, value) {
+  console.log('Filling stars for', containerSelector, 'with value', value);
+  const stars = document.querySelectorAll(`${containerSelector} .star`);
 
-  avgStars.forEach((star, idx) => {
+  stars.forEach((star, idx) => {
     const starValue = idx + 1;
 
     star.classList.remove('filled', 'half-filled');
 
-    if (avg >= starValue) {
+    if (value >= starValue) {
       star.classList.add('filled');
-    } else if (avg >= starValue - 0.5) {
+    } else if (value > starValue - 1) {
       star.classList.add('half-filled');
     }
   });
+}
+
+
+/* ---------- Fill average stars (Main + Mini) ---------- */
+fillStars('#average-stars', avg);
+fillStars('#average-stars-mini', avg);
+
 
   /* ---------- Distribution ---------- */
   for (let i = 1; i <= 5; i++) {
