@@ -98,7 +98,7 @@
   </div>
 </results-list>
 
-<script defer>
+{% comment %} <script defer>
   function swymCallbackFn(swat){
     document.addEventListener("swym:collections-loaded", function(){
       swat.initializeActionButtons(".product-grid");
@@ -109,7 +109,7 @@
   }
   window.SwymCallbacks.push(swymCallbackFn);
 
-</script>
+</script> {% endcomment %}
   
 
 {% stylesheet %}

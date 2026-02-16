@@ -84,7 +84,7 @@
     <script type="module" src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'product-quantity-control.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'cart-count.js' | asset_url }}" defer></script>
-    {% render 'swym-collections'%}
+    {% comment %} {% render 'swym-collections'%}
     <script type="module">
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
@@ -110,7 +110,7 @@
         }, 2000);
       });
     </script>
-    {% render 'swym-custom'%}
+    {% render 'swym-custom'%} {% endcomment %}
   </body>
 </html>
 

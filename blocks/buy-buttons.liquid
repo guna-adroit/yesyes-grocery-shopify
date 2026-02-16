@@ -79,7 +79,7 @@
             can_add_to_cart: can_add_to_cart,
             add_to_cart_text: add_to_cart_text
           %}
-          <button class="button wishlist-button button-secondary swym-button swym-add-to-wishlist"
+          {% comment %} <button class="button wishlist-button button-secondary swym-button swym-add-to-wishlist"
             data-with-epi="true"
             data-swaction="addToWishlist"
             data-product-id="{{ product.id }}"
@@ -92,7 +92,7 @@
                   </span>
               <span class="add-to-whishlist-text__content">Add To Wishlist</span>
               </span>
-          </button>
+          </button> {% endcomment %}
           {%- unless block_settings.gift_card_form and product.gift_card? -%}
             <span
               class="product-form-text__error hidden"

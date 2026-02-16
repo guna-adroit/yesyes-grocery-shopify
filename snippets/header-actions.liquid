@@ -7,7 +7,7 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
-  <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
+  {% comment %} <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
     <div class="wishlist-wrapper">
       <div class="wishlist-icon-wrapper"> 
         <div class="wishlist-icons">{% render 'header-wishlist' %}</div>
@@ -18,7 +18,7 @@
       </div>
       <span class="header-icons-label">Wishlist</span>
     </div>
-  </a>
+  </a> {% endcomment %}
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
   {% else %}
@@ -38,7 +38,7 @@
 </header-actions>
 
 
-<script class="swym-wishlist-header-counter-custom">
+{% comment %} <script class="swym-wishlist-header-counter-custom">
 function renderWishlistCounter(swat) {
   const counters = document.querySelectorAll(".swym-wishlist-header-counter");
   if (!counters.length) return;
@@ -67,7 +67,7 @@ if (header) {
   });
   observer.observe(header, { childList: true, subtree: true });
 }
-</script>
+</script> {% endcomment %}
 
 
 
