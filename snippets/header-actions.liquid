@@ -7,18 +7,18 @@
 <header-actions
   {{- block.shopify_attributes -}}
 >
-  {% comment %} <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
+  <a href="/pages/wishlist" class="wishlist-link" style="display: flex;">
     <div class="wishlist-wrapper">
       <div class="wishlist-icon-wrapper"> 
         <div class="wishlist-icons">{% render 'header-wishlist' %}</div>
-        {% comment %} <span class="swym-wishlist-header-counter"></span> {% endcomment %}
+        <span class="swym-wishlist-header-counter"></span> 
         <div class="wishlist-counter-wrapper">
           <span class="swym-wishlist-header-counter"></span>
         </div>
       </div>
       <span class="header-icons-label">Wishlist</span>
     </div>
-  </a> {% endcomment %}
+  </a> 
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
   {% else %}
