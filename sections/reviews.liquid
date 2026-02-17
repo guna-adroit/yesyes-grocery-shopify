@@ -296,6 +296,12 @@ function renderReviews(reviews) {
       <div class="comment-rating">
         <p class="comment-title">${r.title}</p>
         <p class="comment-content">${r.body}</p>
+        <span class="comment-date">
+          <span class="calender-icon-bg"></span>
+          <span>
+            ${new Date(r.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+          </span>
+        </span>
       </div>
     </div>
   `).join('');
