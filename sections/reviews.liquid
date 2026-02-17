@@ -22,18 +22,19 @@
 
 <section id="yesyes-reviews"
   data-product-id="gid://shopify/Product/{{ product.id }}"
-  {% comment %} Test Data:
-                Maya: 23983640543313
-                Sree: 23979636457553
-                Praveen: 23852944097361
-  {% endcomment %}
   data-customer-id="{% if customer %}gid://shopify/Customer/23979636457553{% endif %}"
 >
 <div class="review-section-wrapper">
 <div class="section-stars-wrapper">
   <h2 class="yesyes-heading">Customer Reviews</h2>
   {% if customer %}
-    <p id="write-review" class="write-review">Write a Review</p>
+    <div  class="write-review-wrapper">
+      <div class="write-review-title">Review this product</div>
+      <div class="write-review-subtitle">Share your thoughts with other customers</div>
+      <p id="write-review" class="write-review">
+        Write a Review
+      </p>
+    </div>
   {% endif %}
   <div class="average-stars">
     <div id="average-stars">
@@ -185,7 +186,6 @@
 (function () {
   const section = document.getElementById('yesyes-reviews');
   if (!section) return;
-
   //extract id from pageurl
   idValue = new URLSearchParams(window.location.search).get('product');
   if (location.pathname === '/pages/reviews') {
@@ -200,7 +200,7 @@
   const customerId = "{% if customer %}{{ customer.id }}{% else %}000{% endif %}";
   const reviewerName = "{% if customer %}{{ customer.first_name }}{% else %}Guest{% endif %}";
 
-  const listEl = document.getElementById('yesyes-reviews-list');
+  var listEl = document.getElementById('yesyes-reviews-list');
   const formEl = document.getElementById('yesyes-review-form');
   const statusEl = document.getElementById('yesyes-review-status');
 
@@ -227,13 +227,15 @@ else {
   var MAX_PDP_REVIEWS = 2;
 }
 function renderReviews(reviews) {
+  console.log('***Rendering reviews', reviews);
   if (!reviews.length) {
     listEl.innerHTML = '<p>No reviews found.</p>';
     return;
   }
+  console.log('Rendering reviews length', reviews.length);
 // limit with 2
 
-  const limitedReviews = reviews.slice(0, MAX_PDP_REVIEWS);
+  var limitedReviews = reviews.slice(0, MAX_PDP_REVIEWS);
   listEl.innerHTML = limitedReviews.map(r => `
     <div class="yesyes-review"
       data-rating="${r.rating}"
@@ -293,6 +295,7 @@ function applySortAndFilter() {
   ----------------------------- */
   
   const writeReviewEl = document.getElementById('write-review');
+  // console.log('Write review element', writeReviewEl);
   if (writeReviewEl) {
     writeReviewEl.addEventListener('click', () => {
       formEl.style.display = 'block';
@@ -315,17 +318,17 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
 })
 .then(res => res.json())
 .then(data => {
-
   ALL_REVIEWS = data?.reviews || [];
-  applySortAndFilter(); // default sort + render
-
+  
   ALL_REVIEWS = data.reviews || [];
   CURRENT_REVIEWS = [...ALL_REVIEWS];
-
+  
   renderRatingSummaryFromAPI(data);
   renderReviews(CURRENT_REVIEWS);
+  applySortAndFilter(); // default sort + render
 })
-.catch(() => {
+.catch(err => {
+  console.error('Reviews fetch error:', err);
   listEl.innerHTML = '<p>Unable to load reviews.</p>';
 });
 
@@ -399,8 +402,9 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
     `${total} Ratings`;
   document.getElementById('reviews-count').innerText =
     `${total} Customer Reviews`;
-  document.getElementById('total-reviews-mini').innerText =
-    `${total}`;
+  if (!isReviewsPage) {
+    document.getElementById('total-reviews-mini').innerText = `${total}`;
+  }
 
   if (!total) {
     document.getElementById('average-rating').innerText = '0 out of 5';

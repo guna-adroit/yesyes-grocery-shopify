@@ -1,5 +1,4 @@
 (function () {
-  console.log("Star rating script initialized");
   const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
 
   /* ----------------------------------

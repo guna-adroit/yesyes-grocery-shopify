@@ -305,10 +305,17 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    .write-review{
-      text-decoration: underline;
+    .write-review {
       cursor: pointer;
       margin-top: 16px;
+      border: 1px solid;
+      border-radius: 25px;
+      text-align: center;
+      padding: 5px;
+    }
+    .write-review:hover {
+      text-decoration: underline;
+      background: #f8faff;
     }
     span.review-label {
       font-weight: 500;
@@ -470,4 +477,15 @@
 }
 .product-details .product-review-avg{
   margin-left: 5px;
+}
+.write-review-title {
+    font-size: 1.25rem;
+    color: #0F1111;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.write-review-subtitle {
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 20px;
 }
