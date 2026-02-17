@@ -327,6 +327,7 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
   renderReviews(CURRENT_REVIEWS);
   applySortAndFilter(); // default sort + render
 })
+
 .catch(err => {
   console.error('Reviews fetch error:', err);
   listEl.innerHTML = '<p>Unable to load reviews.</p>';
@@ -402,9 +403,10 @@ fetch(`${BASE}/api/v1/product-reviews/integration/reviews/fetch`, {
     `${total} Ratings`;
   document.getElementById('reviews-count').innerText =
     `${total} Customer Reviews`;
-  if (!isReviewsPage) {
-    document.getElementById('total-reviews-mini').innerText = `${total}`;
-  }
+    var totalReviewsMiniEl = document.getElementById('total-reviews-mini');
+    if (!isReviewsPage && totalReviewsMiniEl) {
+      totalReviewsMiniEl.innerText = `${total}`;
+    }
 
   if (!total) {
     document.getElementById('average-rating').innerText = '0 out of 5';
