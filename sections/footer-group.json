@@ -437,7 +437,6 @@
         "group_V4a6GM",
         "group_J7r6zQ"
       ],
-      "disabled": true,
       "custom_css": [
         "img.image-block__image.border-style {max-width: 118px;}"
       ],
@@ -497,7 +496,6 @@
         "footer_policy_list_VCdnpa",
         "social_links_Ew63Kq"
       ],
-      "disabled": true,
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
