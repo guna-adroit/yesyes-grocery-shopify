@@ -27,15 +27,6 @@
 <div class="review-section-wrapper">
 <div class="section-stars-wrapper">
   <h2 class="yesyes-heading">Customer Reviews</h2>
-  {% if customer %}
-    <div  class="write-review-wrapper">
-      <div class="write-review-title">Review this product</div>
-      <div class="write-review-subtitle">Share your thoughts with other customers</div>
-      <p id="write-review" class="write-review">
-        Write a Review
-      </p>
-    </div>
-  {% endif %}
   <div class="average-stars">
     <div id="average-stars">
       <label class="star"></label>
@@ -98,6 +89,15 @@
       <span class="count-percentage">0%</span>
     </span>
   </div>
+    {% if customer %}
+    <div  class="write-review-wrapper">
+      <div class="write-review-title">Review this product</div>
+      <div class="write-review-subtitle">Share your thoughts with other customers</div>
+      <p id="write-review" class="write-review">
+        Write a Review
+      </p>
+    </div>
+  {% endif %}
 </div>
   <!-- Reviews List -->
   <div class="reviews-section">
@@ -165,10 +165,20 @@
               <label class="star" for="star-1-2"></label>
             </div>
             <div class="rev-box">
+              <div class="review-input-group">
               <span class="review-label">Review Title <span class="mandatory-star">*</span></span>
-              <input type="text" name="title" placeholder="Review Title" required />
+              <input type="text" name="title" placeholder="Review Title" maxlength="150" required />
+              <div class="review-character-count">
+                <span id="char-count-title">0</span> / <span id="char-limit-title">150</span>
+              </div>
+              </div>
+              <div class="review-input-group">
               <span class="review-label">Write a review <span class="mandatory-star">*</span></span>
-              <textarea rows="4" name="body" placeholder="Write a review" required></textarea>
+              <textarea rows="4" name="body" placeholder="Write a review" maxlength="1000" required></textarea>
+              <div class="review-character-count">
+                <span id="char-count-body">0</span> / <span id="char-limit-body">1000</span>
+              </div>
+              </div>
               <button class="button_submit">Submit Review</button>
             </div>
           </form>
@@ -183,6 +193,35 @@
 </section>
 </div>
 <script>
+  //Character count for title and body
+  const titleInput = document.querySelector('#yesyes-review-form input[name="title"]');
+  const bodyInput = document.querySelector('#yesyes-review-form textarea[name="body"]');
+  const charCountTitle = document.getElementById('char-count-title');
+  const charLimitTitle = document.getElementById('char-limit-title');
+  const charCountBody = document.getElementById('char-count-body');
+  const charLimitBody = document.getElementById('char-limit-body');
+  titleInput.addEventListener('input', () => {
+    charCountTitle.innerText = titleInput.value.length;
+  });
+  bodyInput.addEventListener('input', () => {
+    charCountBody.innerText = bodyInput.value.length;
+  });
+  // when limit is reached, show red text
+  titleInput.addEventListener('input', () => {
+    if (titleInput.value.length >= charLimitTitle.innerText) {
+      charCountTitle.style.color = '#ed1d23';
+    } else {
+      charCountTitle.style.color = '#646464';
+    }
+  });
+  bodyInput.addEventListener('input', () => {
+    if (bodyInput.value.length >= charLimitBody.innerText) {
+      charCountBody.style.color = '#ed1d23';
+    } else {
+      charCountBody.style.color = '#646464';
+    }
+  });
+
 (function () {
   const section = document.getElementById('yesyes-reviews');
   if (!section) return;

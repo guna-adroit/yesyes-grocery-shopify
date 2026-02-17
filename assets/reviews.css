@@ -129,6 +129,9 @@
       font-size: 14px;
       color: #4B4B4B;
     }
+    .review-form input[type="text"], .review-form textarea {
+      width: 100%;
+    }
     .review-form textarea{
       padding-top:15px;
     }
@@ -322,6 +325,19 @@
     }
     span.mandatory-star {
         color: #ed1d23;
+    }
+    .review-input-group {
+      position: relative;
+    }
+    .rev-box button:last-child {
+      margin-top: 24px;
+    }
+    .review-character-count {
+      position: absolute;
+      bottom: -4px;
+      right: 0;
+      font-size: 10px;
+      color: #646464;
     }
     select#review-filter {
       display: none;
