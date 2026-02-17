@@ -33,35 +33,24 @@
   <div>
     <label for="pickup-store">Select Store</label>
     <select id="pickup-store">
-      <option value="">Select a store</option>
-      <option value="Store A">Store A</option>
-      <option value="Store B">Store B</option>
-      <option value="Store C">Store C</option>
+      <option value="" selected disabled>Select a store</option>
+      {% for location in metaobjects.store_location.values %}
+        <option value="{{ location.store_name }}">{{ location.store_name }}</option>
+      {% endfor %}
     </select>
   </div>
 
   <div style="margin-top:10px;">
     <label for="pickup-time">Select Time Slot</label>
     <select id="pickup-time">
-      <option value="">Select a time slot</option>
-      <option value="10:00 - 12:00">10:00 - 12:00</option>
-      <option value="12:00 - 14:00">12:00 - 14:00</option>
-      <option value="16:00 - 18:00">16:00 - 18:00</option>
+      <option value="" selected disabled>Select a time slot</option>
+      {% for slot in metaobjects.pickup_slots.values %}
+        <option value="{{ slot.slot_label }}">{{ slot.slot_label }}</option>
+      {% endfor %}
     </select>
   </div>
 </div>
 
-
-<div id="order-note-debug" style="
-  margin-top:15px;
-  padding:10px;
-  border:1px dashed #ccc;
-  font-size:12px;
-  white-space:pre-wrap;
-">
-  <strong>Current Order Note:</strong>
-  <div id="order-note-value">Loading…</div>
-</div>
 
 
 
