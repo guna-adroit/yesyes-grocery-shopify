@@ -1245,10 +1245,6 @@ input.delivery-option:checked::before {
         min-height: 22vw;
     }
 }
-div#PBarNextFrameWrapper
- {
-    display: none !important;
-}
 .yotpo-review-border-smooth.yotpo-border-margin {
     background: red;
 }
