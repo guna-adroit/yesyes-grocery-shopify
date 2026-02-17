@@ -1,3 +1,6 @@
+.swym-ui-component .swym-wishlist-grid .swym-wishlist-item{
+    justify-content: space-between !important;
+}
 .header__row.header__row--bottom{
     border-bottom: 1px solid #828282;
 }
