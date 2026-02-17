@@ -94,22 +94,38 @@ class ProductRecommendations extends HTMLElement {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
 
-          setTimeout(() => {
-            document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
-            function swymCallbackFn(swat){
-                // your API calls go here
-                document.addEventListener("swym:collections-loaded", function(){
-                  swat.initializeActionButtons('body');
-                  console.log("SWYM init related products");
-                  // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
-                })
-              }
-              if(!window.SwymCallbacks){
-                window.SwymCallbacks = [];
-              }
-              window.SwymCallbacks.push(swymCallbackFn);
+          document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
+
+          const initSwymButtons = (swat) => {
+            console.log("SWYM: Initializing product recommendations");
+            swat.initializeActionButtons(`body`); 
+            swat.collectionsApi.initializeCollections(swat, true, window.Shopify.theme.schema_name);
+          };
+
+          if (window.SwymCallbacks) {
+            initSwymButtons(window._swat);
+          } else {
+            window.SwymCallbacks = window.SwymCallbacks || [];
+            window.SwymCallbacks.push(initSwymButtons);
+          }
+
+
+          // setTimeout(() => {
+          //   document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
+          //   function swymCallbackFn(swat){
+          //       // your API calls go here
+          //       document.addEventListener("swym:collections-loaded", function(){
+          //         swat.initializeActionButtons('body');
+          //         console.log("SWYM init related products");
+          //         // swat.initializeActionButtons(`product-recommendations[id="${id}"]`);
+          //       })
+          //     }
+          //     if(!window.SwymCallbacks){
+          //       window.SwymCallbacks = [];
+          //     }
+          //     window.SwymCallbacks.push(swymCallbackFn);
             
-          }, 2000);
+          // }, 2000);
 
         } else {
           this.#handleError(new Error('No recommendations available'));
