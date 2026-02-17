@@ -60,7 +60,8 @@
         return;
       }
 
-      const avg = productStats.averageRating;
+      const avgRounded = productStats.averageRating;
+      const avg = Math.round(avgRounded * 10) / 10;
       const total = productStats.totalReviews;
 
       container.style.display = 'flex';
@@ -189,7 +190,8 @@
         return;
       }
 
-      const avg = stats.averageRating;
+      const avgRounded = stats.averageRating;
+      const avg = Math.round(avgRounded * 10) / 10;
       const total = stats.totalReviews;
 
       container.classList.remove('skeleton');
