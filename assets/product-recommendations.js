@@ -177,8 +177,8 @@ class ProductRecommendations extends HTMLElement {
                 container.style.display = 'none';
                 return;
               }
-
-              const avg = productStats.averageRating;
+              const avgRounded = productStats.averageRating;
+              const avg = Math.round(avgRounded * 10) / 10;
               const total = productStats.totalReviews;
 
               container.style.display = 'flex';
