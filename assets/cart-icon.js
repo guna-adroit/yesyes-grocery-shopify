@@ -46,6 +46,9 @@ class CartIcon extends Component {
     const comingFromProductForm = event.detail.data?.source === 'product-form-component';
 
     this.renderCartBubble(itemCount, comingFromProductForm);
+    setTimeout(() => {
+      renderWishlistCounter(_swat);
+    }, 1000);
   };
 
   /**
