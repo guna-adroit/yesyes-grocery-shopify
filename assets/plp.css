@@ -812,6 +812,7 @@ div#swym-wishlist-title svg {
 .swym-wishlist-collections-v2-container{
     right: 0;
     left: unset !important;
+    z-index: 8 !important;
 }
 .swym-wishlist-collections-v2, .swym-wishlist-collections-v2 svg{
     width: 48px !important;
