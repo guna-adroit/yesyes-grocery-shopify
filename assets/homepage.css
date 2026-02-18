@@ -704,6 +704,8 @@ li.predictive-search-results__card.predictive-search-results__card--product {
 li.predictive-search-results__card--query {
     display: flex;
     align-items: center;
+    display: grid !important;
+    grid-template-columns: auto 1fr;
 }
 img.resource-card__image.resource-card__image--secondary {
     max-width: calc(100% - 48px);

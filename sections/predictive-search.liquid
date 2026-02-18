@@ -110,12 +110,43 @@
               resource_type: 'collection',
               resources: predictive_search.resources.collections
             %} {% endcomment %}
-             <button
-          class="button button-primary predictive-search__search-button section_view_all"
-          ref="viewAllButton"
-        >
-          {{ 'content.search_results_view_all' | t }} {{ predictive_search.resources.products.size }} items
-        </button>
+             
+          {% endif %}
+          {% if predictive_search.resources.articles.size > 0 %}
+            <div class="search-category-title">Blog Post</div>
+            <ul
+              class="predictive-search-results__list predictive-search-results__wrapper predictive-search-results__wrapper-queries list-unstyled"
+              role="listbox"
+              aria-labelledby="predictive-search-queries"
+            >
+              {%- for article in predictive_search.resources.articles -%}
+                <li
+                  class="predictive-search-results__card--query"
+                  ref="resultsItems[]"
+                  data-search-result-index="search-results-{{ shared_results_index | plus: forloop.index }}"
+                  on:keydown="/onSearchKeyDown"
+                >
+                {% render 'pill-search-icon' %}
+  
+                <a
+                    class="pills__pill predictive-search-results__pill"
+                    href="{{ article.url }}"
+                  >
+                    <span
+                      aria-label="{{ article.title }}"
+                    >
+                      {{ article.title }}
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+              <button
+                class="button button-primary predictive-search__search-button section_view_all"
+                ref="viewAllButton"
+              >
+                {{ 'content.search_results_view_all' | t }} {{ predictive_search.resources.products.size }} items
+              </button>
           {% endif %}
           </div>
           {% if predictive_search.resources.products.size > 0 %}
@@ -137,7 +168,7 @@
             %}
           {% endif %}
 
-          {% if predictive_search.resources.articles.size > 0 %}
+          {% comment %} {% if predictive_search.resources.articles.size > 0 %}
             {% assign shared_results_index = shared_results_index | plus: predictive_search.resources.pages.size %}
             {% assign resource_title = 'content.search_results_resource_articles' | t %}
 
@@ -146,7 +177,7 @@
               resource_type: 'article',
               resources: predictive_search.resources.articles
             %}
-          {% endif %}
+          {% endif %} {% endcomment %}
         {% else %}
           <p class="predictive-search-results__no-results">
             {{ 'content.search_results_no_results' | t: terms: predictive_search.terms }}
