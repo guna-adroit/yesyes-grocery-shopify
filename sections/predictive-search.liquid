@@ -168,7 +168,7 @@
             %}
           {% endif %}
 
-          {% if predictive_search.resources.articles.size > 0 %}
+          {% comment %} {% if predictive_search.resources.articles.size > 0 %}
             {% assign shared_results_index = shared_results_index | plus: predictive_search.resources.pages.size %}
             {% assign resource_title = 'content.search_results_resource_articles' | t %}
 
@@ -177,7 +177,7 @@
               resource_type: 'article',
               resources: predictive_search.resources.articles
             %}
-          {% endif %}
+          {% endif %} {% endcomment %}
         {% else %}
           <p class="predictive-search-results__no-results">
             {{ 'content.search_results_no_results' | t: terms: predictive_search.terms }}
