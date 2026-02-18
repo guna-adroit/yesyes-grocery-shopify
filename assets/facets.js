@@ -134,11 +134,7 @@ class FacetInputsComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFilters();
-    setTimeout(
-      (){
-    window.initStarRatings();
-      }, 2000
-    );
+    
     
     this.#updateSelectedFacetSummary();
   }
