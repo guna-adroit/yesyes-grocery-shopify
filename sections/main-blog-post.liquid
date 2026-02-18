@@ -1,4 +1,4 @@
-
+{% assign products = article.metafields.custom.ingredient_products.value %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section color-{{ section.settings.color_scheme }}">
@@ -58,11 +58,12 @@
         </div>
       {% endif %}
     </div>
+    {% if products.length > 0 %}
     <div class="blog-ingredients-block">
       <div class="blog-ingredients-content">
        <h4>Ingredient's </h4>
           <div class="blog-ingredient-products-list">
-            {% assign products = article.metafields.custom.ingredient_products.value %}
+            
             {% for product in products %}
               <div class="blog-ingredient-product-item">
                 <div class="">
@@ -167,6 +168,7 @@
           </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 
