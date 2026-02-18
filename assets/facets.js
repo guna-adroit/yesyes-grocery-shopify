@@ -134,6 +134,7 @@ class FacetInputsComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFilters();
+    window.initStarRatings();
     this.#updateSelectedFacetSummary();
   }
 
@@ -352,6 +353,7 @@ class FacetClearComponent extends Component {
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFilters();
+    window.initStarRatings();
   }
 
   /**
