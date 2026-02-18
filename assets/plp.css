@@ -691,6 +691,7 @@ quantity-input-bulk.is-loading::after {
     font-weight: 700;
     font-size: 34px;
     line-height: 44px;
+    margin-bottom: 30px;
 }
 .blog-ingredient-product-info-block{
     display: flex;
