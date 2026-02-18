@@ -85,7 +85,29 @@
               </div>
             {% endfor %}
             <div class="buy-ingredients-button-wrapper">
-                <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
+              {% assign available_products = '' %}
+
+              {% for product in products %}
+                {% if product.selected_or_first_available_variant.available %}
+                  {% capture product_json %}
+                    {"id": {{ product.selected_or_first_available_variant.id }}, "quantity": 1}
+                  {% endcapture %}
+
+                  {% if available_products == '' %}
+                    {% assign available_products = product_json %}
+                  {% else %}
+                    {% assign available_products = available_products | append: ',' | append: product_json %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+
+              <button 
+                class="button button--primary blog-ingredients-button"
+                id="add-all-ingredients"
+                data-products='[{{ available_products }}]'>
+                BUY INGREDIENT’S
+              </button>
+                {% comment %} <button class="button button--primary blog-ingredients-button" id="add-all-ingredients"
                       data-products='[
                       {% for product in products %}
                         {% if product.selected_or_first_available_variant.available  %}
@@ -95,7 +117,7 @@
                       {% endfor %}
                       ]'>
                   BUY INGREDIENT’S
-                </button>
+                </button> {% endcomment %}
             </div>
 
             {% comment %} {% assign bundle_product = article.metafields.custom.bundle_product.value %}
