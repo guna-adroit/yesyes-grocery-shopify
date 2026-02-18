@@ -110,12 +110,7 @@
               resource_type: 'collection',
               resources: predictive_search.resources.collections
             %} {% endcomment %}
-             <button
-                class="button button-primary predictive-search__search-button section_view_all"
-                ref="viewAllButton"
-              >
-                {{ 'content.search_results_view_all' | t }} {{ predictive_search.resources.products.size }} items
-              </button>
+             
           {% endif %}
           {% if predictive_search.resources.articles.size > 0 %}
             <div class="search-category-title">Blog Post</div>
@@ -146,6 +141,12 @@
                 </li>
               {% endfor %}
             </ul>
+              <button
+                class="button button-primary predictive-search__search-button section_view_all"
+                ref="viewAllButton"
+              >
+                {{ 'content.search_results_view_all' | t }} {{ predictive_search.resources.products.size }} items
+              </button>
           {% endif %}
           </div>
           {% if predictive_search.resources.products.size > 0 %}
