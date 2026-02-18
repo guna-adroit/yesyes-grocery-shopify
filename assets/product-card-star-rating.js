@@ -4,7 +4,7 @@
   /* ----------------------------------
      Main Function - Can be called multiple times
   ---------------------------------- */
-  function initStarRatings() {
+ window.initStarRatings = function() {
     var productCards = document.querySelectorAll('product-card[data-product-id]:not([data-stars-initialized])');
     
     if (!productCards.length) {
@@ -40,7 +40,7 @@
     .catch(err => {
       console.error('Review stats error:', err);
     });
-  }
+  };
 
   /* ----------------------------------
      Render Function
