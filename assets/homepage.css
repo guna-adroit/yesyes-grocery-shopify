@@ -717,6 +717,8 @@ img.resource-card__image.resource-card__image--secondary {
     font-size: 16px;
     line-height: 21.4px;
     letter-spacing: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 p.predictive-search-results__no-results {
     margin-left: 24px;
