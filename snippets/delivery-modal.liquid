@@ -3,79 +3,73 @@
     display: flex;
     gap: 16px;
 }
-.radio-wrapper .date-selection-wrapper input[type="radio"] {
-    height: 0;
-    width: 0;
-}
-.date-selection-wrapper {
+
+.date-selection-wrapper,
+.time-selection-wrapper {
     display: flex;
-    height: 50px;
-    width: 50px;
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: #E0E0E0;
-    transition: ease-in-out 0.3s;
+    border-radius: 4px;
+    transition: 0.3s ease-in-out;
 }
-.date-selection-wrapper:has(input[type="radio"]:checked) {
+
+.date-selection-wrapper {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #E0E0E0;
+    flex-direction: column;
+}
+
+.date-selection-wrapper input,
+.time-selection-wrapper input {
+    display: none;
+}
+
+.date-selection-wrapper:has(input:checked),
+.time-selection-wrapper:has(input:checked) {
     background: #ED1D23;
     border-color: #ED1D23;
     color: #fff;
 }
-span.day-label {
-    font-weight: 700;
-    font-size: 8px;
-    line-height: 18px;
-    letter-spacing: 0.1px;
-    vertical-align: middle;
-}
-span.date-label {
-    font-weight: 600;
-    font-size: 10px;
-    line-height: 18px;
-    letter-spacing: 0.1px;
-    vertical-align: middle;
-}
-.slot-label{
+
+.slot-label {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.time-selection-wrapper input[type="radio"] {
-    height: 0;
-    width: 0;
+
+.day-label {
+    font-weight: 700;
+    font-size: 8px;
 }
+
+.date-label {
+    font-weight: 600;
+    font-size: 10px;
+}
+
 .timeslot-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 24px;
 }
-span.time-label {
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 18px;
-    letter-spacing: 0.1px;
-    vertical-align: middle;
-}
+
 .time-selection-wrapper {
     flex: 0 0 calc(25% - 10px);
-    display: flex;
-    background: #E0E0E0;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    transition: ease-in-out 0.3s;
 }
-.time-selection-wrapper .slot-label{
+
+.time-selection-wrapper .slot-label {
     padding: 11px 18px;
 }
-.time-selection-wrapper:has(input[type="radio"]:checked) {
-    background: #ED1D23;
-    color: #fff;
+
+.time-label {
+    font-weight: 600;
+    font-size: 12px;
 }
+
+/* Store Styles */
 .store-container {
     display: flex;
     gap: 16px;
@@ -83,239 +77,384 @@ span.time-label {
     border: 1px solid #e1e1e1;
     border-radius: 6px;
 }
+
 .store-icon {
     width: 45px;
     height: 45px;
-    display: flex;
     background: #fee9e9;
     border-radius: 6px;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .store_name {
     font-weight: 700;
     font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0px;
 }
+
 .store_address {
     font-weight: 500;
     font-size: 12px;
-    line-height: 17px;
-    letter-spacing: 0%;
 }
-#store-selector-button, #slot-selector-button {
+
+
+/* Basic modal styling */
+.modal {
     display: none;
+    margin-top: 15px;
+}
+.modal.active {
+    display: block;
 }
 </style>
 
-<button id="store-selector-button" class="modal-opener">Select a store </button>
-<button id="slot-selector-button" class="modal-opener">Time slot </button>
-<div class="review-wrapper-bg">
-    <div class="review-wrapper">
+
+<button id="store-selector-button" class="selector-button">
+  <span class="selector-text">Select a store</span>
+</button>
+
+<button id="slot-selector-button" class="selector-button">
+  <span class="selector-text">Select time slot</span>
+</button>
+
         <!-- Pickup details -->
-        <div id="store-details-modal" style="display:none; margin-top:15px;">
-        <div class="store-selector-wrapper">
-            {% for shop in metaobjects.store_location.values %}
-                <div class="store-container">
-                    <div class="store-icon">
-                        {%  render 'house-icon' %}
-                    </div>
-                    <div class="store-details">
-                        <div class="store_name">
-                            {{ shop.store_name }}
+        <div id="store-details-modal" class="modal">
+            <div class="store-selector-wrapper">
+                {% for shop in metaobjects.store_location.values %}
+                    <div class="store-container">
+                    <input 
+                        type="radio"
+                        id="store-{{ forloop.index }}"
+                        name="pickup-store"
+                        value="{{ shop.store_name }} | {{ shop.store_address }}"
+                        class="store-option"
+                    >
+                    <label for="store-{{ forloop.index }}" style="display:flex; gap:16px; cursor:pointer; width:100%;">
+                        <div class="store-icon">
+                        {% render 'house-icon' %}
                         </div>
-                        <div class="store_address">
-                            {{ shop.store_address }}
+                        <div>
+                        <div class="store_name">{{ shop.store_name }}</div>
+                        <div class="store_address">{{ shop.store_address }}</div>
                         </div>
+                    </label>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="review-wrapper-bg">
-    <div class="review-wrapper">
-        <!-- Pickup details -->
-        <div id="time-slot-modal" style="display:none; margin-top:15px;">
-        <div>
-            {% comment %} 4 Radio buttons {% endcomment %}
-            {% assign slot_2 = "now" | date: "%s" | plus: 86400 %}
-            {% assign slot_2 = slot_2 | date: "%Y-%m-%d" %}
-            {% assign slot_3 = "now" | date: "%s" | plus: 172800 %}
-            {% assign slot_3 = slot_3 | date: "%Y-%m-%d" %}
-            {% assign slot_4 = "now" | date: "%s" | plus: 259200 %}
-            {% assign slot_4 = slot_4 | date: "%Y-%m-%d" %}
-            {% assign slot_5 = "now" | date: "%s" | plus: 345600 %}
-            {% assign slot_5 = slot_5 | date: "%Y-%m-%d" %}
-            {% assign slot_6 = "now" | date: "%s" | plus: 432000 %}
-            {% assign slot_6 = slot_6 | date: "%Y-%m-%d" %}
-            <div class="radio-wrapper date-selection">
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ "now" | date: "%Y-%m-%d" }}" 
-                        name="pickup-date" 
-                        value="{{ "now" | date: "%Y-%m-%d" }}"
-                        class="date-option"
-                    >
-                    <label class="slot-label" for="{{ "now" | date: "%Y-%m-%d" }}">
-                        <span class="day-label">Today</span>
-                        <span class="date-label">{{ "now" | date: "%b %d" }}</span>
-                    </label>
-                
-                </div>
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot_2 }}" 
-                        name="pickup-date" 
-                        value="{{ slot_2 }}"
-                        class="date-option"
-                    >
-                    <label class="slot-label" for="{{ slot_2 }}">
-                        <span class="day-label">Tomorrow</span>
-                        <span class="date-label">{{ slot_2 | date: "%b %d" }}</span>
-                    </label>
-                </div>
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot_3 }}" 
-                        name="pickup-date" 
-                        value="{{ slot_3 }}"
-                        class="date-option"
-                    >
-                    
-                    <label class="slot-label" for="{{ slot_3 }}">
-                        <span class="day-label">{{ slot_3 | date: "%A" }}</span>
-                        <span class="date-label">{{ slot_3 | date: "%b %d" }}</span>
-                    </label>
-                </div>
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot_4 }}" 
-                        name="pickup-date" 
-                        value="{{ slot_4 }}"
-                        class="date-option"
-                    >
-                    <label class="slot-label" for="{{ slot_4 }}">
-                        <span class="day-label">{{ slot_4 | date: "%A" }}</span>
-                        <span class="date-label">{{ slot_4 | date: "%b %d" }}</span>
-                    </label>
-                </div>
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot_5 }}" 
-                        name="pickup-date" 
-                        value="{{ slot_5 }}"
-                        class="date-option"
-                    >
-                    <label class="slot-label" for="{{ slot_5 }}">
-                        <span class="day-label">{{ slot_5 | date: "%A" }}</span>
-                        <span class="date-label">{{ slot_5 | date: "%b %d" }}</span>
-                    </label>
-                </div>
-                <div class="date-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot_6 }}" 
-                        name="pickup-date" 
-                        value="{{ slot_6 }}"
-                        class="date-option"
-                    >
-                    <label class="slot-label" for="{{ slot_6 }}">
-                        <span class="day-label">{{ slot_6 | date: "%A" }}</span>
-                        <span class="date-label">{{ slot_6 | date: "%b %d" }}</span>
-                    </label>
-                </div>
+                {% endfor %}
             </div>
         </div>
-
-        <div class="timeslot-wrapper">
-            {% for slot in metaobjects.pickup_slots.values %}
-                <div class="time-selection-wrapper">
-                    <input 
-                        type="radio" 
-                        id="{{ slot.slot_label }}" 
-                        name="pickup-time" 
-                        value="{{ slot.slot_label }}"
-                        class="time-option"
-                    >
-                    <label class="slot-label" for="{{ slot.slot_label }}">
-                        <span class="time-label">{{ slot.slot_label }}</span>
-                    </label>
+        <!-- Pickup details -->
+        <div id="time-slot-modal" class="modal">
+            <div>
+                {% comment %} 4 Radio buttons {% endcomment %}
+                {% assign slot_2 = "now" | date: "%s" | plus: 86400 %}
+                {% assign slot_2 = slot_2 | date: "%Y-%m-%d" %}
+                {% assign slot_3 = "now" | date: "%s" | plus: 172800 %}
+                {% assign slot_3 = slot_3 | date: "%Y-%m-%d" %}
+                {% assign slot_4 = "now" | date: "%s" | plus: 259200 %}
+                {% assign slot_4 = slot_4 | date: "%Y-%m-%d" %}
+                {% assign slot_5 = "now" | date: "%s" | plus: 345600 %}
+                {% assign slot_5 = slot_5 | date: "%Y-%m-%d" %}
+                {% assign slot_6 = "now" | date: "%s" | plus: 432000 %}
+                {% assign slot_6 = slot_6 | date: "%Y-%m-%d" %}
+                <div class="radio-wrapper date-selection">
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ "now" | date: "%Y-%m-%d" }}" 
+                            name="pickup-date" 
+                            value="{{ "now" | date: "%Y-%m-%d" }}"
+                            class="date-option"
+                        >
+                        <label class="slot-label" for="{{ "now" | date: "%Y-%m-%d" }}">
+                            <span class="day-label">Today</span>
+                            <span class="date-label">{{ "now" | date: "%b %d" }}</span>
+                        </label>
+                    
+                    </div>
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot_2 }}" 
+                            name="pickup-date" 
+                            value="{{ slot_2 }}"
+                            class="date-option"
+                        >
+                        <label class="slot-label" for="{{ slot_2 }}">
+                            <span class="day-label">Tomorrow</span>
+                            <span class="date-label">{{ slot_2 | date: "%b %d" }}</span>
+                        </label>
+                    </div>
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot_3 }}" 
+                            name="pickup-date" 
+                            value="{{ slot_3 }}"
+                            class="date-option"
+                        >
+                        
+                        <label class="slot-label" for="{{ slot_3 }}">
+                            <span class="day-label">{{ slot_3 | date: "%A" }}</span>
+                            <span class="date-label">{{ slot_3 | date: "%b %d" }}</span>
+                        </label>
+                    </div>
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot_4 }}" 
+                            name="pickup-date" 
+                            value="{{ slot_4 }}"
+                            class="date-option"
+                        >
+                        <label class="slot-label" for="{{ slot_4 }}">
+                            <span class="day-label">{{ slot_4 | date: "%A" }}</span>
+                            <span class="date-label">{{ slot_4 | date: "%b %d" }}</span>
+                        </label>
+                    </div>
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot_5 }}" 
+                            name="pickup-date" 
+                            value="{{ slot_5 }}"
+                            class="date-option"
+                        >
+                        <label class="slot-label" for="{{ slot_5 }}">
+                            <span class="day-label">{{ slot_5 | date: "%A" }}</span>
+                            <span class="date-label">{{ slot_5 | date: "%b %d" }}</span>
+                        </label>
+                    </div>
+                    <div class="date-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot_6 }}" 
+                            name="pickup-date" 
+                            value="{{ slot_6 }}"
+                            class="date-option"
+                        >
+                        <label class="slot-label" for="{{ slot_6 }}">
+                            <span class="day-label">{{ slot_6 | date: "%A" }}</span>
+                            <span class="date-label">{{ slot_6 | date: "%b %d" }}</span>
+                        </label>
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+
+            <div class="timeslot-wrapper">
+                {% for slot in metaobjects.pickup_slots.values %}
+                    <div class="time-selection-wrapper">
+                        <input 
+                            type="radio" 
+                            id="{{ slot.slot_label }}" 
+                            name="pickup-time" 
+                            value="{{ slot.slot_label }}"
+                            class="time-option"
+                        >
+                        <label class="slot-label" for="{{ slot.slot_label }}">
+                            <span class="time-label">{{ slot.slot_label }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
 
         </div>
-    </div>
-</div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-
-
-
-
-
-
-
-
-
-
-
-  const checkoutButton = document.getElementById('checkout');
-  const pickupModal = document.getElementById('store-details-modal'); 
-  const timeslotModal = document.getElementById('time-slot-modal');
+  const checkoutBtn = document.getElementById('checkout');
+  const warningBtn = document.getElementById('warning-button');
+  const storeBtn = document.getElementById('store-selector-button');
+  const slotBtn = document.getElementById('slot-selector-button');
+  const pickupModal = document.getElementById('store-details-modal');
+  const slotModal = document.getElementById('time-slot-modal');
   const deliveryOptions = document.querySelectorAll('.delivery-option');
-  const storeSelectorButton = document.getElementById('store-selector-button');
-  const slotSelectorButton = document.getElementById('slot-selector-button');
 
-  if (!checkoutButton || !timeslotModal || !pickupModal) return;
+  let state = {
+    pickup: false,
+    store: null,
+    date: null,
+    time: null
+  };
 
-  function toggleButtons(value) {
-    if (value === 'pickup') {
-      checkoutButton.style.display = 'none';
-      storeSelectorButton.style.display = 'block';
-      slotSelectorButton.style.display = 'block';
+  /* -----------------------
+     Restore From Storage
+  ----------------------- */
+  const saved = localStorage.getItem('pickupData');
+  if (saved) {
+    state = JSON.parse(saved);
+  }
+
+  function saveState() {
+    localStorage.setItem('pickupData', JSON.stringify(state));
+  }
+
+  /* -----------------------
+     Toggle Delivery Mode
+  ----------------------- */
+  function updateDeliveryUI() {
+    if (state.pickup) {
+      checkoutBtn.classList.add('hidden');
+      warningBtn.classList.remove('hidden');
+      storeBtn.classList.remove('hidden');
+      slotBtn.classList.remove('hidden');
     } else {
-      checkoutButton.style.display = 'grid';
-        storeSelectorButton.style.display = 'none';
-        slotSelectorButton.style.display = 'none';
-      pickupModal.style.display = 'none'; // hide modal if switching back
-      timeslotModal.style.display = 'none';
+      checkoutBtn.classList.remove('hidden');
+      warningBtn.classList.add('hidden');
+      storeBtn.classList.add('hidden');
+      slotBtn.classList.add('hidden');
     }
   }
 
-  // Attach change event
   deliveryOptions.forEach(option => {
     option.addEventListener('change', function () {
-      toggleButtons(this.value);
+      state.pickup = this.value === 'pickup';
+      saveState();
+      updateDeliveryUI();
+      updateCheckoutState();
     });
 
-    // Handle pre-selected option on page load
     if (option.checked) {
-      toggleButtons(option.value);
+      state.pickup = option.value === 'pickup';
     }
   });
 
-    $$$$modalButton.addEventListener('click', () => {
-      pickupModal.style.display = 'block';
-      document.querySelector('.review-wrapper-bg').classList.add('active');
+  /* -----------------------
+     Enable / Disable Checkout
+  ----------------------- */
+  function updateCheckoutState() {
+    if (!state.pickup) {
+      checkoutBtn.disabled = false;
+      return;
+    }
+
+    const valid = state.store && state.date && state.time;
+    checkoutBtn.disabled = !valid;
+    checkoutBtn.classList.remove('hidden');
+    warningBtn.classList.add('hidden');}
+
+  /* -----------------------
+     Dropdown Behaviour
+  ----------------------- */
+  function open(modal) {
+    closeAll();
+    modal.classList.add('active');
+  }
+
+  function closeAll() {
+    pickupModal.classList.remove('active');
+    slotModal.classList.remove('active');
+  }
+
+  storeBtn.addEventListener('click', () => open(pickupModal));
+  slotBtn.addEventListener('click', () => open(slotModal));
+
+  document.addEventListener('click', function (e) {
+    if (
+      !pickupModal.contains(e.target) &&
+      !slotModal.contains(e.target) &&
+      !storeBtn.contains(e.target) &&
+      !slotBtn.contains(e.target)
+    ) {
+      closeAll();
+    }
+  });
+
+  /* -----------------------
+     Store Selection
+  ----------------------- */
+  document.querySelectorAll('input[name="pickup-store"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      state.store = this.value;
+      storeBtn.querySelector('.selector-text').textContent =
+        this.value.split('|')[0].trim();
+
+      saveState();
+      closeAll();
+      updateCheckoutState();
     });
-    // close modal on outside click
-    document.querySelector('.review-wrapper-bg').addEventListener('click', (e) => {
-      if (e.target.classList.contains('review-wrapper-bg')) {
-        e.target.classList.remove('active');
+  });
+
+  /* -----------------------
+     Date Selection
+  ----------------------- */
+  document.querySelectorAll('input[name="pickup-date"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      state.date = this.value;
+      saveState();
+    });
+  });
+
+  /* -----------------------
+     Time Selection (Auto Close)
+  ----------------------- */
+  document.querySelectorAll('input[name="pickup-time"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+
+      if (!state.date) {
+        alert('Please select a date first.');
+        this.checked = false;
+        return;
       }
+
+      state.time = this.value;
+
+      slotBtn.querySelector('.selector-text').textContent =
+        `${state.date} | ${state.time}`;
+
+      saveState();
+      closeAll();
+      updateCheckoutState();
     });
+  });
+
+  /* -----------------------
+     Checkout Save Note
+  ----------------------- */
+  checkoutBtn.addEventListener('click', function (e) {
+
+    if (!state.pickup) return;
+
+    if (!state.store || !state.date || !state.time) {
+      e.preventDefault();
+      alert('Please complete pickup selection.');
+      return;
+    }
+
+    e.preventDefault();
+
+    const note = `
+Store Pickup:
+Store: ${state.store}
+Date: ${state.date}
+Time: ${state.time}
+    `.trim();
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note })
+    }).then(() => {
+      window.location.href = '/checkout';
+    });
+  });
+
+  /* -----------------------
+     Restore Button Labels
+  ----------------------- */
+  if (state.store) {
+    storeBtn.querySelector('.selector-text').textContent =
+      state.store.split('|')[0].trim();
+  }
+
+  if (state.date && state.time) {
+    slotBtn.querySelector('.selector-text').textContent =
+      `${state.date} | ${state.time}`;
+  }
+
+  updateDeliveryUI();
+  updateCheckoutState();
 
 });
-
-
-
 </script>
+
