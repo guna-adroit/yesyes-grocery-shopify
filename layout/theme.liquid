@@ -39,7 +39,9 @@
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
-      {% sections 'header-group' %}
+      {% unless template.name == 'page' and template.suffix contains 'headless' %}
+        {% sections 'header-group' %}
+      {% endunless %}
     </div>
 
     <script
@@ -71,8 +73,10 @@
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
-
+    
+    {% unless template.name == 'page' and template.suffix contains 'headless' %}
+        {% sections 'footer-group' %}
+    {% endunless %}
     {% render 'search-modal' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}

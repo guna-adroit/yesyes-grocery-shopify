@@ -1,22 +1,9 @@
 <div class="disclosure-trigger__label h6">DELIVERY OPTION</div>
 <div class="delivery-options-container">
-  <span>
+    <span>
     <input
       type="radio"
-      id="delivery-option-pickup"
-      name="delivery-option"
-      value="pickup"
-      class="delivery-option"
       checked
-    >
-    <label for="delivery-option-pickup">
-      <span>Store Pickup</span>
-    </label>
-  </span>
-
-  <span>
-    <input
-      type="radio"
       id="delivery-option-delivery"
       name="delivery-option"
       value="delivery"
@@ -26,102 +13,19 @@
       <span>Online Delivery</span>
     </label>
   </span>
+
+  <span>
+    <input
+      type="radio"
+      id="delivery-option-pickup"
+      name="delivery-option"
+      value="pickup"
+      class="delivery-option"
+    >
+    <label for="delivery-option-pickup">
+      <span>Store Pickup</span>
+    </label>
+  </span>
+
 </div>
-
-<!-- Pickup details -->
-<div id="pickup-details" style="display:none; margin-top:15px;">
-  <div>
-    <label for="pickup-store">Select Store</label>
-    <select id="pickup-store">
-      <option value="" selected disabled>Select a store</option>
-      {% for location in metaobjects.store_location.values %}
-        <option value="{{ location.store_name }}">{{ location.store_name }}</option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div style="margin-top:10px;">
-    <label for="pickup-time">Select Time Slot</label>
-    <select id="pickup-time">
-      <option value="" selected disabled>Select a time slot</option>
-      {% for slot in metaobjects.pickup_slots.values %}
-        <option value="{{ slot.slot_label }}">{{ slot.slot_label }}</option>
-      {% endfor %}
-    </select>
-  </div>
-</div>
-
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const pickupRadio = document.getElementById('delivery-option-pickup');
-  const deliveryRadio = document.getElementById('delivery-option-delivery');
-  const pickupDetails = document.getElementById('pickup-details');
-
-  const storeSelect = document.getElementById('pickup-store');
-  const timeSelect = document.getElementById('pickup-time');
-
-  const debugEl = document.getElementById('order-note-value');
-
-  function fetchCart() {
-    return fetch('/cart.js')
-      .then(res => res.json());
-  }
-
-  function renderDebugNote(note) {
-    debugEl.textContent = note || '(empty)';
-  }
-
-  function updateVisibility() {
-    pickupDetails.style.display = pickupRadio.checked ? 'block' : 'none';
-  }
-
-  async function updateOrderNote() {
-    let note = '';
-
-    if (pickupRadio.checked) {
-      const store = storeSelect.value;
-      const time = timeSelect.value;
-
-      if (!store || !time) {
-        return;
-      }
-
-      note =
-        'Delivery Method: Store Pickup\n' +
-        'Pickup Store: ' + store + '\n' +
-        'Pickup Time Slot: ' + time;
-    } else {
-      note = 'Delivery Method: Online Delivery';
-    }
-
-    await fetch('/cart/update.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ note })
-    });
-
-    const cart = await fetchCart();
-    renderDebugNote(cart.note);
-  }
-
-  document.querySelectorAll('.delivery-option').forEach(radio => {
-    radio.addEventListener('change', function () {
-      updateVisibility();
-      updateOrderNote();
-    });
-  });
-
-  storeSelect.addEventListener('change', updateOrderNote);
-  timeSelect.addEventListener('change', updateOrderNote);
-
-  console.log('Cart Pickup script initialized.');
-  console.log('Pickup Radio:', pickupRadio);
-  console.log('Delivery Radio:', deliveryRadio);
-  console.log('Pickup Details Container:', pickupDetails);
-  fetchCart().then(cart => renderDebugNote(cart.note));
-  updateVisibility();
-});
-</script>
+{%  render 'delivery-modal' %}
