@@ -126,6 +126,37 @@ span.selector-text {
     letter-spacing: 0;
     color: #7F7C7C;
 }
+.selector-button::after {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 45%;
+    transform: translateY(-50%) rotate(45deg);
+    border: 2px solid #000;
+    width: 7px;
+    height: 7px;
+    border-width: 0px 2px 2px 0;
+    transition: transform 0.3s ease;
+}
+.selector-button.active::after{
+    transform: translateY(-50%) rotate(-135deg);
+}
+.check-icon {
+    min-width: 18px;
+    min-height: 14px;
+    margin-left: auto;
+}
+.check-icon svg path{
+    fill: rgb(180, 180, 180);
+}
+.store-container:has(input:checked) .check-icon svg path {
+    fill: #ED1D23;
+}
+.store-container input[type="radio"] {
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
 /* Basic modal styling */
 .modal {
     display: none;
@@ -158,8 +189,11 @@ span.selector-text {
                     {% render 'house-icon' %}
                     </div>
                     <div>
-                    <div class="store_name">{{ shop.store_name }}</div>
-                    <div class="store_address">{{ shop.store_address }}</div>
+                        <div class="store_name">{{ shop.store_name }}</div>
+                        <div class="store_address">{{ shop.store_address }}</div>
+                    </div>
+                    <div class="check-icon">
+                        {% render 'check-icon' %}
                     </div>
                 </label>
                 </div>
@@ -382,11 +416,15 @@ document.addEventListener('DOMContentLoaded', function () {
   function open(modal) {
     closeAll();
     modal.classList.add('active');
+    storeBtn.classList.toggle('active', modal === pickupModal);
+    slotBtn.classList.toggle('active', modal === slotModal);
   }
 
   function closeAll() {
     pickupModal.classList.remove('active');
     slotModal.classList.remove('active');
+    storeBtn.classList.remove('active');
+    slotBtn.classList.remove('active');
   }
 
   storeBtn.addEventListener('click', () => open(pickupModal));
