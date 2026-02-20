@@ -84,14 +84,14 @@
 <script>
   (function() {
     const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
-    const APP_PROXY_URL = '/apps/reviews';
+    const APP_PROXY_URL = '/apps/reviews'; // keep if using app proxy
 
     function initProductPageWishlist() {
       const button = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
       if (!button) return;
 
       const productId = button.getAttribute('data-product-id');
-      
+
       if (isInWishlist(productId)) {
         button.classList.add('active');
       }
@@ -124,12 +124,11 @@
 
     async function handleWishlistToggle(event) {
       event.preventDefault();
-      console.log('Wishlist toggle clicked');
+
       const button = event.currentTarget;
       const productId = button.getAttribute('data-product-id');
-      
+
       const isLoggedIn = {% if customer %}true{% else %}false{% endif %};
-    console.log('User logged in:', isLoggedIn);
 
       if (isLoggedIn) {
         await toggleWishlistServer(productId, button);
@@ -151,44 +150,58 @@
       }
 
       saveWishlistLocal(wishlist);
-      
+
       document.dispatchEvent(new CustomEvent('wishlist:updated', {
-        detail: { wishlist, productId, action: index > -1 ? 'remove' : 'add' }
+        detail: {
+          wishlist,
+          productId,
+          action: index > -1 ? 'removed' : 'added'
+        }
       }));
     }
 
     async function toggleWishlistServer(productId, button) {
       try {
-        const isActive = button.classList.contains('active');
-        const action = isActive ? 'remove' : 'add';
-        console.log(`Toggling wishlist for product ${productId}, action: ${action}`);
+        const customerId = "{{ customer.id }}";
+
+        // Convert numeric IDs to GID format
+        const productGid = `gid://shopify/Product/${productId}`;
+        const customerGid = `gid://shopify/Customer/${customerId}`;
+
+        // Optimistic UI update
         button.classList.toggle('active');
 
-        const response = await fetch(`${APP_PROXY_URL}/api/wishlist`, {
+        const response = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/toggle`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            productId: productId,
-            action: action,
-            customerId: {{ customer.id }}
+            customerId: customerGid,
+            productId: productGid
           })
         });
 
-        if (!response.ok) {
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+          // Revert UI on failure
           button.classList.toggle('active');
-          console.log('Error');
-          throw new Error('Failed to update wishlist');
-        }
-        else {
-          console.log('Wishlist updated successfully');
+          throw new Error(data.error || 'Failed to update wishlist');
         }
 
-        const data = await response.json();
-        
+        // Update UI based on server response
+        if (data.status === 'added') {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+
         document.dispatchEvent(new CustomEvent('wishlist:updated', {
-          detail: { wishlist: data.wishlist, productId, action }
+          detail: {
+            productId,
+            status: data.status
+          }
         }));
 
       } catch (error) {
