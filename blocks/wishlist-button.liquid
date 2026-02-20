@@ -150,6 +150,8 @@
       }
 
       saveWishlistLocal(wishlist);
+      const title = {{ product.title }};
+      const image = {{ product.featured_image }};
 
       document.dispatchEvent(new CustomEvent('wishlist:updated', {
         detail: {
