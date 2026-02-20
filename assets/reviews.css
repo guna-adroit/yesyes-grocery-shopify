@@ -355,6 +355,18 @@
       height: 24px;
       background-image: url(https://cdn.shopify.com/s/files/1/0979/1825/5185/files/uil_calender.png?v=1771317939);
     }
+    .review-wrapper .close-button{
+      color: #959595;
+      cursor: pointer;
+      transition: all 0.4s;
+      height: 22px;
+      width: 22px;
+      line-height: 1;
+    }
+
+    .review-wrapper .close-button:hover {
+        color: red;
+    }
     select#review-filter {
       display: none;
     }
@@ -459,6 +471,9 @@
   .reviews-header {
     flex-direction: column;
     gap: 16px;
+  }
+  .review-wrapper {
+    width: 90%;
   }
 }
 

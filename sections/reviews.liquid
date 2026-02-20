@@ -1,7 +1,3 @@
-<style>
-    
-</style>
-
 {% assign full_width = false %}
 
 {% if section.settings.width_percent == 100 and section.settings.section_width == 'full-width' %}
@@ -10,15 +6,23 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}" style="padding-top: {{ section.settings.padding-block-start }}px; padding-bottom: {{ section.settings.padding-block-end }}px;"
-> <span style="opacity: 0;">
-  {% render 'divider', id: section.id, settings: section.settings, attributes: true, full_width: full_width %}
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} section--{{ section.id }}">
+   <span style="opacity: 0;">
+  {% comment %} {% render 'divider', id: section.id, settings: section.settings, attributes: true, full_width: full_width %} {% endcomment %}
   </span>
 
-{% comment %}
-  YesYes Reviews – Core Section
-  Secure integration via Shopify App Proxy
-{% endcomment %}
+<style>
+  .section--{{ section.id }} {
+    padding-block-start: {{ section.settings.padding-block-start }}px;
+    padding-block-end: {{ section.settings.padding-block-end }}px;
+  }
+  @media screen and (max-width: 749px) {
+    .section--{{ section.id }} {
+      padding-block-start: {{ section.settings.padding-block-start | divided_by: 3 }}px;
+      padding-block-end: {{ section.settings.padding-block-end }}px;
+    }
+  }
+</style>
 
 <section id="yesyes-reviews"
   data-product-id="gid://shopify/Product/{{ product.id }}"
@@ -143,7 +147,9 @@
     <div class="review-wrapper">
       <div id="yesyes-review-status" class="review-status" hidden></div>
       {% if customer %}
-        <h4 class="review-heading">Share your thoughts </h4>
+        <h4 class="review-heading">Share your thoughts 
+          <span class="close-button" id="close-review-form">&times;</span>
+        </h4>
         <p class="review-product-title"> {{ product.title }}</p>
         <hr style="width: 100%;border: 1px solid #ccc;margin-top: 0px;" />
           <form id="yesyes-review-form" class="review-form">
@@ -357,6 +363,10 @@ function applySortAndFilter() {
       if (e.target.classList.contains('review-wrapper-bg')) {
         e.target.classList.remove('active');
       }
+    });
+    // close modal on close button click
+    document.getElementById('close-review-form').addEventListener('click', () => {
+      document.querySelector('.review-wrapper-bg').classList.remove('active');
     });
   }
   
