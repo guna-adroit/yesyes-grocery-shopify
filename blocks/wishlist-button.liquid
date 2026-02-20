@@ -213,8 +213,6 @@
       saveWishlistLocal(wishlist);
       
 
-      showWishlistToast(title, image);
-
       document.dispatchEvent(new CustomEvent('wishlist:updated', {
         detail: {
           wishlist,
