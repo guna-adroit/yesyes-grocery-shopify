@@ -138,27 +138,33 @@
     }
 
     function toggleWishlistLocal(productId, button) {
-      const wishlist = getWishlist();
-      const index = wishlist.indexOf(productId);
+        const wishlist = getWishlist();
+        const index = wishlist.indexOf(productId);
 
-      if (index > -1) {
-        wishlist.splice(index, 1);
-        button.classList.remove('active');
-      } else {
-        wishlist.push(productId);
-        button.classList.add('active');
-      }
+        const title = {{ product.title }};
+        const image = {{ product.featured_image }};
 
-      saveWishlistLocal(wishlist);
+        if (index > -1) {
+            wishlist.splice(index, 1);
+            button.classList.remove('active');
+        } else {
+            wishlist.push(productId);
+            button.classList.add('active');
 
-      document.dispatchEvent(new CustomEvent('wishlist:updated', {
-        detail: {
-          wishlist,
-          productId,
-          action: index > -1 ? 'removed' : 'added'
+            // ✅ Show toast only when added
+            showWishlistToast(title, image);
         }
-      }));
-    }
+
+        saveWishlistLocal(wishlist);
+
+        document.dispatchEvent(new CustomEvent('wishlist:updated', {
+            detail: {
+            wishlist,
+            productId,
+            action: index > -1 ? 'removed' : 'added'
+            }
+        }));
+        }
 
     async function toggleWishlistServer(productId, button) {
       try {
@@ -214,6 +220,34 @@
     } else {
       initProductPageWishlist();
     }
+
+    function showWishlistToast(title, image) {
+  // Remove existing toast if any
+  const existingToast = document.querySelector('.wishlist-toast');
+  if (existingToast) existingToast.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'wishlist-toast';
+
+  toast.innerHTML = `
+    <div class="wishlist-toast-inner">
+      <img src="${image}" alt="${title}" />
+      <div class="wishlist-toast-content">
+        <strong>${title}</strong>
+        <p>has been added to Wishlist.</p>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(toast);
+
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
   })();
 </script>
 
