@@ -197,17 +197,21 @@
       const wishlist = getWishlist();
       const index = wishlist.indexOf(productId);
 
+      const title = {{ product.title | json }};
+      const image = {{ product.featured_image | image_url: width: 300 | json}};
+
       if (index > -1) {
         wishlist.splice(index, 1);
         button.classList.remove('active');
+        showWishlistToast(title, image, 'removed');
       } else {
         wishlist.push(productId);
         button.classList.add('active');
+        showWishlistToast(title, image, 'added');
       }
 
       saveWishlistLocal(wishlist);
-      const title = {{ product.title | json }};
-      const image = {{ product.featured_image | image_url: width: 300 | json}};
+      
 
       showWishlistToast(title, image);
 
@@ -275,31 +279,36 @@
       initProductPageWishlist();
     }
 
-    function showWishlistToast(title, image) {
+    function showWishlistToast(title, image, type = 'added') {
         const existingToast = document.querySelector('.wishlist-toast');
         if (existingToast) existingToast.remove();
 
         const toast = document.createElement('div');
-        toast.className = 'wishlist-toast';
+        toast.className = `wishlist-toast ${type}`;
+
+        const message =
+            type === 'added'
+            ? 'has been added to Wishlist.'
+            : 'has been removed from Wishlist.';
 
         toast.innerHTML = `
             <div class="wishlist-toast-inner">
             <img src="${image}" alt="${title}" />
             <div class="wishlist-toast-content">
                 <strong>${title}</strong>
-                <p>has been added to Wishlist.</p>
+                <p>${message}</p>
             </div>
             </div>
         `;
 
         document.body.appendChild(toast);
 
-        // Trigger enter animation
+        // Enter animation
         requestAnimationFrame(() => {
             toast.classList.add('show');
         });
 
-        // Auto hide after 3s
+        // Auto hide
         setTimeout(() => {
             toast.classList.remove('show');
             toast.classList.add('hide');
