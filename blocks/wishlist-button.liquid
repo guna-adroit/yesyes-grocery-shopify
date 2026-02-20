@@ -150,7 +150,8 @@
       }
 
       saveWishlistLocal(wishlist);
-      
+      const title = {{ product.title | json }};
+      const image = {{ product.featured_image | image_url: width: 300 | json}};
 
       showWishlistToast(title, image);
 
@@ -162,7 +163,6 @@
         }
       }));
     }
-    
 
     async function toggleWishlistServer(productId, button) {
       try {
@@ -218,6 +218,33 @@
     } else {
       initProductPageWishlist();
     }
+
+    function showWishlistToast(title, image) {
+  // Remove existing toast if any
+  const existingToast = document.querySelector('.wishlist-toast');
+  if (existingToast) existingToast.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'wishlist-toast';
+
+  toast.innerHTML = `
+    <div class="wishlist-toast-inner">
+      <img src="${image}" alt="${title}" />
+      <div class="wishlist-toast-content">
+        <strong>${title}</strong>
+        <p>has been added to Wishlist.</p>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(toast);
+
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
 
   })();
 </script>
