@@ -584,7 +584,7 @@ footer .group-block-content.layout-panel-flex.layout-panel-flex--row.mobile-colu
 .wishlist-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin-right: 4px;
 }
 header-actions {
