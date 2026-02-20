@@ -70,52 +70,6 @@
     display: inline !important;
   }
 
-  .wishlist-toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #111;
-  color: #fff;
-  padding: 14px 16px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  z-index: 9999;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.3s ease;
-  max-width: 320px;
-}
-
-.wishlist-toast.hide {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.wishlist-toast-inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.wishlist-toast img {
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.wishlist-toast-content strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-
-.wishlist-toast-content p {
-  margin: 0;
-  font-size: 13px;
-  opacity: 0.85;
-}
-
   @keyframes heartBeat {
     0%, 100% { transform: scale(1); }
     25% { transform: scale(1.2); }
@@ -184,33 +138,27 @@
     }
 
     function toggleWishlistLocal(productId, button) {
-        const wishlist = getWishlist();
-        const index = wishlist.indexOf(productId);
+      const wishlist = getWishlist();
+      const index = wishlist.indexOf(productId);
 
-        const title = {{ product.title }};
-        const image = {{ product.featured_image }};
+      if (index > -1) {
+        wishlist.splice(index, 1);
+        button.classList.remove('active');
+      } else {
+        wishlist.push(productId);
+        button.classList.add('active');
+      }
 
-        if (index > -1) {
-            wishlist.splice(index, 1);
-            button.classList.remove('active');
-        } else {
-            wishlist.push(productId);
-            button.classList.add('active');
+      saveWishlistLocal(wishlist);
 
-            // ✅ Show toast only when added
-            showWishlistToast(title, image);
+      document.dispatchEvent(new CustomEvent('wishlist:updated', {
+        detail: {
+          wishlist,
+          productId,
+          action: index > -1 ? 'removed' : 'added'
         }
-
-        saveWishlistLocal(wishlist);
-
-        document.dispatchEvent(new CustomEvent('wishlist:updated', {
-            detail: {
-            wishlist,
-            productId,
-            action: index > -1 ? 'removed' : 'added'
-            }
-        }));
-        }
+      }));
+    }
 
     async function toggleWishlistServer(productId, button) {
       try {
