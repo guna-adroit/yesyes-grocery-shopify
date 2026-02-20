@@ -268,6 +268,27 @@
                 "swym_custom_css": ""
               }
             },
+            "wishlist_button_ppBUGw": {
+              "type": "wishlist-button",
+              "name": "Wishlist button",
+              "settings": {
+                "add_text": "Add to Wishlist",
+                "remove_text": "Remove from Wishlist",
+                "button_background": "transparent",
+                "button_hover_background": "#f5f5f5",
+                "button_text_color": "#000000",
+                "button_border_color": "#000000",
+                "button_border_width": 2,
+                "button_border_radius": 4,
+                "active_button_background": "#ff0000",
+                "active_button_border_color": "#ff0000",
+                "active_button_text_color": "#ffffff",
+                "button_width": "auto",
+                "margin_top": 20,
+                "margin_bottom": 20
+              },
+              "blocks": {}
+            },
             "group_NixjBb": {
               "type": "group",
               "name": "t:names.group",
@@ -481,6 +502,7 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "wishlist_plus_wishlist_pdp_button_73W9dF",
+            "wishlist_button_ppBUGw",
             "group_NixjBb",
             "product_additional_info_YNHkp8",
             "group_BEmhBc"
