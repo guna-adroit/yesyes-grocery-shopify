@@ -153,6 +153,8 @@
       const title = {{ product.title }};
       const image = {{ product.featured_image | image_url: width: 300 }};
 
+      showWishlistToast(title, image);
+
       document.dispatchEvent(new CustomEvent('wishlist:updated', {
         detail: {
           wishlist,
