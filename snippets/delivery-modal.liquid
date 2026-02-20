@@ -211,25 +211,25 @@ span.selector-text {
         <div>
             {% comment %} 4 Radio buttons {% endcomment %}
             {% assign slot_2 = "now" | date: "%s" | plus: 86400 %}
-            {% assign slot_2 = slot_2 | date: "%Y-%m-%d" %}
+            {% assign slot_2 = slot_2 | date: "%d-%m-%Y" %}
             {% assign slot_3 = "now" | date: "%s" | plus: 172800 %}
-            {% assign slot_3 = slot_3 | date: "%Y-%m-%d" %}
+            {% assign slot_3 = slot_3 | date: "%d-%m-%Y" %}
             {% assign slot_4 = "now" | date: "%s" | plus: 259200 %}
-            {% assign slot_4 = slot_4 | date: "%Y-%m-%d" %}
+            {% assign slot_4 = slot_4 | date: "%d-%m-%Y" %}
             {% assign slot_5 = "now" | date: "%s" | plus: 345600 %}
-            {% assign slot_5 = slot_5 | date: "%Y-%m-%d" %}
+            {% assign slot_5 = slot_5 | date: "%d-%m-%Y" %}
             {% assign slot_6 = "now" | date: "%s" | plus: 432000 %}
-            {% assign slot_6 = slot_6 | date: "%Y-%m-%d" %}
+            {% assign slot_6 = slot_6 | date: "%d-%m-%Y" %}
             <div class="radio-wrapper date-selection">
                 <div class="date-selection-wrapper">
                     <input 
                         type="radio" 
-                        id="{{ "now" | date: "%Y-%m-%d" }}" 
+                        id="{{ "now" | date: "%d-%m-%Y" }}" 
                         name="pickup-date" 
-                        value="{{ "now" | date: "%Y-%m-%d" }}"
+                        value="{{ "now" | date: "%d-%m-%Y" }}"
                         class="date-option"
                     >
-                    <label class="slot-label" for="{{ "now" | date: "%Y-%m-%d" }}">
+                    <label class="slot-label" for="{{ "now" | date: "%d-%m-%Y" }}">
                         <span class="day-label">Today</span>
                         <span class="date-label">{{ "now" | date: "%b %d" }}</span>
                     </label>
@@ -410,50 +410,50 @@ document.addEventListener('DOMContentLoaded', function () {
         warningButton.classList.remove('hidden');
         }
     }
-  /* -----------------------
-   Dropdown Behaviour
------------------------ */
+    /* -----------------------
+    Dropdown Behaviour
+    ----------------------- */
 
-function toggleModal(modal, button) {
-  const isActive = modal.classList.contains('active');
+    function toggleModal(modal, button) {
+        const isActive = modal.classList.contains('active');
 
-  // Close everything first
-  closeAll();
+        // Close everything first
+        closeAll();
 
-  // If it was NOT active before, open it
-  if (!isActive) {
-    modal.classList.add('active');
-    button.classList.add('active');
-  }
-}
+        // If it was NOT active before, open it
+        if (!isActive) {
+            modal.classList.add('active');
+            button.classList.add('active');
+        }
+    }
 
-function closeAll() {
-  pickupModal.classList.remove('active');
-  slotModal.classList.remove('active');
-  storeBtn.classList.remove('active');
-  slotBtn.classList.remove('active');
-}
+    function closeAll() {
+        pickupModal.classList.remove('active');
+        slotModal.classList.remove('active');
+        storeBtn.classList.remove('active');
+        slotBtn.classList.remove('active');
+    }
 
-storeBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  toggleModal(pickupModal, storeBtn);
-});
+    storeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleModal(pickupModal, storeBtn);
+    });
 
-slotBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  toggleModal(slotModal, slotBtn);
-});
+    slotBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleModal(slotModal, slotBtn);
+    });
 
-document.addEventListener('click', function (e) {
-  if (
-    !pickupModal.contains(e.target) &&
-    !slotModal.contains(e.target) &&
-    !storeBtn.contains(e.target) &&
-    !slotBtn.contains(e.target)
-  ) {
-    closeAll();
-  }
-});
+    document.addEventListener('click', function (e) {
+    if (
+        !pickupModal.contains(e.target) &&
+        !slotModal.contains(e.target) &&
+        !storeBtn.contains(e.target) &&
+        !slotBtn.contains(e.target)
+    ) {
+        closeAll();
+    }
+    });
 
   /* -----------------------
      Store Selection
