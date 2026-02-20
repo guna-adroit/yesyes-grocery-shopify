@@ -411,35 +411,49 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
   /* -----------------------
-     Dropdown Behaviour
-  ----------------------- */
-  function open(modal) {
-    closeAll();
+   Dropdown Behaviour
+----------------------- */
+
+function toggleModal(modal, button) {
+  const isActive = modal.classList.contains('active');
+
+  // Close everything first
+  closeAll();
+
+  // If it was NOT active before, open it
+  if (!isActive) {
     modal.classList.add('active');
-    storeBtn.classList.toggle('active', modal === pickupModal);
-    slotBtn.classList.toggle('active', modal === slotModal);
+    button.classList.add('active');
   }
+}
 
-  function closeAll() {
-    pickupModal.classList.remove('active');
-    slotModal.classList.remove('active');
-    storeBtn.classList.remove('active');
-    slotBtn.classList.remove('active');
+function closeAll() {
+  pickupModal.classList.remove('active');
+  slotModal.classList.remove('active');
+  storeBtn.classList.remove('active');
+  slotBtn.classList.remove('active');
+}
+
+storeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleModal(pickupModal, storeBtn);
+});
+
+slotBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleModal(slotModal, slotBtn);
+});
+
+document.addEventListener('click', function (e) {
+  if (
+    !pickupModal.contains(e.target) &&
+    !slotModal.contains(e.target) &&
+    !storeBtn.contains(e.target) &&
+    !slotBtn.contains(e.target)
+  ) {
+    closeAll();
   }
-
-  storeBtn.addEventListener('click', () => open(pickupModal));
-  slotBtn.addEventListener('click', () => open(slotModal));
-
-  document.addEventListener('click', function (e) {
-    if (
-      !pickupModal.contains(e.target) &&
-      !slotModal.contains(e.target) &&
-      !storeBtn.contains(e.target) &&
-      !slotBtn.contains(e.target)
-    ) {
-      closeAll();
-    }
-  });
+});
 
   /* -----------------------
      Store Selection
