@@ -2,6 +2,7 @@
 .radio-wrapper.date-selection {
     display: flex;
     gap: 16px;
+    justify-content: space-between;
 }
 
 .date-selection-wrapper,
@@ -13,10 +14,13 @@
     border-radius: 4px;
     transition: 0.3s ease-in-out;
 }
-
+.time-selection-wrapper.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
 .date-selection-wrapper {
     height: 50px;
-    width: 50px;
+    min-width: 75px;
     border: 1px solid #E0E0E0;
     flex-direction: column;
 }
@@ -41,12 +45,12 @@
 
 .day-label {
     font-weight: 700;
-    font-size: 8px;
+    font-size: 10px;
 }
 
 .date-label {
     font-weight: 600;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .timeslot-wrapper {
@@ -313,6 +317,8 @@ span.selector-text {
                         name="pickup-time" 
                         value="{{ slot.slot_label }}"
                         class="time-option"
+                        data-start="{{ slot.start_time }}"
+                        data-end="{{ slot.end_time }}"
                     >
                     <label class="slot-label" for="{{ slot.slot_label }}">
                         <span class="time-label">{{ slot.slot_label }}</span>
@@ -324,7 +330,7 @@ span.selector-text {
     </div>
 
 
-        <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
 
   const checkoutBtn = document.getElementById('checkout');
@@ -334,6 +340,81 @@ document.addEventListener('DOMContentLoaded', function () {
   const pickupModal = document.getElementById('store-details-modal');
   const slotModal = document.getElementById('time-slot-modal');
   const deliveryOptions = document.querySelectorAll('.delivery-option');
+  const PICKUP_BUFFER_HOURS = 1; // Change anytime
+
+
+  function parseDateDMY(dateStr) {
+  const [day, month, year] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function parseTimeToDate(baseDate, timeStr) {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date(baseDate);
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+}
+
+function updateTimeSlotAvailability() {
+
+  const selectedDateStr = state.date;
+  if (!selectedDateStr) return;
+
+  const now = new Date();
+  const bufferTime = new Date(now.getTime() + PICKUP_BUFFER_HOURS * 60 * 60 * 1000);
+  console.log('Buffer Time:', bufferTime);
+  const selectedDate = parseDateDMY(selectedDateStr);
+
+  document.querySelectorAll('input[name="pickup-time"]').forEach(radio => {
+
+    const startTimeStr = radio.dataset.start;
+    if (!startTimeStr) return;
+
+    const slotStart = parseTimeToDate(selectedDate, startTimeStr);
+
+    let disabled = false;
+
+    // If selected date is today
+    const isToday =
+      selectedDate.toDateString() === now.toDateString();
+
+    if (isToday) {
+      if (slotStart <= bufferTime) {
+        disabled = true;
+      }
+    }
+
+    radio.disabled = disabled;
+
+    if (disabled) {
+      radio.closest('.time-selection-wrapper').classList.add('disabled');
+      if (radio.checked) {
+        radio.checked = false;
+        state.time = null;
+        slotBtn.querySelector('.selector-text').textContent = 'Select time slot';
+      }
+    } else {
+      radio.closest('.time-selection-wrapper').classList.remove('disabled');
+    }
+  });
+
+  updateCheckoutState();
+}
+document.querySelectorAll('input[name="pickup-date"]').forEach(radio => {
+  radio.addEventListener('change', function () {
+    state.date = this.value;
+    state.time = null;
+
+    document.querySelectorAll('input[name="pickup-time"]').forEach(r => r.checked = false);
+
+    slotBtn.querySelector('.selector-text').textContent = 'Select time slot';
+
+    updateTimeSlotAvailability(); // 🔥 ADD THIS
+
+    updateCheckoutState();
+  });
+});
+
 
   let state = {
     pickup: false,
@@ -545,6 +626,9 @@ Time: ${state.time}
   ----------------------- */
   updateDeliveryUI();
   updateCheckoutState();
+  if (state.date) {
+    updateTimeSlotAvailability();
+ }
 
 });
 </script>
