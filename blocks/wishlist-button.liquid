@@ -249,6 +249,7 @@
         });
 
         const data = await response.json();
+        consoel.log(data);
 
         if (!response.ok || data.error) {
           // Revert UI on failure
