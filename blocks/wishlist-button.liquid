@@ -1,3 +1,9 @@
+<wishlist-button
+  data-product-id="{{ product.id }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+>
+</wishlist-button>
 <div class="wishlist-product-page" data-product-id="{{ product.id }}">
   <button 
     type="button" 
