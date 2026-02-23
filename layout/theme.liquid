@@ -34,6 +34,16 @@
     {{ content_for_header }}
     <script type="module" src="{{ 'quick-bulk-add.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'quick-bulk-add-popup.js' | asset_url }}" defer></script>
+
+    <script>
+      window.WISHLIST_CONFIG = {
+        storageKey: 'shopify_wishlist',
+        appProxyUrl: '{{ routes.root_url }}apps/reviews',
+        customerId: {% if customer %}"gid://shopify/Customer/{{ customer.id }}"{% else %}null{% endif %}
+      };
+    </script>
+
+    <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
