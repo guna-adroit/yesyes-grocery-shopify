@@ -256,6 +256,14 @@
       <div class="sale-ribbon">{{ percent }}%</div>
     </div>
   {% endif %}
+
+  <wishlist-button
+    data-product-id="{{ product.id }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+    data-variant="icon"
+  >
+  </wishlist-button>
   {% comment %} <div aria-label="Add to Wishlist" 
               data-with-epi="true" 
               class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}" 
