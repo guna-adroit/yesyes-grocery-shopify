@@ -188,7 +188,7 @@
       const wishlistButton = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
       try {
         const productIds = [
-          {{product.id | json}}
+          "{{ product.id | json}}"
         ];
         const response = await fetch("https://yesyes-grocerz.myshopify.com/apps/reviews/api/v1/wishlist/integration/verify", {
           method: 'POST',
