@@ -190,7 +190,7 @@
     try {
       // This will correctly inject the product ID from Shopify Liquid into JavaScript
       const productIds = [
-        {{ product.id | json }}
+        {{ product.id | json | append: ""}}
       ];
       console.log(productIds);
 
