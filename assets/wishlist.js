@@ -127,19 +127,46 @@
     }
 
     render() {
-      this.innerHTML = `
-        <button type="button" class="wishlist-btn" aria-pressed="false">
-        <svg class="wishlist-icon-large" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="wishlist-icon-outline" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path class="wishlist-icon-filled" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor" style="display: none;"/>
-        </svg>
-          <span class="wishlist-label-add">Add to Wishlist</span>
-          <span class="wishlist-label-remove">Remove from Wishlist</span>
-        </button>
-      `;
+        const variant = this.dataset.variant || "default";
 
-      this.button = this.querySelector("button");
-    }
+        if (variant === "icon") {
+            this.innerHTML = `
+            <button type="button"
+                    class="wishlist-btn wishlist-btn--icon"
+                    aria-pressed="false"
+                    aria-label="Add to Wishlist">
+
+                <svg class="wishlist-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path class="wishlist-outline"
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
+                        a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23
+                        l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                        stroke="currentColor"
+                        stroke-width="2"/>
+
+                <path class="wishlist-filled"
+                        d="M12 21.23l-7.78-7.78a5.5 5.5 0 0 1
+                        7.78-7.78 5.5 5.5 0 0 1
+                        7.78 7.78L12 21.23z"
+                        fill="currentColor"/>
+                </svg>
+
+            </button>
+            `;
+        } else {
+            this.innerHTML = `
+            <button type="button"
+                    class="wishlist-btn"
+                    aria-pressed="false">
+                <span class="wishlist-label-add">Add to Wishlist</span>
+                <span class="wishlist-label-remove">Remove from Wishlist</span>
+            </button>
+            `;
+        }
+
+        this.button = this.querySelector("button");
+        this.button.addEventListener("click", () => this.handleToggle());
+        }
 
     async initialize() {
       if (config.customerId) {
