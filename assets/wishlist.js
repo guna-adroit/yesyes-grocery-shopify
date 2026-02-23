@@ -10,11 +10,12 @@
     verifiedCache: new Map(),
 
     getLocal() {
-      try {
-        return JSON.parse(localStorage.getItem(config.storageKey)) || [];
-      } catch {
+    try {
+        const data = JSON.parse(localStorage.getItem(config.storageKey)) || [];
+        return data.map(String); // normalize to string
+    } catch {
         return [];
-      }
+    }
     },
 
     setLocal(data) {
