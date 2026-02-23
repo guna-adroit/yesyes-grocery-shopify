@@ -219,20 +219,22 @@
     }
 
     toggleLocal() {
-      const wishlist = WishlistStore.getLocal();
-      const index = wishlist.indexOf(this.productId);
+        const productId = String(this.productId);
+        const wishlist = WishlistStore.getLocal();
 
-      if (index > -1) {
-        wishlist.splice(index, 1);
-        this.setActive(false);
-        showToast(this.title, this.image, "removed");
-      } else {
-        wishlist.push(this.productId);
-        this.setActive(true);
-        showToast(this.title, this.image, "added");
-      }
+        const index = wishlist.indexOf(productId);
 
-      WishlistStore.setLocal(wishlist);
+        if (index > -1) {
+            wishlist.splice(index, 1);
+            this.setActive(false);
+            showToast(this.title, this.image, "removed");
+        } else {
+            wishlist.push(productId);
+            this.setActive(true);
+            showToast(this.title, this.image, "added");
+        }
+
+        WishlistStore.setLocal(wishlist);
     }
 
     setActive(state) {
