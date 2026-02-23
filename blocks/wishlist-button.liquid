@@ -220,7 +220,7 @@
               console.log(`Product ${id}:`, isInWishlist ? "In Wishlist" : "Not in Wishlist");
             });
 
-        return data ? JSON.parse(data) : [];
+        return data ? data : [];
       } catch (e) {
         console.error('Error getting wishlist:', e);
         return [];
