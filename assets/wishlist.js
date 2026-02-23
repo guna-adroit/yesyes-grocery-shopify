@@ -2,17 +2,16 @@
   const config = window.WISHLIST_CONFIG;
   if (!config) return;
 
-  /* ==============================
-      WISHLIST STORE
-  ============================== */
+  /* =========================================================
+     WISHLIST STORE (Single Source of Truth)
+  ========================================================== */
 
   const WishlistStore = {
-    cache: null,
+    verifiedCache: new Map(),
 
     getLocal() {
       try {
-        const data = localStorage.getItem(config.storageKey);
-        return data ? JSON.parse(data) : [];
+        return JSON.parse(localStorage.getItem(config.storageKey)) || [];
       } catch {
         return [];
       }
@@ -22,8 +21,8 @@
       localStorage.setItem(config.storageKey, JSON.stringify(data));
     },
 
-    async verifyServer(productIds) {
-      if (!config.customerId) return {};
+    async verifyBulk(productIds) {
+      if (!config.customerId || !productIds.length) return {};
 
       try {
         const response = await fetch(
@@ -42,16 +41,21 @@
 
         if (!response.ok) throw new Error("Verify failed");
 
-        return await response.json();
-      } catch (error) {
-        console.error("Wishlist verify error:", error);
+        const data = await response.json();
+
+        Object.entries(data).forEach(([gid, value]) => {
+          const id = gid.split("/").pop();
+          this.verifiedCache.set(id, value);
+        });
+
+        return data;
+      } catch (err) {
+        console.error("Wishlist verify error:", err);
         return {};
       }
     },
 
     async toggleServer(productId) {
-      const productGid = `gid://shopify/Product/${productId}`;
-
       const response = await fetch(
         `${config.appProxyUrl}/api/v1/wishlist/integration/toggle`,
         {
@@ -59,7 +63,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             customerId: config.customerId,
-            productId: productGid,
+            productId: `gid://shopify/Product/${productId}`,
           }),
         }
       );
@@ -70,56 +74,51 @@
         throw new Error(data.error || "Toggle failed");
       }
 
-      return data.status; // "added" | "removed"
+      this.verifiedCache.set(productId, data.status === "added");
+
+      return data.status;
     },
   };
 
-  /* ==============================
-      TOAST
-  ============================== */
+  /* =========================================================
+     TOAST
+  ========================================================== */
 
   function showToast(title, image, type) {
-    const existing = document.querySelector(".wishlist-toast");
-    if (existing) existing.remove();
+    const old = document.querySelector(".wishlist-toast");
+    if (old) old.remove();
 
     const toast = document.createElement("div");
     toast.className = `wishlist-toast ${type}`;
-
     toast.innerHTML = `
       <div class="wishlist-toast-inner">
         <img src="${image}" alt="${title}">
         <div>
           <strong>${title}</strong>
-          <p>${
-            type === "added"
-              ? "Added to Wishlist"
-              : "Removed from Wishlist"
-          }</p>
+          <p>${type === "added" ? "Added to Wishlist" : "Removed from Wishlist"}</p>
         </div>
       </div>
     `;
 
     document.body.appendChild(toast);
 
-    requestAnimationFrame(() => {
-      toast.classList.add("show");
-    });
+    requestAnimationFrame(() => toast.classList.add("show"));
 
     setTimeout(() => {
       toast.classList.remove("show");
       setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 2500);
   }
 
-  /* ==============================
-      WEB COMPONENT
-  ============================== */
+  /* =========================================================
+     WEB COMPONENT
+  ========================================================== */
 
   class WishlistButton extends HTMLElement {
     connectedCallback() {
       this.productId = this.dataset.productId;
-      this.title = this.dataset.productTitle;
-      this.image = this.dataset.productImage;
+      this.title = this.dataset.productTitle || "";
+      this.image = this.dataset.productImage || "";
 
       if (!this.productId) return;
 
@@ -129,9 +128,9 @@
 
     render() {
       this.innerHTML = `
-        <button type="button" class="wishlist-btn">
-          <span class="wishlist-text-add">Add to Wishlist</span>
-          <span class="wishlist-text-remove">Remove from Wishlist</span>
+        <button type="button" class="wishlist-btn" aria-pressed="false">
+          <span class="wishlist-label-add">Add to Wishlist</span>
+          <span class="wishlist-label-remove">Remove from Wishlist</span>
         </button>
       `;
 
@@ -140,12 +139,11 @@
 
     async initialize() {
       if (config.customerId) {
-        const result = await WishlistStore.verifyServer([
-          this.productId,
-        ]);
+        if (!WishlistStore.verifiedCache.has(this.productId)) {
+          await WishlistStore.verifyBulk([this.productId]);
+        }
 
-        const gid = `gid://shopify/Product/${this.productId}`;
-        if (result[gid]) {
+        if (WishlistStore.verifiedCache.get(this.productId)) {
           this.setActive(true);
         }
       } else {
@@ -161,6 +159,8 @@
     }
 
     async handleToggle() {
+      if (this.button.disabled) return;
+
       this.button.disabled = true;
 
       try {
@@ -179,8 +179,8 @@
             detail: { productId: this.productId },
           })
         );
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error("Wishlist toggle error:", err);
       }
 
       this.button.disabled = false;
@@ -205,8 +205,11 @@
 
     setActive(state) {
       this.button.classList.toggle("active", state);
+      this.button.setAttribute("aria-pressed", state);
     }
   }
 
-  customElements.define("wishlist-button", WishlistButton);
+  if (!customElements.get("wishlist-button")) {
+    customElements.define("wishlist-button", WishlistButton);
+  }
 })();
