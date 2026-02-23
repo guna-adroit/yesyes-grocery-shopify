@@ -3,6 +3,7 @@
     display: flex;
     gap: 16px;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .date-selection-wrapper,
@@ -169,6 +170,14 @@ span.selector-text {
 .modal.active {
     display: block;
 }
+@media (max-width: 750px) {
+    .time-selection-wrapper {
+        flex: 0 0 calc(34% - 10px);
+    }
+    .date-selection-wrapper {
+        flex: 0 0 calc(33% - 10px);
+    }
+}   
 </style>
 
     <button id="store-selector-button" class="selector-button">
