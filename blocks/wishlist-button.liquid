@@ -48,13 +48,15 @@
     width: {{ block.settings.button_width | default: 'auto' }};
   }
 
-  .wishlist-btn-product-page:hover {
+  .wishlist-btn-product-page:hover,
+  .wishlist-btn:hover {
     background: {{ block.settings.button_hover_background | default: '#f5f5f5' }};
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .wishlist-btn-product-page.active {
+  .wishlist-btn-product-page.active,
+  .wishlist-btn.active {
     background: {{ block.settings.active_button_background | default: '#ff0000' }};
     border-color: {{ block.settings.active_button_border_color | default: '#ff0000' }};
     color: {{ block.settings.active_button_text_color | default: '#ffffff' }};
