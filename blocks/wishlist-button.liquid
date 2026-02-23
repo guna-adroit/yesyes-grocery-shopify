@@ -210,7 +210,7 @@
 
             
 
-        return wishlistData ? JSON.parse(data) : [];
+        return data ? JSON.parse(data) : [];
       } catch (e) {
         console.error('Error getting wishlist:', e);
         return [];
