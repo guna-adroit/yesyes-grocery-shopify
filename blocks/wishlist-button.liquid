@@ -143,6 +143,8 @@
 
 <script>
   (function() {
+    const title = {{ product.title | json }};
+    const image = {{ product.featured_image | image_url: width: 300 | json}};
     const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
     const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews'; // keep if using app proxy
     getWishlistServer();
@@ -252,8 +254,7 @@
       const wishlist = getWishlist();
       const index = wishlist.indexOf(productId);
 
-      const title = {{ product.title | json }};
-      const image = {{ product.featured_image | image_url: width: 300 | json}};
+      
 
       if (index > -1) {
         wishlist.splice(index, 1);
