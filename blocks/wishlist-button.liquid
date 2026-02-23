@@ -192,6 +192,7 @@
       const productIds = [
         {{ product.id | json }}
       ];
+      console.log(productIds);
 
       const response = await fetch("https://yesyes-grocerz.myshopify.com/apps/reviews/api/v1/wishlist/integration/verify", {
         method: 'POST',
