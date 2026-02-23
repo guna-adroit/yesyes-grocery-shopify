@@ -312,8 +312,10 @@
         // Update UI based on server response
         if (data.status === 'added') {
           button.classList.add('active');
+          showWishlistToast(title, image, data.status);
         } else {
           button.classList.remove('active');
+          showWishlistToast(title, image, data.status);
         }
 
         document.dispatchEvent(new CustomEvent('wishlist:updated', {
