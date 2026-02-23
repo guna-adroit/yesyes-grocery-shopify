@@ -165,7 +165,8 @@
     const image = {{ product.featured_image | image_url: width: 300 | json}};
     const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
     const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews'; // keep if using app proxy
-    {% comment %} getWishlistServer(); {% endcomment %}
+     
+    const getWishlist = await getWishlistServer();
 
     function initProductPageWishlist() {
       const button = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
@@ -202,7 +203,7 @@
       }
     }
 
-    {% comment %} async function getWishlistServer() {
+    async function getWishlistServer() {
       const wishlistButton = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
       const productElement = document.querySelector('.wishlist-product-page');
       
@@ -253,7 +254,7 @@
       console.error('Error getting wishlist:', e);
       return [];
     }
-  } {% endcomment %}
+  }
 
     function saveWishlistLocal(wishlist) {
       try {
