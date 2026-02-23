@@ -167,10 +167,10 @@
       const wishlist = getWishlist();
       return wishlist.includes(productId);
     }
-    function isInWishlistServer(productId) {
+    {% comment %} function isInWishlistServer(productId) {
       const wishlist = getWishlistServer();
       return wishlist.includes(productId);
-    }
+    } {% endcomment %}
 
     function getWishlist() {
       try {
@@ -218,7 +218,7 @@
               console.log(`Product ${id}:`, isInWishlist ? "In Wishlist" : "Not in Wishlist");
             });
 
-        return wishlistData ? JSON.parse(data) : [];
+        return data ? JSON.parse(data) : [];
       } catch (e) {
         console.error('Error getting wishlist:', e);
         return [];
