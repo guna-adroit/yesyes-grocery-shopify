@@ -202,7 +202,7 @@
       }
     }
 
-    async function getWishlistServer() {
+    {% comment %} async function getWishlistServer() {
       const wishlistButton = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
       const productElement = document.querySelector('.wishlist-product-page');
       
@@ -253,7 +253,7 @@
       console.error('Error getting wishlist:', e);
       return [];
     }
-  }
+  } {% endcomment %}
 
     function saveWishlistLocal(wishlist) {
       try {
