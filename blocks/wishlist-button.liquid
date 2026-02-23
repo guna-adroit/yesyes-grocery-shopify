@@ -206,15 +206,11 @@
       const wishlistButton = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
       const productElement = document.querySelector('.wishlist-product-page');
       
-      if (productElement) {
         const productId = productElement.getAttribute('data-product-id');
         const productIdString = String(productId); // or productId.toString()
         const productIds = [productIdString];
 
         console.log(productIds); // ["15573512093777"]
-      } else {
-        console.log("Product element not found");
-      }
     
     try {
       
