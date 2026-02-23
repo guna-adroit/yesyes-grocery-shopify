@@ -145,7 +145,7 @@
   (function() {
     const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
     const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews'; // keep if using app proxy
-    
+    getWishlistServer();
 
     function initProductPageWishlist() {
       const button = document.querySelector('.wishlist-btn-product-page[data-wishlist-btn]');
@@ -208,9 +208,17 @@
               throw new Error(data.error || 'Failed to get wishlist details');
             } {% endcomment %}
 
-            
+            productIds.forEach((id) => {
+              const gid = `gid://shopify/Product/${id}`;
+              const isInWishlist = data[gid] === true;
+              if(isInWishlist){
+                wishlistButton.classList.add('active');
+              }
+              
+              console.log(`Product ${id}:`, isInWishlist ? "In Wishlist" : "Not in Wishlist");
+            });
 
-        return data ? JSON.parse(data) : [];
+        return wishlistData ? JSON.parse(data) : [];
       } catch (e) {
         console.error('Error getting wishlist:', e);
         return [];
