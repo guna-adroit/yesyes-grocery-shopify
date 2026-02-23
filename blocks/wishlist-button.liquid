@@ -156,12 +156,19 @@
       if (isInWishlist(productId)) {
         button.classList.add('active');
       }
+      if (isInWishlistServer(productId)) {
+        button.classList.add('active');
+      }
 
       button.addEventListener('click', handleWishlistToggle);
     }
 
     function isInWishlist(productId) {
       const wishlist = getWishlist();
+      return wishlist.includes(productId);
+    }
+    function isInWishlistServer(productId) {
+      const wishlist = getWishlistServer();
       return wishlist.includes(productId);
     }
 
@@ -201,15 +208,7 @@
               throw new Error(data.error || 'Failed to get wishlist details');
             } {% endcomment %}
 
-            productIds.forEach((id) => {
-              const gid = `gid://shopify/Product/${id}`;
-              const isInWishlist = data[gid] === true;
-              if(isInWishlist){
-                wishlistButton.classList.add('active');
-              }
-              
-              console.log(`Product ${id}:`, isInWishlist ? "In Wishlist" : "Not in Wishlist");
-            });
+            
 
         return wishlistData ? JSON.parse(data) : [];
       } catch (e) {
