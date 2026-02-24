@@ -133,7 +133,7 @@ class ProductRecommendations extends HTMLElement {
         // Product Star rating start
         (function () {
           console.log("Star rating script initialized");
-          const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+          const BASE = window.location.origin + '/apps/reviews';
 
           /* ----------------------------------
             Main Function - Can be called multiple times

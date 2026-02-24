@@ -1,5 +1,6 @@
 (function () {
-  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  // BASE= origin + '/apps/reviews';
+  const BASE = window.location.origin + '/apps/reviews';
 
   /* ----------------------------------
      Main Function - Can be called multiple times
@@ -158,7 +159,7 @@
 // Product page star rating
 
 (function () {
-  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  const BASE = window.location.origin + '/apps/reviews';
 
   function initProductPageStars() {
     const container = document.querySelector('.product-stars-container[data-product-id]');
