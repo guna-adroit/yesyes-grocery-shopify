@@ -303,9 +303,10 @@
     box-shadow: 0 2px 10px rgba(230, 53, 53, 0.25);
   }
 
-  .wishlist-icon-btn.active .wishlist-icon path {
+  .wishlist-icon-btn.active svg path {
     fill: #e63535;
     stroke: #e63535;
+    color: #e63535;
   }
 
   /* ─── Disabled / Loading ─────────────────────────────────────────────────── */
