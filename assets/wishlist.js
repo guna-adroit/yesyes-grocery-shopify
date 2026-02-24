@@ -1,8 +1,8 @@
 (function () {
   const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
-  const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
-  const IS_LOGGED_IN = {{ customer | json }} !== null; // Rendered server-side once
-  const CUSTOMER_ID = IS_LOGGED_IN ? "{{ customer.id }}" : null;
+  const IS_LOGGED_IN = window.WishlistConfig?.isLoggedIn ?? false;
+  const CUSTOMER_ID  = window.WishlistConfig?.customerId ?? null;
+  const APP_PROXY_URL = window.WishlistConfig?.appProxyUrl ?? '';
 
   // ─── Shared Utilities ──
 
