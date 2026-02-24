@@ -408,7 +408,6 @@
 }
 </style> {% endcomment %}
 <script>
-  // assets/wishlist-button.js
 
 (function () {
   const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
@@ -416,7 +415,7 @@
   const IS_LOGGED_IN = {{ customer | json }} !== null; // Rendered server-side once
   const CUSTOMER_ID = IS_LOGGED_IN ? "{{ customer.id }}" : null;
 
-  // ─── Shared Utilities ────────────────────────────────────────────────────────
+  // ─── Shared Utilities ──
 
   function getLocalWishlist() {
     try {
