@@ -94,20 +94,20 @@ class ProductRecommendations extends HTMLElement {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
 
-          document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
+          // document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
 
-          const initSwymButtons = (swat) => {
-            console.log("SWYM: Initializing product recommendations");
-            swat.initializeActionButtons(`body`); 
-            swat.collectionsApi.initializeCollections(swat, true, window.Shopify.theme.schema_name);
-          };
+          // const initSwymButtons = (swat) => {
+          //   console.log("SWYM: Initializing product recommendations");
+          //   swat.initializeActionButtons(`body`); 
+          //   swat.collectionsApi.initializeCollections(swat, true, window.Shopify.theme.schema_name);
+          // };
 
-          if (window.SwymCallbacks) {
-            initSwymButtons(window._swat);
-          } else {
-            window.SwymCallbacks = window.SwymCallbacks || [];
-            window.SwymCallbacks.push(initSwymButtons);
-          }
+          // if (window.SwymCallbacks) {
+          //   initSwymButtons(window._swat);
+          // } else {
+          //   window.SwymCallbacks = window.SwymCallbacks || [];
+          //   window.SwymCallbacks.push(initSwymButtons);
+          // }
 
 
           // setTimeout(() => {
