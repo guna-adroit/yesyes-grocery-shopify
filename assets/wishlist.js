@@ -1,14 +1,6 @@
 (function() {
-    const title = {
-        {
-            product.title | json
-        }
-    };
-    const image = {
-        {
-            product.featured_image | image_url: width: 300 | json
-        }
-    };
+    const title = {{ product.title | json }};
+    const image = {{ product.featured_image | image_url: width: 300 | json }};
     const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
     const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews'; // keep if using app proxy
 
@@ -268,15 +260,12 @@
 })();
 
 
-
+/*
 
 (function () {
   const config = window.WISHLIST_CONFIG;
   if (!config) return;
 
-  /* =========================================================
-     WISHLIST STORE (Single Source of Truth)
-  ========================================================== */
 
   const WishlistStore = {
     verifiedCache: new Map(),
@@ -353,9 +342,6 @@
     },
   };
 
-  /* =========================================================
-     TOAST
-  ========================================================== */
 
   function showToast(title, image, type) {
     const old = document.querySelector(".wishlist-toast");
@@ -383,9 +369,7 @@
     }, 2500);
   }
 
-  /* =========================================================
-     WEB COMPONENT
-  ========================================================== */
+
 
   class WishlistButton extends HTMLElement {
     connectedCallback() {
@@ -518,4 +502,4 @@
   if (!customElements.get("wishlist-button")) {
     customElements.define("wishlist-button", WishlistButton);
   }
-})();
+})();*/
