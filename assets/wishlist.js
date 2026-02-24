@@ -1,246 +1,281 @@
-
-
-
-/*
-
 (function () {
-  const config = window.WISHLIST_CONFIG;
-  if (!config) return;
+  const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
+  const APP_PROXY_URL = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  const IS_LOGGED_IN = {{ customer | json }} !== null; // Rendered server-side once
+  const CUSTOMER_ID = IS_LOGGED_IN ? "{{ customer.id }}" : null;
 
+  // ─── Shared Utilities ──
 
-  const WishlistStore = {
-    verifiedCache: new Map(),
-
-    getLocal() {
+  function getLocalWishlist() {
     try {
-        const data = JSON.parse(localStorage.getItem(config.storageKey)) || [];
-        return data.map(String); // normalize to string
+      return JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
     } catch {
-        return [];
+      return [];
     }
-    },
+  }
 
-    setLocal(data) {
-      localStorage.setItem(config.storageKey, JSON.stringify(data));
-    },
+  function saveLocalWishlist(wishlist) {
+    try {
+      localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    } catch (e) {
+      console.error('Error saving wishlist:', e);
+    }
+  }
 
-    async verifyBulk(productIds) {
-      if (!config.customerId || !productIds.length) return {};
+  function toGid(type, id) {
+    return `gid://shopify/${type}/${id}`;
+  }
 
-      try {
-        const response = await fetch(
-          `${config.appProxyUrl}/api/v1/wishlist/integration/verify`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              customerId: config.customerId,
-              productIds: productIds.map(
-                (id) => `gid://shopify/Product/${id}`
-              ),
-            }),
-          }
-        );
+  function dispatchWishlistEvent(productId, status) {
+    document.dispatchEvent(new CustomEvent('wishlist:updated', {
+      detail: { productId, status }
+    }));
+  }
 
-        if (!response.ok) throw new Error("Verify failed");
+  function showWishlistToast(title, image, type) {
+    const existing = document.querySelector('.wishlist-toast');
+    if (existing) existing.remove();
 
-        const data = await response.json();
+    const toast = document.createElement('div');
+    toast.className = `wishlist-toast ${type}`;
+    toast.innerHTML = `
+      <div class="wishlist-toast-inner">
+        <img src="${image}" alt="${title}" />
+        <div class="wishlist-toast-content">
+          <strong>${title}</strong>
+          <p>${title} has been ${type} ${type === 'added' ? 'to' : 'from'} your Wishlist.</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(toast);
 
-        Object.entries(data).forEach(([gid, value]) => {
-          const id = gid.split("/").pop();
-          this.verifiedCache.set(id, value);
-        });
+    requestAnimationFrame(() => toast.classList.add('show'));
 
-        return data;
-      } catch (err) {
-        console.error("Wishlist verify error:", err);
-        return {};
-      }
-    },
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hide');
+      setTimeout(() => toast.remove(), 400);
+    }, 3000);
+  }
 
-    async toggleServer(productId) {
-      const response = await fetch(
-        `${config.appProxyUrl}/api/v1/wishlist/integration/toggle`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customerId: config.customerId,
-            productId: `gid://shopify/Product/${productId}`,
-          }),
+  // ─── Server API ──────────────────────────────────────────────────────────────
+
+  async function verifyWishlistServer(productIds) {
+    // productIds: array of numeric strings e.g. ['12345678']
+    // Returns a Set of product IDs that are in the wishlist
+    try {
+      const response = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: toGid('Customer', CUSTOMER_ID),
+          productIds: productIds
+        })
+      });
+
+      if (!response.ok) throw new Error('Verify request failed');
+
+      const data = await response.json();
+      // data shape: { "gid://shopify/Product/123": true, ... }
+
+      const activeIds = new Set();
+      productIds.forEach(id => {
+        if (data[toGid('Product', id)] === true) {
+          activeIds.add(id);
         }
-      );
+      });
+
+      return activeIds;
+    } catch (e) {
+      console.error('Error verifying wishlist:', e);
+      return new Set();
+    }
+  }
+
+  async function toggleWishlistServer(productId, title, image, button) {
+    const productGid = toGid('Product', productId);
+    const customerGid = toGid('Customer', CUSTOMER_ID);
+
+    // Optimistic UI
+    button.classList.toggle('active');
+    button.disabled = true;
+
+    try {
+      const response = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/toggle`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customerId: customerGid, productId: productGid })
+      });
 
       const data = await response.json();
 
       if (!response.ok || data.error) {
-        throw new Error(data.error || "Toggle failed");
+        // Revert optimistic update
+        button.classList.toggle('active');
+        throw new Error(data.error || 'Toggle failed');
       }
 
-      this.verifiedCache.set(productId, data.status === "added");
+      // Confirm UI matches server response
+      button.classList.toggle('active', data.status === 'added');
+      showWishlistToast(title, image, data.status);
+      dispatchWishlistEvent(productId, data.status);
 
-      return data.status;
-    },
-  };
-
-
-  function showToast(title, image, type) {
-    const old = document.querySelector(".wishlist-toast");
-    if (old) old.remove();
-
-    const toast = document.createElement("div");
-    toast.className = `wishlist-toast ${type}`;
-    toast.innerHTML = `
-      <div class="wishlist-toast-inner">
-        <img src="${image}" alt="${title}">
-        <div>
-          <strong>${title}</strong>
-          <p>${type === "added" ? "Added to Wishlist" : "Removed from Wishlist"}</p>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(toast);
-
-    requestAnimationFrame(() => toast.classList.add("show"));
-
-    setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => toast.remove(), 300);
-    }, 2500);
+    } catch (e) {
+      console.error('Error toggling wishlist:', e);
+    } finally {
+      button.disabled = false;
+    }
   }
 
+  function toggleWishlistLocal(productId, title, image, button) {
+    const wishlist = getLocalWishlist();
+    const index = wishlist.indexOf(productId);
+    const status = index > -1 ? 'removed' : 'added';
 
+    if (status === 'removed') {
+      wishlist.splice(index, 1);
+    } else {
+      wishlist.push(productId);
+    }
+
+    button.classList.toggle('active', status === 'added');
+    saveLocalWishlist(wishlist);
+    showWishlistToast(title, image, status);
+    dispatchWishlistEvent(productId, status);
+  }
+
+  // ─── Web Component ───────────────────────────────────────────────────────────
 
   class WishlistButton extends HTMLElement {
+    constructor() {
+      super();
+      this._initialized = false;
+    }
+
     connectedCallback() {
+      if (this._initialized) return;
+      this._initialized = true;
+
       this.productId = this.dataset.productId;
-      this.title = this.dataset.productTitle || "";
-      this.image = this.dataset.productImage || "";
+      this.title = this.dataset.productTitle;
+      this.image = this.dataset.productImage;
+      this.button = this.querySelector('[data-wishlist-btn]');
 
-      if (!this.productId) return;
+      if (!this.button || !this.productId) return;
 
-      this.render();
-      this.initialize();
+      // Check initial state
+      this._setInitialState();
+
+      // Bind click
+      this.button.addEventListener('click', (e) => {
+        e.preventDefault();
+        this._handleToggle();
+      });
+
+      // Listen for external wishlist updates (e.g. removed from wishlist page)
+      document.addEventListener('wishlist:updated', (e) => {
+        if (e.detail.productId === this.productId) {
+          this.button.classList.toggle('active', e.detail.status === 'added');
+        }
+      });
     }
 
-    render() {
-        const variant = this.dataset.variant || "default";
-
-        if (variant === "icon") {
-            this.innerHTML = `
-            <button type="button"
-                    class="wishlist-btn wishlist-btn--icon"
-                    aria-pressed="false"
-                    aria-label="Add to Wishlist">
-
-                <svg class="wishlist-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path class="wishlist-outline"
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
-                        a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23
-                        l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                        stroke="currentColor"
-                        stroke-width="2"/>
-
-                <path class="wishlist-filled"
-                        d="M12 21.23l-7.78-7.78a5.5 5.5 0 0 1
-                        7.78-7.78 5.5 5.5 0 0 1
-                        7.78 7.78L12 21.23z"
-                        fill="currentColor"/>
-                </svg>
-
-            </button>
-            `;
-        } else {
-            this.innerHTML = `
-            <button type="button"
-                    class="wishlist-btn"
-                    aria-pressed="false">
-                <span class="wishlist-label-add">Add to Wishlist</span>
-                <span class="wishlist-label-remove">Remove from Wishlist</span>
-            </button>
-            `;
-        }
-
-        this.button = this.querySelector("button");
-        this.button.addEventListener("click", () => this.handleToggle());
-        }
-
-    async initialize() {
-      if (config.customerId) {
-        if (!WishlistStore.verifiedCache.has(this.productId)) {
-          await WishlistStore.verifyBulk([this.productId]);
-        }
-
-        if (WishlistStore.verifiedCache.get(this.productId)) {
-          this.setActive(true);
-        }
+    async _setInitialState() {
+      if (IS_LOGGED_IN) {
+        // Server verify — this is the FIX: properly await and apply result
+        const activeIds = await verifyWishlistServer([this.productId]);
+        this.button.classList.toggle('active', activeIds.has(this.productId));
       } else {
-        const local = WishlistStore.getLocal();
-        if (local.includes(this.productId)) {
-          this.setActive(true);
-        }
+        // Local storage check
+        const wishlist = getLocalWishlist();
+        this.button.classList.toggle('active', wishlist.includes(this.productId));
       }
-
-      this.button.addEventListener("click", () =>
-        this.handleToggle()
-      );
     }
 
-    async handleToggle() {
-      if (this.button.disabled) return;
-
-      this.button.disabled = true;
-
-      try {
-        if (config.customerId) {
-          const status = await WishlistStore.toggleServer(
-            this.productId
-          );
-          this.setActive(status === "added");
-          showToast(this.title, this.image, status);
-        } else {
-          this.toggleLocal();
-        }
-
-        document.dispatchEvent(
-          new CustomEvent("wishlist:updated", {
-            detail: { productId: this.productId },
-          })
-        );
-      } catch (err) {
-        console.error("Wishlist toggle error:", err);
+    async _handleToggle() {
+      if (IS_LOGGED_IN) {
+        await toggleWishlistServer(this.productId, this.title, this.image, this.button);
+      } else {
+        toggleWishlistLocal(this.productId, this.title, this.image, this.button);
       }
-
-      this.button.disabled = false;
-    }
-
-    toggleLocal() {
-        const productId = String(this.productId);
-        const wishlist = WishlistStore.getLocal();
-
-        const index = wishlist.indexOf(productId);
-
-        if (index > -1) {
-            wishlist.splice(index, 1);
-            this.setActive(false);
-            showToast(this.title, this.image, "removed");
-        } else {
-            wishlist.push(productId);
-            this.setActive(true);
-            showToast(this.title, this.image, "added");
-        }
-
-        WishlistStore.setLocal(wishlist);
-    }
-
-    setActive(state) {
-      this.button.classList.toggle("active", state);
-      this.button.setAttribute("aria-pressed", state);
     }
   }
 
-  if (!customElements.get("wishlist-button")) {
-    customElements.define("wishlist-button", WishlistButton);
+  customElements.define('wishlist-button', WishlistButton);
+
+  // ─── Batch Verify for Product Cards ─────────────────────────────────────────
+  // If multiple <wishlist-button> elements are on the same page (collection/search),
+  // this batches the verify call into ONE request instead of N requests.
+
+  let batchTimer = null;
+  let pendingIds = new Set();
+  let pendingComponents = new Map(); // productId -> WishlistButton[]
+
+  function scheduleBatchVerify(productId, component) {
+    pendingIds.add(productId);
+
+    if (!pendingComponents.has(productId)) {
+      pendingComponents.set(productId, []);
+    }
+    pendingComponents.get(productId).push(component);
+
+    clearTimeout(batchTimer);
+    batchTimer = setTimeout(async () => {
+      if (!IS_LOGGED_IN) return;
+
+      const ids = [...pendingIds];
+      pendingIds.clear();
+
+      const activeIds = await verifyWishlistServer(ids);
+
+      ids.forEach(id => {
+        const components = pendingComponents.get(id) || [];
+        components.forEach(c => {
+          if (c.button) {
+            c.button.classList.toggle('active', activeIds.has(id));
+          }
+        });
+        pendingComponents.delete(id);
+      });
+    }, 50); // Wait 50ms to collect all components on the page
   }
-})();*/
+
+  // Patch _setInitialState to use batching when on non-product pages
+  const isProductPage = !!document.querySelector('.product-page, [data-product-page]');
+
+  if (!isProductPage) {
+    // Override for collection/search pages to batch the verify call
+    const originalConnectedCallback = WishlistButton.prototype.connectedCallback;
+    WishlistButton.prototype.connectedCallback = function () {
+      if (this._initialized) return;
+      this._initialized = true;
+
+      this.productId = this.dataset.productId;
+      this.title = this.dataset.productTitle;
+      this.image = this.dataset.productImage;
+      this.button = this.querySelector('[data-wishlist-btn]');
+
+      if (!this.button || !this.productId) return;
+
+      // Use batch verify instead of individual verify
+      if (IS_LOGGED_IN) {
+        scheduleBatchVerify(this.productId, this);
+      } else {
+        const wishlist = getLocalWishlist();
+        this.button.classList.toggle('active', wishlist.includes(this.productId));
+      }
+
+      this.button.addEventListener('click', (e) => {
+        e.preventDefault();
+        this._handleToggle();
+      });
+
+      document.addEventListener('wishlist:updated', (e) => {
+        if (e.detail.productId === this.productId) {
+          this.button.classList.toggle('active', e.detail.status === 'added');
+        }
+      });
+    };
+  }
+
+})();
