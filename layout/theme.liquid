@@ -44,6 +44,7 @@
     </script>
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
+    {{ 'wishlist.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
