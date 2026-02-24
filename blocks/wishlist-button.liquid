@@ -186,16 +186,12 @@
     function isInWishlist(productId) {
         const wishlist = getWishlist();
         return wishlist.includes(productId);
-    } {
-        % comment %
-    }
+    } {% comment %}
 
     function isInWishlistServer(productId) {
         const wishlist = getWishlistServer();
         return wishlist.includes(productId);
-    } {
-        % endcomment %
-    }
+    } {% endcomment %}
 
     function getWishlist() {
         try {
