@@ -257,38 +257,8 @@
     </div>
   {% endif %}
 
-  <wishlist-button
-    data-product-id="{{ product.id }}"
-    data-product-title="{{ product.title | escape }}"
-    data-product-image="{{ product.featured_image | image_url: width: 300 }}"
-    data-variant="icon"
-  >
-  </wishlist-button>
-  {% comment %} <div aria-label="Add to Wishlist" 
-              data-with-epi="true" 
-              class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}" 
-              data-swaction="addToWishlist" 
-              data-product-id="{{product.id | json}}" 
-              data-variant-id="{{product.variants[0].id}}" 
-              data-product-url="{{ shop.url }}{{roduct.url }}">
-
-  </div> {% endcomment %}
-  {% comment %} <div class="product-badges product-badges--top-right wishlist-icon-position card-wishlist">
-    <div class="product-badges__badge ">
-      <div aria-label="Add to Wishlist" 
-              data-with-epi="true" 
-              class="swym-button card-wishlist-button swym-add-to-wishlist-view-product product_{{product.id}}" 
-              data-swaction="addToWishlist" 
-              data-product-id="{{product.id | json}}" 
-              data-variant-id="{{product.variants[0].id}}" 
-              data-product-url="{{ shop.url }}{{roduct.url }}"
-      >
-          <span class="svg-wrapper collection-wishlist-icon">
-            {{- 'icon-heart.svg' | inline_asset_content -}}
-          </span>
-      </div>
-    </div>
-  </div> {% endcomment %}
+  
+  {% render 'wishlist-icon', product: card_product %}
   
 </product-card>
 {%- if settings.transition_to_main_product -%}
