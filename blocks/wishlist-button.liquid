@@ -183,8 +183,9 @@
         button.addEventListener('click', handleWishlistToggle);
     }
 
-    function isInWishlist(productId) {
+   async function isInWishlist(productId) {
         const wishlist = getWishlist();
+        const wishlistServer = await getWishlistServer()
         return wishlist.includes(productId);
     } {% comment %}
 
