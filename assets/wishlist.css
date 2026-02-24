@@ -22,9 +22,9 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: {{ block.settings.button_background | default: 'transparent' }};
-    border: {{ block.settings.button_border_width | default: 2 }}px solid {{ block.settings.button_border_color | default: '#000000' }};
-    color: {{ block.settings.button_text_color | default: '#000000' }};
+    background: white;
+    border: 1px solid #ed1d23;
+    color: #ed1d23;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: 500;
@@ -42,7 +42,7 @@
   /* ─── Hover ──────────────────────────────────────────────────────────────── */
 
   .wishlist-btn:hover:not(:disabled) {
-    background: {{ block.settings.button_hover_background | default: '#f5f5f5' }};
+    background: #ed1d23;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
