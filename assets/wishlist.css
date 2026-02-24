@@ -293,7 +293,7 @@
   }
 
   .wishlist-icon-btn:hover:not(:disabled) .wishlist-icon path {
-    stroke: {{ block.settings.active_button_background | default: '#e63535' }};
+    stroke: #e63535;
   }
 
   /* ─── Active / In Wishlist ───────────────────────────────────────────────── */
@@ -304,8 +304,8 @@
   }
 
   .wishlist-icon-btn.active .wishlist-icon path {
-    fill: {{ block.settings.active_button_background | default: '#e63535' }};
-    stroke: {{ block.settings.active_button_background | default: '#e63535' }};
+    fill: #e63535;
+    stroke: #e63535;
   }
 
   /* ─── Disabled / Loading ─────────────────────────────────────────────────── */
