@@ -43,7 +43,7 @@
         <img src="${image}" alt="${title}" />
         <div class="wishlist-toast-content">
           <strong>${title}</strong>
-          <p>${title} has been ${type} ${type === 'added' ? 'to' : 'from'} your Wishlist.</p>
+          <p>has been ${type} ${type === 'added' ? 'to' : 'from'} your Wishlist.</p>
         </div>
       </div>
     `;
