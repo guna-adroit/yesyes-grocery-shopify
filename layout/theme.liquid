@@ -39,7 +39,7 @@
       window.WishlistConfig = {
         isLoggedIn: {{ customer | json }} !== null,
         customerId: {{ customer.id | json }},
-        appProxyUrl: '{{ routes.root_url }}apps/reviews'
+        appProxyUrl: `{{ routes.root_url | json}}apps/reviews`
       };
     </script>
 
