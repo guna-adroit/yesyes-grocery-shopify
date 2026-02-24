@@ -176,9 +176,9 @@
         if (isInWishlist(productId)) {
             button.classList.add('active');
         }
-        if (isInWishlistServer(productId)) {
+        {% comment %} if (isInWishlistServer(productId)) {
             button.classList.add('active');
-        }
+        } {% endcomment %}
 
         button.addEventListener('click', handleWishlistToggle);
     }
