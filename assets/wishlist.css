@@ -303,7 +303,7 @@
     box-shadow: 0 2px 10px rgba(230, 53, 53, 0.25);
   }
 
-  .wishlist-icon-btn.active svg path {
+  .wishlist-icon-btn.active svg path, .wishlist-icon-btn.active svg{
     fill: #e63535;
     stroke: #e63535;
     color: #e63535;
