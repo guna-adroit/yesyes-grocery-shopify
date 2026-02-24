@@ -39,15 +39,16 @@
     overflow: hidden;
   }
 
-  /* ─── Hover ──────────────────────────────────────────────────────────────── */
+
 
   .wishlist-btn:hover:not(:disabled) {
     background: #ed1d23;
+    color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  /* ─── Disabled / Loading ─────────────────────────────────────────────────── */
+
 
   .wishlist-btn:disabled {
     opacity: 0.6;
