@@ -1,5 +1,5 @@
 (function () {
-  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
   /* ----------------------------------
      Main Function - Can be called multiple times
