@@ -70,7 +70,8 @@
         "empty_cta_text": "Start Shopping",
         "error_message": "Something went wrong loading your wishlist. Please try again.",
         "columns_desktop": "4",
-        "columns_mobile": "2"
+        "columns_mobile": "2",
+        "featured_product": "adf-soul-garlic-pickle-275g"
       }
     }
   },
