@@ -11,7 +11,7 @@
 {% endcomment %}
 
 <a
-  href="/pages/wishlist"
+  href="/pages/yesyes-wishlist"
   class="wishlist-nav-icon"
   aria-label="Wishlist">
   <svg
@@ -29,41 +29,3 @@
   </svg>
   <wishlist-count class="wishlist-nav-icon__badge"></wishlist-count>
 </a>
-
-<style>
-  .wishlist-nav-icon {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-foreground, #111827);
-    text-decoration: none;
-  }
-
-  .wishlist-nav-icon__svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .wishlist-nav-icon__badge {
-    position: absolute;
-    top: -0.4rem;
-    right: -0.5rem;
-    min-width: 1.1rem;
-    height: 1.1rem;
-    padding: 0 0.2rem;
-    background: var(--color-wishlist-active, #ef4444);
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: 700;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  .wishlist-nav-icon__badge[hidden] {
-    display: none;
-  }
-</style>
