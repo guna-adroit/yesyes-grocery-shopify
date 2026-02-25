@@ -221,7 +221,7 @@
 
     _render() {
       if (this._count > 0) {
-        this.textContent = `(${this._count})`;
+        this.textContent = `${this._count}`;
         this.removeAttribute('hidden');
       } else {
         this.textContent = '';
