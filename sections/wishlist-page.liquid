@@ -101,7 +101,7 @@
   </div>
 </template>
 {% assign product = section.settings.featured_product %}
-
+{{ section.settings.featured_product }}
 {% if product != blank %}
   <h2>{{ product.title }}</h2>
   <a href="{{ product.url }}">
