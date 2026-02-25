@@ -1,47 +1,47 @@
 /**
  * wishlist-page.js
  *
- * Renders the Wishlist page by:
- *  1. Fetching wishlist items (server API for logged-in, localStorage for guests)
- *  2. For each product handle, calling Shopify's Section Rendering API:
- *       /products/{handle}?sections=wishlist-product-card
- *     This renders sections/wishlist-product-card.liquid server-side, giving
- *     full access to the Liquid `product` object (price, images, availability,
- *     all_products[handle], etc.) — no JS-side price formatting needed.
- *  3. Injecting the returned HTML directly into the grid.
+ * Renders the Wishlist page. Load only on the wishlist page template.
  *
- * ─── Guest (localStorage) handle caching ──────────────────────────────────────
- *  Since localStorage only stores product IDs, handles are cached in a separate
- *  key (`shopify_wishlist_meta`) whenever a wishlist-button element is found in
- *  the DOM. This works automatically as long as your wishlist-button elements
- *  include the data-product-handle attribute:
+ * Depends on (loaded in theme.liquid globally):
+ *   • wishlist-button.js  — handles toggle buttons, writes localStorage meta
+ *   • wishlist-count.js   — defines <wishlist-count> web component
  *
- *    <wishlist-button
- *      data-product-id="{{ product.id }}"
- *      data-product-handle="{{ product.handle }}"   ← add this
- *      data-product-title="{{ product.title | escape }}"
- *      data-product-image="{{ product.featured_image | image_url: width: 400 }}">
+ * How product cards are rendered:
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  For each product handle, we call Shopify's Section Rendering API:
+ *    /products/{handle}?sections=wishlist-product-card
+ *  Shopify renders sections/wishlist-product-card.liquid server-side with full
+ *  access to the Liquid `product` object — correct prices, images, availability.
  *
- *  On every page load (product, collection, search), this script scans the DOM
- *  and populates the meta cache automatically. On the wishlist page itself the
- *  handles come directly from the API response (server) or the meta cache (guest).
+ * localStorage flow (guest users):
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  wishlist-button.js writes two localStorage keys:
+ *    shopify_wishlist       → ["id1", "id2", ...]
+ *    shopify_wishlist_meta  → { "id1": { handle, title, image }, ... }
+ *
+ *  The meta key is written at the moment a product is added to the wishlist,
+ *  so handles are always available when this page loads — no DOM scanning needed.
+ *
+ *  If a meta entry is missing for any ID (e.g. old data before this update),
+ *  we fall back to Shopify's /products/{id}.js AJAX endpoint to resolve the handle.
  */
 
 (function () {
   'use strict';
 
-  // ─── Config ──────────────────────────────────────────────────────────────────
+  // ─── Config ───────────────────────────────────────────────────────────────────
 
-  const IS_LOGGED_IN   = window.WishlistConfig?.isLoggedIn   ?? false;
-  const CUSTOMER_ID    = window.WishlistConfig?.customerId   ?? null;
-  const APP_PROXY_URL  = window.WishlistConfig?.appProxyUrl  ?? '';
-  const PAGE_LIMIT     = window.WishlistConfig?.pageLimit    ?? 12;
-  const CARD_SECTION   = window.WishlistConfig?.cardSection  ?? 'wishlist-product-card';
+  const IS_LOGGED_IN  = window.WishlistConfig?.isLoggedIn  ?? false;
+  const CUSTOMER_ID   = window.WishlistConfig?.customerId  ?? null;
+  const APP_PROXY_URL = window.WishlistConfig?.appProxyUrl ?? '';
+  const PAGE_LIMIT    = window.WishlistConfig?.pageLimit   ?? 12;
+  const CARD_SECTION  = window.WishlistConfig?.cardSection ?? 'wishlist-product-card';
 
-  const STORAGE_KEY      = 'shopify_wishlist';       // IDs array — shared with wishlist-button.js
-  const STORAGE_META_KEY = 'shopify_wishlist_meta';  // { [productId]: { handle, title, image } }
+  const STORAGE_KEY      = 'shopify_wishlist';
+  const STORAGE_META_KEY = 'shopify_wishlist_meta';
 
-  // ─── DOM refs ────────────────────────────────────────────────────────────────
+  // ─── DOM refs ─────────────────────────────────────────────────────────────────
 
   const elLoading    = document.getElementById('wishlist-loading');
   const elEmpty      = document.getElementById('wishlist-empty');
@@ -51,13 +51,13 @@
   const elPagination = document.getElementById('wishlist-pagination');
   const retryBtn     = document.getElementById('wishlist-retry-btn');
 
-  // ─── Pagination state ────────────────────────────────────────────────────────
+  // ─── Pagination state ─────────────────────────────────────────────────────────
 
-  let serverCursor    = null;   // current page cursor for server API
-  let prevCursors     = [];     // stack for "back" navigation
-  let localPage       = 0;      // current page index for localStorage
+  let serverCursor = null;
+  let prevCursors  = [];
+  let localPage    = 0;
 
-  // ─── UI helpers ──────────────────────────────────────────────────────────────
+  // ─── UI state helpers ─────────────────────────────────────────────────────────
 
   function show(el) { el?.classList.remove('hidden'); }
   function hide(el) { el?.classList.add('hidden'); }
@@ -67,7 +67,7 @@
   function showError()   { hide(elLoading); hide(elEmpty); show(elError); hide(elResults); }
   function showResults() { hide(elLoading); hide(elEmpty); hide(elError); show(elResults); }
 
-  // ─── localStorage helpers ────────────────────────────────────────────────────
+  // ─── localStorage helpers ─────────────────────────────────────────────────────
 
   function getLocalIds() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
@@ -75,8 +75,15 @@
   }
 
   function removeLocalId(productId) {
-    const ids = getLocalIds().filter(id => id !== productId);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); } catch {}
+    const updated = getLocalIds().filter(id => id !== productId);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
+
+    // Also clean up meta
+    try {
+      const meta = JSON.parse(localStorage.getItem(STORAGE_META_KEY) || '{}');
+      delete meta[productId];
+      localStorage.setItem(STORAGE_META_KEY, JSON.stringify(meta));
+    } catch {}
   }
 
   function getLocalMeta() {
@@ -84,54 +91,70 @@
     catch { return {}; }
   }
 
-  function saveLocalMeta(meta) {
-    try { localStorage.setItem(STORAGE_META_KEY, JSON.stringify(meta)); } catch {}
-  }
+  // ─── Handle resolution ────────────────────────────────────────────────────────
+  // Primary source: meta cache written by wishlist-button.js.
+  // Fallback: Shopify AJAX product endpoint for IDs with no cached handle
+  // (covers products wishlisted before wishlist-button.js was updated).
 
-  /**
-   * Scan the DOM for any wishlist-button elements that carry a
-   * data-product-handle attribute and persist them to the meta cache.
-   * Called on every page so handles accumulate over time.
-   */
-  function cacheHandlesFromDOM() {
-    const buttons = document.querySelectorAll('wishlist-button[data-product-handle]');
-    if (!buttons.length) return;
+  async function resolveHandlesForIds(ids) {
+    const meta    = getLocalMeta();
+    const handles = [];
+    const missing = [];   // IDs not in the meta cache
 
-    const meta = getLocalMeta();
-    let changed = false;
-
-    buttons.forEach(el => {
-      const id     = el.dataset.productId;
-      const handle = el.dataset.productHandle;
-      if (id && handle && !meta[id]?.handle) {
-        meta[id] = {
-          handle: handle,
-          title:  el.dataset.productTitle || '',
-          image:  el.dataset.productImage || ''
-        };
-        changed = true;
+    ids.forEach(id => {
+      if (meta[id]?.handle) {
+        handles.push({ id, handle: meta[id].handle });
+      } else {
+        missing.push(id);
       }
     });
 
-    if (changed) saveLocalMeta(meta);
+    // Fallback: resolve missing IDs via /products/{id}.js
+    // Shopify redirects numeric-ID URLs to the product if it exists.
+    if (missing.length) {
+      const resolved = await Promise.allSettled(
+        missing.map(id =>
+          fetch(`/products/${id}.js`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        )
+      );
+
+      resolved.forEach((result, i) => {
+        const product = result.status === 'fulfilled' ? result.value : null;
+        if (product?.handle) {
+          handles.push({ id: missing[i], handle: product.handle });
+
+          // Backfill the meta cache so the next visit is instant
+          const meta = getLocalMeta();
+          meta[missing[i]] = {
+            handle: product.handle,
+            title:  product.title    || '',
+            image:  product.featured_image || ''
+          };
+          try { localStorage.setItem(STORAGE_META_KEY, JSON.stringify(meta)); } catch {}
+        }
+        // If still null: product was deleted — skip silently
+      });
+    }
+
+    // Return handles in the original ID order
+    return ids
+      .map(id => handles.find(h => h.id === id)?.handle)
+      .filter(Boolean);
   }
 
-  // ─── Section Rendering API ───────────────────────────────────────────────────
+  // ─── Section Rendering API ────────────────────────────────────────────────────
+  // Fetch rendered Liquid HTML for a single product handle.
+  // Shopify runs sections/wishlist-product-card.liquid in the context of
+  // /products/{handle}, giving full access to the `product` Liquid object.
 
-  /**
-   * Fetch the rendered Liquid card HTML for a single product handle.
-   * Shopify renders sections/wishlist-product-card.liquid in the context
-   * of /products/{handle}, so `product` and `all_products[handle]` are
-   * both available inside the section template.
-   *
-   * @param  {string} handle  Product handle e.g. "mayil-matta-rice"
-   * @returns {string|null}   Rendered HTML string, or null on failure
-   */
   async function fetchCardHTML(handle) {
     try {
-      const res = await fetch(`/products/${encodeURIComponent(handle)}?sections=${CARD_SECTION}`, {
-        headers: { 'X-Requested-With': 'fetch' }
-      });
+      const res = await fetch(
+        `/products/${encodeURIComponent(handle)}?sections=${encodeURIComponent(CARD_SECTION)}`,
+        { headers: { 'X-Requested-With': 'fetch' } }
+      );
 
       if (!res.ok) {
         console.warn(`[Wishlist] Section render failed for "${handle}": ${res.status}`);
@@ -146,40 +169,33 @@
     }
   }
 
-  /**
-   * Render the product grid from an array of handles.
-   * Fetches all cards in parallel and injects them into the DOM
-   * in their original list order.
-   *
-   * @param {string[]} handles
-   */
+  // Render a page of product handles into the grid.
+  // Cards are fetched in parallel but injected in list order.
   async function renderGrid(handles) {
     elGrid.innerHTML = '';
 
-    // Insert placeholder divs immediately to preserve order
+    // Pre-insert ordered slot divs so positions are locked before async fetches return
     const slots = handles.map(handle => {
       const slot = document.createElement('div');
-      slot.dataset.handle = handle;
+      slot.className        = 'wishlist-card-slot';
+      slot.dataset.handle   = handle;
       elGrid.appendChild(slot);
       return slot;
     });
 
-    // Fetch all cards in parallel
     const htmlResults = await Promise.all(handles.map(fetchCardHTML));
 
     htmlResults.forEach((html, i) => {
       if (html) {
-        slots[i].outerHTML = html;
+        // Replace the slot div with the real rendered card HTML
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        const card = tmp.firstElementChild;
+        slots[i].replaceWith(card);
       } else {
-        // Remove empty slot if section render failed (product deleted, etc.)
+        // Product may have been deleted — remove the empty slot
         slots[i].remove();
       }
-    });
-
-    // After all cards are in the DOM, trigger WishlistButton init
-    // (custom elements upgrade automatically, but re-scan just in case)
-    document.querySelectorAll('wishlist-button:not([data-initialized])').forEach(el => {
-      el.setAttribute('data-initialized', '');
     });
   }
 
@@ -206,19 +222,18 @@
     }
   }
 
-  // ─── Server flow (logged-in) ──────────────────────────────────────────────────
+  // ─── Count badge sync ─────────────────────────────────────────────────────────
+  // Broadcasts the known count to all <wishlist-count> elements on the page.
+  // wishlist-count.js exposes _setCount() on the element instance.
 
-  /**
-   * Call the server wishlist list endpoint.
-   * Returns items with `handle` fields ready for Section Rendering.
-   *
-   * Response shape:
-   * {
-   *   items: [{ productId, title, handle, available, hasMultipleVariants, image }],
-   *   pageInfo: { hasNextPage, hasPreviousPage, endCursor },
-   *   totalCount?: number
-   * }
-   */
+  function broadcastCount(n) {
+    document.querySelectorAll('wishlist-count').forEach(el => {
+      if (typeof el._setCount === 'function') el._setCount(n);
+    });
+  }
+
+  // ─── Server flow (logged-in users) ───────────────────────────────────────────
+
   async function fetchWishlistServer(cursor = null) {
     const res = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/list`, {
       method:  'POST',
@@ -238,19 +253,18 @@
   async function loadServerPage(cursor = null) {
     showLoading();
     try {
-      const data = await fetchWishlistServer(cursor);
+      const data  = await fetchWishlistServer(cursor);
       const items = data.items ?? [];
 
       if (!items.length) {
         showEmpty();
-        setCount(0);
+        broadcastCount(0);
         return;
       }
 
       serverCursor = data.pageInfo?.endCursor ?? null;
 
-      // Extract handles from the API response — this is the key change.
-      // We use the `handle` field directly from the server response.
+      // `handle` comes directly from the API response — no resolution needed
       const handles = items.map(item => item.handle).filter(Boolean);
 
       await renderGrid(handles);
@@ -259,7 +273,7 @@
         hasPrev: prevCursors.length > 0
       });
       showResults();
-      setCount(data.totalCount ?? items.length);
+      broadcastCount(data.totalCount ?? items.length);
 
     } catch (e) {
       console.error('[Wishlist] Server load error:', e);
@@ -273,11 +287,10 @@
   }
 
   function handleServerPrev() {
-    const cursor = prevCursors.pop() ?? null;
-    loadServerPage(cursor);
+    loadServerPage(prevCursors.pop() ?? null);
   }
 
-  // ─── Guest flow (localStorage) ───────────────────────────────────────────────
+  // ─── Guest flow (localStorage users) ─────────────────────────────────────────
 
   async function loadLocalPage(page = 0) {
     showLoading();
@@ -286,23 +299,17 @@
 
       if (!allIds.length) {
         showEmpty();
-        setCount(0);
+        broadcastCount(0);
         return;
       }
 
-      const meta     = getLocalMeta();
-      const start    = page * PAGE_LIMIT;
-      const pageIds  = allIds.slice(start, start + PAGE_LIMIT);
+      const start   = page * PAGE_LIMIT;
+      const pageIds = allIds.slice(start, start + PAGE_LIMIT);
 
-      // Map IDs to handles using the cached meta
-      const handles  = pageIds
-        .map(id => meta[id]?.handle)
-        .filter(Boolean);
+      // Resolve IDs to handles (meta cache first, AJAX fallback)
+      const handles = await resolveHandlesForIds(pageIds);
 
       if (!handles.length) {
-        // No handles cached yet — show a helpful empty/error state
-        console.warn('[Wishlist] No handles cached for guest wishlist. ' +
-          'Add data-product-handle to wishlist-button elements across your theme.');
         showError();
         return;
       }
@@ -313,7 +320,7 @@
         hasPrev: page > 0
       });
       showResults();
-      setCount(allIds.length);
+      broadcastCount(allIds.length);
 
     } catch (e) {
       console.error('[Wishlist] Local load error:', e);
@@ -331,74 +338,7 @@
     loadLocalPage(localPage);
   }
 
-  // ─── Wishlist count ───────────────────────────────────────────────────────────
-
-  function setCount(n) {
-    document.querySelectorAll('wishlist-count').forEach(el => {
-      if (typeof el._setCount === 'function') el._setCount(n);
-    });
-  }
-
-  // ─── <wishlist-count> Web Component ──────────────────────────────────────────
-  /**
-   * <wishlist-count>
-   *
-   * Displays the live wishlist item count. Listens to `wishlist:updated`
-   * events dispatched by wishlist-button.js so it stays in sync everywhere.
-   *
-   * Usage (place anywhere — nav, page heading, etc.):
-   *   <wishlist-count></wishlist-count>
-   *
-   * Renders as: "(3)" or is hidden when count is 0.
-   */
-  class WishlistCount extends HTMLElement {
-    connectedCallback() {
-      this._count = 0;
-      this._render();
-      this._initCount();
-
-      document.addEventListener('wishlist:updated', (e) => {
-        console.log("Wishlist updated;")
-        const delta = e.detail.status === 'added' ? 1 : -1;
-        this._setCount(Math.max(0, this._count + delta));
-      });
-    }
-
-    async _initCount() {
-      if (IS_LOGGED_IN) {
-        // Lightweight fetch to get totalCount — reuses the same list endpoint
-        try {
-          const data = await fetchWishlistServer(null);
-          this._setCount(data.totalCount ?? data.items?.length ?? 0);
-        } catch {
-          this._setCount(0);
-        }
-      } else {
-        this._setCount(getLocalIds().length);
-      }
-    }
-
-    _setCount(n) {
-      this._count = n;
-      this._render();
-    }
-
-    _render() {
-      if (this._count > 0) {
-        this.textContent = `(${this._count})`;
-        this.removeAttribute('hidden');
-      } else {
-        this.textContent = '';
-        this.setAttribute('hidden', '');
-      }
-    }
-  }
-
-  if (!customElements.get('wishlist-count')) {
-    customElements.define('wishlist-count', WishlistCount);
-  }
-
-  // ─── Remove card from DOM on wishlist:updated (removed) ──────────────────────
+  // ─── Remove card on wishlist:updated (removed) ────────────────────────────────
 
   document.addEventListener('wishlist:updated', (e) => {
     if (e.detail.status !== 'removed') return;
@@ -409,29 +349,28 @@
     card.classList.add('wishlist-card--removing');
     card.addEventListener('animationend', () => {
       card.remove();
-      if (elGrid?.children.length === 0) {
+      if (elGrid && elGrid.querySelectorAll('.wishlist-card').length === 0) {
         showEmpty();
-        setCount(0);
+        broadcastCount(0);
       }
     }, { once: true });
 
-    // Remove from localStorage for guest users
     if (!IS_LOGGED_IN) {
       removeLocalId(e.detail.productId);
     }
   });
 
-  // ─── Retry button ─────────────────────────────────────────────────────────────
+  // ─── Retry button ──────────────────────────────────────────────────────────────
 
   retryBtn?.addEventListener('click', () => {
-    IS_LOGGED_IN ? loadServerPage(null) : loadLocalPage(0);
+    if (IS_LOGGED_IN) {
+      loadServerPage(null);
+    } else {
+      loadLocalPage(0);
+    }
   });
 
-  // ─── Init ─────────────────────────────────────────────────────────────────────
-
-  // Always scan the DOM to cache handles for guest users
-  // (safe to call even when logged in — it's a no-op if no buttons exist)
-  cacheHandlesFromDOM();
+  // ─── Init ──────────────────────────────────────────────────────────────────────
 
   if (IS_LOGGED_IN) {
     loadServerPage(null);
@@ -440,4 +379,3 @@
   }
 
 })();
- 
