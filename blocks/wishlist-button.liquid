@@ -1,6 +1,7 @@
 {% comment %} snippets/wishlist-button.liquid {% endcomment %}
 <wishlist-button
   data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
   data-product-title="{{ product.title | escape }}"
   data-product-image="{{ product.featured_image | image_url: width: 300 }}"
   class="wishlist-btn-wrapper"
