@@ -358,6 +358,7 @@
       this._initCount();
 
       document.addEventListener('wishlist:updated', (e) => {
+        console.log("Wishlist updated;")
         const delta = e.detail.status === 'added' ? 1 : -1;
         this._setCount(Math.max(0, this._count + delta));
       });
