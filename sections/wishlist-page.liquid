@@ -100,7 +100,18 @@
     </div>
   </div>
 </template>
+{% assign product = section.settings.featured_product %}
 
+{% if product != blank %}
+  <h2>{{ product.title }}</h2>
+  <a href="{{ product.url }}">
+    <img 
+      src="{{ product.featured_image | image_url: width: 600 }}" 
+      alt="{{ product.featured_image.alt | escape }}"
+    >
+  </a>
+  <p>{{ product.price | money }}</p>
+{% endif %}
 <script>
   window.WishlistConfig = window.WishlistConfig || {};
   window.WishlistConfig.appProxyUrl   = {{ shop.url | append: '/apps/reviews' | json }};
@@ -191,6 +202,11 @@
       ],
       "default": "2",
       "label": "Columns on mobile"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Select product"
     }
   ],
   "presets": [
