@@ -100,7 +100,7 @@
     </div>
   </div>
 </template>
-{% assign product = section.settings.featured_product %}
+{% assign product = all_products[15612221128785] %}
 {{ section.settings.featured_product }}
 {% if product != blank %}
   <h2>{{ product.title }}</h2>
@@ -111,6 +111,7 @@
     >
   </a>
   <p>{{ product.price | money }}</p>
+  <p>{{ product.id }}</p>
 {% endif %}
 <script>
   window.WishlistConfig = window.WishlistConfig || {};
