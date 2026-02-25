@@ -127,7 +127,7 @@
   window.WishlistConfig.pageLimit    = {{ section.settings.products_per_page | default: 12 }};
   window.WishlistConfig.cardSection  = 'wishlist-product-card';
 </script>
-
+<script src="{{ 'wishlist-page.js' | asset_url }}" defer></script>
 
 {% comment %} <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> {% endcomment %}
 
