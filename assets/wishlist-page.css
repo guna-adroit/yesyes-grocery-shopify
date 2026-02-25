@@ -107,9 +107,8 @@ wishlist-count[hidden] {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 2.25rem;
-  height: 2.25rem; */
-  border-radius: 50%;
+  border-radius: 200px;
+  padding: 4px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--color-border, #e5e7eb);
   cursor: pointer;
@@ -118,8 +117,8 @@ wishlist-count[hidden] {
 }
 
 .wishlist-card__remove .wishlist-btn svg {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   pointer-events: none;
 }
 
