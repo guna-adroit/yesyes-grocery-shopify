@@ -160,6 +160,7 @@
   }
 
   function toggleWishlistLocal(productId, handle, title, image, button) {
+    console.log("LOCAL TOGGLE RUNNING");
     const wishlist = getLocalWishlist();
     const index    = wishlist.indexOf(productId);
     const status   = index > -1 ? 'removed' : 'added';
