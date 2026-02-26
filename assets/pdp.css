@@ -131,14 +131,14 @@ span.svg-wrapper.wishlist-icon{
     width: 26px;
     height: 26px;
 }
-.button.wishlist-button, .wishlist-btn{
+.button.wishlist-button{
     height: 60px;
     background-color: white !important;
 }
 .button.wishlist-button:hover{
     background-color:  #ed1d23!important;
 }
-.button.wishlist-button.disabled, .wishlist-btn.active{
+.button.wishlist-button.disabled{
     opacity: 0.7;
 }
 .button.wishlist-button.swym-added{
