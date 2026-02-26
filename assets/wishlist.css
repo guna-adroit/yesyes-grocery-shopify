@@ -29,9 +29,8 @@
     padding: 12px 24px;
     font-size: 16px;
     font-weight: 500;
+    height: 60px;
     cursor: pointer;
-    border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
-    width: {{ block.settings.button_width | default: 'auto' }};
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease,
                 transform 0.3s ease, box-shadow 0.3s ease;
 
