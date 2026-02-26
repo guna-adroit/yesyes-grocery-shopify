@@ -252,7 +252,7 @@
   const formEl = document.getElementById('yesyes-review-form');
   const statusEl = document.getElementById('yesyes-review-status');
 
-  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
 
 /* -----------------------------

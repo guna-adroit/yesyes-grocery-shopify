@@ -158,7 +158,7 @@
 // Product page star rating
 
 (function () {
-  const BASE = 'https://yesyes-grocerz.myshopify.com/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
   function initProductPageStars() {
     const container = document.querySelector('.product-stars-container[data-product-id]');
