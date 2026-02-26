@@ -48,7 +48,7 @@ class CartIcon extends Component {
     this.renderCartBubble(itemCount, comingFromProductForm);
     setTimeout( () => {
       renderWishlistCounter();
-    }, 800);
+    }, 1500);
   };
 
   /**
