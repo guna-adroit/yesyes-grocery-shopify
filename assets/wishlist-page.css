@@ -339,7 +339,7 @@ wishlist-count[hidden] {
 
 /* ─── Toast (shared, included here as fallback) ─── */
 
-.wishlist-toast {
+/* .wishlist-toast {
   position: fixed;
   bottom: 1.5rem;
   left: 50%;
@@ -405,4 +405,4 @@ wishlist-count[hidden] {
 
 .wishlist-toast.removed {
   border-left: 3px solid var(--color-border, #e5e7eb);
-}
+} */
