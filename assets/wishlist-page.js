@@ -3,35 +3,28 @@
  *
  * Renders the Wishlist page. Load only on the wishlist page template.
  *
- * Depends on (loaded globally in theme.liquid):
- *   • wishlist-button.js  — toggle buttons, writes localStorage meta
- *   • wishlist-count.js   — <wishlist-count> web component
+ * Depends on (loaded in theme.liquid globally):
+ *   • wishlist-button.js  — handles toggle buttons, writes localStorage meta
+ *   • wishlist-count.js   — defines <wishlist-count> web component
  *
- * ─── How product cards are rendered ──────────────────────────────────────────
- *  For each product handle we call Shopify's Section Rendering API:
+ * How product cards are rendered:
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  For each product handle, we call Shopify's Section Rendering API:
  *    /products/{handle}?sections=wishlist-product-card
- *  Shopify renders wishlist-product-card.liquid server-side with the full
- *  Liquid product object (price, images, availability, etc.)
+ *  Shopify renders sections/wishlist-product-card.liquid server-side with full
+ *  access to the Liquid `product` object — correct prices, images, availability.
  *
- * ─── Guest (localStorage) handle resolution ──────────────────────────────────
- *  wishlist-button.js writes two keys:
- *    shopify_wishlist       → ["id1", "id2", ...]       (written since v1)
- *    shopify_wishlist_meta  → { id: { handle, ... } }   (written since v2)
+ * localStorage flow (guest users):
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  wishlist-button.js writes two localStorage keys:
+ *    shopify_wishlist       → ["id1", "id2", ...]
+ *    shopify_wishlist_meta  → { "id1": { handle, title, image }, ... }
  *
- *  For IDs that exist in shopify_wishlist but NOT in shopify_wishlist_meta
- *  (products added before wishlist-button.js v2), we run a HEAD request:
+ *  The meta key is written at the moment a product is added to the wishlist,
+ *  so handles are always available when this page loads — no DOM scanning needed.
  *
- *    HEAD /products/{numericId}
- *
- *  Shopify redirects numeric-ID product URLs to their handle-based URL:
- *    /products/15573512093777  →  /products/mayil-matta-rice
- *
- *  We extract the handle from the final redirected URL and backfill the meta
- *  cache so subsequent page loads are instant.
- *
- *  This migration runs ONCE on the wishlist page for all missing IDs, then
- *  never again (the cache is populated). On the first visit for a guest with
- *  21 IDs and 5 handles, the page will resolve all 21 and show them all.
+ *  If a meta entry is missing for any ID (e.g. old data before this update),
+ *  we fall back to Shopify's /products/{id}.js AJAX endpoint to resolve the handle.
  */
 
 (function () {
@@ -64,7 +57,7 @@
   let prevCursors  = [];
   let localPage    = 0;
 
-  // ─── UI helpers ───────────────────────────────────────────────────────────────
+  // ─── UI state helpers ─────────────────────────────────────────────────────────
 
   function show(el) { el?.classList.remove('hidden'); }
   function hide(el) { el?.classList.add('hidden'); }
@@ -77,146 +70,84 @@
   // ─── localStorage helpers ─────────────────────────────────────────────────────
 
   function getLocalIds() {
-    try   { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     catch { return []; }
-  }
-
-  function getLocalMeta() {
-    try   { return JSON.parse(localStorage.getItem(STORAGE_META_KEY) || '{}'); }
-    catch { return {}; }
   }
 
   function removeLocalId(productId) {
     const updated = getLocalIds().filter(id => id !== productId);
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
+
+    // Also clean up meta
     try {
-      const meta = getLocalMeta();
+      const meta = JSON.parse(localStorage.getItem(STORAGE_META_KEY) || '{}');
       delete meta[productId];
       localStorage.setItem(STORAGE_META_KEY, JSON.stringify(meta));
     } catch {}
   }
 
-  // ─── Handle resolution ────────────────────────────────────────────────────────
-
-  /**
-   * Resolve a Shopify product handle from a numeric product ID.
-   *
-   * Strategy: send a HEAD request to /products/{numericId}.
-   * Shopify redirects numeric-ID product URLs to their canonical handle URL:
-   *   /products/15573512093777  →  /products/mayil-matta-rice
-   *
-   * fetch() with redirect:'follow' follows the redirect and exposes the
-   * final URL via response.url, from which we extract the handle.
-   *
-   * Falls back to null if the product doesn't exist or the redirect fails.
-   *
-   * @param  {string} productId  Numeric product ID string
-   * @returns {Promise<string|null>}
-   */
-  async function resolveHandleFromId(productId) {
-    try {
-      const res = await fetch(`/products/${productId}`, {
-        method:   'HEAD',
-        redirect: 'follow'
-      });
-
-      if (!res.ok) return null;
-
-      // Extract handle from the final URL after redirect
-      // e.g. "https://mystore.com/products/mayil-matta-rice" → "mayil-matta-rice"
-      const match = res.url.match(/\/products\/([^?#/]+)/);
-      const handle = match?.[1];
-
-      // Sanity check: if it resolves back to the numeric ID itself, it didn't redirect
-      if (!handle || handle === productId) return null;
-
-      return handle;
-    } catch {
-      return null;
-    }
+  function getLocalMeta() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_META_KEY) || '{}'); }
+    catch { return {}; }
   }
 
-  /**
-   * One-time migration: for all IDs in shopify_wishlist that are missing
-   * from shopify_wishlist_meta, resolve their handles via HEAD redirects
-   * and populate the meta cache.
-   *
-   * Runs on every wishlist page load but is effectively a no-op once all
-   * IDs have been resolved (meta cache is complete).
-   *
-   * Requests are batched in parallel for speed. Any ID that can't be resolved
-   * (deleted product, redirect didn't work) is silently skipped.
-   *
-   * @returns {Promise<void>}
-   */
-  async function migrateOrphanedIds() {
-    const allIds  = getLocalIds();
+  // ─── Handle resolution ────────────────────────────────────────────────────────
+  // Primary source: meta cache written by wishlist-button.js.
+  // Fallback: Shopify AJAX product endpoint for IDs with no cached handle
+  // (covers products wishlisted before wishlist-button.js was updated).
+
+  async function resolveHandlesForIds(ids) {
     const meta    = getLocalMeta();
+    const handles = [];
+    const missing = [];   // IDs not in the meta cache
 
-    // Find IDs that are in the wishlist but have no handle in meta
-    const orphans = allIds.filter(id => !meta[id]?.handle);
-    if (!orphans.length) return;
-
-    console.debug(`[Wishlist] Migrating ${orphans.length} orphaned IDs without handles...`);
-
-    // Resolve all in parallel — HEAD requests are lightweight
-    const results = await Promise.allSettled(
-      orphans.map(id => resolveHandleFromId(id))
-    );
-
-    // Read meta fresh (may have been updated by wishlist-button backfill)
-    const freshMeta = getLocalMeta();
-    let migrated = 0;
-
-    results.forEach((result, i) => {
-      const handle = result.status === 'fulfilled' ? result.value : null;
-      if (handle) {
-        freshMeta[orphans[i]] = { handle, title: '', image: '' };
-        migrated++;
+    ids.forEach(id => {
+      if (meta[id]?.handle) {
+        handles.push({ id, handle: meta[id].handle });
+      } else {
+        missing.push(id);
       }
     });
 
-    if (migrated > 0) {
-      try { localStorage.setItem(STORAGE_META_KEY, JSON.stringify(freshMeta)); } catch {}
-      console.debug(`[Wishlist] Migrated ${migrated}/${orphans.length} orphaned IDs.`);
-    }
-
-    const stillMissing = orphans.length - migrated;
-    if (stillMissing > 0) {
-      console.warn(
-        `[Wishlist] ${stillMissing} product(s) could not be resolved — ` +
-        `they may have been deleted from the store.`
+    // Fallback: resolve missing IDs via /products/{id}.js
+    // Shopify redirects numeric-ID URLs to the product if it exists.
+    if (missing.length) {
+      const resolved = await Promise.allSettled(
+        missing.map(id =>
+          fetch(`/products/${id}.js`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        )
       );
-    }
-  }
 
-  // ─── Resolve handles for a page of IDs ───────────────────────────────────────
-  // Uses meta cache first. After migrateOrphanedIds() runs, this should
-  // always find all entries. The HEAD fallback here is a last-resort safety net.
+      resolved.forEach((result, i) => {
+        const product = result.status === 'fulfilled' ? result.value : null;
+        if (product?.handle) {
+          handles.push({ id: missing[i], handle: product.handle });
 
-  async function resolveHandlesForIds(ids) {
-    const meta = getLocalMeta();
-
-    const resolved = await Promise.all(
-      ids.map(async id => {
-        if (meta[id]?.handle) return meta[id].handle;
-
-        // Last-resort: try live HEAD resolution for this single ID
-        const handle = await resolveHandleFromId(id);
-        if (handle) {
-          // Backfill so we don't need to resolve again
-          const m = getLocalMeta();
-          m[id] = { handle, title: '', image: '' };
-          try { localStorage.setItem(STORAGE_META_KEY, JSON.stringify(m)); } catch {}
+          // Backfill the meta cache so the next visit is instant
+          const meta = getLocalMeta();
+          meta[missing[i]] = {
+            handle: product.handle,
+            title:  product.title    || '',
+            image:  product.featured_image || ''
+          };
+          try { localStorage.setItem(STORAGE_META_KEY, JSON.stringify(meta)); } catch {}
         }
-        return handle;
-      })
-    );
+        // If still null: product was deleted — skip silently
+      });
+    }
 
-    return resolved.filter(Boolean);
+    // Return handles in the original ID order
+    return ids
+      .map(id => handles.find(h => h.id === id)?.handle)
+      .filter(Boolean);
   }
 
   // ─── Section Rendering API ────────────────────────────────────────────────────
+  // Fetch rendered Liquid HTML for a single product handle.
+  // Shopify runs sections/wishlist-product-card.liquid in the context of
+  // /products/{handle}, giving full access to the `product` Liquid object.
 
   async function fetchCardHTML(handle) {
     try {
@@ -238,14 +169,16 @@
     }
   }
 
+  // Render a page of product handles into the grid.
+  // Cards are fetched in parallel but injected in list order.
   async function renderGrid(handles) {
     elGrid.innerHTML = '';
 
-    // Pre-insert ordered slots to preserve list order while cards load in parallel
+    // Pre-insert ordered slot divs so positions are locked before async fetches return
     const slots = handles.map(handle => {
       const slot = document.createElement('div');
-      slot.className      = 'wishlist-card-slot';
-      slot.dataset.handle = handle;
+      slot.className        = 'wishlist-card-slot';
+      slot.dataset.handle   = handle;
       elGrid.appendChild(slot);
       return slot;
     });
@@ -254,11 +187,13 @@
 
     htmlResults.forEach((html, i) => {
       if (html) {
-        const tmp  = document.createElement('div');
+        // Replace the slot div with the real rendered card HTML
+        const tmp = document.createElement('div');
         tmp.innerHTML = html;
         const card = tmp.firstElementChild;
         slots[i].replaceWith(card);
       } else {
+        // Product may have been deleted — remove the empty slot
         slots[i].remove();
       }
     });
@@ -288,6 +223,8 @@
   }
 
   // ─── Count badge sync ─────────────────────────────────────────────────────────
+  // Broadcasts the known count to all <wishlist-count> elements on the page.
+  // wishlist-count.js exposes _setCount() on the element instance.
 
   function broadcastCount(n) {
     document.querySelectorAll('wishlist-count').forEach(el => {
@@ -295,16 +232,16 @@
     });
   }
 
-  // ─── Server flow (logged-in) ──────────────────────────────────────────────────
+  // ─── Server flow (logged-in users) ───────────────────────────────────────────
 
   async function fetchWishlistServer(cursor = null) {
     const res = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/list`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({
+      body: JSON.stringify({
         customerId: `gid://shopify/Customer/${CUSTOMER_ID}`,
         limit:      PAGE_LIMIT,
-        cursor,
+        cursor:     cursor,
         idsOnly:    false
       })
     });
@@ -319,9 +256,15 @@
       const data  = await fetchWishlistServer(cursor);
       const items = data.items ?? [];
 
-      if (!items.length) { showEmpty(); broadcastCount(0); return; }
+      if (!items.length) {
+        showEmpty();
+        broadcastCount(0);
+        return;
+      }
 
       serverCursor = data.pageInfo?.endCursor ?? null;
+
+      // `handle` comes directly from the API response — no resolution needed
       const handles = items.map(item => item.handle).filter(Boolean);
 
       await renderGrid(handles);
@@ -331,29 +274,45 @@
       });
       showResults();
       broadcastCount(data.totalCount ?? items.length);
+
     } catch (e) {
       console.error('[Wishlist] Server load error:', e);
       showError();
     }
   }
 
-  function handleServerNext() { prevCursors.push(serverCursor); loadServerPage(serverCursor); }
-  function handleServerPrev() { loadServerPage(prevCursors.pop() ?? null); }
+  function handleServerNext() {
+    prevCursors.push(serverCursor);
+    loadServerPage(serverCursor);
+  }
 
-  // ─── Guest flow (localStorage) ────────────────────────────────────────────────
+  function handleServerPrev() {
+    loadServerPage(prevCursors.pop() ?? null);
+  }
+
+  // ─── Guest flow (localStorage users) ─────────────────────────────────────────
 
   async function loadLocalPage(page = 0) {
     showLoading();
     try {
       const allIds = getLocalIds();
 
-      if (!allIds.length) { showEmpty(); broadcastCount(0); return; }
+      if (!allIds.length) {
+        showEmpty();
+        broadcastCount(0);
+        return;
+      }
 
       const start   = page * PAGE_LIMIT;
       const pageIds = allIds.slice(start, start + PAGE_LIMIT);
+
+      // Resolve IDs to handles (meta cache first, AJAX fallback)
       const handles = await resolveHandlesForIds(pageIds);
 
-      if (!handles.length) { showError(); return; }
+      if (!handles.length) {
+        showError();
+        return;
+      }
 
       await renderGrid(handles);
       renderPagination({
@@ -362,16 +321,24 @@
       });
       showResults();
       broadcastCount(allIds.length);
+
     } catch (e) {
       console.error('[Wishlist] Local load error:', e);
       showError();
     }
   }
 
-  function handleLocalNext() { localPage++; loadLocalPage(localPage); }
-  function handleLocalPrev() { localPage = Math.max(0, localPage - 1); loadLocalPage(localPage); }
+  function handleLocalNext() {
+    localPage++;
+    loadLocalPage(localPage);
+  }
 
-  // ─── Remove card on wishlist:updated(removed) ─────────────────────────────────
+  function handleLocalPrev() {
+    localPage = Math.max(0, localPage - 1);
+    loadLocalPage(localPage);
+  }
+
+  // ─── Remove card on wishlist:updated (removed) ────────────────────────────────
 
   document.addEventListener('wishlist:updated', (e) => {
     if (e.detail.status !== 'removed') return;
@@ -388,13 +355,19 @@
       }
     }, { once: true });
 
-    if (!IS_LOGGED_IN) removeLocalId(e.detail.productId);
+    if (!IS_LOGGED_IN) {
+      removeLocalId(e.detail.productId);
+    }
   });
 
   // ─── Retry button ──────────────────────────────────────────────────────────────
 
   retryBtn?.addEventListener('click', () => {
-    IS_LOGGED_IN ? loadServerPage(null) : loadLocalPage(0);
+    if (IS_LOGGED_IN) {
+      loadServerPage(null);
+    } else {
+      loadLocalPage(0);
+    }
   });
 
   // ─── Init ──────────────────────────────────────────────────────────────────────
@@ -402,8 +375,7 @@
   if (IS_LOGGED_IN) {
     loadServerPage(null);
   } else {
-    // Run migration first so all handles are available before rendering
-    migrateOrphanedIds().then(() => loadLocalPage(0));
+    loadLocalPage(0);
   }
 
 })();
