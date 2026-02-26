@@ -48,7 +48,10 @@
   }
 
   function saveProductMeta(productId, handle, title, image) {
-    if (!productId || !handle) return;
+    if (!productId || !handle) {
+        console.log("Handle error");
+        return;
+    }
     const meta = getLocalMeta();
     meta[productId] = { handle, title, image };
     saveLocalMeta(meta);
