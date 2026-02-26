@@ -256,12 +256,12 @@
     width: 36px;
     height: 36px;
     padding: 0;
-    background: rgba(255, 255, 255, 0.92);
+    background: none;
     border: none;
     border-radius: 50%;
     cursor: pointer;
     backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
 
@@ -288,25 +288,25 @@
   /* ─── Hover ──────────────────────────────────────────────────────────────── */
 
   .wishlist-icon-btn:hover:not(:disabled) {
-    background: #ffffff;
+    background: none;
     transform: scale(1.12);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+    box-shadow: none;
   }
 
   .wishlist-icon-btn:hover:not(:disabled) .wishlist-icon path {
-    stroke: #e63535;
+    stroke: #ed1d23;
   }
 
   /* ─── Active / In Wishlist ───────────────────────────────────────────────── */
 
   .wishlist-icon-btn.active {
-    background: #ffffff;
-    box-shadow: 0 2px 10px rgba(230, 53, 53, 0.25);
+    background: none;
+    box-shadow: none;
   }
 
   .wishlist-icon-btn.active svg path, .wishlist-icon-btn.active svg{
-    fill: #e63535;
-    color: #e63535;
+    fill: #ed1d23;
+    color: #ed1d23;
   }
 
   /* ─── Disabled / Loading ─────────────────────────────────────────────────── */
