@@ -45,6 +45,10 @@
   .wishlist-btn {
     height: 50px;
   }
+  button.wishlist-btn svg {
+    width: 24px;
+    font-size: 14px;
+  }
 }
 
   .wishlist-btn:hover:not(:disabled) {
