@@ -1,23 +1,12 @@
 /**
  * wishlist-button.js
  *
- * Handles wishlist toggle buttons — product cards and product pages.
+ * Wishlist toggle buttons for product cards and product pages.
  * Works for logged-in users (server API) and guests (localStorage).
  *
  * ─── localStorage keys ────────────────────────────────────────────────────────
  *  shopify_wishlist       → string[]  product IDs  e.g. ["123", "456"]
  *  shopify_wishlist_meta  → object    { [id]: { handle, title, image } }
- *
- * The meta key is written at the moment of add so wishlist-page.js always
- * has the handle for the Section Rendering API — even in a fresh session.
- *
- * ─── Legacy migration (backfillMetaIfNeeded) ─────────────────────────────────
- * Products added BEFORE this version of wishlist-button.js have IDs in
- * shopify_wishlist but no entry in shopify_wishlist_meta.
- * Fix: whenever any wishlist-button element mounts, if the product is in the
- * wishlist but has no meta entry, we save it immediately from data-* attrs.
- * This passively heals all legacy IDs as the user browses the store — no
- * user action needed.
  *
  * ─── Required attributes on <wishlist-button> ────────────────────────────────
  *  data-product-id      ="{{ product.id }}"
@@ -27,6 +16,8 @@
  */
 
 (function () {
+  'use strict';
+
   const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
   const WISHLIST_META_KEY    = 'shopify_wishlist_meta';
 
@@ -43,7 +34,7 @@
 
   function saveLocalWishlist(list) {
     try   { localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(list)); }
-    catch (e) { console.error('[Wishlist] Error saving wishlist:', e); }
+    catch (e) { console.error('[Wishlist] saveLocalWishlist:', e); }
   }
 
   function getLocalMeta() {
@@ -53,7 +44,7 @@
 
   function saveLocalMeta(meta) {
     try   { localStorage.setItem(WISHLIST_META_KEY, JSON.stringify(meta)); }
-    catch (e) { console.error('[Wishlist] Error saving wishlist meta:', e); }
+    catch (e) { console.error('[Wishlist] saveLocalMeta:', e); }
   }
 
   function saveProductMeta(productId, handle, title, image) {
@@ -65,36 +56,23 @@
 
   function removeProductMeta(productId) {
     const meta = getLocalMeta();
-    if (meta[productId]) {
-      delete meta[productId];
-      saveLocalMeta(meta);
-    }
+    delete meta[productId];
+    saveLocalMeta(meta);
   }
 
   /**
    * Passive legacy migration.
-   *
-   * Called on every wishlist-button mount. If:
-   *   • The product IS in shopify_wishlist (added before this update), AND
-   *   • It has NO entry in shopify_wishlist_meta (handle was never saved), AND
-   *   • This element has a data-product-handle attribute
-   * → save the meta entry immediately.
-   *
-   * As the guest user browses collection pages, product pages, search results,
-   * each mounted wishlist-button fills in its own missing entry. After visiting
-   * enough pages all 21 IDs will have handles and the wishlist page will be full.
+   * If this product is in the wishlist but has no meta entry, write it now
+   * using data attributes from the element. Runs on every button mount so
+   * legacy IDs (added before handle-caching was introduced) heal passively
+   * as the user browses the store.
    */
   function backfillMetaIfNeeded(productId, handle, title, image) {
-    if (IS_LOGGED_IN) return;    // meta is guest-only
+    if (IS_LOGGED_IN) return;
     if (!productId || !handle) return;
-
-    const wishlist = getLocalWishlist();
-    if (!wishlist.includes(productId)) return;   // not in wishlist — nothing to do
-
+    if (!getLocalWishlist().includes(productId)) return;
     const meta = getLocalMeta();
-    if (meta[productId]?.handle) return;         // already cached — nothing to do
-
-    // Product is wishlisted but handle was never saved — fix it now
+    if (meta[productId]?.handle) return;
     meta[productId] = { handle, title, image };
     saveLocalMeta(meta);
   }
@@ -112,8 +90,7 @@
   }
 
   function showWishlistToast(title, image, type) {
-    const existing = document.querySelector('.wishlist-toast');
-    if (existing) existing.remove();
+    document.querySelector('.wishlist-toast')?.remove();
 
     const toast = document.createElement('div');
     toast.className = `wishlist-toast ${type}`;
@@ -124,14 +101,11 @@
           <strong>${title}</strong>
           <p>has been ${type} ${type === 'added' ? 'to' : 'from'} your Wishlist.</p>
         </div>
-      </div>
-    `;
+      </div>`;
     document.body.appendChild(toast);
-
     requestAnimationFrame(() => toast.classList.add('show'));
     setTimeout(() => {
-      toast.classList.remove('show');
-      toast.classList.add('hide');
+      toast.classList.replace('show', 'hide');
       setTimeout(() => toast.remove(), 400);
     }, 3000);
   }
@@ -140,55 +114,43 @@
 
   async function verifyWishlistServer(productIds) {
     try {
-      const response = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/verify`, {
+      const res = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/verify`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          customerId: toGid('Customer', CUSTOMER_ID),
-          productIds
-        })
+        body:    JSON.stringify({ customerId: toGid('Customer', CUSTOMER_ID), productIds })
       });
-
-      if (!response.ok) throw new Error('Verify request failed');
-
-      const data      = await response.json();
+      if (!res.ok) throw new Error('Verify failed');
+      const data      = await res.json();
       const activeIds = new Set();
       productIds.forEach(id => {
         if (data[toGid('Product', id)] === true) activeIds.add(id);
       });
       return activeIds;
     } catch (e) {
-      console.error('[Wishlist] Error verifying wishlist:', e);
+      console.error('[Wishlist] verifyWishlistServer:', e);
       return new Set();
     }
   }
 
   async function toggleWishlistServer(productId, title, image, button) {
-    const productGid  = toGid('Product', productId);
-    const customerGid = toGid('Customer', CUSTOMER_ID);
-
-    button.classList.toggle('active'); // optimistic
+    button.classList.toggle('active');
     button.disabled = true;
-
     try {
-      const response = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/toggle`, {
+      const res = await fetch(`${APP_PROXY_URL}/api/v1/wishlist/integration/toggle`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ customerId: customerGid, productId: productGid })
+        body:    JSON.stringify({
+          customerId: toGid('Customer', CUSTOMER_ID),
+          productId:  toGid('Product', productId)
+        })
       });
-
-      const data = await response.json();
-
-      if (!response.ok || data.error) {
-        button.classList.toggle('active'); // revert
-        throw new Error(data.error || 'Toggle failed');
-      }
-
+      const data = await res.json();
+      if (!res.ok || data.error) { button.classList.toggle('active'); throw new Error(data.error || 'Toggle failed'); }
       button.classList.toggle('active', data.status === 'added');
       showWishlistToast(title, image, data.status);
       dispatchWishlistEvent(productId, data.status);
     } catch (e) {
-      console.error('[Wishlist] Error toggling wishlist:', e);
+      console.error('[Wishlist] toggleWishlistServer:', e);
     } finally {
       button.disabled = false;
     }
@@ -204,7 +166,7 @@
       removeProductMeta(productId);
     } else {
       wishlist.push(productId);
-      saveProductMeta(productId, handle, title, image);  // always save handle on add
+      saveProductMeta(productId, handle, title, image);
     }
 
     button.classList.toggle('active', status === 'added');
@@ -213,67 +175,8 @@
     dispatchWishlistEvent(productId, status);
   }
 
-  // ─── WishlistButton Web Component ────────────────────────────────────────────
-
-  class WishlistButton extends HTMLElement {
-    constructor() {
-      super();
-      this._initialized = false;
-    }
-
-    connectedCallback() {
-      if (this._initialized) return;
-      this._initialized = true;
-
-      this.productId = this.dataset.productId;
-      this.handle    = this.dataset.productHandle || '';
-      this.title     = this.dataset.productTitle  || '';
-      this.image     = this.dataset.productImage  || '';
-      this.button    = this.querySelector('[data-wishlist-btn]');
-
-      if (!this.button || !this.productId) return;
-
-      // ── Passive migration: fill any missing meta entry immediately ──────────
-      backfillMetaIfNeeded(this.productId, this.handle, this.title, this.image);
-
-      this._setInitialState();
-
-      this.button.addEventListener('click', (e) => {
-        e.preventDefault();
-        this._handleToggle();
-      });
-
-      document.addEventListener('wishlist:updated', (e) => {
-        if (e.detail.productId === this.productId) {
-          this.button.classList.toggle('active', e.detail.status === 'added');
-        }
-      });
-    }
-
-    async _setInitialState() {
-      if (IS_LOGGED_IN) {
-        const activeIds = await verifyWishlistServer([this.productId]);
-        this.button.classList.toggle('active', activeIds.has(this.productId));
-      } else {
-        const wishlist = getLocalWishlist();
-        this.button.classList.toggle('active', wishlist.includes(this.productId));
-      }
-    }
-
-    async _handleToggle() {
-      if (IS_LOGGED_IN) {
-        await toggleWishlistServer(this.productId, this.title, this.image, this.button);
-      } else {
-        toggleWishlistLocal(this.productId, this.handle, this.title, this.image, this.button);
-      }
-    }
-  }
-
- if (!customElements.get('wishlist-button')) {
-  customElements.define('wishlist-button', WishlistButton);
-}
-
-  // ─── Batch Verify for collection / search pages ───────────────────────────────
+  // ─── Batch server verify (collection / search pages) ─────────────────────────
+  // Collects all product IDs on the page and sends ONE verify request.
 
   let batchTimer        = null;
   let pendingIds        = new Set();
@@ -281,21 +184,14 @@
 
   function scheduleBatchVerify(productId, component) {
     pendingIds.add(productId);
-
-    if (!pendingComponents.has(productId)) {
-      pendingComponents.set(productId, []);
-    }
+    if (!pendingComponents.has(productId)) pendingComponents.set(productId, []);
     pendingComponents.get(productId).push(component);
 
     clearTimeout(batchTimer);
     batchTimer = setTimeout(async () => {
-      if (!IS_LOGGED_IN) return;
-
       const ids = [...pendingIds];
       pendingIds.clear();
-
       const activeIds = await verifyWishlistServer(ids);
-
       ids.forEach(id => {
         (pendingComponents.get(id) || []).forEach(c => {
           if (c.button) c.button.classList.toggle('active', activeIds.has(id));
@@ -305,42 +201,74 @@
     }, 50);
   }
 
-  const isProductPage = !!document.querySelector('.product-page, [data-product-page]');
+  // ─── Shared init helper ───────────────────────────────────────────────────────
+  // Extracts data attrs, runs backfill, sets initial active state, binds events.
+  // Used by both product-page and non-product-page paths to avoid duplication.
 
-  if (!isProductPage) {
-    WishlistButton.prototype.connectedCallback = function () {
-      if (this._initialized) return;
-      this._initialized = true;
+  function initComponent(component, usesBatchVerify) {
+    if (component._initialized) return;
+    component._initialized = true;
 
-      this.productId = this.dataset.productId;
-      this.handle    = this.dataset.productHandle || '';
-      this.title     = this.dataset.productTitle  || '';
-      this.image     = this.dataset.productImage  || '';
-      this.button    = this.querySelector('[data-wishlist-btn]');
+    const { productId, productHandle: handle, productTitle: title, productImage: image } = component.dataset;
+    const button = component.querySelector('[data-wishlist-btn]');
 
-      if (!this.button || !this.productId) return;
+    if (!button || !productId) return;
 
-      // ── Passive migration on every page, every button ──────────────────────
-      backfillMetaIfNeeded(this.productId, this.handle, this.title, this.image);
+    component.productId = productId;
+    component.handle    = handle || '';
+    component.title     = title  || '';
+    component.image     = image  || '';
+    component.button    = button;
 
-      if (IS_LOGGED_IN) {
-        scheduleBatchVerify(this.productId, this);
+    // Passive migration — fill missing meta for legacy wishlisted items
+    backfillMetaIfNeeded(productId, component.handle, component.title, component.image);
+
+    // Set initial active state
+    if (IS_LOGGED_IN) {
+      if (usesBatchVerify) {
+        scheduleBatchVerify(productId, component);
       } else {
-        const wishlist = getLocalWishlist();
-        this.button.classList.toggle('active', wishlist.includes(this.productId));
+        verifyWishlistServer([productId]).then(activeIds => {
+          button.classList.toggle('active', activeIds.has(productId));
+        });
       }
+    } else {
+      button.classList.toggle('active', getLocalWishlist().includes(productId));
+    }
 
-      this.button.addEventListener('click', (e) => {
-        e.preventDefault();
-        this._handleToggle();
-      });
+    // Toggle on click
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (IS_LOGGED_IN) {
+        toggleWishlistServer(productId, component.title, component.image, button);
+      } else {
+        toggleWishlistLocal(productId, component.handle, component.title, component.image, button);
+      }
+    });
 
-      document.addEventListener('wishlist:updated', (e) => {
-        if (e.detail.productId === this.productId) {
-          this.button.classList.toggle('active', e.detail.status === 'added');
-        }
-      });
-    };
+    // Sync state from external events (e.g. removed on wishlist page)
+    document.addEventListener('wishlist:updated', (e) => {
+      if (e.detail.productId === productId) {
+        button.classList.toggle('active', e.detail.status === 'added');
+      }
+    });
+  }
+
+  // ─── WishlistButton Web Component ────────────────────────────────────────────
+
+  class WishlistButton extends HTMLElement {
+    connectedCallback() {
+      // Determine page type here (inside connectedCallback) so the check happens
+      // at mount time, not at script parse time — avoids the prototype-override
+      // race condition that could miss elements already in the DOM.
+      const isProductPage = !!document.querySelector('.product-page, [data-product-page]');
+      // Use batch verify on collection/search pages; single verify on product page.
+      initComponent(this, !isProductPage);
+    }
+  }
+
+  if (!customElements.get('wishlist-button')) {
+    customElements.define('wishlist-button', WishlistButton);
   }
 
 })();
