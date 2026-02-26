@@ -44,10 +44,10 @@
 @media screen and (max-width: 749px){
   .wishlist-btn {
     height: 50px;
+    font-size: 14px;
   }
   button.wishlist-btn svg {
     width: 24px;
-    font-size: 14px;
   }
 }
 
