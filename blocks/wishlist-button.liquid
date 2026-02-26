@@ -7,10 +7,11 @@
   class="wishlist-btn-wrapper"
 >
   <button type="button" class="wishlist-btn" data-wishlist-btn>
-    <svg class="wishlist-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {% comment %} <svg class="wishlist-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    </svg> {% endcomment %}
+    {{ 'icon-wishlist.svg' | inline_asset_content: 'wishlist-icon' }}
     <span class="wishlist-text-add">{{ add_text | default: 'Add to Wishlist' }}</span>
     <span class="wishlist-text-remove">{{ remove_text | default: 'Remove from Wishlist' }}</span>
   </button>
