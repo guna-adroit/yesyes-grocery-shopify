@@ -4,10 +4,7 @@
   fetchpriority="low"
 ></script>
 
-<header-actions
-  {{- block.shopify_attributes -}}
->
-  <a href="/pages/yesyes-wishlist" class="wishlist-link" class="wishlist-nav-icon"
+<a href="/pages/yesyes-wishlist" class="wishlist-link" class="wishlist-nav-icon"
   aria-label="Wishlist" style="display: flex;">
     <div class="wishlist-wrapper">
       <div class="wishlist-icon-wrapper"> 
@@ -18,6 +15,10 @@
       <span class="header-icons-label">Wishlist</span>
     </div>
   </a>
+<header-actions
+  {{- block.shopify_attributes -}}
+>
+  
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     {% render 'cart-drawer' %}
   {% else %}
