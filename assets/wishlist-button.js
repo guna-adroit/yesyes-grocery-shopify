@@ -269,7 +269,9 @@
     }
   }
 
+ if (!customElements.get('wishlist-button')) {
   customElements.define('wishlist-button', WishlistButton);
+}
 
   // ─── Batch Verify for collection / search pages ───────────────────────────────
 
