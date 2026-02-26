@@ -24,7 +24,7 @@
     gap: 10px;
     background: white;
     border: 1px solid #ed1d23;
-    border: 8px;
+    border-radius: 8px;
     color: #ed1d23;
     padding: 12px 24px;
     font-size: 16px;
