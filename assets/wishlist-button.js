@@ -1,3 +1,31 @@
+/**
+ * wishlist-button.js
+ *
+ * Handles wishlist toggle buttons — product cards and product pages.
+ * Works for logged-in users (server API) and guests (localStorage).
+ *
+ * ─── localStorage keys ────────────────────────────────────────────────────────
+ *  shopify_wishlist       → string[]  product IDs  e.g. ["123", "456"]
+ *  shopify_wishlist_meta  → object    { [id]: { handle, title, image } }
+ *
+ * The meta key is written at the moment of add so wishlist-page.js always
+ * has the handle for the Section Rendering API — even in a fresh session.
+ *
+ * ─── Legacy migration (backfillMetaIfNeeded) ─────────────────────────────────
+ * Products added BEFORE this version of wishlist-button.js have IDs in
+ * shopify_wishlist but no entry in shopify_wishlist_meta.
+ * Fix: whenever any wishlist-button element mounts, if the product is in the
+ * wishlist but has no meta entry, we save it immediately from data-* attrs.
+ * This passively heals all legacy IDs as the user browses the store — no
+ * user action needed.
+ *
+ * ─── Required attributes on <wishlist-button> ────────────────────────────────
+ *  data-product-id      ="{{ product.id }}"
+ *  data-product-handle  ="{{ product.handle }}"
+ *  data-product-title   ="{{ product.title | escape }}"
+ *  data-product-image   ="{{ product.featured_image | image_url: width: 400 }}"
+ */
+
 (function () {
   const WISHLIST_STORAGE_KEY = 'shopify_wishlist';
   const WISHLIST_META_KEY    = 'shopify_wishlist_meta';
