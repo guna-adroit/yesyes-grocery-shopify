@@ -59,9 +59,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customerId: `gid://shopify/Customer/${CUSTOMER_ID}`,
-          limit:   100,
+          limit:   50,
           cursor:  null,
-          idsOnly: true
+          idsOnly: false
         })
       });
       if (!res.ok) return 0;
