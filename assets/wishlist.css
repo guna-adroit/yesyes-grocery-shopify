@@ -27,8 +27,10 @@
     border-radius: 8px;
     color: #ed1d23;
     padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 500;
+    font-family: Raleway;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22.4px;
     height: 60px;
     cursor: pointer;
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease,
