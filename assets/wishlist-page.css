@@ -4,7 +4,7 @@
  * Uses CSS custom properties that Horizon exposes via its design system.
  */
 
-/* ─── Page Layout ─────────────────────────────────────────────────────────── */
+/* ─── Page Layout ──── */
 
 .wishlist-page {
   padding-block: var(--spacing-section-vertical, 4rem);
@@ -27,7 +27,7 @@
   gap: 0.5rem;
 }
 
-/* ─── Count Badge ─────────────────────────────────────────────────────────── */
+/* ─── Count Badge ──── */
 
 wishlist-count {
   font-size: 0.85em;
@@ -39,7 +39,7 @@ wishlist-count[hidden] {
   display: none;
 }
 
-/* ─── Grid ────────────────────────────────────────────────────────────────── */
+/* ─── Grid ─── */
 
 .wishlist-grid {
   display: grid;
@@ -53,7 +53,7 @@ wishlist-count[hidden] {
   }
 }
 
-/* ─── Product Card ────────────────────────────────────────────────────────── */
+/* ─── Product Card ──── */
 
 .wishlist-card {
   position: relative;
@@ -220,7 +220,7 @@ wishlist-count[hidden] {
   }
 }
 
-/* ─── Skeleton Loading ────────────────────────────────────────────────────── */
+/* ─── Skeleton Loading ─── */
 
 .wishlist-card--skeleton {
   pointer-events: none;
@@ -272,7 +272,7 @@ wishlist-count[hidden] {
   100% { background-position: -200% 0; }
 }
 
-/* ─── Empty State ─────────────────────────────────────────────────────────── */
+/* ─── Empty State ───── */
 
 .wishlist-empty {
   display: flex;
@@ -306,7 +306,7 @@ wishlist-count[hidden] {
   margin-top: 0.5rem;
 }
 
-/* ─── Error State ─────────────────────────────────────────────────────────── */
+/* ─── Error State ──── */
 
 .wishlist-error {
   text-align: center;
@@ -318,7 +318,7 @@ wishlist-count[hidden] {
   color: var(--color-foreground-secondary, #6b7280);
 }
 
-/* ─── Pagination ──────────────────────────────────────────────────────────── */
+/* ─── Pagination ───── */
 
 .wishlist-pagination {
   display: flex;
@@ -331,13 +331,13 @@ wishlist-count[hidden] {
   min-width: 8rem;
 }
 
-/* ─── Hidden utility ──────────────────────────────────────────────────────── */
+/* ─── Hidden utility ──── */
 
 .hidden {
   display: none !important;
 }
 
-/* ─── Toast (shared, included here as fallback) ───────────────────────────── */
+/* ─── Toast (shared, included here as fallback) ─── */
 
 .wishlist-toast {
   position: fixed;
