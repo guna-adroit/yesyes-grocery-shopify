@@ -1,29 +1,3 @@
-/**
- * wishlist-sync.js
- *
- * Syncs a guest's localStorage wishlist to their server account after login.
- *
- * ─── How it works ─────────────────────────────────────────────────────────────
- *  1. Runs only when the customer IS logged in.
- *  2. Checks shopify_wishlist in localStorage for any IDs.
- *  3. Calls the verify endpoint to find which IDs are NOT yet on the server.
- *  4. Calls the toggle (add) endpoint for each missing ID.
- *  5. Clears both localStorage keys once sync is confirmed.
- *  6. Dispatches wishlist:synced with the count of items added.
- *  7. Sets a sessionStorage flag so the sync only runs once per login session.
- *
- * ─── Load order ───────────────────────────────────────────────────────────────
- *  In theme.liquid, load AFTER wishlist-button.js and wishlist-count.js:
- *    <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script>
- *    <script src="{{ 'wishlist-count.js' | asset_url }}" defer></script>
- *    <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script>
- *
- * ─── Listening to the sync event ─────────────────────────────────────────────
- *  document.addEventListener('wishlist:synced', (e) => {
- *    console.log(`${e.detail.syncedCount} items synced to your account`);
- *  });
- */
-
 (function () {
   'use strict';
 
