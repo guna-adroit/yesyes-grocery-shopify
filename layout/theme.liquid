@@ -126,7 +126,8 @@
     </script>
     {% render 'swym-custom'%} {% endcomment %}
     <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> 
-    {<script src="{{ 'wishlist-count.js' | asset_url }}" defer></script> 
+    <script src="{{ 'wishlist-count.js' | asset_url }}" defer></script>
+    <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script> 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
