@@ -337,6 +337,10 @@ wishlist-count[hidden] {
   display: none !important;
 }
 
+.wishlist-grid .shopify-section:not(:has(.wishlist-card)) {
+  display: none;
+}
+
 /* ─── Toast (shared, included here as fallback) ─── */
 
 /* .wishlist-toast {
