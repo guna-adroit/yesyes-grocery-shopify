@@ -98,33 +98,7 @@
     <script type="module" src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'product-quantity-control.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'cart-count.js' | asset_url }}" defer></script>
-    {% comment %} {% render 'swym-collections'%}
-    <script type="module">
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-        renderWishlistCounter(_swat);
-          function renderWishlistCounter(swat) {
-            var counter_elem = document.querySelectorAll(".swym-wishlist-header-counter"); /* Targets the span added in Step 1. */
-            if (counter_elem) {
-              for (var i = 0; i < counter_elem.length; i++) {
-                if (swat.renderWishlistCount) {
-                  swat.renderWishlistCount(counter_elem[i], function(count, element) {
-                    console.log("debug - renderWishlistCount", count, element); 
-                  });
-                }
-              }
-            }
-          }
-
-          if (!window.SwymCallbacks) {
-            window.SwymCallbacks = [];
-          }
-
-          window.SwymCallbacks.push(renderWishlistCounter);
-        }, 2000);
-      });
-    </script>
-    {% render 'swym-custom'%} {% endcomment %}
+    
     <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> 
     <script src="{{ 'wishlist-count.js' | asset_url }}" defer></script>
     <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script> 
