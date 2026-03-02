@@ -280,7 +280,10 @@
     box-shadow: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-
+  .product.wishlist-icon-position wishlist-button.wishlist-icon-wrapper .wishlist-icon-btn{
+    width: 46px;
+    height: 46px;
+  }
   /* ─── SVG Icon ───────────────────────────────────────────────────────────── */
 
   .wishlist-icon-btn .wishlist-icon {
