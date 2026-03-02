@@ -79,7 +79,7 @@ class FacetsFormComponent extends Component {
     this.#updateSection();
     setTimeout(() => {
        window.initStarRatings();
-    }, 1000);
+    }, 1500);
    
     // observePaginationChange();
   };
