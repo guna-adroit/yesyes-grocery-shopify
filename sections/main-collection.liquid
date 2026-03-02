@@ -98,18 +98,6 @@
   </div>
 </results-list>
 
-<script defer>
-  function swymCallbackFn(swat){
-    document.addEventListener("swym:collections-loaded", function(){
-      swat.initializeActionButtons(".product-grid");
-    })
-  }
-  if(!window.SwymCallbacks){
-    window.SwymCallbacks = [];
-  }
-  window.SwymCallbacks.push(swymCallbackFn);
-
-</script>
   
 
 {% stylesheet %}
