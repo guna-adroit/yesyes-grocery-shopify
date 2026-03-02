@@ -77,7 +77,10 @@ class FacetsFormComponent extends Component {
     this.#updateURLHash();
     this.dispatchEvent(new FilterUpdateEvent(this.createURLParameters()));
     this.#updateSection();
-    window.initStarRatings();
+    setTimeout(() => {
+       window.initStarRatings();
+    }, 1000);
+   
     // observePaginationChange();
   };
 
