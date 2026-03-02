@@ -915,18 +915,7 @@ const CURRENCY_DECIMALS = {
   XUA: 0,
 };
 
-function swymCallbackFn(swat){
-    document.addEventListener("collection:updated", function(){
-      swat.initializeActionButtons(".product-grid");
-    })
-    document.addEventListener("shopify:section:load", function(){
-      swat.initializeActionButtons(".product-grid");
-    })
-  }
-  if(!window.SwymCallbacks){
-    window.SwymCallbacks = [];
-  }
-  window.SwymCallbacks.push(swymCallbackFn);
+
 
 // Infinite Scroll
 let ajaxinateInstance = null;
