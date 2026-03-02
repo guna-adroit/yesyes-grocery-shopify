@@ -308,17 +308,12 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    .write-review {
-      cursor: pointer;
-      margin-top: 16px;
-      border: 1px solid;
-      border-radius: 25px;
-      text-align: center;
-      padding: 5px;
+    .write-review-wrapper {
+      margin-top: 24px;
     }
-    .write-review:hover {
-      text-decoration: underline;
-      background: #f8faff;
+    .button.btn-primary {
+      text-transform: uppercase;
+      font-weight: 700;
     }
     span.review-label {
       font-weight: 500;

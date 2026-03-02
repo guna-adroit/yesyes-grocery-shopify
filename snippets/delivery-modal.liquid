@@ -2,6 +2,8 @@
 .radio-wrapper.date-selection {
     display: flex;
     gap: 16px;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .date-selection-wrapper,
@@ -13,10 +15,13 @@
     border-radius: 4px;
     transition: 0.3s ease-in-out;
 }
-
+.time-selection-wrapper.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
 .date-selection-wrapper {
     height: 50px;
-    width: 50px;
+    min-width: 75px;
     border: 1px solid #E0E0E0;
     flex-direction: column;
 }
@@ -41,12 +46,12 @@
 
 .day-label {
     font-weight: 700;
-    font-size: 8px;
+    font-size: 10px;
 }
 
 .date-label {
     font-weight: 600;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .timeslot-wrapper {
@@ -165,6 +170,14 @@ span.selector-text {
 .modal.active {
     display: block;
 }
+@media (max-width: 750px) {
+    .time-selection-wrapper {
+        flex: 0 0 calc(34% - 10px);
+    }
+    .date-selection-wrapper {
+        flex: 0 0 calc(33% - 10px);
+    }
+}   
 </style>
 
     <button id="store-selector-button" class="selector-button">
@@ -211,25 +224,25 @@ span.selector-text {
         <div>
             {% comment %} 4 Radio buttons {% endcomment %}
             {% assign slot_2 = "now" | date: "%s" | plus: 86400 %}
-            {% assign slot_2 = slot_2 | date: "%Y-%m-%d" %}
+            {% assign slot_2 = slot_2 | date: "%d-%m-%Y" %}
             {% assign slot_3 = "now" | date: "%s" | plus: 172800 %}
-            {% assign slot_3 = slot_3 | date: "%Y-%m-%d" %}
+            {% assign slot_3 = slot_3 | date: "%d-%m-%Y" %}
             {% assign slot_4 = "now" | date: "%s" | plus: 259200 %}
-            {% assign slot_4 = slot_4 | date: "%Y-%m-%d" %}
+            {% assign slot_4 = slot_4 | date: "%d-%m-%Y" %}
             {% assign slot_5 = "now" | date: "%s" | plus: 345600 %}
-            {% assign slot_5 = slot_5 | date: "%Y-%m-%d" %}
+            {% assign slot_5 = slot_5 | date: "%d-%m-%Y" %}
             {% assign slot_6 = "now" | date: "%s" | plus: 432000 %}
-            {% assign slot_6 = slot_6 | date: "%Y-%m-%d" %}
+            {% assign slot_6 = slot_6 | date: "%d-%m-%Y" %}
             <div class="radio-wrapper date-selection">
                 <div class="date-selection-wrapper">
                     <input 
                         type="radio" 
-                        id="{{ "now" | date: "%Y-%m-%d" }}" 
+                        id="{{ "now" | date: "%d-%m-%Y" }}" 
                         name="pickup-date" 
-                        value="{{ "now" | date: "%Y-%m-%d" }}"
+                        value="{{ "now" | date: "%d-%m-%Y" }}"
                         class="date-option"
                     >
-                    <label class="slot-label" for="{{ "now" | date: "%Y-%m-%d" }}">
+                    <label class="slot-label" for="{{ "now" | date: "%d-%m-%Y" }}">
                         <span class="day-label">Today</span>
                         <span class="date-label">{{ "now" | date: "%b %d" }}</span>
                     </label>
@@ -313,6 +326,8 @@ span.selector-text {
                         name="pickup-time" 
                         value="{{ slot.slot_label }}"
                         class="time-option"
+                        data-start="{{ slot.start_time }}"
+                        data-end="{{ slot.end_time }}"
                     >
                     <label class="slot-label" for="{{ slot.slot_label }}">
                         <span class="time-label">{{ slot.slot_label }}</span>
@@ -324,7 +339,7 @@ span.selector-text {
     </div>
 
 
-        <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
 
   const checkoutBtn = document.getElementById('checkout');
@@ -334,6 +349,81 @@ document.addEventListener('DOMContentLoaded', function () {
   const pickupModal = document.getElementById('store-details-modal');
   const slotModal = document.getElementById('time-slot-modal');
   const deliveryOptions = document.querySelectorAll('.delivery-option');
+  const PICKUP_BUFFER_HOURS = 1; // Change anytime
+
+
+  function parseDateDMY(dateStr) {
+  const [day, month, year] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function parseTimeToDate(baseDate, timeStr) {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date(baseDate);
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+}
+
+function updateTimeSlotAvailability() {
+
+  const selectedDateStr = state.date;
+  if (!selectedDateStr) return;
+
+  const now = new Date();
+  const bufferTime = new Date(now.getTime() + PICKUP_BUFFER_HOURS * 60 * 60 * 1000);
+  console.log('Buffer Time:', bufferTime);
+  const selectedDate = parseDateDMY(selectedDateStr);
+
+  document.querySelectorAll('input[name="pickup-time"]').forEach(radio => {
+
+    const startTimeStr = radio.dataset.start;
+    if (!startTimeStr) return;
+
+    const slotStart = parseTimeToDate(selectedDate, startTimeStr);
+
+    let disabled = false;
+
+    // If selected date is today
+    const isToday =
+      selectedDate.toDateString() === now.toDateString();
+
+    if (isToday) {
+      if (slotStart <= bufferTime) {
+        disabled = true;
+      }
+    }
+
+    radio.disabled = disabled;
+
+    if (disabled) {
+      radio.closest('.time-selection-wrapper').classList.add('disabled');
+      if (radio.checked) {
+        radio.checked = false;
+        state.time = null;
+        slotBtn.querySelector('.selector-text').textContent = 'Select time slot';
+      }
+    } else {
+      radio.closest('.time-selection-wrapper').classList.remove('disabled');
+    }
+  });
+
+  updateCheckoutState();
+}
+document.querySelectorAll('input[name="pickup-date"]').forEach(radio => {
+  radio.addEventListener('change', function () {
+    state.date = this.value;
+    state.time = null;
+
+    document.querySelectorAll('input[name="pickup-time"]').forEach(r => r.checked = false);
+
+    slotBtn.querySelector('.selector-text').textContent = 'Select time slot';
+
+    updateTimeSlotAvailability(); // 🔥 ADD THIS
+
+    updateCheckoutState();
+  });
+});
+
 
   let state = {
     pickup: false,
@@ -410,36 +500,50 @@ document.addEventListener('DOMContentLoaded', function () {
         warningButton.classList.remove('hidden');
         }
     }
-  /* -----------------------
-     Dropdown Behaviour
-  ----------------------- */
-  function open(modal) {
-    closeAll();
-    modal.classList.add('active');
-    storeBtn.classList.toggle('active', modal === pickupModal);
-    slotBtn.classList.toggle('active', modal === slotModal);
-  }
+    /* -----------------------
+    Dropdown Behaviour
+    ----------------------- */
 
-  function closeAll() {
-    pickupModal.classList.remove('active');
-    slotModal.classList.remove('active');
-    storeBtn.classList.remove('active');
-    slotBtn.classList.remove('active');
-  }
+    function toggleModal(modal, button) {
+        const isActive = modal.classList.contains('active');
 
-  storeBtn.addEventListener('click', () => open(pickupModal));
-  slotBtn.addEventListener('click', () => open(slotModal));
+        // Close everything first
+        closeAll();
 
-  document.addEventListener('click', function (e) {
-    if (
-      !pickupModal.contains(e.target) &&
-      !slotModal.contains(e.target) &&
-      !storeBtn.contains(e.target) &&
-      !slotBtn.contains(e.target)
-    ) {
-      closeAll();
+        // If it was NOT active before, open it
+        if (!isActive) {
+            modal.classList.add('active');
+            button.classList.add('active');
+        }
     }
-  });
+
+    function closeAll() {
+        pickupModal.classList.remove('active');
+        slotModal.classList.remove('active');
+        storeBtn.classList.remove('active');
+        slotBtn.classList.remove('active');
+    }
+
+    storeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleModal(pickupModal, storeBtn);
+    });
+
+    slotBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleModal(slotModal, slotBtn);
+    });
+
+    document.addEventListener('click', function (e) {
+    if (
+        !pickupModal.contains(e.target) &&
+        !slotModal.contains(e.target) &&
+        !storeBtn.contains(e.target) &&
+        !slotBtn.contains(e.target)
+    ) {
+        closeAll();
+    }
+    });
 
   /* -----------------------
      Store Selection
@@ -531,6 +635,9 @@ Time: ${state.time}
   ----------------------- */
   updateDeliveryUI();
   updateCheckoutState();
+  if (state.date) {
+    updateTimeSlotAvailability();
+ }
 
 });
 </script>
