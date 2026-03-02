@@ -563,7 +563,7 @@
   {%- endif -%}
 
   <div class="product-badges product-badges--top-right product wishlist-icon-position">
-    {% render 'wishlist-icon', product: product %}
+    {% render 'wishlist-icon', product: product %} 
   </div>
   {% if product.compare_at_price > product.price %}
   {%- assign percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
