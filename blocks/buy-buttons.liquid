@@ -79,7 +79,20 @@
             can_add_to_cart: can_add_to_cart,
             add_to_cart_text: add_to_cart_text
           %}
-          <button class="button wishlist-button button-secondary swym-button swym-add-to-wishlist"
+          <wishlist-button
+            data-product-id="{{ product.id }}"
+            data-product-handle="{{ product.handle }}"
+            data-product-title="{{ product.title | escape }}"
+            data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+            class="wishlist-btn-wrapper"
+          >
+            <button type="button" class="wishlist-btn" data-wishlist-btn>
+              {{ 'icon-wishlist.svg' | inline_asset_content }}
+              <span class="wishlist-text-add">{{ add_text | default: 'Add to Wishlist' }}</span>
+              <span class="wishlist-text-remove">{{ remove_text | default: 'Remove from Wishlist' }}</span>
+            </button>
+          </wishlist-button>
+          {% comment %} <button class="button wishlist-button button-secondary swym-button swym-add-to-wishlist"
             data-with-epi="true"
             data-swaction="addToWishlist"
             data-product-id="{{ product.id }}"
@@ -92,7 +105,7 @@
                   </span>
               <span class="add-to-whishlist-text__content">Add To Wishlist</span>
               </span>
-          </button>
+          </button> {% endcomment %}
           {%- unless block_settings.gift_card_form and product.gift_card? -%}
             <span
               class="product-form-text__error hidden"

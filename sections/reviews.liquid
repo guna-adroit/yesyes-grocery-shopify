@@ -257,7 +257,8 @@
   const formEl = document.getElementById('yesyes-review-form');
   const statusEl = document.getElementById('yesyes-review-status');
 
-  const BASE = '{{ shop.url }}/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
+
 
 /* -----------------------------
    FETCH REVIEWS + SORT + FILTER

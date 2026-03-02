@@ -34,6 +34,17 @@
     {{ content_for_header }}
     <script type="module" src="{{ 'quick-bulk-add.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'quick-bulk-add-popup.js' | asset_url }}" defer></script>
+
+    <script>
+      window.WishlistConfig = {
+        isLoggedIn: {{ customer | json }} !== null,
+        customerId: {{ customer.id | json }},
+        appProxyUrl: '{{ routes.root_url }}apps/reviews'
+      };
+    </script>
+
+    {% comment %} <script src="{{ 'wishlist.js' | asset_url }}" defer></script> {% endcomment %}
+    {{ 'wishlist.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
@@ -87,7 +98,7 @@
     <script type="module" src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'product-quantity-control.js' | asset_url }}" defer></script>
     <script type="module" src="{{ 'cart-count.js' | asset_url }}" defer></script>
-    {% render 'swym-collections'%}
+    {% comment %} {% render 'swym-collections'%}
     <script type="module">
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
@@ -113,7 +124,18 @@
         }, 2000);
       });
     </script>
-    {% render 'swym-custom'%}
+    {% render 'swym-custom'%} {% endcomment %}
+    <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> 
+    <script src="{{ 'wishlist-count.js' | asset_url }}" defer></script>
+    <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script> 
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          renderWishlistCounter();
+        }, 1500);
+        
+      });
+    </script>
   </body>
 </html>
 

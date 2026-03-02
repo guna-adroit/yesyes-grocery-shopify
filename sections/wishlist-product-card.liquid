@@ -1,0 +1,134 @@
+{% comment %}
+  sections/wishlist-product-card.liquid
+
+  Rendered via Shopify's Section Rendering API:
+    fetch(`/products/${handle}?sections=wishlist-product-card`)
+
+  The `product` object is fully available because the request
+  is made in the context of a product URL. `all_products[handle]`
+  is used as a reliable cross-context alias.
+{% endcomment %}
+
+{%- assign p = all_products[product.handle] -%}
+{%- if p == blank -%}
+  {%- assign p = product -%}
+{%- endif -%}
+
+{%- assign product_id = p.id | prepend: '' -%}
+{%- assign product_url = p.url -%}
+{%- assign product_image = p.featured_image | image_url: width: 600 -%}
+{%- assign product_image_alt = p.featured_image.alt | default: p.title | escape -%}
+
+{%- comment -%} Price logic {%- endcomment -%}
+{%- assign current_price = p.price -%}
+{%- assign compare_price = p.compare_at_price -%}
+{%- assign on_sale = false -%}
+{%- if compare_price > current_price -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+<div
+  class="wishlist-card"
+  data-product-id="{{ product_id }}"
+  data-product-handle="{{ p.handle }}">
+
+  <div class="wishlist-card__image-wrap">
+
+    <a class="wishlist-card__image-link" href="{{ product_url }}">
+      {%- if p.featured_image -%}
+        <img
+          class="wishlist-card__image"
+          src="{{ product_image }}"
+          alt="{{ product_image_alt }}"
+          loading="lazy"
+          width="600"
+          height="600">
+      {%- else -%}
+        <div class="wishlist-card__image wishlist-card__image--placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%} Sale badge {%- endcomment -%}
+    {%- if on_sale -%}
+      <div class="wishlist-card__badge">Sale</div>
+    {%- endif -%}
+
+    {%- comment -%} Sold out badge {%- endcomment -%}
+    {%- unless p.available -%}
+      <div class="wishlist-card__badge wishlist-card__badge--soldout">Sold out</div>
+    {%- endunless -%}
+
+    {%- comment -%}
+      Wishlist remove button — active by default since this card
+      is always rendered in the context of the wishlist page.
+    {%- endcomment -%}
+    <wishlist-button
+      class="wishlist-card__remove"
+      data-product-id="{{ product_id }}"
+      data-product-title="{{ p.title | escape }}"
+      data-product-handle="{{ p.handle }}"
+      data-product-image="{{ product_image }}">
+      <button
+        type="button"
+        data-wishlist-btn
+        class="wishlist-btn wishlist-page-button active"
+        aria-label="Remove {{ p.title | escape }} from wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </wishlist-button>
+
+  </div>
+
+  <div class="wishlist-card__body">
+
+    {%- if p.vendor != blank -%}
+      <a
+        class="wishlist-card__vendor"
+        href="/collections/vendors?q={{ p.vendor | url_encode }}">
+        {{ p.vendor }}
+      </a>
+    {%- endif -%}
+
+    <a class="wishlist-card__title" href="{{ product_url }}">
+      {{ p.title }}
+    </a>
+
+    <div class="wishlist-card__price">
+      <span class="wishlist-card__price--current{% if on_sale %} wishlist-card__price--sale{% endif %}">
+        {{ current_price | money }}
+      </span>
+      {%- if on_sale -%}
+        <s class="wishlist-card__price--compare">{{ compare_price | money }}</s>
+      {%- endif -%}
+    </div>
+
+    <div class="wishlist-card__actions">
+      {%- if p.available -%}
+        <a class="button button--primary wishlist-card__cta" href="{{ product_url }}">
+          {%- if p.variants.size > 1 -%}
+            Choose Options
+          {%- else -%}
+            View Product
+          {%- endif -%}
+        </a>
+      {%- else -%}
+        <a class="button button--secondary wishlist-card__cta" href="{{ product_url }}">
+          View Product
+        </a>
+      {%- endif -%}
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist Product Card",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,13 @@
+<wishlist-button
+  data-product-id="{{ product.id }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-handle="{{ product.handle }}"
+  data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+  class="wishlist-icon-wrapper"
+>
+  <button type="button" class="wishlist-icon-btn" data-wishlist-btn aria-label="Add to wishlist">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 42 42" height="42" width="42">
+      <path stroke-linejoin="round" stroke-linecap="round" stroke="#ED1D23" d="M33.0945 22.8067L23.2778 32.6251C22.627 33.2758 21.7443 33.6413 20.8241 33.6413C19.9038 33.6413 19.0212 33.2758 18.3703 32.6251L8.5536 22.8084C7.74211 22.004 7.0975 21.0472 6.65677 19.993C6.21604 18.9388 5.98787 17.808 5.98537 16.6653C5.98287 15.5227 6.20608 14.3908 6.64219 13.3347C7.0783 12.2786 7.71871 11.319 8.52667 10.511C9.33463 9.70309 10.2942 9.06267 11.3503 8.62656C12.4065 8.19046 13.5383 7.96725 14.681 7.96975C15.8236 7.97225 16.9545 8.20041 18.0087 8.64114C19.0629 9.08187 20.0196 9.72649 20.8241 10.538C22.458 8.94473 24.6538 8.05935 26.9359 8.07365C29.218 8.08795 31.4026 9.00077 33.0164 10.6144C34.6302 12.228 35.5433 14.4124 35.558 16.6945C35.5726 18.9766 34.6875 21.1725 33.0945 22.8067Z"/>
+    </svg>
+  </button>
+</wishlist-button>

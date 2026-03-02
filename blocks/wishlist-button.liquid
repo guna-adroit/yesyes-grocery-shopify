@@ -1,0 +1,134 @@
+{% comment %} snippets/wishlist-button.liquid {% endcomment %}
+<wishlist-button
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+  class="wishlist-btn-wrapper"
+>
+  <button type="button" class="wishlist-btn" data-wishlist-btn>
+    {{ 'icon-wishlist.svg' | inline_asset_content }}
+    <span class="wishlist-text-add">{{ add_text | default: 'Add to Wishlist' }}</span>
+    <span class="wishlist-text-remove">{{ remove_text | default: 'Remove from Wishlist' }}</span>
+  </button>
+</wishlist-button>
+
+
+{% schema %}
+{
+  "name": "Wishlist Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "add_text",
+      "label": "Add to Wishlist Text",
+      "default": "Add to Wishlist"
+    },
+    {
+      "type": "text",
+      "id": "remove_text",
+      "label": "Remove from Wishlist Text",
+      "default": "Remove from Wishlist"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button Hover Background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border Width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "active_button_background",
+      "label": "Active Button Background",
+      "default": "#ff0000"
+    },
+    {
+      "type": "color",
+      "id": "active_button_border_color",
+      "label": "Active Button Border Color",
+      "default": "#ff0000"
+    },
+    {
+      "type": "color",
+      "id": "active_button_text_color",
+      "label": "Active Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "button_width",
+      "label": "Button Width",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "100%",
+          "label": "Full Width"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin Top (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+        "name": "Wishlist button"
+    }
+  ]
+}
+{% endschema %}

@@ -94,20 +94,20 @@ class ProductRecommendations extends HTMLElement {
           this.dataset.recommendationsPerformed = 'true';
           this.innerHTML = recommendations.innerHTML;
 
-          document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
+          // document.dispatchEvent(new CustomEvent("swym:collections-loaded"));
 
-          const initSwymButtons = (swat) => {
-            console.log("SWYM: Initializing product recommendations");
-            swat.initializeActionButtons(`body`); 
-            swat.collectionsApi.initializeCollections(swat, true, window.Shopify.theme.schema_name);
-          };
+          // const initSwymButtons = (swat) => {
+          //   console.log("SWYM: Initializing product recommendations");
+          //   swat.initializeActionButtons(`body`); 
+          //   swat.collectionsApi.initializeCollections(swat, true, window.Shopify.theme.schema_name);
+          // };
 
-          if (window.SwymCallbacks) {
-            initSwymButtons(window._swat);
-          } else {
-            window.SwymCallbacks = window.SwymCallbacks || [];
-            window.SwymCallbacks.push(initSwymButtons);
-          }
+          // if (window.SwymCallbacks) {
+          //   initSwymButtons(window._swat);
+          // } else {
+          //   window.SwymCallbacks = window.SwymCallbacks || [];
+          //   window.SwymCallbacks.push(initSwymButtons);
+          // }
 
 
           // setTimeout(() => {
@@ -132,8 +132,8 @@ class ProductRecommendations extends HTMLElement {
         }
         // Product Star rating start
         (function () {
-          console.log("Star rating script initialized");
-          const BASE = window.location.origin + '/apps/reviews';
+          // console.log("Star rating script initialized");
+          const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
           /* ----------------------------------
             Main Function - Can be called multiple times
@@ -142,11 +142,11 @@ class ProductRecommendations extends HTMLElement {
             var productCards = document.querySelectorAll('product-card[data-product-id]:not([data-stars-initialized])');
             
             if (!productCards.length) {
-              console.log("No new product cards found");
+              // console.log("No new product cards found");
               return;
             }
 
-            console.log("Found new product cards:", productCards.length);
+            // console.log("Found new product cards:", productCards.length);
 
             // Mark cards as initialized to avoid duplicate processing
             productCards.forEach(card => {
@@ -168,7 +168,7 @@ class ProductRecommendations extends HTMLElement {
             .then(res => res.json())
             .then(data => {
               if (!data?.stats) return;
-              console.log("Received stats:", data.stats);
+              // console.log("Received stats:", data.stats);
               renderStats(data.stats, productCards);
             })
             .catch(err => {
@@ -240,13 +240,13 @@ class ProductRecommendations extends HTMLElement {
 
           // Listen for Shopify section load events (Theme Editor)
           document.addEventListener('shopify:section:load', function(event) {
-            console.log('Section loaded, re-initializing stars');
+            // console.log('Section loaded, re-initializing stars');
             setTimeout(initStarRatings, 200);
           });
 
           // Listen for Ajaxinate pagination load
           document.addEventListener('ajaxinate:loaded', function(event) {
-            console.log('Ajaxinate loaded new products');
+            // console.log('Ajaxinate loaded new products');
             setTimeout(initStarRatings, 200);
           });
 
@@ -271,7 +271,7 @@ class ProductRecommendations extends HTMLElement {
             });
 
             if (newProductsAdded) {
-              console.log('New products detected via MutationObserver');
+              // console.log('New products detected via MutationObserver');
               setTimeout(initStarRatings, 200);
             }
           });
@@ -283,7 +283,7 @@ class ProductRecommendations extends HTMLElement {
               childList: true,
               subtree: true
             });
-            console.log('MutationObserver attached to product grid');
+            // console.log('MutationObserver attached to product grid');
           }
 
         })();

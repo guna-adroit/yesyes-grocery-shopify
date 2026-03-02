@@ -1,6 +1,5 @@
 (function () {
-  // BASE= origin + '/apps/reviews';
-  const BASE = window.location.origin + '/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
   /* ----------------------------------
      Main Function - Can be called multiple times
@@ -9,11 +8,11 @@
     var productCards = document.querySelectorAll('product-card[data-product-id]:not([data-stars-initialized])');
     
     if (!productCards.length) {
-      console.log("No new product cards found");
+      // console.log("No new product cards found");
       return;
     }
 
-    console.log("Found new product cards:", productCards.length);
+    // console.log("Found new product cards:", productCards.length);
 
     // Mark cards as initialized to avoid duplicate processing
     productCards.forEach(card => {
@@ -35,7 +34,7 @@
     .then(res => res.json())
     .then(data => {
       if (!data?.stats) return;
-      console.log("Received stats:", data.stats);
+      // console.log("Received stats:", data.stats);
       renderStats(data.stats, productCards);
     })
     .catch(err => {
@@ -108,13 +107,13 @@
 
   // Listen for Shopify section load events (Theme Editor)
   document.addEventListener('shopify:section:load', function(event) {
-    console.log('Section loaded, re-initializing stars');
+    // console.log('Section loaded, re-initializing stars');
     setTimeout(initStarRatings, 200);
   });
 
   // Listen for Ajaxinate pagination load
   document.addEventListener('ajaxinate:loaded', function(event) {
-    console.log('Ajaxinate loaded new products');
+    // console.log('Ajaxinate loaded new products');
     setTimeout(initStarRatings, 200);
   });
 
@@ -139,7 +138,7 @@
     });
 
     if (newProductsAdded) {
-      console.log('New products detected via MutationObserver');
+      // console.log('New products detected via MutationObserver');
       setTimeout(initStarRatings, 200);
     }
   });
@@ -151,7 +150,7 @@
       childList: true,
       subtree: true
     });
-    console.log('MutationObserver attached to product grid');
+    // console.log('MutationObserver attached to product grid');
   }
 
 })();
@@ -159,7 +158,7 @@
 // Product page star rating
 
 (function () {
-  const BASE = window.location.origin + '/apps/reviews';
+  const BASE = window.WishlistConfig?.appProxyUrl ?? '';
 
   function initProductPageStars() {
     const container = document.querySelector('.product-stars-container[data-product-id]');

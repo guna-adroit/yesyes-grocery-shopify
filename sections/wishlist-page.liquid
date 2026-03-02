@@ -1,0 +1,220 @@
+{% comment %}
+  Wishlist Page Section
+  Compatible with: Shopify Horizon Theme
+
+  How product cards are rendered:
+  ─────────────────────────────────────────────────────────────
+  Product cards are rendered server-side via Shopify's Section
+  Rendering API. For each product handle in the wishlist,
+  wishlist-page.js calls:
+
+    fetch(`/products/${handle}?sections=wishlist-product-card`)
+
+  This renders sections/wishlist-product-card.liquid with full
+  access to the Liquid `product` object and `all_products[handle]`,
+  returning ready-to-inject HTML with correct prices, images,
+  availability badges, and wishlist buttons.
+
+  Requires:
+  ─────────────────────────────────────────────────────────────
+  • sections/wishlist-product-card.liquid  (Section Rendering target)
+  • assets/wishlist-page.js
+  • assets/wishlist-page.css
+  • assets/wishlist-button.js  (loaded globally in theme.liquid)
+
+  Guest (localStorage) users:
+  ─────────────────────────────────────────────────────────────
+  Add data-product-handle="{{ product.handle }}" to every
+  <wishlist-button> element across your theme so handles are
+  cached automatically. Example:
+
+    <wishlist-button
+      data-product-id="{{ product.id }}"
+      data-product-handle="{{ product.handle }}"
+      data-product-title="{{ product.title | escape }}"
+      data-product-image="{{ product.featured_image | image_url: width: 400 }}">
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'wishlist-page.css' | asset_url }}">
+
+<div
+  class="wishlist-page page-width"
+  data-section-id="{{ section.id }}"
+  style="
+    --wishlist-cols-desktop: {{ section.settings.columns_desktop }};
+    --wishlist-cols-mobile:  {{ section.settings.columns_mobile }};
+  ">
+
+  <div class="wishlist-page__header">
+    <h1 class="wishlist-page__title">
+      {{ section.settings.title | default: 'My Wishlist' }}
+      <wishlist-count class="wishlist-page__count-badge"></wishlist-count>
+    </h1>
+  </div>
+
+  <div id="wishlist-page-state">
+
+    {% comment %} ── Loading skeleton ──────────────────────────────── {% endcomment %}
+    <div
+      class="wishlist-loading"
+      id="wishlist-loading"
+      aria-live="polite"
+      aria-label="Loading wishlist items">
+      <div class="wishlist-grid">
+        {%- for i in (1..4) -%}
+          <div class="wishlist-card wishlist-card--skeleton">
+            <div class="wishlist-card__image-wrap skeleton-box"></div>
+            <div class="wishlist-card__body">
+              <div class="skeleton-box skeleton-box--title"></div>
+              <div class="skeleton-box skeleton-box--price"></div>
+              <div class="skeleton-box skeleton-box--btn"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {% comment %} ── Empty state ───────────────────────────────────── {% endcomment %}
+    <div class="wishlist-empty hidden" id="wishlist-empty">
+      <div class="wishlist-empty__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+        </svg>
+      </div>
+      <h2 class="wishlist-empty__title">
+        {{ section.settings.empty_title | default: 'Your wishlist is empty' }}
+      </h2>
+      <p class="wishlist-empty__subtitle">
+        {{ section.settings.empty_subtitle | default: 'Save items you love and come back to them anytime.' }}
+      </p>
+      <a
+        href="{{ section.settings.empty_cta_url | default: '/collections/all' }}"
+        class="button button--primary wishlist-empty__cta">
+        {{ section.settings.empty_cta_text | default: 'Start Shopping' }}
+      </a>
+    </div>
+
+    {% comment %} ── Error state ───────────────────────────────────── {% endcomment %}
+    <div class="wishlist-error hidden" id="wishlist-error">
+      <p>{{ section.settings.error_message | default: 'Something went wrong loading your wishlist. Please try again.' }}</p>
+      <button class="button button--secondary" id="wishlist-retry-btn">Retry</button>
+    </div>
+
+    {% comment %} ── Results grid ──────────────────────────────────── {% endcomment %}
+    <div class="wishlist-results hidden" id="wishlist-results">
+      <div class="wishlist-grid" id="wishlist-grid">
+        {% comment %}
+          Cards injected here by wishlist-page.js.
+          Each card HTML is returned by:
+            /products/{handle}?sections=wishlist-product-card
+          which renders sections/wishlist-product-card.liquid
+          with full Liquid product context.
+        {% endcomment %}
+      </div>
+      <div class="wishlist-pagination" id="wishlist-pagination"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  window.WishlistConfig = window.WishlistConfig || {};
+  window.WishlistConfig.appProxyUrl  = {{ shop.url | append: '/apps/reviews' | json }};
+  window.WishlistConfig.isLoggedIn   = {{ customer | json | default: 'null' }} !== null;
+  window.WishlistConfig.customerId   = {{ customer.id | default: 0 | json }};
+  window.WishlistConfig.pageLimit    = {{ section.settings.products_per_page | default: 12 }};
+  window.WishlistConfig.cardSection  = 'wishlist-product-card';
+</script>
+<script src="{{ 'wishlist-page.js' | asset_url }}" defer></script>
+
+{% comment %} <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> {% endcomment %}
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "My Wishlist"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "label": "Products per page",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Empty State"
+    },
+    {
+      "type": "text",
+      "id": "empty_title",
+      "label": "Empty state heading",
+      "default": "Your wishlist is empty"
+    },
+    {
+      "type": "text",
+      "id": "empty_subtitle",
+      "label": "Empty state subtext",
+      "default": "Save items you love and come back to them anytime."
+    },
+    {
+      "type": "url",
+      "id": "empty_cta_url",
+      "label": "Empty state button URL"
+    },
+    {
+      "type": "text",
+      "id": "empty_cta_text",
+      "label": "Empty state button label",
+      "default": "Start Shopping"
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Something went wrong loading your wishlist. Please try again."
+    },
+    {
+      "type": "header",
+      "content": "Grid Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "4",
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "2",
+      "label": "Columns on mobile"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist Page"
+    }
+  ]
+}
+{% endschema %}
