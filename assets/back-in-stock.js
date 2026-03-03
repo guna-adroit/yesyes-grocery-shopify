@@ -46,7 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
       updateUI(); // always re-sync with state
     }
   }
+  document.addEventListener('variant:change', function(event) {
+  // Access the details of the newly selected variant
+  const variant = event.detail.variant;
+  const variantId = event.detail.variant.id;
+  
+  console.log('Variant changed to:', variant);
+  console.log('Variant ID:', variantId);
 
+  // You can also access other useful data, like the previous variant or the product
+  // const previousVariant = event.detail.previousVariant; 
+  // const product = event.detail.product; 
+  // const form = event.target; 
+
+  // Add your custom functionality here to update the UI
+  // (e.g., update an app block, change a custom field, etc.)
+});
   async function checkStatus() {
     setLoading(true);
 
@@ -171,9 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         messageBox.innerText = "You will receive an email when this product is back in stock.";
         submitBtn.innerText = "Subscribe";
-        setTimeout(function () {
-          closeModal();
-        }, 3800);
         
       }
     }
