@@ -1,6 +1,473 @@
+{% doc %}
+  @prompt
+    show stock count of variant. When variant changed, Stock count should be updated
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-stock-count-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-stock-count-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    {% if block.settings.show_border %}
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% endif %}
+  }
+
+  .ai-stock-count-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-stock-count-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    stroke: {{ block.settings.icon_color }};
+  }
+
+  .ai-stock-count-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: {{ block.settings.text_weight }};
+    margin: 0;
+  }
+
+  .ai-stock-count-number-{{ ai_gen_id }} {
+    color: {{ block.settings.number_color }};
+    font-weight: {{ block.settings.number_weight }};
+  }
+
+  .ai-stock-count-low-{{ ai_gen_id }} .ai-stock-count-wrapper-{{ ai_gen_id }} {
+    background-color: {{ block.settings.low_stock_bg_color }};
+  }
+
+  .ai-stock-count-low-{{ ai_gen_id }} .ai-stock-count-text-{{ ai_gen_id }},
+  .ai-stock-count-low-{{ ai_gen_id }} .ai-stock-count-number-{{ ai_gen_id }} {
+    color: {{ block.settings.low_stock_text_color }};
+  }
+
+  .ai-stock-count-low-{{ ai_gen_id }} .ai-stock-count-icon-{{ ai_gen_id }} svg {
+    stroke: {{ block.settings.low_stock_icon_color }};
+  }
+
+  .ai-stock-count-out-{{ ai_gen_id }} .ai-stock-count-wrapper-{{ ai_gen_id }} {
+    background-color: {{ block.settings.out_of_stock_bg_color }};
+  }
+
+  .ai-stock-count-out-{{ ai_gen_id }} .ai-stock-count-text-{{ ai_gen_id }},
+  .ai-stock-count-out-{{ ai_gen_id }} .ai-stock-count-number-{{ ai_gen_id }} {
+    color: {{ block.settings.out_of_stock_text_color }};
+  }
+
+  .ai-stock-count-out-{{ ai_gen_id }} .ai-stock-count-icon-{{ ai_gen_id }} svg {
+    stroke: {{ block.settings.out_of_stock_icon_color }};
+  }
+
+  .ai-stock-count-hidden-{{ ai_gen_id }} {
+    display: none;
+  }
+{% endstyle %}
+
+<variant-stock-count-{{ ai_gen_id }}
+  class="ai-stock-count-{{ ai_gen_id }}"
+  data-product-id="{{ product.id }}"
+  data-low-threshold="{{ block.settings.low_stock_threshold }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-stock-count-wrapper-{{ ai_gen_id }}">
+    {% if block.settings.show_icon %}
+      <div class="ai-stock-count-icon-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+      </div>
+    {% endif %}
+    <p class="ai-stock-count-text-{{ ai_gen_id }}">
+      <span class="ai-stock-count-number-{{ ai_gen_id }}" data-stock-number>
+        {% if product.selected_or_first_available_variant.inventory_quantity > 0 %}
+          {{ product.selected_or_first_available_variant.inventory_quantity }}
+        {% else %}
+          0
+        {% endif %}
+      </span>
+      <span data-stock-label>
+        {% if product.selected_or_first_available_variant.inventory_quantity > 0 %}
+          {{ block.settings.in_stock_text }}
+        {% else %}
+          {{ block.settings.out_of_stock_text }}
+        {% endif %}
+      </span>
+    </p>
+  </div>
+</variant-stock-count-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantStockCount{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.productId = this.dataset.productId;
+        this.lowThreshold = parseInt(this.dataset.lowThreshold);
+        this.stockNumber = this.querySelector('[data-stock-number]');
+        this.stockLabel = this.querySelector('[data-stock-label]');
+      }
+
+      connectedCallback() {
+        this.setupVariantListener();
+        this.updateStockDisplay(this.getCurrentVariantId());
+      }
+
+      getCurrentVariantId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const variantParam = urlParams.get('variant');
+        if (variantParam) {
+          return variantParam;
+        }
+
+        const variantInput = document.querySelector('input[name="id"]');
+        if (variantInput) {
+          return variantInput.value;
+        }
+
+        const productJson = document.querySelector('[data-product-json]');
+        if (productJson) {
+          try {
+            const product = JSON.parse(productJson.textContent);
+            return product.selected_or_first_available_variant?.id;
+          } catch (e) {
+            console.error('Error parsing product JSON:', e);
+          }
+        }
+
+        return null;
+      }
+
+      setupVariantListener() {
+        document.addEventListener('variant:change', (event) => {
+          if (event.detail && event.detail.variant) {
+            this.updateStockDisplay(event.detail.variant.id);
+          }
+        });
+
+        const variantSelects = document.querySelectorAll('variant-selects, variant-radios');
+        variantSelects.forEach((selector) => {
+          selector.addEventListener('change', () => {
+            setTimeout(() => {
+              this.updateStockDisplay(this.getCurrentVariantId());
+            }, 100);
+          });
+        });
+
+        const form = this.closest('form');
+        if (form) {
+          const observer = new MutationObserver(() => {
+            this.updateStockDisplay(this.getCurrentVariantId());
+          });
+
+          const variantInput = form.querySelector('input[name="id"]');
+          if (variantInput) {
+            observer.observe(variantInput, {
+              attributes: true,
+              attributeFilter: ['value']
+            });
+          }
+        }
+      }
+
+      async updateStockDisplay(variantId) {
+        if (!variantId) return;
+
+        try {
+          const response = await fetch(`/products/${this.getProductHandle()}.js`);
+          const product = await response.json();
+          const variant = product.variants.find(v => v.id == variantId);
+
+          if (variant) {
+            const inventory = variant.inventory_quantity || 0;
+            const inventoryPolicy = variant.inventory_policy;
+            const inventoryManagement = variant.inventory_management;
+
+            this.classList.remove('ai-stock-count-low-{{ ai_gen_id }}', 'ai-stock-count-out-{{ ai_gen_id }}', 'ai-stock-count-hidden-{{ ai_gen_id }}');
+
+            if (inventoryManagement === null || inventoryPolicy === 'continue') {
+              if (!{{ block.settings.show_when_not_tracked | json }}) {
+                this.classList.add('ai-stock-count-hidden-{{ ai_gen_id }}');
+                return;
+              }
+            }
+
+            if (inventory <= 0) {
+              this.stockNumber.textContent = '0';
+              this.stockLabel.textContent = {{ block.settings.out_of_stock_text | json }};
+              this.classList.add('ai-stock-count-out-{{ ai_gen_id }}');
+            } else if (inventory <= this.lowThreshold) {
+              this.stockNumber.textContent = inventory;
+              this.stockLabel.textContent = {{ block.settings.in_stock_text | json }};
+              this.classList.add('ai-stock-count-low-{{ ai_gen_id }}');
+            } else {
+              this.stockNumber.textContent = inventory;
+              this.stockLabel.textContent = {{ block.settings.in_stock_text | json }};
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching variant stock:', error);
+        }
+      }
+
+      getProductHandle() {
+        const urlPath = window.location.pathname;
+        const match = urlPath.match(/\/products\/([^\/]+)/);
+        return match ? match[1] : null;
+      }
+    }
+
+    customElements.define('variant-stock-count-{{ ai_gen_id }}', VariantStockCount{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Variant stock count",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "in_stock_text",
+      "label": "In stock text",
+      "default": "in stock"
+    },
+    {
+      "type": "text",
+      "id": "out_of_stock_text",
+      "label": "Out of stock text",
+      "default": "out of stock"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_not_tracked",
+      "label": "Show when inventory not tracked",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Low stock threshold"
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "label": "Low stock threshold",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show border",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Text weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "number_weight",
+      "label": "Number weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Normal stock colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f0f9ff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#0369a1"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Number",
+      "default": "#0369a1"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#bae6fd"
+    },
+    {
+      "type": "header",
+      "content": "Low stock colors"
+    },
+    {
+      "type": "color",
+      "id": "low_stock_bg_color",
+      "label": "Background",
+      "default": "#fef3c7"
+    },
+    {
+      "type": "color",
+      "id": "low_stock_text_color",
+      "label": "Text",
+      "default": "#92400e"
+    },
+    {
+      "type": "color",
+      "id": "low_stock_icon_color",
+      "label": "Icon",
+      "default": "#92400e"
+    },
+    {
+      "type": "header",
+      "content": "Out of stock colors"
+    },
+    {
+      "type": "color",
+      "id": "out_of_stock_bg_color",
+      "label": "Background",
+      "default": "#fee2e2"
+    },
+    {
+      "type": "color",
+      "id": "out_of_stock_text_color",
+      "label": "Text",
+      "default": "#991b1b"
+    },
+    {
+      "type": "color",
+      "id": "out_of_stock_icon_color",
+      "label": "Icon",
+      "default": "#991b1b"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Variant stock count"
+    }
+  ]
+}
 {% endschema %}
