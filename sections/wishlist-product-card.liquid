@@ -107,12 +107,7 @@
     </div>
 
     <div class="wishlist-card__actions">
-      {%- if p.available -%}
-        <a class="button button--primary wishlist-card__cta" href="{{ product_url }}">
-          {%- if p.variants.size > 1 -%}
-            Choose Options
-          {%- else -%}
-            {%- liquid
+      {%- liquid
                  
                   assign product_variant_media = p.featured_media.preview_image | image_url: width: 100
                   if p.featured_media.preview_image != blank
@@ -159,11 +154,17 @@
               {% endform %}
             </product-form-component>
             {% endif %}
+      {% comment %} {%- if p.available -%}
+        <a class="button button--primary wishlist-card__cta" href="{{ product_url }}">
+          {%- if p.variants.size > 1 -%}
+            Choose Options
+          {%- else -%}
+            View Product
           {%- endif -%}
         </a>
       {%- else -%}
         
-      {%- endif -%}
+      {%- endif -%} {% endcomment %}
     </div>
 
   </div>
