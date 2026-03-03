@@ -353,4 +353,8 @@ wishlist-count[hidden] {
     display: grid;
     height: 35px;
   }
+  .wishlist-card__title{
+    font-size: 12px;
+    min-height: 30px;
+  }
 }
