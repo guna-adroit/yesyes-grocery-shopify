@@ -50,10 +50,12 @@ export default class VariantPicker extends Component {
    */
   variantChanged(event) {
     if (!(event.target instanceof HTMLElement)) return;
-
+    
     const selectedOption =
-      event.target instanceof HTMLSelectElement ? event.target.options[event.target.selectedIndex] : event.target;
-
+    event.target instanceof HTMLSelectElement ? event.target.options[event.target.selectedIndex] : event.target;
+    const variantAvailable = selectedOption.dataset.optionAvailable;
+    var dataVariantId = selectedOption.dataset.variantId;
+    
     if (!selectedOption) return;
 
     this.updateSelectedOption(event.target);
@@ -94,6 +96,7 @@ export default class VariantPicker extends Component {
         history.replaceState({}, '', url.toString());
       });
     }
+    handleBackInStockVariantChange(variantAvailable, dataVariantId);
   }
 
   /**
@@ -359,4 +362,32 @@ export default class VariantPicker extends Component {
 
 if (!customElements.get('variant-picker')) {
   customElements.define('variant-picker', VariantPicker);
+}
+function handleBackInStockVariantChange(variantAvailable, dataVariantId) {
+  console.log("Var available?: ", variantAvailable);
+  if (!variantAvailable) return;
+
+  const notifyLink = document.getElementById("notify-link");
+  const dataEl = document.getElementById("notify-data");
+
+  if (!notifyLink || !dataEl) return;
+
+  // Update current variant id in DOM dataset
+  dataEl.dataset.variantId = dataVariantId;
+    console.log("Var id updated");
+    
+    // Show / Hide button based on availability
+    if (variantAvailable === "true") {
+    console.log("Var available True");
+    notifyLink.style.display = "none";
+  } else {
+    console.log("Var available False");
+    notifyLink.style.display = "inline-block";
+  }
+  console.log("Var complete");
+
+  // Reset subscription state
+  window.backInStockSubscribed = false;
+
+  console.log("Back-in-stock updated for variant:");
 }

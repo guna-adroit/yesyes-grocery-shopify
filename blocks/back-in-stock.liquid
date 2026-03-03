@@ -11,7 +11,12 @@
 
 
 <div class="back-in-stock-wrapper">
-  <span id="notify-link" class="notify-link" style="cursor:pointer;">Notify Me</span>
+  <span id="notify-link" class="notify-link" 
+    {% if product.selected_or_first_available_variant.available == true %}
+      style="display:none;"
+    {% endif %}>
+    Notify Me
+  </span>
 
   <div class="notify-modal" style="display:none;">
     <div class="notify-description" id="notify-message">
@@ -19,11 +24,13 @@
     hidden
     class="hidden"
     id="notify-data"
-    data-customer-id="{{ customer.id }}"
-    data-product-id="{{ product.id }}"
-    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-    data-email="{{ customer.email }}"
-  ></div>
+  data-customer-id="{{ customer.id }}"
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  data-variant-available="{{ product.selected_or_first_available_variant.available }}"
+  data-email="{{ customer.email }}"
+  >
+  </div>
       A mail will be sent to your mail id.
     </div>
     <div class="button-group-wrapper">

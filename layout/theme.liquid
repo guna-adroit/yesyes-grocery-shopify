@@ -1,15 +1,11 @@
 <!doctype html>
-<html
-  class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}"
-  lang="{{ request.locale.iso_code }}"
->
+<html class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}" lang="{{ request.locale.iso_code }}">
   <head>
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
         type="image/png"
-        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
-      >
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
     {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
@@ -17,8 +13,7 @@
       rel="expect"
       href="#MainContent"
       blocking="render"
-      id="view-transition-render-blocker"
-    >
+      id="view-transition-render-blocker">
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
@@ -32,8 +27,14 @@
     {% endif %}
 
     {{ content_for_header }}
-    <script type="module" src="{{ 'quick-bulk-add.js' | asset_url }}" defer></script>
-    <script type="module" src="{{ 'quick-bulk-add-popup.js' | asset_url }}" defer></script>
+    <script
+      type="module"
+      src="{{ 'quick-bulk-add.js' | asset_url }}"
+      defer></script>
+    <script
+      type="module"
+      src="{{ 'quick-bulk-add-popup.js' | asset_url }}"
+      defer></script>
 
     <script>
       window.WishlistConfig = {
@@ -41,14 +42,16 @@
         customerId: {{ customer.id | json }},
         appProxyUrl: '{{ routes.root_url }}apps/reviews'
       };
-    </script>
+  </script>
 
     {% comment %} <script src="{{ 'wishlist.js' | asset_url }}" defer></script> {% endcomment %}
     {{ 'wishlist.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
-    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+    {% render 'skip-to-content-link'
+      , href: '#MainContent'
+      , text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% unless template.name == 'page' and template.suffix contains 'headless' %}
         {% sections 'header-group' %}
@@ -59,19 +62,13 @@
       src="{{ 'critical.js' | asset_url }}"
       type="module"
       async
-      blocking="render"
-    ></script>
-      <script
-          src="{{ 'product-card-star-rating.js' | asset_url }}"
-          type="module"
-        >
-      </script>
+      blocking="render"></script>
+    <script src="{{ 'product-card-star-rating.js' | asset_url }}" type="module"></script>
     {% if customer %}
       <script
         src="{{ 'theme-sync.js' | asset_url }}"
         type="module"
-        async
-      ></script>
+        async></script>
     {% endif %}
     <main
       id="MainContent"
@@ -79,29 +76,37 @@
       role="main"
       data-page-transition-enabled="{{ settings.page_transition_enabled }}"
       data-product-transition="{{ settings.transition_to_main_product }}"
-      data-template="{{ template }}"
-    >
+      data-template="{{ template }}">
       {{ content_for_layout }}
     </main>
 
-    
+
     {% unless template.name == 'page' and template.suffix contains 'headless' %}
-        {% sections 'footer-group' %}
+      {% sections 'footer-group' %}
     {% endunless %}
     {% render 'search-modal' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
-    
+
     {% section 'quick-add-popup' %}
-    <script type="module" src="{{ 'quick-add-popup.js' | asset_url }}" defer></script>
-    <script type="module" src="{{ 'product-quantity-control.js' | asset_url }}" defer></script>
-    <script type="module" src="{{ 'cart-count.js' | asset_url }}" defer></script>
-    
-    <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script> 
+    <script
+      type="module"
+      src="{{ 'quick-add-popup.js' | asset_url }}"
+      defer></script>
+    <script
+      type="module"
+      src="{{ 'product-quantity-control.js' | asset_url }}"
+      defer></script>
+    <script
+      type="module"
+      src="{{ 'cart-count.js' | asset_url }}"
+      defer></script>
+
+    <script src="{{ 'wishlist-button.js' | asset_url }}" defer></script>
     <script src="{{ 'wishlist-count.js' | asset_url }}" defer></script>
-    <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script> 
+    <script src="{{ 'wishlist-sync.js' | asset_url }}" defer></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
@@ -112,4 +117,3 @@
     </script>
   </body>
 </html>
-
