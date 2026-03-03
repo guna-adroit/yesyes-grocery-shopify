@@ -131,7 +131,7 @@
                     ref="liveRegion"
                   ></div>
                 {%- form 'product', product, data-type: 'add-to-cart-form' -%}
-                <input type="hidden" name="id" ref="variantId"   value="{{ p.id }}">
+                <input type="hidden" name="id" ref="variantId"   value="{{ p.selected_or_first_available_variant.id }}">
                 <add-to-cart-component
                   ref="addToCartButtonContainer" 
                   data-product-variant-media="{{ product_variant_media }}"
@@ -142,7 +142,7 @@
                   type="submit"
                   name="add"
                   on:click="/handleClick"
-                  data-variant-id="{{ p.id }}">
+                  data-variant-id="{{ p.selected_or_first_available_variant.id }}">
                   <span class="svg-wrapper add-to-cart-icon">
                     {{- 'icon-trolley.svg' | inline_asset_content -}}
                   </span>
