@@ -4372,7 +4372,9 @@ text-component {
     color: #e50914;
     text-decoration: underline;
 }
-
+.notify-description {
+    margin-bottom: 24px;
+}
 
 
 
