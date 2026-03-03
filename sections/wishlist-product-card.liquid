@@ -112,11 +112,7 @@
           {%- if p.variants.size > 1 -%}
             Choose Options
           {%- else -%}
-            View Product
-          {%- endif -%}
-        </a>
-      {%- else -%}
-        {%- liquid
+            {%- liquid
                  
                   assign product_variant_media = p.featured_media.preview_image | image_url: width: 100
                   if p.featured_media.preview_image != blank
@@ -163,6 +159,10 @@
               {% endform %}
             </product-form-component>
             {% endif %}
+          {%- endif -%}
+        </a>
+      {%- else -%}
+        
       {%- endif -%}
     </div>
 
