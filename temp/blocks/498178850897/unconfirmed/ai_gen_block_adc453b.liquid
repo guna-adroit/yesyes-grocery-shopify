@@ -1,6 +1,450 @@
+{% doc %}
+  @prompt
+    show stock count of variant. When variant changed, Stock count should be updated
+    
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-stock-count-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-stock-count-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    {% if block.settings.show_border %}
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% endif %}
+  }
+
+  .ai-stock-count-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-stock-count-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-stock-count-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    margin: 0;
+  }
+
+  .ai-stock-count-number-{{ ai_gen_id }} {
+    color: {{ block.settings.number_color }};
+    font-weight: {{ block.settings.number_font_weight }};
+  }
+
+  .ai-stock-count-low-{{ ai_gen_id }} .ai-stock-count-icon-{{ ai_gen_id }} {
+    color: {{ block.settings.low_stock_color }};
+  }
+
+  .ai-stock-count-out-{{ ai_gen_id }} .ai-stock-count-icon-{{ ai_gen_id }} {
+    color: {{ block.settings.out_of_stock_color }};
+  }
+
+  .ai-stock-count-in-{{ ai_gen_id }} .ai-stock-count-icon-{{ ai_gen_id }} {
+    color: {{ block.settings.in_stock_color }};
+  }
+
+  .ai-stock-count-hidden-{{ ai_gen_id }} {
+    display: none;
+  }
+{% endstyle %}
+
+<variant-stock-count-{{ ai_gen_id }}
+  class="ai-stock-count-{{ ai_gen_id }}"
+  data-product-id="{{ product.id }}"
+  data-low-stock-threshold="{{ block.settings.low_stock_threshold }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-stock-count-wrapper-{{ ai_gen_id }} ai-stock-count-in-{{ ai_gen_id }}" data-stock-wrapper>
+    <div class="ai-stock-count-icon-{{ ai_gen_id }}">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <p class="ai-stock-count-text-{{ ai_gen_id }}">
+      <span data-stock-text>
+        {% if product.selected_or_first_available_variant.inventory_management %}
+          {% if product.selected_or_first_available_variant.inventory_quantity > 0 %}
+            <span class="ai-stock-count-number-{{ ai_gen_id }}">{{ product.selected_or_first_available_variant.inventory_quantity }}</span> {{ block.settings.in_stock_text }}
+          {% else %}
+            {{ block.settings.out_of_stock_text }}
+          {% endif %}
+        {% else %}
+          {{ block.settings.in_stock_text }}
+        {% endif %}
+      </span>
+    </p>
+  </div>
+</variant-stock-count-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantStockCount{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.productId = this.dataset.productId;
+        this.lowStockThreshold = parseInt(this.dataset.lowStockThreshold);
+        this.wrapper = this.querySelector('[data-stock-wrapper]');
+        this.stockText = this.querySelector('[data-stock-text]');
+        this.variantData = null;
+      }
+
+      connectedCallback() {
+        this.fetchVariantData();
+        this.setupVariantChangeListener();
+      }
+
+      async fetchVariantData() {
+        try {
+          const response = await fetch(`/products/${window.location.pathname.split('/').pop()}.js`);
+          const productData = await response.json();
+          this.variantData = productData.variants;
+          this.updateStockDisplay(productData.variants[0]);
+        } catch (error) {
+          console.error('Error fetching variant data:', error);
+        }
+      }
+
+      setupVariantChangeListener() {
+        document.addEventListener('variant:change', (event) => {
+          if (event.detail && event.detail.variant) {
+            this.updateStockFromVariant(event.detail.variant.id);
+          }
+        });
+
+        const variantSelects = document.querySelectorAll('variant-selects, variant-radios');
+        variantSelects.forEach(selector => {
+          const observer = new MutationObserver(() => {
+            const currentVariantId = this.getCurrentVariantId();
+            if (currentVariantId) {
+              this.updateStockFromVariant(currentVariantId);
+            }
+          });
+
+          observer.observe(selector, {
+            attributes: true,
+            childList: true,
+            subtree: true
+          });
+        });
+
+        const form = document.querySelector('form[action*="/cart/add"]');
+        if (form) {
+          const variantInput = form.querySelector('[name="id"]');
+          if (variantInput) {
+            const observer = new MutationObserver(() => {
+              this.updateStockFromVariant(parseInt(variantInput.value));
+            });
+            observer.observe(variantInput, { attributes: true });
+          }
+        }
+      }
+
+      getCurrentVariantId() {
+        const form = document.querySelector('form[action*="/cart/add"]');
+        if (form) {
+          const variantInput = form.querySelector('[name="id"]');
+          if (variantInput && variantInput.value) {
+            return parseInt(variantInput.value);
+          }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const variantParam = urlParams.get('variant');
+        if (variantParam) {
+          return parseInt(variantParam);
+        }
+
+        return null;
+      }
+
+      updateStockFromVariant(variantId) {
+        if (!this.variantData) return;
+
+        const variant = this.variantData.find(v => v.id === variantId);
+        if (variant) {
+          this.updateStockDisplay(variant);
+        }
+      }
+
+      updateStockDisplay(variant) {
+        if (!variant) return;
+
+        const inStockText = "{{ block.settings.in_stock_text }}";
+        const lowStockText = "{{ block.settings.low_stock_text }}";
+        const outOfStockText = "{{ block.settings.out_of_stock_text }}";
+        const showStockCount = {{ block.settings.show_stock_count }};
+
+        this.wrapper.classList.remove('ai-stock-count-in-{{ ai_gen_id }}', 'ai-stock-count-low-{{ ai_gen_id }}', 'ai-stock-count-out-{{ ai_gen_id }}');
+
+        if (!variant.inventory_management) {
+          this.stockText.innerHTML = inStockText;
+          this.wrapper.classList.add('ai-stock-count-in-{{ ai_gen_id }}');
+          this.classList.remove('ai-stock-count-hidden-{{ ai_gen_id }}');
+          return;
+        }
+
+        const quantity = variant.inventory_quantity;
+
+        if (quantity <= 0) {
+          this.stockText.innerHTML = outOfStockText;
+          this.wrapper.classList.add('ai-stock-count-out-{{ ai_gen_id }}');
+          this.classList.remove('ai-stock-count-hidden-{{ ai_gen_id }}');
+        } else if (quantity <= this.lowStockThreshold) {
+          if (showStockCount) {
+            this.stockText.innerHTML = `<span class="ai-stock-count-number-{{ ai_gen_id }}">${quantity}</span> ${lowStockText}`;
+          } else {
+            this.stockText.innerHTML = lowStockText;
+          }
+          this.wrapper.classList.add('ai-stock-count-low-{{ ai_gen_id }}');
+          this.classList.remove('ai-stock-count-hidden-{{ ai_gen_id }}');
+        } else {
+          if (showStockCount) {
+            this.stockText.innerHTML = `<span class="ai-stock-count-number-{{ ai_gen_id }}">${quantity}</span> ${inStockText}`;
+          } else {
+            this.stockText.innerHTML = inStockText;
+          }
+          this.wrapper.classList.add('ai-stock-count-in-{{ ai_gen_id }}');
+          this.classList.remove('ai-stock-count-hidden-{{ ai_gen_id }}');
+        }
+      }
+    }
+
+    customElements.define('variant-stock-count-{{ ai_gen_id }}', VariantStockCount{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Variant stock count",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Stock settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock_count",
+      "label": "Show stock count number",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "label": "Low stock threshold",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "in_stock_text",
+      "label": "In stock text",
+      "default": "in stock"
+    },
+    {
+      "type": "text",
+      "id": "low_stock_text",
+      "label": "Low stock text",
+      "default": "left - order soon!"
+    },
+    {
+      "type": "text",
+      "id": "out_of_stock_text",
+      "label": "Out of stock text",
+      "default": "Out of stock"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show border",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "number_font_weight",
+      "label": "Number font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Number",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "in_stock_color",
+      "label": "In stock",
+      "default": "#008060"
+    },
+    {
+      "type": "color",
+      "id": "low_stock_color",
+      "label": "Low stock",
+      "default": "#FFA500"
+    },
+    {
+      "type": "color",
+      "id": "out_of_stock_color",
+      "label": "Out of stock",
+      "default": "#D82C0D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Variant stock count"
+    }
+  ]
+}
 {% endschema %}
