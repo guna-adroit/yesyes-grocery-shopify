@@ -344,6 +344,10 @@ wishlist-count[hidden] {
 .wishlist-page-button{
   height: auto;
 }
+
+.wishlist-atc-button.add-to-cart-button.card-atc-button{
+  margin: 0;
+}
 /* ─── Toast (shared, included here as fallback) ─── */
 
 /* .wishlist-toast {
