@@ -241,6 +241,15 @@
               },
               "block_order": []
             },
+            "back_in_stock_8iCKVQ": {
+              "type": "back-in-stock",
+              "name": "Back in Stock",
+              "settings": {
+                "rating_color": "primary",
+                "type_preset": "paragraph"
+              },
+              "blocks": {}
+            },
             "wishlist_plus_wishlist_pdp_button_73W9dF": {
               "type": "shopify://apps/wishlist-plus/blocks/wishlist-pdp-button/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
               "disabled": true,
@@ -480,6 +489,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "back_in_stock_8iCKVQ",
             "wishlist_plus_wishlist_pdp_button_73W9dF",
             "group_NixjBb",
             "product_additional_info_YNHkp8",
