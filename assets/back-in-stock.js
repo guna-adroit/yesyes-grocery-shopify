@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("notify-submit");
   const cancelBtn = document.getElementById("notify-cancel");
   const messageBox = document.getElementById("notify-message");
-  const checkIcon = document.querySelector(".check-icon");
 
 
   // Shopify dynamic values
@@ -161,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       await subscribe();
     }
-    renderCheck();
 
   });
 
@@ -178,15 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3800);
         
       }
-    }
-    function renderCheck() {
-        checkIcon.style.display = "none";
-        setTimeout(function () {
-          checkIcon.style.display = "block";
-        }, 800);
-        setTimeout(function () {
-          checkIcon.style.display = "none";
-        }, 2400);
     }
 
   cancelBtn.addEventListener("click", function () {
