@@ -241,6 +241,33 @@
               },
               "block_order": []
             },
+            "ai_gen_block_adc453b_QeenCJ": {
+              "type": "ai_gen_block_adc453b",
+              "settings": {
+                "show_stock_count": true,
+                "low_stock_threshold": 5,
+                "in_stock_text": "in stock",
+                "low_stock_text": "left - order soon!",
+                "out_of_stock_text": "Out of stock",
+                "desktop_width_percent": 100,
+                "padding": 12,
+                "border_radius": 8,
+                "show_border": true,
+                "border_width": 1,
+                "background_color": "#f5f5f5",
+                "border_color": "#e6e6e6",
+                "font_size": 14,
+                "font_weight": "400",
+                "number_font_weight": "600",
+                "text_color": "#000000",
+                "number_color": "#000000",
+                "icon_size": 20,
+                "in_stock_color": "#008060",
+                "low_stock_color": "#FFA500",
+                "out_of_stock_color": "#D82C0D"
+              },
+              "blocks": {}
+            },
             "back_in_stock_8iCKVQ": {
               "type": "back-in-stock",
               "name": "Back in Stock",
@@ -489,6 +516,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "ai_gen_block_adc453b_QeenCJ",
             "back_in_stock_8iCKVQ",
             "wishlist_plus_wishlist_pdp_button_73W9dF",
             "group_NixjBb",
