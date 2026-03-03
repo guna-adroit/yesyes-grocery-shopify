@@ -107,7 +107,7 @@
     </div>
 
     <div class="wishlist-card__actions">
-      {%- liquid
+            {%- liquid
                  
                   assign product_variant_media = p.featured_media.preview_image | image_url: width: 100
                   if p.featured_media.preview_image != blank
@@ -153,6 +153,10 @@
                 
               {% endform %}
             </product-form-component>
+            {% else %}
+              <a class="button button--primary wishlist-card__cta" disabled href="{{ product_url }}">
+                Sold out
+              </a>
             {% endif %}
       {% comment %} {%- if p.available -%}
         <a class="button button--primary wishlist-card__cta" href="{{ product_url }}">
