@@ -4390,8 +4390,32 @@ text-component {
 .notify-description {
     margin-bottom: 24px;
 }
-
-
+.result-response {
+    position: absolute;
+    height: 0;
+    width: 100%;
+    background: #270c019e;
+    left: 0;
+    top: 0;
+    transition: .5s;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 4px;
+}
+.result-response.active {
+    height: 100%;
+}
+.response-msg {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 36px;
+    text-align: center;
+}
 
 
 

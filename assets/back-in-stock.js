@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("notify-submit");
   const cancelBtn = document.getElementById("notify-cancel");
   const messageBox = document.getElementById("notify-message");
+  const responseMsg = document.getElementById("response-msg");
+  const resultResponse = document.getElementById("result-response");
 
 
   // Shopify dynamic values
@@ -36,8 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "none";
     modal.classList.remove("active");
     modalBg.classList.remove("active");
+    console.log("Closemodal called")
   }
-
+  modal.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
   function setLoading(state) {
     isProcessing = state;
     submitBtn.disabled = state;
@@ -96,6 +101,24 @@ document.addEventListener("DOMContentLoaded", function () {
         subscribed = true;
         cancelBtn.innerText = "Close";
         updateUI();
+        console.log("Thank you msg 2");
+        resultResponse.classList.add("active");
+        responseMsg.innerText = "We will notify you when this item is back in stock.";
+        // Clear any existing timeout to prevent duplicates
+        if (window.unsubscribeTimeout) {
+          clearTimeout(window.unsubscribeTimeout);
+        }
+
+        window.unsubscribeTimeout = setTimeout(() => {
+          resultResponse.classList.remove("active");
+          responseMsg.innerText = "";
+
+
+          // Ensure function exists before calling
+          if (typeof closeModal === "function") {
+            closeModal();
+          }
+        }, 3000);
       }
 
     } catch (err) {
@@ -126,6 +149,27 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data?.status === "unsubscribed") {
         subscribed = false;
         updateUI();
+
+        console.log("Thank you msg 3");
+
+        responseMsg.innerText = "You've unsubscribed.";
+        resultResponse.classList.add("active");
+
+        // Clear any existing timeout to prevent duplicates
+        if (window.unsubscribeTimeout) {
+          clearTimeout(window.unsubscribeTimeout);
+        }
+
+        window.unsubscribeTimeout = setTimeout(() => {
+          resultResponse.classList.remove("active");
+          responseMsg.innerText = "";
+
+
+          // Ensure function exists before calling
+          if (typeof closeModal === "function") {
+            closeModal();
+          }
+        }, 3000);
       }
 
     } catch (err) {
@@ -180,9 +224,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cancelBtn.addEventListener("click", function () {
     closeModal();
+    console.log("cancelBtn click");
   });
   modalBg.addEventListener("click", function () {
     closeModal();
+    console.log("modalBg click");
   });
 
 });
