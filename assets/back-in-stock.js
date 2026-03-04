@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const notifyLink = document.getElementById("notify-link");
   const modal = document.querySelector(".notify-modal");
+  const modalBg = document.querySelector(".modal-bg");
   const submitBtn = document.getElementById("notify-submit");
   const cancelBtn = document.getElementById("notify-cancel");
   const messageBox = document.getElementById("notify-message");
@@ -28,11 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function openModal() {
     modal.style.display = "block";
     modal.classList.add("active");
+    modalBg.classList.add("active");
   }
   
   function closeModal() {
     modal.style.display = "none";
     modal.classList.remove("active");
+    modalBg.classList.remove("active");
   }
 
   function setLoading(state) {
@@ -176,6 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
   cancelBtn.addEventListener("click", function () {
+    closeModal();
+  });
+  modalBg.addEventListener("click", function () {
     closeModal();
   });
 
