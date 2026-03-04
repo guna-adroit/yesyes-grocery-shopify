@@ -364,7 +364,6 @@ if (!customElements.get('variant-picker')) {
   customElements.define('variant-picker', VariantPicker);
 }
 function handleBackInStockVariantChange(variantAvailable, dataVariantId) {
-  console.log("Var available?: ", variantAvailable);
   if (!variantAvailable) return;
 
   const notifyLink = document.getElementById("notify-link");
@@ -374,20 +373,15 @@ function handleBackInStockVariantChange(variantAvailable, dataVariantId) {
 
   // Update current variant id in DOM dataset
   dataEl.dataset.variantId = dataVariantId;
-    console.log("Var id updated");
     
     // Show / Hide button based on availability
     if (variantAvailable === "true") {
-    console.log("Var available True");
-    notifyLink.style.display = "none";
+      notifyLink.style.display = "none";
   } else {
-    console.log("Var available False");
     notifyLink.style.display = "inline-block";
   }
-  console.log("Var complete");
 
   // Reset subscription state
   window.backInStockSubscribed = false;
 
-  console.log("Back-in-stock updated for variant:");
 }
