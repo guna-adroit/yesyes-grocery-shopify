@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const responseMsg = document.getElementById("response-msg");
   const resultResponse = document.getElementById("result-response");
 
+    console.log("N.L :");
+    console.log(notifyLink,"N.L exists");
 
   // Shopify dynamic values
     const dataEl = document.getElementById("notify-data");
