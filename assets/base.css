@@ -4382,10 +4382,21 @@ text-component {
     font-size: 16px;
     color: #e50914;
     cursor: pointer;
-    text-decoration: underline;
+    padding: 16px 32px;
+    border: 1px solid #e50914;
+    box-sizing: border-box;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    width: 100%;
+    min-width: fit-content;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
 }
 .notify-link:hover{
-    
+    background: #e50914;
+    color: #fff;
 }
 .notify-description {
     margin-bottom: 24px;
@@ -4419,3 +4430,27 @@ text-component {
 
 
 
+.add-to-cart-button.button-secondary:disabled{
+  display: none;
+}
+.notify-link {
+    font-size: 16px;
+    color: #e50914;
+    cursor: pointer;
+    /* text-decoration: underline; */
+    padding: 16px 32px;
+    border: 1px solid #e50914;
+    box-sizing: border-box;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    width: 100%;
+    min-width: fit-content;
+    text-align: center;
+    display: block;
+}
+.notify-link.unsub {
+    background: #fff;
+    border: 1px solid grey;
+    color: grey;
+}

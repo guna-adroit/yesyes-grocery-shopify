@@ -22,12 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let subscribed = false;
   let isProcessing = false;
 
-  // Update variant when changed
-  document.addEventListener("variant:change", function (event) {
-    currentVariantId = event.detail.variant.id;
-    subscribed = false;
-  });
-
   function openModal() {
     modal.style.display = "block";
     modal.classList.add("active");
@@ -38,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "none";
     modal.classList.remove("active");
     modalBg.classList.remove("active");
-    console.log("Closemodal called")
   }
   modal.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -54,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateUI(); // always re-sync with state
     }
   }
-  
+  checkStatus();
   async function checkStatus() {
     setLoading(true);
 
@@ -101,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
         subscribed = true;
         cancelBtn.innerText = "Close";
         updateUI();
-        console.log("Thank you msg 2");
         resultResponse.classList.add("active");
         responseMsg.innerText = "We will notify you when this item is back in stock.";
         // Clear any existing timeout to prevent duplicates
@@ -149,8 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data?.status === "unsubscribed") {
         subscribed = false;
         updateUI();
-
-        console.log("Thank you msg 3");
 
         responseMsg.innerText = "You've unsubscribed.";
         resultResponse.classList.add("active");
@@ -214,21 +204,23 @@ document.addEventListener("DOMContentLoaded", function () {
       if (subscribed) {
         messageBox.innerText = "You are already subscribed. Do you want to unsubscribe?";
         submitBtn.innerText = "Unsubscribe";
+        notifyLink.classList.add("unsub");
+        notifyLink.innerText = "Unsubscribe";
         
       } else {
         messageBox.innerText = "You will receive an email when this product is back in stock.";
         submitBtn.innerText = "Subscribe";
-        
+        notifyLink.classList.remove("unsub");
+        notifyLink.innerText = "Notify Me";
+
       }
     }
 
   cancelBtn.addEventListener("click", function () {
     closeModal();
-    console.log("cancelBtn click");
   });
   modalBg.addEventListener("click", function () {
     closeModal();
-    console.log("modalBg click");
   });
 
 });

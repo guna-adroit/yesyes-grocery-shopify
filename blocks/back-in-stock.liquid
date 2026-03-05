@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
@@ -8,125 +6,76 @@
     assign product = collections.all.products.first
   endif
 -%}
-
-<div class="back-in-stock-wrapper">
-  <span id="notify-link" class="notify-link" 
-    {% if product.selected_or_first_available_variant.available == true %}
-      style="display:none;"
-      {% endif %}>
-      Notify Me
-    </span>
-    
-    <div id="modal-bg" class="modal-bg">
-      <div class="notify-modal" style="display:none;">
-        <div 
-        hidden
-        class="hidden"
-        id="notify-data"
-      data-customer-id="{{ customer.id }}"
-      data-product-id="{{ product.id }}"
-      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-      data-variant-available="{{ product.selected_or_first_available_variant.available }}"
-      data-email="{{ customer.email }}"
-      >
-      </div>
-        <div class="notify-description" id="notify-message">
-          
-          A mail will be sent to your mail id.
-        </div>
-        <div class="button-group-wrapper">
-          <button class="primary button-primary" id="notify-submit">Ok</button>
-          <button class="secondary button-secondary" id="notify-cancel">Cancel</button>
-        </div>
-        <modal-message id="result-response" class="result-response">
-          <div id="response-msg" class="response-msg"></div>
-        </modal-message>
-      </div>
-    </div>
-  </div>
-  <script
-    src="{{ 'back-in-stock.js' | asset_url }}"
-    type="module"
-    >
-  </script>
-
-
-
 {% schema %}
-{
-  "name": "Back in Stock",
-  "tag": null,
-  "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:content.resource_reference_product_review"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:content.app_required_for_ratings"
-    },
-    {
-      "type": "select",
-      "id": "rating_color",
-      "label": "t:settings.color",
-      "options": [
-        {
-          "value": "foreground",
-          "label": "t:options.text"
-        },
-        {
-          "value": "primary",
-          "label": "t:options.body"
-        }
-      ],
-      "default": "primary"
-    },
-    {
-      "type": "header",
-      "content": "t:content.typography"
-    },
-    {
-      "type": "select",
-      "id": "type_preset",
-      "label": "t:settings.preset",
-      "options": [
-        {
-          "value": "paragraph",
-          "label": "t:options.paragraph"
-        },
-        {
-          "value": "h1",
-          "label": "t:options.h1"
-        },
-        {
-          "value": "h2",
-          "label": "t:options.h2"
-        },
-        {
-          "value": "h3",
-          "label": "t:options.h3"
-        },
-        {
-          "value": "h4",
-          "label": "t:options.h4"
-        },
-        {
-          "value": "h5",
-          "label": "t:options.h5"
-        },
-        {
-          "value": "h6",
-          "label": "t:options.h6"
-        }
-      ],
-      "default": "paragraph"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Back in Stock",
-      "category": "t:categories.product"
-    }
-  ]
-}
+  {
+    "name": "Back in Stock",
+    "tag": null,
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:content.resource_reference_product_review"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:content.app_required_for_ratings"
+      },
+      {
+        "type": "select",
+        "id": "rating_color",
+        "label": "t:settings.color",
+        "options": [
+          {
+            "value": "foreground",
+            "label": "t:options.text"
+          }, {
+            "value": "primary",
+            "label": "t:options.body"
+          }
+        ],
+        "default": "primary"
+      },
+      {
+        "type": "header",
+        "content": "t:content.typography"
+      }, {
+        "type": "select",
+        "id": "type_preset",
+        "label": "t:settings.preset",
+        "options": [
+          {
+            "value": "paragraph",
+            "label": "t:options.paragraph"
+          },
+          {
+            "value": "h1",
+            "label": "t:options.h1"
+          },
+          {
+            "value": "h2",
+            "label": "t:options.h2"
+          },
+          {
+            "value": "h3",
+            "label": "t:options.h3"
+          }, {
+            "value": "h4",
+            "label": "t:options.h4"
+          }, {
+            "value": "h5",
+            "label": "t:options.h5"
+          }, {
+            "value": "h6",
+            "label": "t:options.h6"
+          }
+        ],
+        "default": "paragraph"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Back in Stock",
+        "category": "t:categories.product"
+      }
+    ]
+  }
 {% endschema %}
