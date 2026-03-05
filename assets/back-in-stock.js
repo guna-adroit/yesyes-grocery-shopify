@@ -173,8 +173,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Click Handlers
 
+  console.log(notifyLink,"exists");
   notifyLink.addEventListener("click", async function () {
-    console.log("Clicked");
+    console.log(notifyLink,"Clicked");
     if (!customerId) {
       alert("Please login to subscribe.");
       return;

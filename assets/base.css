@@ -4454,3 +4454,7 @@ text-component {
     border: 1px solid grey;
     color: grey;
 }
+.notify-link.unsub:hover {
+    background: grey;
+    color: white;
+}
