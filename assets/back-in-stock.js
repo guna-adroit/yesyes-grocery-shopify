@@ -174,6 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Click Handlers
 
   notifyLink.addEventListener("click", async function () {
+    console.log("Clicked");
     if (!customerId) {
       alert("Please login to subscribe.");
       return;
@@ -212,7 +213,6 @@ document.addEventListener("DOMContentLoaded", function () {
         submitBtn.innerText = "Subscribe";
         notifyLink.classList.remove("unsub");
         notifyLink.innerText = "Notify Me";
-
       }
     }
 
