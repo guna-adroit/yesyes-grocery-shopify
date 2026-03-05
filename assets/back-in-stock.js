@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const responseMsg = document.getElementById("response-msg");
   const resultResponse = document.getElementById("result-response");
 
-    console.log("N.L :");
-    console.log(notifyLink,"N.L exists");
 
   // Shopify dynamic values
     const dataEl = document.getElementById("notify-data");
@@ -175,9 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Click Handlers
 
-  console.log(notifyLink,"exists");
   notifyLink.addEventListener("click", async function () {
-    console.log(notifyLink,"Clicked");
     if (!customerId) {
       alert("Please login to subscribe.");
       return;
