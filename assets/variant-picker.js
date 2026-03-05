@@ -363,25 +363,264 @@ export default class VariantPicker extends Component {
 if (!customElements.get('variant-picker')) {
   customElements.define('variant-picker', VariantPicker);
 }
-function handleBackInStockVariantChange(variantAvailable, dataVariantId) {
-  if (!variantAvailable) return;
+
+const BASE = window.location.origin + '/apps/reviews';
+
+document.addEventListener("DOMContentLoaded", function () {
 
   const notifyLink = document.getElementById("notify-link");
-  const dataEl = document.getElementById("notify-data");
+  const modal = document.querySelector(".notify-modal");
+  const modalBg = document.querySelector(".modal-bg");
+  const submitBtn = document.getElementById("notify-submit");
+  const cancelBtn = document.getElementById("notify-cancel");
+  const messageBox = document.getElementById("notify-message");
+  const responseMsg = document.getElementById("response-msg");
+  const resultResponse = document.getElementById("result-response");
 
-  if (!notifyLink || !dataEl) return;
+  let subscribed = false;
+  let isProcessing = false;
 
-  // Update current variant id in DOM dataset
-  dataEl.dataset.variantId = dataVariantId;
-    
-    // Show / Hide button based on availability
-    if (variantAvailable === "true") {
-      notifyLink.style.display = "none";
-  } else {
-    notifyLink.style.display = "inline-block";
+  function getNotifyData() {
+    const dataEl = document.getElementById("notify-data");
+
+    return {
+      customerId: dataEl?.dataset.customerId || null,
+      productId: dataEl?.dataset.productId || null,
+      variantId: dataEl?.dataset.variantId || null,
+      email: dataEl?.dataset.email || null
+    };
   }
 
-  // Reset subscription state
-  window.backInStockSubscribed = false;
+  function openModal() {
+    document.body.style.overflow = "hidden";
+    modal.style.display = "block";
+    modal.classList.add("active");
+    modalBg.classList.add("active");
+  }
 
-}
+  function closeModal() {
+    document.body.style.overflow = "";
+    modal.style.display = "none";
+    modal.classList.remove("active");
+    modalBg.classList.remove("active");
+  }
+
+  modal.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+
+  function setLoading(state) {
+    isProcessing = state;
+    submitBtn.disabled = state;
+
+    if (state) {
+      submitBtn.dataset.originalText = submitBtn.innerText;
+      submitBtn.innerText = "Please wait...";
+    }
+  }
+
+  async function checkStatus() {
+
+    notifyLink.innerText = "Loading...";
+
+    const notifyData = getNotifyData();
+    if (!notifyData.customerId) return;
+
+    setLoading(true);
+
+    try {
+
+      const res = await fetch(`${BASE}/api/v1/back-in-stock/integration/status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId: `gid://shopify/Customer/${notifyData.customerId}`,
+          variantId: `gid://shopify/ProductVariant/${notifyData.variantId}`
+        })
+      });
+
+      const data = await res.json();
+      subscribed = data?.subscribed === true;
+
+      updateUI();
+
+    } catch (err) {
+      console.error("Status API error:", err);
+      messageBox.innerText = "Something went wrong. Please try again.";
+    }
+
+    setLoading(false);
+  }
+
+  async function subscribe() {
+
+    const notifyData = getNotifyData();
+    setLoading(true);
+
+    try {
+
+      const res = await fetch(`${BASE}/api/v1/back-in-stock/integration/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId: `gid://shopify/Customer/${notifyData.customerId}`,
+          variantId: `gid://shopify/ProductVariant/${notifyData.variantId}`,
+          productId: `gid://shopify/Product/${notifyData.productId}`,
+          email: notifyData.email
+        })
+      });
+
+      const data = await res.json();
+
+      if (data?.status === "subscribed") {
+
+        subscribed = true;
+        cancelBtn.innerText = "Close";
+        updateUI();
+
+        responseMsg.innerText = "We will notify you when this item is back in stock.";
+        resultResponse.classList.add("active");
+
+        clearTimeout(window.unsubscribeTimeout);
+
+        window.unsubscribeTimeout = setTimeout(() => {
+          resultResponse.classList.remove("active");
+          responseMsg.innerText = "";
+          closeModal();
+        }, 3000);
+      }
+
+    } catch (err) {
+      console.error("Subscribe API error:", err);
+      messageBox.innerText = "Subscription failed. Try again.";
+    }
+
+    setLoading(false);
+  }
+
+  async function unsubscribe() {
+
+    const notifyData = getNotifyData();
+    setLoading(true);
+
+    try {
+
+      const res = await fetch(`${BASE}/api/v1/back-in-stock/integration/unsubscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId: `gid://shopify/Customer/${notifyData.customerId}`,
+          variantId: `gid://shopify/ProductVariant/${notifyData.variantId}`,
+          productId: `gid://shopify/Product/${notifyData.productId}`
+        })
+      });
+
+      const data = await res.json();
+
+      if (data?.status === "unsubscribed") {
+
+        subscribed = false;
+        updateUI();
+
+        responseMsg.innerText = "You've unsubscribed.";
+        resultResponse.classList.add("active");
+
+        clearTimeout(window.unsubscribeTimeout);
+
+        window.unsubscribeTimeout = setTimeout(() => {
+          resultResponse.classList.remove("active");
+          responseMsg.innerText = "";
+          closeModal();
+        }, 3000);
+      }
+
+    } catch (err) {
+      console.error("Unsubscribe API error:", err);
+      messageBox.innerText = "Unsubscribe failed. Try again.";
+    }
+
+    setLoading(false);
+  }
+
+  function updateUI() {
+    if (!notifyLink) return;
+
+    if (subscribed) {
+
+      messageBox.innerText = "You are already subscribed. Do you want to unsubscribe?";
+      submitBtn.innerText = "Unsubscribe";
+
+      notifyLink.classList.add("unsub");
+      notifyLink.innerText = "Unsubscribe";
+
+    } else {
+
+      messageBox.innerText = "You will receive an email when this product is back in stock.";
+      submitBtn.innerText = "Subscribe";
+
+      notifyLink.classList.remove("unsub");
+      notifyLink.innerText = "Notify Me";
+    }
+  }
+
+  notifyLink.addEventListener("click", async function () {
+
+    const notifyData = getNotifyData();
+
+    if (!notifyData.customerId) {
+      alert("Please login to subscribe.");
+      return;
+    }
+
+    cancelBtn.innerText = "Cancel";
+    messageBox.innerText = "Checking subscription status...";
+    submitBtn.innerText = "Checking...";
+    submitBtn.disabled = true;
+
+    openModal();
+    await checkStatus();
+  });
+
+  submitBtn.addEventListener("click", async function () {
+
+    if (isProcessing) return;
+
+    if (subscribed) {
+      await unsubscribe();
+    } else {
+      await subscribe();
+    }
+  });
+
+  cancelBtn.addEventListener("click", closeModal);
+  modalBg.addEventListener("click", closeModal);
+
+  window.handleBackInStockVariantChange = async function (variantAvailable, dataVariantId) {
+
+    const notifyLink = document.getElementById("notify-link");
+    const dataEl = document.getElementById("notify-data");
+
+    if (!notifyLink || !dataEl) return;
+
+    // update dataset
+    dataEl.dataset.variantId = dataVariantId;
+
+    // show/hide notify button
+    if (variantAvailable === "true") {
+      notifyLink.style.display = "none";
+      return;
+    } else {
+      notifyLink.style.display = "inline-block";
+    }
+
+    // check subscription for this variant
+    await checkStatus();
+  };
+  const notifyData = getNotifyData();
+    if (notifyData.customerId && notifyData.variantId) {
+      checkStatus();
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+});
