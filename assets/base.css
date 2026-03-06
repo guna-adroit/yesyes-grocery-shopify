@@ -1694,7 +1694,7 @@ zoom-dialog dialog {
 
 /* This triggers iOS < 16.4. The outline bug is not recognized as a lack of @supports */
 
-@supports not (background-color: rgb(from red 150 g b / alpha)) {
+@supports not (background-color: rgb(from #ED1D23 150 g b / alpha)) {
   /**
     There is a bug in safari < 16.4 that causes the outline to not follow the elements border radius. This is a workaround.
     Using element selector to increase specificity.
@@ -4333,7 +4333,7 @@ text-component {
 
 .notify-modal {
     padding: 20px;
-    border: 1px solid red;
+    border: 1px solid #ED1D23;
     border-radius: 4px;
     position: absolute;
     background: white;
@@ -4373,16 +4373,22 @@ text-component {
 
 .button-primary {
     border-radius: 10px;
-    background: red;
-    color: white;
+    background: #ED1D23;
+    color: #fff;
     padding: 10px 30px;
-    border: none;
+    border: 1px solid #ED1D23;
+    transition: 0.4s;
+}
+.button-primary:hover {
+    background: white;
+    color: #ED1D23;
+    border: 1px solid #ED1D23;
 }
 .notify-link {
-    background: #e50914;
+    background: #ED1D23;
     cursor: pointer;
     padding: 8px 32px;
-    border: 1px solid #e50914;
+    border: 1px solid #ED1D23;
     box-sizing: border-box;
     border-radius: 14px;
     font-size: 16px;
@@ -4396,7 +4402,7 @@ text-component {
     transition: 0.3s;
 }
 .notify-link:hover{
-    background: #e50914;
+    background: #ED1D23;
     color: #fff;
 }
 .notify-description {
@@ -4478,6 +4484,10 @@ text-component {
     background: #d1d1d1;
 }
 .notification-icon.subscribe {
-    color: #ff0008;
+    color: #ED1D23;
     background: #ffe0e2;
+}
+#notify-submit, #notify-cancel {
+    text-transform: uppercase;
+    font-weight: 700;
 }

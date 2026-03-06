@@ -130,10 +130,10 @@ slideshow-controls:has(.slideshow-controls__dots), slideshow-component[autoplay]
     background-color: #9b9b9b;
 }
 .slideshow-controls__dots.slideshow-controls__dots button[aria-selected="true"]:after{
-    background-color: #ff0000;
+    background-color: #ED1D23;
 }
 .slideshow-controls__dots button[aria-selected=true] {
-    border: 1px solid red;
+    border: 1px solid ED1D23;
 }
 slideshow-controls[controls-on-media] {
     position: absolute;
@@ -279,7 +279,7 @@ button.account-button.header-actions__action{
     text-align: left;
 }
 .menu-title a {
-  color: #e53935; /* red */
+  color: #ED1D23; /* red */
   text-decoration: none;
 }
 .email-signup__input-group  .email-signup__button:not(.button-unstyled){
@@ -461,7 +461,7 @@ span.category-menu_button.active, span.overlay-back-button.active {
     color: inherit;
 }
 .category-menu-mobile .menu-drawer__menu-item-text {
-    color: #e53935;
+    color: #ED1D23;
 }
 /* Second-level (grandchild) items indentation / smaller */
 .sub-submenu {
@@ -476,7 +476,7 @@ span.category-menu_button.active, span.overlay-back-button.active {
   margin-bottom: 4px;
 }
 .sub-submenu-link:hover {
-  color: #e53935;
+  color: #ED1D23;
 }
 .header__secondary-menu.hidden-menu {
     height: 0px;
@@ -1256,5 +1256,5 @@ input.delivery-option:checked+label::before {
     }
 }
 .yotpo-review-border-smooth.yotpo-border-margin {
-    background: red;
+    background: ED1D23;
 }
