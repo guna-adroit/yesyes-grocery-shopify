@@ -547,15 +547,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (subscribed) {
 
-      messageBox.innerText = "You are already subscribed. Do you want to unsubscribe?";
+      // messageBox.innerText = "You are already subscribed. Do you want to unsubscribe?";
+      messageBox.classList.add("unsubscribe");
+      messageBox.classList.remove("subscribe");
       submitBtn.innerText = "Unsubscribe";
-
+      
       notifyLink.classList.add("unsub");
       notifyLink.innerText = "Unsubscribe";
-
+      
     } else {
-
-      messageBox.innerText = "You will receive an email when this product is back in stock.";
+      
+      // messageBox.innerText = "You will receive an email when this product is back in stock.";
+      messageBox.classList.add("subscribe");
+      messageBox.classList.remove("unsubscribe");
       submitBtn.innerText = "Subscribe";
 
       notifyLink.classList.remove("unsub");
@@ -573,7 +577,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     cancelBtn.innerText = "Cancel";
-    messageBox.innerText = "Checking subscription status...";
+    // messageBox.innerText = "Checking subscription status...";
     submitBtn.innerText = "Checking...";
     submitBtn.disabled = true;
 

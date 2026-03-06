@@ -4379,10 +4379,9 @@ text-component {
     border: none;
 }
 .notify-link {
-    font-size: 16px;
-    color: #e50914;
+    background: #e50914;
     cursor: pointer;
-    padding: 16px 32px;
+    padding: 8px 32px;
     border: 1px solid #e50914;
     box-sizing: border-box;
     border-radius: 14px;
@@ -4392,6 +4391,8 @@ text-component {
     min-width: fit-content;
     text-align: center;
     display: block;
+    color: #fff;
+    max-width: 240px;
     transition: 0.3s;
 }
 .notify-link:hover{
@@ -4427,28 +4428,14 @@ text-component {
     padding: 36px;
     text-align: center;
 }
-
-
-
-.add-to-cart-button.button-secondary:disabled{
-  display: none;
+.modal-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.notify-link {
-    font-size: 16px;
-    color: #e50914;
-    cursor: pointer;
-    /* text-decoration: underline; */
-    padding: 16px 32px;
-    border: 1px solid #e50914;
-    box-sizing: border-box;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    width: 100%;
-    min-width: fit-content;
-    text-align: center;
-    display: block;
-}
+
+
 .notify-link.unsub {
     background: #fff;
     border: 1px solid grey;
@@ -4457,4 +4444,40 @@ text-component {
 .notify-link.unsub:hover {
     background: grey;
     color: white;
+}
+
+.modal-unsubscribe, .modal-subscribe {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+.notify-description.subscribe .modal-subscribe, .notify-description.unsubscribe .modal-unsubscribe{
+  display: flex;
+}
+.notification-heading {
+    font-size: 18px;
+    font-weight: 700;
+}
+.notification-subheading {
+    font-size: 14px;
+    color: grey;
+    margin-top: 8px;
+}
+.notification-icon {
+    font-weight: 700;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.notification-icon.unsubscribe {
+    color: #444242;
+    background: #d1d1d1;
+}
+.notification-icon.subscribe {
+    color: #ff0008;
+    background: #ffe0e2;
 }
