@@ -552,8 +552,8 @@ document.addEventListener("DOMContentLoaded", function () {
       messageBox.classList.remove("subscribe");
       submitBtn.innerText = "Unsubscribe";
       
-      notifyLink.classList.add("unsub");
-      notifyLink.innerText = "Unsubscribe";
+      // notifyLink.classList.add("unsub");
+      notifyLink.innerText = "Cancel Alert";
       
     } else {
       
@@ -562,7 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
       messageBox.classList.remove("unsubscribe");
       submitBtn.innerText = "Subscribe";
 
-      notifyLink.classList.remove("unsub");
+      // notifyLink.classList.remove("unsub");
       notifyLink.innerText = "Notify Me";
     }
   }
