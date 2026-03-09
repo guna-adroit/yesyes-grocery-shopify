@@ -18,7 +18,8 @@
   {{ block.shopify_attributes }}
   style="--add-to-cart-font-case: {{ settings.button_text_case }};"
 > 
-  {% render 'add-to-cart-button', 
+  {% render 'add-to-cart-button',
+    id: id,
     class: class,
     can_add_to_cart: can_add_to_cart,
     product: closest.product,
