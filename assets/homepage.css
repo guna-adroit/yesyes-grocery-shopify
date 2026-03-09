@@ -1190,7 +1190,7 @@ input.delivery-option:checked+label::before {
     dialog.dialog-modal.dialog-drawer.dialog-bottom-sheet.account-drawer__dialog[open] {
         z-index: 20;
     }
-    .hamburger-drawer-account {
+    .hamburger-drawer-account { 
         display: flex;
         align-items: center;
         justify-content: flex-start;
