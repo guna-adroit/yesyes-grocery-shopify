@@ -1771,6 +1771,12 @@
       },
       {
         "type": "checkbox",
+        "id": "show_points",
+        "label": "Reward Points",
+        "default": true
+      },
+      {
+        "type": "checkbox",
         "id": "show_accelerated_checkout_buttons",
         "label": "t:settings.checkout_buttons",
         "info": "t:info.checkout_buttons",

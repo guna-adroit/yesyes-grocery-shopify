@@ -25,9 +25,11 @@
 %}
 {% if template.name == 'cart' %}
   <disclosure-custom class="cart-discount">
-    <div class="reward-program-banner-wrapper">
-      {% render 'reward-program-banner', section_id: section_id %}
-    </div>
+    {% if settings.show_points %}
+      <div class="reward-program-banner-wrapper">
+        {% render 'reward-program-banner', section_id: section_id %}
+      </div>
+    {% endif %}
     {% render 'disclosure-trigger',
       controls_id: 'cart-discount-disclosure',
       is_expanded: disclosure_expanded,
