@@ -553,7 +553,7 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtn.innerText = "Unsubscribe";
       
       // notifyLink.classList.add("unsub");
-      notifyLink.innerText = "Cancel Alert";
+      notifyLink.innerText = "Notify Me";
       
     } else {
       
