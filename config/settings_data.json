@@ -60,6 +60,7 @@
     "cart_price_font": "secondary",
     "show_cart_note": true,
     "show_add_discount_code": true,
+    "show_points": false,
     "show_accelerated_checkout_buttons": false,
     "drawer_color_scheme": "scheme-1",
     "drawer_drop_shadow": true,
@@ -90,11 +91,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "7570552984445421165": {
-        "type": "shopify://apps/yotpo-product-reviews/blocks/settings/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-        "disabled": false,
-        "settings": {}
-      },
       "5946647744298494267": {
         "type": "shopify://apps/wishlist-plus/blocks/wishlist-app-embed/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
         "disabled": true,
