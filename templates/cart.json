@@ -338,7 +338,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "eastern-chicken-masala-100gm",
+        "product": "real-aampanna-juice-1l",
         "recommendation_type": "related",
         "custom_classes": "related-products-slider",
         "layout_type": "carousel",
