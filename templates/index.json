@@ -704,7 +704,7 @@
       },
       "name": "Dynamic Products Grid",
       "settings": {
-        "collection": "all",
+        "collection": "featured",
         "collections_list": [
           "milk",
           "pickles",
