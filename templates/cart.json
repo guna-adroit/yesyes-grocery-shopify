@@ -192,8 +192,8 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "double-horse-matta-red-rice",
-        "recommendation_type": "related",
+        "product": "7-up-nimbu-masala-soda-250-ml",
+        "recommendation_type": "complementary",
         "custom_classes": "related-products-slider",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
@@ -338,7 +338,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "fresh-spinach-250g",
+        "product": "aachi-sambar-powder-100gm",
         "recommendation_type": "related",
         "custom_classes": "related-products-slider",
         "layout_type": "carousel",
