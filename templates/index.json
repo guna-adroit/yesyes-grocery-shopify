@@ -1416,7 +1416,7 @@
       ],
       "name": "Products grid with Banner",
       "settings": {
-        "collection": "popular-products",
+        "collection": "fruit-drinks",
         "banner_image": "shopify://shop_images/Screenshot_2025-11-13_151350.png",
         "banner_link": "shopify://products/kuttanadu-rice-matta-rice",
         "layout_type": "grid",
