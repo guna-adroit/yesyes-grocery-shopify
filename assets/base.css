@@ -4491,3 +4491,8 @@ text-component {
     text-transform: uppercase;
     font-weight: 700;
 }
+  @media screen and (max-width: 600px) {
+    #cart-discount-disclosure{
+          max-width: calc(100% - 24px);
+    }
+  }
