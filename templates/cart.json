@@ -338,7 +338,7 @@
       ],
       "name": "t:names.product_recommendations",
       "settings": {
-        "product": "aachi-sambar-powder-100gm",
+        "product": "eastern-chicken-masala-100gm",
         "recommendation_type": "related",
         "custom_classes": "related-products-slider",
         "layout_type": "carousel",
