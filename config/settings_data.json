@@ -60,7 +60,7 @@
     "cart_price_font": "secondary",
     "show_cart_note": true,
     "show_add_discount_code": true,
-    "show_points": true,
+    "show_points": false,
     "show_accelerated_checkout_buttons": false,
     "drawer_color_scheme": "scheme-1",
     "drawer_drop_shadow": true,
