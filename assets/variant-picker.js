@@ -390,7 +390,11 @@ document.addEventListener("DOMContentLoaded", function () {
       email: dataEl?.dataset.email || null
     };
   }
-
+//before executing anything on modal, check if the modal exists to avoid errors
+  if (!modal || !modalBg || !submitBtn || !cancelBtn || !messageBox || !responseMsg || !resultResponse) {
+    console.warn("Modal elements not found. Skipping modal functionality.");
+    return;
+  }
   function openModal() {
     document.body.style.overflow = "hidden";
     modal.style.display = "block";
