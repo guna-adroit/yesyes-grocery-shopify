@@ -1,14 +1,12 @@
 <div class="disclosure-trigger__label h6">DELIVERY OPTION</div>
 <div class="delivery-options-container">
-    <span>
+  <span>
     <input
       type="radio"
-      checked
       id="delivery-option-delivery"
       name="delivery-option"
       value="delivery"
-      class="delivery-option"
-    >
+      class="delivery-option">
     <label for="delivery-option-delivery">
       <span>Online Delivery</span>
     </label>
@@ -17,15 +15,15 @@
   <span>
     <input
       type="radio"
+      checked
       id="delivery-option-pickup"
       name="delivery-option"
       value="pickup"
-      class="delivery-option"
-    >
+      class="delivery-option">
     <label for="delivery-option-pickup">
       <span>Store Pickup</span>
     </label>
   </span>
 
 </div>
-{%  render 'delivery-modal' %}
+{% render 'delivery-modal' %}
