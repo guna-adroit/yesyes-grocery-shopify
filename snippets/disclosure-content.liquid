@@ -19,17 +19,7 @@
   %}
 {% enddoc %}
 
-<div
-  class="disclosure-content"
-  {% unless is_expanded %}
-    inert
-  {% endunless %}
-  ref="disclosureContent"
->
-  <div id="{{ content_id }}">
-    {{ content }}
-  </div>
-</div>
+
 
 {% stylesheet %}
   .disclosure-content {
