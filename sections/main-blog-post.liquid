@@ -68,7 +68,9 @@
               <div class="blog-ingredient-product-item">
                 <div class="">
                   <div class="blog-ingredient-product-image-block">
-                    {{ product.featured_image | image_url: width: 300 | image_tag : class: "blog-ingredient-product-image"  }}
+                    {% if product.featured_image %}
+                      {{ product.featured_image | image_url: width: 300 | image_tag : class: "blog-ingredient-product-image"  }}
+                    {% endif %}
                   </div>
                 </div>
                 <div class="blog-ingredient-product-info-block">
@@ -279,6 +281,8 @@
   .blog-ingredient-product-image{
     width: 92px;
     border-radius: 8px;
+    object-fit: contain;
+    max-height: 100%;
   }
   .blog-ingredient-product__soldout {
     border: 1px solid #000000;
