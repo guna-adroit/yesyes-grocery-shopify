@@ -28,7 +28,7 @@
         "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
         "section_width": "page-width",
-        "section_height": "custom",
+        "section_height": "auto",
         "section_height_custom": 62,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
@@ -1445,6 +1445,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Good_Food_Great_WhatsApp_Updates_1_1.png",
+            "image_mobile": "shopify://shop_images/c95178ba7393463ecb3b10f6b8e0dee7dabc5c78.png",
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -1473,6 +1474,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Elite_Malabar_Shadow_Only_1728x544_1.png",
+            "image_mobile": "shopify://shop_images/e74e3876b688a254d7491b0663a8a801379bdc88.png",
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -1500,6 +1502,7 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Group_1000009342.png",
+            "image_mobile": "shopify://shop_images/6b9489dff1e0779505479e6cbc10199ae273875a.png",
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
