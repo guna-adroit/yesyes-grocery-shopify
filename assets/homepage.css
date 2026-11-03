@@ -1121,7 +1121,8 @@ input.delivery-option:checked+label::before {
     .header-actions__action{
         margin-right: 0;
     }
-    slideshow-container .slide__image-container > .slide__image{
+    slideshow-container .slide__image-container > .slide__image,
+    slideshow-container .slide__image-container > .slide__picture > .slide__image{
         object-fit: contain;
     }
     slideshow-slides[size=small] {
