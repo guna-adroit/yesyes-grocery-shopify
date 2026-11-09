@@ -299,11 +299,26 @@
         "padding-block-start": 40,
         "padding-block-end": 63
       }
+    },
+    "divider_RwEwkA": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 32
+      }
     }
   },
   "order": [
     "main",
     "collection_list_x7m9Xt",
-    "featured_collections_CT9xWm"
+    "featured_collections_CT9xWm",
+    "divider_RwEwkA"
   ]
 }
