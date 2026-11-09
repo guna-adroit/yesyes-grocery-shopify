@@ -330,8 +330,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Group_1000009143-1.png",
-                "link": "#",
+                "image": "shopify://shop_images/77897497d3b574eb995ae32966c23cb01fa0afe8.png",
+                "link": "shopify://collections/vegetables",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -398,8 +398,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Group_1000009143b.png",
-                "link": "",
+                "image": "shopify://shop_images/3cd5b346e62e14eed70881c8af946c9e26baa511.png",
+                "link": "shopify://collections/rice-1",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
@@ -466,8 +466,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/Pickles.png",
-                "link": "",
+                "image": "shopify://shop_images/ce7fcaa4d1c61364af61732e05dcbf776e59d605.png",
+                "link": "shopify://collections/elite-malabar",
                 "image_ratio": "adapt",
                 "width": "fill",
                 "custom_width": 100,
