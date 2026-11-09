@@ -49,6 +49,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -104,7 +105,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "<h3>Shop by Brands</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
