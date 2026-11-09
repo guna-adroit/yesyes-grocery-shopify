@@ -201,6 +201,7 @@
       "block_order": [
         "group_gbmkXJ"
       ],
+      "disabled": true,
       "name": "t:names.collections_grid",
       "settings": {
         "collection_list": [
@@ -239,10 +240,70 @@
         "padding-block-start": 0,
         "padding-block-end": 48
       }
+    },
+    "featured_collections_CT9xWm": {
+      "type": "featured-collections",
+      "name": "Featured collections",
+      "settings": {
+        "collection_list": [
+          "7up",
+          "adukkala",
+          "amul",
+          "apna-chef",
+          "britannia",
+          "eastern",
+          "elite-malabar",
+          "frooti",
+          "maggi",
+          "nanma",
+          "nestle",
+          "prime-gold",
+          "real",
+          "tang",
+          "sunfeast",
+          "thums-up",
+          "waah-waah"
+        ],
+        "heading": "Shop by Brands",
+        "heading_size": "h3",
+        "subheading": "",
+        "header_alignment": "left",
+        "view_all_link": "",
+        "view_all_label": "View all",
+        "layout": "grid",
+        "columns_desktop": 5,
+        "columns_mobile": 3,
+        "gap_desktop": 20,
+        "gap_mobile": 10,
+        "section_width": "page-width",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "loop": true,
+        "show_navigation": true,
+        "show_pagination": true,
+        "aspect_ratio": "1",
+        "image_fit": "cover",
+        "image_padding": 0,
+        "card_background": "#FFFFFF",
+        "show_border": true,
+        "border_color": "#EAEAEA",
+        "corner_radius": 16,
+        "hover_effect": "zoom",
+        "title_style": "badge",
+        "title_alignment": "center",
+        "show_product_count": false,
+        "product_count_label": "products",
+        "badge_background": "#ED1B24",
+        "badge_text": "#FFFFFF",
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
     "main",
-    "collection_list_x7m9Xt"
+    "collection_list_x7m9Xt",
+    "featured_collections_CT9xWm"
   ]
 }
