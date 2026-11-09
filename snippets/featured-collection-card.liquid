@@ -1,0 +1,68 @@
+{%- doc -%}
+  Renders one card in the Featured collections section.
+
+  @param {object} [collection] - The collection to show. Renders a placeholder card when empty.
+  @param {object} settings - The section settings.
+  @param {string} sizes - The sizes attribute for the image.
+  @param {string} loading - { 'lazy' | 'eager' } Image loading strategy.
+
+  @example
+  {% render 'featured-collection-card', collection: collection, settings: section.settings, sizes: sizes, loading: 'lazy' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign image = collection.featured_image | default: collection.image
+  assign title = collection.title | default: 'Collection title'
+  assign image_alt = title
+  if settings.title_style == 'below'
+    # The visible title already names the link.
+    assign image_alt = ''
+  endif
+-%}
+
+{%- capture card_content -%}
+  <div class="featured-collections__media">
+    {%- if image -%}
+      {{
+        image
+        | image_url: width: 800
+        | image_tag:
+          widths: '165, 240, 330, 400, 500, 660, 800',
+          sizes: sizes,
+          alt: image_alt,
+          loading: loading,
+          class: 'featured-collections__image'
+      }}
+    {%- elsif collection -%}
+      <span class="featured-collections__initials" aria-hidden="true">
+        {{- collection.title | slice: 0, 2 -}}
+      </span>
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'featured-collections__image featured-collections__placeholder' }}
+    {%- endif -%}
+
+    {%- if settings.title_style == 'badge' -%}
+      <span class="featured-collections__badge">{{ title }}</span>
+    {%- endif -%}
+  </div>
+
+  {%- if settings.title_style == 'below' -%}
+    <div class="featured-collections__info">
+      <span class="featured-collections__title">{{ title }}</span>
+      {%- if settings.show_product_count and collection -%}
+        <span class="featured-collections__count">
+          {{- collection.products_count }}
+          {{ settings.product_count_label -}}
+        </span>
+      {%- endif -%}
+    </div>
+  {%- elsif settings.title_style == 'hidden' and image == blank -%}
+    <span class="visually-hidden">{{ title }}</span>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if collection -%}
+  <a class="featured-collections__card" href="{{ collection.url }}">{{ card_content }}</a>
+{%- else -%}
+  <div class="featured-collections__card">{{ card_content }}</div>
+{%- endif -%}
