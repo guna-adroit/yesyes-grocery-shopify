@@ -166,7 +166,7 @@
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
                 "background": true,
-                "background_color": "#FCD816",
+                "background_color": "#fcd816",
                 "corner_radius": 7,
                 "padding-block-start": 4,
                 "padding-block-end": 4,
@@ -218,7 +218,9 @@
           "real",
           "sunfeast",
           "tang",
-          "thums-up"
+          "thums-up",
+          "nanma",
+          "waah-waah"
         ],
         "layout_type": "grid",
         "carousel_on_mobile": false,
