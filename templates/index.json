@@ -706,11 +706,12 @@
       "settings": {
         "collection": "featured",
         "collections_list": [
-          "milk",
-          "pickles",
-          "rice",
-          "soya",
-          "vegetables"
+          "rice-basmati-rice",
+          "spices-masalas",
+          "chips-namkeen",
+          "lentils-pulses",
+          "cooking-oils-and-ghee",
+          "frozen"
         ],
         "layout_type": "grid",
         "carousel_on_mobile": false,
