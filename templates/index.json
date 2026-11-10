@@ -278,7 +278,7 @@
       "name": "Featured Categories",
       "settings": {
         "heading": "{{ metaobjects.homepage_featured_categories_heading[\"featured-categories\"].heading.value }}",
-        "desktop_slides": 12,
+        "desktop_slides": 10,
         "tablet_slides": 6,
         "mobile_slides": 3
       }
