@@ -704,7 +704,7 @@
       },
       "name": "Dynamic Products Grid",
       "settings": {
-        "collection": "featured",
+        "collection": "popular-products",
         "collections_list": [
           "rice-basmati-rice",
           "spices-masalas",
