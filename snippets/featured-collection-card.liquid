@@ -14,7 +14,7 @@
   assign image = collection.featured_image | default: collection.image
   assign title = collection.title | default: 'Collection title'
   assign image_alt = title
-  if settings.title_style == 'below'
+  if settings.title_style == 'below' or settings.title_style == 'badge'
     # The visible title already names the link.
     assign image_alt = ''
   endif
@@ -43,6 +43,16 @@
 
     {%- if settings.title_style == 'badge' -%}
       <span class="featured-collections__badge">{{ title }}</span>
+    {%- endif -%}
+
+    {%- if settings.hover_effect == 'overlay' -%}
+      {%- comment -%} Decorative: the link is already named by the title or image alt. {%- endcomment -%}
+      <span class="featured-collections__overlay" aria-hidden="true">
+        <span class="featured-collections__overlay-title">{{ title }}</span>
+        <span class="featured-collections__overlay-button">
+          {{- settings.overlay_button_label | default: 'View Products' -}}
+        </span>
+      </span>
     {%- endif -%}
   </div>
 

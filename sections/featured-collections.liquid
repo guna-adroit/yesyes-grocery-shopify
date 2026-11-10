@@ -16,149 +16,155 @@
   # strips the space in "100% - (", which makes the calc() invalid.
   assign gaps_desktop = cols_desktop | minus: 1 | times: gap_desktop
   assign gaps_mobile = cols_mobile | minus: 1 | times: gap_mobile
-  assign slide_width_desktop = ' c alc((100% - ' | append: gaps_desktop | append: ' p x) / ' | append: cols_desktop | append: ' ) '
-  assign slide_width_mobile = ' c alc((100% - ' | append: gaps_mobile | append: ' p x) / ' | append: cols_mobile | append: ' ) '
+  assign slide_width_desktop = 'calc((100% - ' | append: gaps_desktop | append: 'px) / ' | append: cols_desktop | append: ')'
+  assign slide_width_mobile = 'calc((100% - ' | append: gaps_mobile | append: 'px) / ' | append: cols_mobile | append: ')'
 
   # A grid needs whole columns; half values only apply to the carousel.
   assign grid_cols_mobile = cols_mobile | floor
 
-  assign sizes = ' ( min-width: 750px) calc(100vw / ' | append: cols_desktop | append: ' ) , calc(100vw / ' | append: cols_mobile | append: ' ) '
+  assign sizes = '(min-width: 750px) calc(100vw / ' | append: cols_desktop | append: '), calc(100vw / ' | append: cols_mobile | append: ')'
 
   assign autoplay_speed = 0
-  if layout == ' c arousel' and section.settings.autoplay
+  if layout == 'carousel' and section.settings.autoplay
     assign autoplay_speed = section.settings.autoplay_speed
   endif
 
-  assign dot_label = ' a ccessibility.slide_status' | t: index: ' [ index]', length: ' [ length]'
-  -%}
+  assign dot_label = 'accessibility.slide_status' | t: index: '[index]', length: '[length]'
+-%}
 
-  {%- if layout == ' c arousel' -%}
-  <script src="{{ ' m ini-carousel.js' | asset_url }}" defer="defer"></script>
-  {%- endif -%}
+{%- if layout == 'carousel' -%}
+  <script src="{{ 'mini-carousel.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
   class="spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  style="{% render ' s pacing-padding', settings: section.settings %}"
-  >
+  style="{% render 'spacing-padding', settings: section.settings %}"
+>
   <div
-  class="featured-collections featured-collections--{{ layout }} featured-collections--title-{{ section.settings.title_style }} featured-collections--hover-{{ section.settings.hover_effect }}"
-  style="
-  --fc-cols-desktop: {{ cols_desktop }};
-  --fc-cols-mobile: {{ grid_cols_mobile }};
-  --fc-gap-desktop: {{ gap_desktop }}px;
-  --fc-gap-mobile: {{ gap_mobile }}px;
-  --fc-slide-width-desktop: {{ slide_width_desktop }};
-  --fc-slide-width-mobile: {{ slide_width_mobile }};
-  --fc-aspect-ratio: {{ section.settings.aspect_ratio }};
-  --fc-radius: {{ section.settings.corner_radius }}px;
-  --fc-image-padding: {{ section.settings.image_padding }}%;
-  --fc-image-fit: {{ section.settings.image_fit }};
-  --fc-card-bg: {{ section.settings.card_background }};
-  --fc-border-color: {{ section.settings.border_color }};
-  --fc-border-width: {% if section.settings.show_border %}1px{% else %}0px{% endif %};
-  --fc-badge-bg: {{ section.settings.badge_background }};
-  --fc-badge-text: {{ section.settings.badge_text }};
-  --fc-title-align: {{ section.settings.title_alignment }};
-  "
+    class="featured-collections featured-collections--{{ layout }} featured-collections--title-{{ section.settings.title_style }} featured-collections--hover-{{ section.settings.hover_effect }}"
+    style="
+      --fc-cols-desktop: {{ cols_desktop }};
+      --fc-cols-mobile: {{ grid_cols_mobile }};
+      --fc-gap-desktop: {{ gap_desktop }}px;
+      --fc-gap-mobile: {{ gap_mobile }}px;
+      --fc-slide-width-desktop: {{ slide_width_desktop }};
+      --fc-slide-width-mobile: {{ slide_width_mobile }};
+      --fc-aspect-ratio: {{ section.settings.aspect_ratio }};
+      --fc-radius: {{ section.settings.corner_radius }}px;
+      --fc-image-padding: {{ section.settings.image_padding }}%;
+      --fc-image-fit: {{ section.settings.image_fit }};
+      --fc-card-bg: {{ section.settings.card_background }};
+      --fc-border-color: {{ section.settings.border_color }};
+      --fc-border-width: {% if section.settings.show_border %}1px{% else %}0px{% endif %};
+      --fc-badge-bg: {{ section.settings.badge_background }};
+      --fc-badge-text: {{ section.settings.badge_text }};
+      --fc-title-align: {{ section.settings.title_alignment }};
+      --fc-overlay-bg: {{ section.settings.overlay_color }};
+      --fc-overlay-text: {{ section.settings.overlay_text_color }};
+      --fc-overlay-blur: {{ section.settings.overlay_blur }}px;
+      --fc-overlay-button-bg: {{ section.settings.overlay_button_background }};
+      --fc-overlay-button-text: {{ section.settings.overlay_button_text }};
+    "
   >
-  {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.view_all_link != blank -%}
-  <div class="featured-collections__header featured-collections__header--{{ section.settings.header_alignment }}">
-  <div class="featured-collections__intro">
-  {%- if section.settings.heading != blank -%}
-  <h2 class="featured-collections__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
-  {%- endif -%}
-  {%- if section.settings.subheading != blank -%}
-  <p class="featured-collections__subheading">{{ section.settings.subheading }}</p>
-  {%- endif -%}
-  </div>
-  {%- if section.settings.view_all_link != blank -%}
-  <a class="featured-collections__view-all" href="{{ section.settings.view_all_link }}">
-  {{- section.settings.view_all_label | default: ' V iew all' -}}
-  {{- ' i con-chevron-right.svg' | inline_asset_content -}}
-  </a>
-  {%- endif -%}
-  </div>
-  {%- endif -%}
-
-  {%- comment -%}
-  Always a <mini-carousel>: in grid mode its script isn't loaded, so it stays a plain block.
-  {%- endcomment-%}
-<mini-carousel
-  class="featured-collections__body"
-  {% if layout == 'carousel' %}
-  {% if autoplay_speed > 0 %}
-  autoplay="{{ autoplay_speed }}"
-  pause-on-hover
-  {% endif %}
-  {% if section.settings.loop %}
-  loop
-  {% endif %}
-  data-dot-label="{{ dot_label | escape }}"
-  role="region"
-  aria-roledescription="carousel"
-  aria-label="{{ section.settings.heading | default: 'Collections' | strip_html | escape }}"
-  {% endif %}>
-  <div class="featured-collections__viewport">
-    <ul
-      class="featured-collections__list list-unstyled"
-      {% if layout == 'carousel' %}
-      data-track
-      tabindex="-1"
-      {% endif %}>
-      {%- if collections == blank -%}
-        {%- for i in (1..item_count) -%}
-          <li class="featured-collections__item">
-            {%- render 'featured-collection-card'
-              , collection: null
-              , settings: section.settings
-              , sizes: sizes
-              , loading: 'lazy'
-            -%}
-          </li>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for collection in collections -%}
-          {%- liquid
-            assign loading = 'lazy'
-            if section.index <= 2 and forloop.index <= cols_desktop
-              assign loading = 'eager'
-            endif
-          -%}
-          <li class="featured-collections__item">
-            {%- render 'featured-collection-card'
-              , collection: collection
-              , settings: section.settings
-              , sizes: sizes
-              , loading: loading
-            -%}
-          </li>
-        {%- endfor -%}
-      {%- endif -%}
-    </ul>
-
-    {%- if layout == 'carousel' and section.settings.show_navigation -%}
-      <button
-        type="button"
-        class="featured-collections__arrow featured-collections__arrow--prev"
-        data-prev
-        aria-label="{{ 'accessibility.slideshow_previous' | t }}">
-        {{- 'icon-chevron-left.svg' | inline_asset_content -}}
-      </button>
-      <button
-        type="button"
-        class="featured-collections__arrow featured-collections__arrow--next"
-        data-next
-        aria-label="{{ 'accessibility.slideshow_next' | t }}">
-        {{- 'icon-chevron-right.svg' | inline_asset_content -}}
-      </button>
+    {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.view_all_link != blank -%}
+      <div class="featured-collections__header featured-collections__header--{{ section.settings.header_alignment }}">
+        <div class="featured-collections__intro">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="featured-collections__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="featured-collections__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.view_all_link != blank -%}
+          <a class="featured-collections__view-all" href="{{ section.settings.view_all_link }}">
+            {{- section.settings.view_all_label | default: 'View all' -}}
+            {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+          </a>
+        {%- endif -%}
+      </div>
     {%- endif -%}
-  </div>
 
-  {%- if layout == 'carousel' and section.settings.show_pagination -%}
-    <div class="featured-collections__dots" data-dots></div>
-  {%- endif -%}
-</mini-carousel></div></div>{% stylesheet %}
+    {%- comment -%}
+      Always a <mini-carousel>: in grid mode its script isn't loaded, so it stays a plain block.
+    {%- endcomment -%}
+    <mini-carousel
+      class="featured-collections__body"
+      {% if layout == 'carousel' %}
+        {% if autoplay_speed > 0 %}
+          autoplay="{{ autoplay_speed }}" pause-on-hover
+        {% endif %}
+        {% if section.settings.loop %}
+          loop
+        {% endif %}
+        data-dot-label="{{ dot_label | escape }}"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="{{ section.settings.heading | default: 'Collections' | strip_html | escape }}"
+      {% endif %}
+    >
+      <div class="featured-collections__viewport">
+        <ul class="featured-collections__list list-unstyled" {% if layout == 'carousel' %}data-track tabindex="-1"{% endif %}>
+          {%- if collections == blank -%}
+            {%- for i in (1..item_count) -%}
+              <li class="featured-collections__item">
+                {%- render 'featured-collection-card',
+                  collection: null,
+                  settings: section.settings,
+                  sizes: sizes,
+                  loading: 'lazy'
+                -%}
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for collection in collections -%}
+              {%- liquid
+                assign loading = 'lazy'
+                if section.index <= 2 and forloop.index <= cols_desktop
+                  assign loading = 'eager'
+                endif
+              -%}
+              <li class="featured-collections__item">
+                {%- render 'featured-collection-card',
+                  collection: collection,
+                  settings: section.settings,
+                  sizes: sizes,
+                  loading: loading
+                -%}
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+
+        {%- if layout == 'carousel' and section.settings.show_navigation -%}
+          <button
+            type="button"
+            class="featured-collections__arrow featured-collections__arrow--prev"
+            data-prev
+            aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+          >
+            {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+          </button>
+          <button
+            type="button"
+            class="featured-collections__arrow featured-collections__arrow--next"
+            data-next
+            aria-label="{{ 'accessibility.slideshow_next' | t }}"
+          >
+            {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+          </button>
+        {%- endif -%}
+      </div>
+
+      {%- if layout == 'carousel' and section.settings.show_pagination -%}
+        <div class="featured-collections__dots" data-dots></div>
+      {%- endif -%}
+    </mini-carousel>
+  </div>
+</div>
+
+{% stylesheet %}
 .featured-collections {
   --fc-cols: var(--fc-cols-mobile);
   --fc-gap: var(--fc-gap-mobile);
@@ -359,6 +365,10 @@
     transform: scale(1.06);
   }
 
+  .featured-collections--hover-overlay a.featured-collections__card:hover .featured-collections__image {
+    transform: scale(1.04);
+  }
+
   a.featured-collections__card:hover .featured-collections__media {
     border-color: color-mix(in srgb, var(--fc-border-color) 40%, var(--color-foreground));
   }
@@ -367,6 +377,81 @@
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+}
+
+/* Overlay hover: tint and blur fade in, then the title and button slide up */
+.featured-collections__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: inherit;
+  background-color: var(--fc-overlay-bg);
+  color: var(--fc-overlay-text);
+  text-align: center;
+  opacity: 0;
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  transition: opacity 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease;
+  pointer-events: none;
+}
+
+.featured-collections__overlay-title,
+.featured-collections__overlay-button {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.featured-collections__overlay-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.featured-collections__overlay-button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background-color: var(--fc-overlay-button-bg);
+  color: var(--fc-overlay-button-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition-delay: 0.06s;
+}
+
+@media (hover: hover) {
+  a.featured-collections__card:hover .featured-collections__overlay {
+    opacity: 1;
+    -webkit-backdrop-filter: blur(var(--fc-overlay-blur));
+    backdrop-filter: blur(var(--fc-overlay-blur));
+  }
+
+  a.featured-collections__card:hover .featured-collections__overlay-title,
+  a.featured-collections__card:hover .featured-collections__overlay-button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keyboard users get the overlay too */
+a.featured-collections__card:focus-visible .featured-collections__overlay,
+a.featured-collections__card:focus-visible .featured-collections__overlay-title,
+a.featured-collections__card:focus-visible .featured-collections__overlay-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+a.featured-collections__card:focus-visible .featured-collections__overlay {
+  -webkit-backdrop-filter: blur(var(--fc-overlay-blur));
+  backdrop-filter: blur(var(--fc-overlay-blur));
 }
 
 a.featured-collections__card:focus-visible {
@@ -469,7 +554,15 @@ a.featured-collections__card:focus-visible .featured-collections__media {
   .featured-collections__dots .mini-carousel__dot {
     transition: none;
   }
-}{% endstylesheet %}{% schema %}
+
+  .featured-collections__overlay-title,
+  .featured-collections__overlay-button {
+    transform: none;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
 {
   "name": "Featured collections",
   "disabled_on": {
@@ -728,11 +821,56 @@ a.featured-collections__card:focus-visible .featured-collections__media {
           "value": "zoom",
           "label": "Zoom image"
         }, {
+          "value": "overlay",
+          "label": "Overlay with button"
+        }, {
           "value": "none",
           "label": "None"
         }
       ],
-      "default": "lift"
+      "default": "lift",
+      "info": "Hover effects show on devices with a mouse."
+    }, {
+      "type": "text",
+      "id": "overlay_button_label",
+      "label": "Overlay button text",
+      "default": "View Products",
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
+    }, {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "alpha": true,
+      "default": "#00000066",
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
+    }, {
+      "type": "range",
+      "id": "overlay_blur",
+      "label": "Overlay blur",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
+    }, {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
+    }, {
+      "type": "color",
+      "id": "overlay_button_background",
+      "label": "Overlay button background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
+    }, {
+      "type": "color",
+      "id": "overlay_button_text",
+      "label": "Overlay button text color",
+      "default": "#111111",
+      "visible_if": "{{ section.settings.hover_effect == 'overlay' }}"
     }, {
       "type": "header",
       "content": "Collection title"
