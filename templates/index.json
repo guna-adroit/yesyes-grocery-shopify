@@ -231,12 +231,12 @@
         },
         "category_7Ptg7e": {
           "type": "category",
-          "source": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"] }}",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"] }}",
           "settings": {
-            "title": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].category_title.value }}",
-            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].collection.value }}",
-            "image": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].category_image.value }}",
-            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"tea-coffee\"].background_color.value }}"
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].background_color.value }}"
           }
         },
         "category_3WUznW": {
