@@ -199,6 +199,16 @@
             "bg_color": "{{ metaobjects.homepage_featured_categories_cards.frozen.background_color.value }}"
           }
         },
+        "category_cMj3iX": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].background_color.value }}"
+          }
+        },
         "category_xWhxJC": {
           "type": "category",
           "source": "{{ metaobjects.homepage_featured_categories_cards.flours }}",
@@ -207,16 +217,6 @@
             "collection_link": "{{ metaobjects.homepage_featured_categories_cards.flours.collection.value }}",
             "image": "{{ metaobjects.homepage_featured_categories_cards.flours.category_image.value }}",
             "bg_color": "{{ metaobjects.homepage_featured_categories_cards.flours.background_color.value }}"
-          }
-        },
-        "category_KN3yjM": {
-          "type": "category",
-          "source": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"] }}",
-          "settings": {
-            "title": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_title.value }}",
-            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].collection.value }}",
-            "image": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_image.value }}",
-            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].background_color.value }}"
           }
         },
         "category_Tjnnh9": {
@@ -229,6 +229,16 @@
             "bg_color": "{{ metaobjects.homepage_featured_categories_cards.rice.background_color.value }}"
           }
         },
+        "category_KN3yjM": {
+          "type": "category",
+          "source": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_title.value }}",
+            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].collection.value }}",
+            "image": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].category_image.value }}",
+            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"ice-creams\"].background_color.value }}"
+          }
+        },
         "category_7Ptg7e": {
           "type": "category",
           "source": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"] }}",
@@ -237,16 +247,6 @@
             "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].collection.value }}",
             "image": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].category_image.value }}",
             "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"beauty-health\"].background_color.value }}"
-          }
-        },
-        "category_cMj3iX": {
-          "type": "category",
-          "source": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"] }}",
-          "settings": {
-            "title": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].category_title.value }}",
-            "collection_link": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].collection.value }}",
-            "image": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].category_image.value }}",
-            "bg_color": "{{ metaobjects.homepage_featured_categories_cards[\"pooja-essentials\"].background_color.value }}"
           }
         },
         "category_FaAXgg": {
@@ -268,11 +268,11 @@
         "category_CMzYVj",
         "category_rk8P47",
         "category_XA7PeL",
-        "category_xWhxJC",
-        "category_KN3yjM",
-        "category_Tjnnh9",
-        "category_7Ptg7e",
         "category_cMj3iX",
+        "category_xWhxJC",
+        "category_Tjnnh9",
+        "category_KN3yjM",
+        "category_7Ptg7e",
         "category_FaAXgg"
       ],
       "name": "Featured Categories",
