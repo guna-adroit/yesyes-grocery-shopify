@@ -220,7 +220,6 @@
         "slide_hyPrfE",
         "slide_tfacPc"
       ],
-      "disabled": true,
       "name": "Mini carousel",
       "settings": {
         "slides_per_view_desktop": 7,
