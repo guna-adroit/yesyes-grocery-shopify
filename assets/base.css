@@ -1629,6 +1629,8 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 
 .product-media-container.media-fit {
   --product-media-fit: cover;
+    max-height: 220px;
+    object-fit: contain;
 
   img {
     object-fit: var(--product-media-fit);
