@@ -1065,6 +1065,11 @@ input.delivery-option:checked+label::before {
     .predictive-search-form .predictive-search-form__content-wrapper{
         width: 125%;
     }
+    .collection-titles-wrapper {
+        position: unset;
+        transform: none;
+        padding-top: 24px;
+    }
 }
 @media (max-width: 1100px) {
     .predictive-search-results__inner{
@@ -1207,11 +1212,6 @@ input.delivery-option:checked+label::before {
     .floating-menu-footer dialog-component.account-drawer .account-button{
         justify-content: flex-start;
         padding: 0;
-    }
-    .collection-titles-wrapper {
-        position: unset;
-        transform: none;
-        padding-top: 24px;
     }
     button.account-button.header-actions__action{
         padding-left: 0;
