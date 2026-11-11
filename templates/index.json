@@ -126,6 +126,125 @@
         "padding-block-end": 72
       }
     },
+    "mini_carousel_3Axxig": {
+      "type": "mini-carousel",
+      "blocks": {
+        "slide_tXxibL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_8gCqnK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_zD8AhY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_EPJP4b": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_R7gT8X": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_HCN9Dn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_cBMRwz": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_hyPrfE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        },
+        "slide_tfacPc": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "link": "",
+            "open_in_new_tab": false,
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_tXxibL",
+        "slide_8gCqnK",
+        "slide_zD8AhY",
+        "slide_EPJP4b",
+        "slide_R7gT8X",
+        "slide_HCN9Dn",
+        "slide_cBMRwz",
+        "slide_hyPrfE",
+        "slide_tfacPc"
+      ],
+      "disabled": true,
+      "name": "Mini carousel",
+      "settings": {
+        "slides_per_view_desktop": 7,
+        "slides_per_view_mobile": 2.5,
+        "aspect_ratio": "1",
+        "gap_desktop": 24,
+        "gap_mobile": 12,
+        "corner_radius": 12,
+        "section_width": "page-width",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "pause_on_hover": true,
+        "loop": true,
+        "show_pagination": true,
+        "show_navigation": true,
+        "navigation_position": "below",
+        "color_scheme": "",
+        "accessibility_label": "Promotions",
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    },
     "featured_categories_cibbXA": {
       "type": "featured-categories",
       "blocks": {
@@ -2248,6 +2367,7 @@
   "order": [
     "hero_phhUHj",
     "hero_jVaWmY",
+    "mini_carousel_3Axxig",
     "featured_categories_cibbXA",
     "section_wHChnB",
     "dynamic_product_grid_CRHcwJ",
