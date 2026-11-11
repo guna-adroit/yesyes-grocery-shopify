@@ -4498,3 +4498,6 @@ text-component {
           max-width: calc(100% - 24px);
     }
   }
+  .product-media-container.media-fit img {
+    object-fit:contain;
+}
