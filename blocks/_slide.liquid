@@ -24,6 +24,23 @@
       }
     {% endstyle %}
   {% endif %}
+  {% if block_settings.fit_desktop_image and preview_image != blank %}
+    {%- comment -%}
+      On desktop, size the slide to the image's aspect ratio so it isn't cropped at narrower widths
+      (e.g. 1366px). This replaces the section's fixed slide height on desktop.
+    {%- endcomment -%}
+    {% style %}
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} slideshow-slides {
+          min-height: 0;
+        }
+
+        slideshow-slide.slide--{{ block.id }} {
+          aspect-ratio: {{ preview_image.aspect_ratio }};
+        }
+      }
+    {% endstyle %}
+  {% endif %}
   {% if section.settings.slide_height == 'adapt_image' and block_index == 0 and preview_image != blank %}
     {%
       # Great example of why it can be helpful for a section to be able to read the settings of its direct child blocks.
@@ -252,6 +269,13 @@
         "label": "Mobile image",
         "info": "Shown on screens below 750px. Recommended 1:1 (e.g. 1080 x 1080px). Falls back to the image above if empty.",
         "visible_if": "{{ block.settings.media_type_1 == 'image' }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "fit_desktop_image",
+        "label": "Show full image on desktop",
+        "info": "Slide height follows the image's shape, so it isn't cropped on smaller laptop screens. Overrides the slideshow height on desktop.",
+        "default": true
       },
       {
         "type": "video",
