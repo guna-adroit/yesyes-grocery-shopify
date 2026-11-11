@@ -131,11 +131,9 @@
       "blocks": {
         "slide_tXxibL": {
           "type": "slide",
+          "source": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"] }}",
           "settings": {
-            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
-            "link": "",
-            "open_in_new_tab": false,
-            "alt_text": ""
+            "image": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].image.value }}"
           }
         },
         "slide_8gCqnK": {
