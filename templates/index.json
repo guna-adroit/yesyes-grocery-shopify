@@ -151,7 +151,7 @@
         "slide_EPJP4b": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -160,7 +160,7 @@
         "slide_R7gT8X": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -169,7 +169,7 @@
         "slide_HCN9Dn": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -178,7 +178,7 @@
         "slide_cBMRwz": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -187,7 +187,7 @@
         "slide_hyPrfE": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -206,7 +206,7 @@
         "slide_tfacPc": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Traditional_Brass_Pooja_Thali_Arrangement.png",
+            "image": "shopify://shop_images/c28c3975-c38a-4f4f-839c-5ca2cca83c54_size384x384_cropCenter.webp",
             "link": "",
             "open_in_new_tab": false,
             "alt_text": ""
@@ -224,7 +224,6 @@
         "slide_8gCqnK",
         "slide_tfacPc"
       ],
-      "disabled": true,
       "name": "Mini carousel",
       "settings": {
         "slides_per_view_desktop": 7,
