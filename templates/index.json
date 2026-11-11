@@ -138,15 +138,6 @@
             "alt_text": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_label.value }}"
           }
         },
-        "slide_8gCqnK": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/aromatic-spice-arrangement-with-vibrant-colors-and-textures-on-transparent-background-free-png.webp",
-            "link": "",
-            "open_in_new_tab": false,
-            "alt_text": ""
-          }
-        },
         "slide_zD8AhY": {
           "type": "slide",
           "settings": {
@@ -201,6 +192,15 @@
             "alt_text": ""
           }
         },
+        "slide_8gCqnK": {
+          "type": "slide",
+          "source": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].image.value }}",
+            "link": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_url.value }}",
+            "alt_text": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_label.value }}"
+          }
+        },
         "slide_tfacPc": {
           "type": "slide",
           "settings": {
@@ -213,13 +213,13 @@
       },
       "block_order": [
         "slide_aJHJ3k",
-        "slide_8gCqnK",
         "slide_zD8AhY",
         "slide_EPJP4b",
         "slide_R7gT8X",
         "slide_HCN9Dn",
         "slide_cBMRwz",
         "slide_hyPrfE",
+        "slide_8gCqnK",
         "slide_tfacPc"
       ],
       "name": "Mini carousel",
