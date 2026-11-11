@@ -144,6 +144,7 @@
           "settings": {
             "image": "{{ metaobjects.homepage_mini_carousal[\"demo-2\"].image.value }}",
             "link": "{{ metaobjects.homepage_mini_carousal[\"demo-2\"].slide_url.value }}",
+            "open_in_new_tab": false,
             "alt_text": "{{ metaobjects.homepage_mini_carousal[\"demo-2\"].slide_label.value }}"
           }
         },
@@ -198,6 +199,7 @@
           "settings": {
             "image": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].image.value }}",
             "link": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_url.value }}",
+            "open_in_new_tab": false,
             "alt_text": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_label.value }}"
           }
         },
@@ -1541,8 +1543,8 @@
         "banner_link": "shopify://products/kuttanadu-rice-matta-rice",
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
+        "max_products": 10,
+        "columns": 5,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 30,
@@ -1566,6 +1568,7 @@
             "media_type_1": "image",
             "image_1": "shopify://shop_images/20beb6bd4b68c0ab255a114ebe2dd39ad61989ca.png",
             "image_mobile": "shopify://shop_images/c95178ba7393463ecb3b10f6b8e0dee7dabc5c78.png",
+            "fit_desktop_image": true,
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -1595,6 +1598,7 @@
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Elite_Malabar_Shadow_Only_1728x544_1.png",
             "image_mobile": "shopify://shop_images/e74e3876b688a254d7491b0663a8a801379bdc88.png",
+            "fit_desktop_image": true,
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -1623,6 +1627,7 @@
             "media_type_1": "image",
             "image_1": "shopify://shop_images/Group_1000009342.png",
             "image_mobile": "shopify://shop_images/6b9489dff1e0779505479e6cbc10199ae273875a.png",
+            "fit_desktop_image": true,
             "overlay_link": "shopify://collections/all",
             "content_direction": "column",
             "vertical_on_mobile": true,
