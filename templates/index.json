@@ -225,7 +225,7 @@
         "slide_tfacPc"
       ],
       "disabled": true,
-      "name": "Mini carousel",
+      "name": "Offer Zone Slider",
       "settings": {
         "slides_per_view_desktop": 7,
         "slides_per_view_mobile": 2.5,
