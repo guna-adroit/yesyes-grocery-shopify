@@ -129,11 +129,13 @@
     "mini_carousel_3Axxig": {
       "type": "mini-carousel",
       "blocks": {
-        "slide_tXxibL": {
+        "slide_aJHJ3k": {
           "type": "slide",
-          "source": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"] }}",
           "settings": {
-            "image": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].image.value }}"
+            "image": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].image.value }}",
+            "link": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_url.value }}",
+            "open_in_new_tab": false,
+            "alt_text": "{{ metaobjects.homepage_mini_carousal[\"demo-1\"].slide_label.value }}"
           }
         },
         "slide_8gCqnK": {
@@ -210,7 +212,7 @@
         }
       },
       "block_order": [
-        "slide_tXxibL",
+        "slide_aJHJ3k",
         "slide_8gCqnK",
         "slide_zD8AhY",
         "slide_EPJP4b",
