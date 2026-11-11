@@ -249,6 +249,8 @@ button.account-button.header-actions__action{
     -moz-box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.34);
     overflow-y: scroll;
     row-gap: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ed1d23 #ffffff;
 }
 
 /* Column wrapper */
