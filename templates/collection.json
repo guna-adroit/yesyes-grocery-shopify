@@ -120,11 +120,16 @@
             "color_scheme": "",
             "category_list": [
               "all",
+              "spices-masalas",
+              "chips-namkeen",
+              "lentils-pulses",
+              "rice-basmati-rice",
+              "tea-and-coffee",
               "grocery",
-              "frontpage",
               "milk",
-              "rice",
-              "pickles"
+              "pickles",
+              "flours",
+              "herbs"
             ],
             "padding-block-start": 0,
             "padding-block-end": 0,
