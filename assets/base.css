@@ -4501,3 +4501,6 @@ text-component {
   .product-media-container.media-fit img {
     object-fit:contain;
 }
+facet-inputs-component#facet-inputs-component-filter-p-m-custom-brand_name {
+    padding-top: 10px;
+}
