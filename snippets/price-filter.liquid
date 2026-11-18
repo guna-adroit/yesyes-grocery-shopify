@@ -62,10 +62,10 @@
       </span>
     </summary>
     <div class="custom-price-reset">
-      <div class="price-facet__highest-price">
+      {% comment %} <div class="price-facet__highest-price">
           {%- assign formatted_highest_price = filter.range_max | money -%}
           {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
-      </div>
+      </div> {% endcomment %}
         {% if filter.min_value.value != null or filter.max_value.value != null %}
         <facet-remove-component
                   class="custom-filter-reset"
